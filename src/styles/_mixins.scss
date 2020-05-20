@@ -1,0 +1,5 @@
+@mixin for-phone-only {
+  @media only screen and (max-width: $mob-min) {
+    @content;
+  }
+}

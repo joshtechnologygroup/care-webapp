@@ -1,0 +1,25 @@
+@import "./variables";
+@import "./mixins";
+
+.container {
+  margin: 0 auto;
+  max-width: 120rem;
+}
+.row {
+  display: flex;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  color: $white;
+}
+
+@include for-phone-only {
+  .container {
+    padding: 0;
+  }
+}

@@ -1,0 +1,37 @@
+@font-face {
+    font-family: $primary-font;
+    src: url(../assets/fonts/primary-font.otf);
+  }
+  @font-face {
+    font-family: $primary-font-bold;
+    src: url(../assets/fonts/primary-font-bold.otf);
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%; //1rem = 10px , 10px/16px(browser default size is 16px)
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  body {
+    font-weight: 400;
+    line-height: 1.6;
+    background-color: $grey-light;
+    font-family: $primary-font;
+  }
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
