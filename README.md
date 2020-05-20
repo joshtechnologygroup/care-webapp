@@ -2,6 +2,8 @@
 
 ## Setting up app on your local machine
 
+Cloning repository
+
 ```
 git clone git@github.com:joshtechnologygroup/care-webapp.git
 ```
@@ -28,12 +30,12 @@ You will also see any lint errors in the console.
 
 ### `npm run lint`
 
-Test for lint errors in code.
+Test for any lint errors in code.
 
 
 ### `npm run lint:fix`
 
-Test for fixing standard lint errors in code.
+Fixing standard lint errors in code.
 
 
 ### `npm run build`
