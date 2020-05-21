@@ -32,8 +32,11 @@ function Home() {
                     <Route path={`/reports`} component={Reports} />
                     <Route path={`/settings`} component={Settings} />
                     <Route path={`/profile`} component={Profile} />
+                    <Route path={`/error/:errorCode`}>
+                        <ErrorPage text="Oops! Error occured." />
+                    </Route>
                     <Route path='*' exact={true}>
-                        <ErrorPage type={404}/>
+                        <ErrorPage title={404} text="Page Not Found!" />
                     </Route>
                 </Switch>
             </Grid>

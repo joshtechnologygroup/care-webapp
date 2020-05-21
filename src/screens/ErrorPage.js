@@ -1,14 +1,26 @@
-import React, { Component } from 'react';
-import i18n from "i18next";
+import React from 'react';
+import {
+  useParams
+} from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
 
-class ErrorPage extends Component {
-    render() {
-        return (
+export const ErrorPage = ({title, text}) => {
+    const { errorCode } = useParams();
+    return (
+        <Grid
+            className="full-height"
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+        >
             <div>
-                <h2>{i18n.t('Error Page')} - {this.props.type}</h2>
+                <h2 className="error-title">{title || errorCode}</h2>
+                <p className="error-text">{text}</p>
             </div>
-        );
-    }
+        </Grid>
+    );
+
 }
 
 export default ErrorPage;
