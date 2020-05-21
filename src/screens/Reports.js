@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import ReportsList from 'Containers/ReportsList';
+import {InsertDriveFile} from '@material-ui/icons';
 
 class Reports extends Component {
     render() {
         return (
-            <div>
-                <h2>{i18n.t('Reports')}</h2>
-            </div>
+            <Grid
+                container
+                direction="column"
+                justify="flex-start"
+                alignItems="stretch"
+            >
+                <div className="page-header">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        startIcon={<InsertDriveFile />}
+                    >
+                        GENERATE NEW
+                    </Button>
+                </div>
+                <div className="page-container primary-bg-light">
+                    <ReportsList />
+                </div>
+            </Grid>
         );
     }
 }

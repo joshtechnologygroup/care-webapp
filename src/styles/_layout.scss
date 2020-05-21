@@ -2,8 +2,8 @@
     min-height: 100vh;
     background: #fff;
 }
-.container {
-    padding: 10px 30px;
+.page-container {
+    padding: 2rem 3rem;
 }
 .full-height {
     height: 100%;
@@ -19,4 +19,11 @@
     line-height: 1.2;
     color: $black-dark;
     text-align: center;
+}
+.page-header {
+    padding: 2rem 3rem;
+    text-align: right;
+}
+.primary-bg-light {
+    // background: $blue-primary-bg;
 }

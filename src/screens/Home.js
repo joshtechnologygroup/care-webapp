@@ -13,7 +13,7 @@ import Profile from 'Screens/Profile';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
-import Navigation from 'Containers/navigation/Navigation';
+import Navigation from 'Containers/Navigation';
 
 
 function Home() {
@@ -22,7 +22,7 @@ function Home() {
             <Grid item xs={2}>
                 <Navigation />
             </Grid>
-            <Grid item xs={10} className="container">
+            <Grid item xs={10}>
                 <Switch>
                     <Route exact path={`/`} component={Patients} />
                     <Route path={`/dashboard`} component={Dashboard} />
