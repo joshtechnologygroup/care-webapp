@@ -13,14 +13,14 @@ import Profile from 'Screens/Profile';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
-import Navigation from 'Containers/Navigation';
+import NavigationPanel from 'Containers/NavigationPanel';
 
 
 function Home() {
     return (
         <Grid container className="container-wrap">
             <Grid item xs={2}>
-                <Navigation />
+                <NavigationPanel />
             </Grid>
             <Grid item xs={10}>
                 <Switch>
