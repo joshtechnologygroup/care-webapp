@@ -40,6 +40,7 @@ export function ReportsList(props) {
           pivotPanelShow={CONFIG.pivotPanelShow}
           onGridReady={onGridReady}
           rowData={data}
+          frameworkComponents={CONFIG.frameworkComponents}
         />
     </div>
   );

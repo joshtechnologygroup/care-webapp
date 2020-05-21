@@ -32,6 +32,7 @@ class TableComponent extends Component {
             pagination={true}
             onGridReady={this.props.onGridReady}
             rowData={this.props.rowData}
+            frameworkComponents={this.props.frameworkComponents}
           />
         </div>
       </div>

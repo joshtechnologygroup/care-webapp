@@ -1,3 +1,7 @@
+import {
+  DownloadIconRenderer
+} from 'Components/CellRenderer';
+
 export const CONFIG  = {
       columnDefs: [
         // {
@@ -18,36 +22,45 @@ export const CONFIG  = {
         { field: 'gold' },
         { field: 'silver' },
         { field: 'bronze' },
-        { field: 'total' },
+        { field: '', cellRenderer: 'DownloadIconRenderer' },
       ],
-      autoGroupColumnDef: {
-        headerName: 'Group',
-        minWidth: 170,
-        field: 'athlete',
-        valueGetter: function(params) {
-          if (params.node.group) {
-            return params.node.key;
-          } else {
-            return params.data[params.colDef.field];
-          }
-        },
-        headerCheckboxSelection: true,
-        cellRenderer: 'agGroupCellRenderer',
-        cellRendererParams: { checkbox: true },
-      },
+      // autoGroupColumnDef: {
+      //   headerName: 'Group',
+      //   minWidth: 170,
+      //   field: 'athlete',
+      //   valueGetter: function(params) {
+      //     if (params.node.group) {
+      //       return params.node.key;
+      //     } else {
+      //       return params.data[params.colDef.field];
+      //     }
+      //   },
+      //   headerCheckboxSelection: true,
+      //   cellRenderer: 'agGroupCellRenderer',
+      //   cellRendererParams: { checkbox: true },
+      // },
       defaultColDef: {
-        editable: true,
-        enableRowGroup: true,
-        enablePivot: true,
-        enableValue: true,
-        sortable: true,
-        resizable: true,
-        filter: true,
+        // enableRowGroup: true,
+        // enablePivot: true,
+        // enableValue: true,
         flex: 1,
         minWidth: 100,
+        sortable: true, // Set is true for sorting
+        resizable: true, // Set is true for column resizable
+        suppressMenu: true, // Set it false to show menu options
+        suppressMovable: false, // Set it true to stop column re-ordering
+        filter: true,
+        editable: false, // Set true in case editing cells
       },
     //   rowSelection: 'multiple',
-      rowGroupPanelShow: 'always',
-      pivotPanelShow: 'always',
+      // rowGroupPanelShow: 'always',
+      // pivotPanelShow: 'always',
+      suppressContextMenu: true, // Set true to hide cell option menu that opens on right click
+      rowHeight: 60,
+      headerHeight: 60,
+      rowSelection: 'single',
       rowData: [],
+      frameworkComponents: {
+        DownloadIconRenderer: DownloadIconRenderer,
+      }
 };
