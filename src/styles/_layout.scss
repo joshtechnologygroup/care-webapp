@@ -5,3 +5,18 @@
 .container {
     padding: 10px 30px;
 }
+.full-height {
+    height: 100%;
+}
+.error-title {
+    font-size: 12rem;
+    line-height: 1.2;
+    color: $black-dark;
+    text-align: center;
+}
+.error-text {
+    font-size: 2rem;
+    line-height: 1.2;
+    color: $black-dark;
+    text-align: center;
+}
