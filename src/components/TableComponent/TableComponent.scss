@@ -1,11 +1,55 @@
 .grid-wrapper {
     height: 80vh;
     width: 100%;
+    background-color: red;
 }
 
-.ag-theme-material .ag-row.ag-row-even {
-    background: #fafafa;
+.ag-theme-balham {
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+
+    .ag-row {
+        color: #333;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.15) !important;
+
+        .ag-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    }
+
+    .ag-ltr {
+        .ag-cell {
+            border-right: 1px solid #dbdfe9;
+
+        }
+    }
+
+    .ag-header-cell {
+        border-right: 1px solid #dbdfe9;
+    }
+
+    .ag-header {
+        background: #fff;
+    }
+
+    .ag-header-cell-text {
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .ag-row-even {
+        background: #fafafa;
+    }
+
+    .ag-row-odd {
+        background: #fff;
+    }
 }
+
 
 .ag-cell-icon-wrap {
     cursor: pointer;

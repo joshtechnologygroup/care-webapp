@@ -25,6 +25,9 @@ class TableComponent extends Component {
             suppressRowClickSelection={true}
             groupSelectsChildren={true}
             debug={true}
+            cellStyle={this.props.cellStyle}
+            headerHeight={this.props.headerHeight}
+            rowHeight={this.props.rowHeight}
             rowSelection={this.props.rowSelection}
             rowGroupPanelShow={this.props.rowGroupPanelShow}
             pivotPanelShow={this.props.pivotPanelShow}

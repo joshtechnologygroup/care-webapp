@@ -6,6 +6,7 @@ import { CONFIG } from './config';
 import './PatientsList.scss';
 
 export function PatientsList(props) {
+
   // const [data, setData] = useState([]);
 
   // function onGridReady(params) {
@@ -83,11 +84,14 @@ export function PatientsList(props) {
       <TableComponent
         modules={CONFIG.modules}
         columnDefs={CONFIG.columnDefs}
+        rowHeight={CONFIG.rowHeight}
+        headerHeight={CONFIG.headerHeight}
         autoGroupColumnDef={CONFIG.autoGroupColumnDef}
         defaultColDef={CONFIG.defaultColDef}
         rowSelection={CONFIG.rowSelection}
         rowGroupPanelShow={CONFIG.rowGroupPanelShow}
         pivotPanelShow={CONFIG.pivotPanelShow}
+        cellStyle={CONFIG.cellStyle}
         rowData={patients}
       />
     </div>
