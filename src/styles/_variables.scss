@@ -1,3 +1,5 @@
+//COLORS
+
 $blue-primary: #007aff;
 $blue-primary-bg: #f5faff;
 $blue-medium: #006FAC;
@@ -13,10 +15,21 @@ $black-dark: #333;
 $black: #000000;
 $white: #ffffff;
 
+$DBDFE9: #DBDFE9;
+$FAFAFA: #FAFAFA;
+
 $shadow: 0.1rem 0.2rem 0.3rem 0.4rem rgba($black, 0.03);
 $hero-img: "../../img/hero.png";
+
+
+$mob-min: 48em;
+
+// FONTS
 
 $primary-font: "Proxima Nova Thin";
 $primary-font-bold: "Proxima Nova Regular";
 
-$mob-min: 48em;
+$font: 'Lato',
+sans-serif;
+$font-weight-normal: normal;
+$font-weight-bold: bold;

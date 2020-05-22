@@ -1,17 +1,19 @@
+@import '../../styles/index.scss';
+
 .grid-wrapper {
     height: 80vh;
     width: 100%;
-    background-color: red;
 }
 
 .ag-theme-balham {
-    font-weight: normal;
-    font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-weight: $font-weight-normal;
+    font-family: $font;
+    font-size: 1.4rem;
 
     .ag-row {
-        color: #333;
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.15) !important;
+        color: $black-dark;
+        box-shadow: $shadow !important;
+        // box-shadow: 0 0 2px rgba(0, 0, 0, 0.15) !important;
 
         .ag-cell {
             display: flex;
@@ -23,33 +25,32 @@
 
     .ag-ltr {
         .ag-cell {
-            border-right: 1px solid #dbdfe9;
+            border-right: 1px solid $DBDFE9;
 
         }
     }
 
     .ag-header-cell {
-        border-right: 1px solid #dbdfe9;
+        border-right: 1px solid $DBDFE9;
     }
 
     .ag-header {
-        background: #fff;
+        background: $white;
     }
 
     .ag-header-cell-text {
-        font-weight: bold;
-        color: rgba(0, 0, 0, 0.8);
+        font-weight: $font-weight-bold;
+        color: rgba($black, 0.8);
     }
 
     .ag-row-even {
-        background: #fafafa;
+        background: $FAFAFA;
     }
 
     .ag-row-odd {
-        background: #fff;
+        background: $white;
     }
 }
-
 
 .ag-cell-icon-wrap {
     cursor: pointer;
