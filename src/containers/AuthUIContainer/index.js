@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import './LoginContainer.scss';
+import './AuthUIContainer.scss';
 import Grid from '@material-ui/core/Grid';
 import logo from 'Assets/images/logo.svg';
 
-export function LoginContainer(props) {
+export function AuthUIContainer(props) {
   const { i18n } = useTranslation();
   return (
     <Grid container
@@ -46,4 +46,4 @@ export function LoginContainer(props) {
   );
 }
 
-export default LoginContainer;
+export default AuthUIContainer;

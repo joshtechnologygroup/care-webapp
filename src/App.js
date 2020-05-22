@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from 'Screens/Home';
-import Login from 'Screens/Login';
-import Contact from 'Screens/Contact';
-import ForgotPassword from 'Screens/ForgotPassword';
+import LoginPage from 'Screens/LoginPage';
+import ContactPage from 'Screens/ContactPage';
+import ForgotPasswordPage from 'Screens/ForgotPasswordPage';
 
 require('dotenv').config()
 
@@ -11,9 +11,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/forgot-password" component={ForgotPassword} />
-        <Route path="/contact" component={Contact} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/forgot-password" component={ForgotPasswordPage} />
+        <Route path="/contact" component={ContactPage} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>

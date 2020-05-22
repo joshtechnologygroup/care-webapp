@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import i18n from 'i18next';
 import { LocalPhoneOutlined } from '@material-ui/icons'
 import { Link } from 'react-router-dom';
-import LoginContainer from 'Containers/LoginContainer';
+import AuthUIContainer from 'Containers/AuthUIContainer';
 
-class Contact extends Component {
+class ContactPage extends Component {
 
   render() {
     return (
-      <LoginContainer head={i18n.t('Still having a problem?')}>
+      <AuthUIContainer head={i18n.t('Still having a problem?')}>
         <h1 className="contact-heading mt-24">
           <LocalPhoneOutlined
             color="primary"
@@ -27,9 +27,9 @@ class Contact extends Component {
         >
           {i18n.t('back to login page')}
         </Link>
-      </LoginContainer>
+      </AuthUIContainer>
     );
   }
 }
 
-export default Contact;
+export default ContactPage;
