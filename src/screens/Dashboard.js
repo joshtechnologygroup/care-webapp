@@ -1,36 +1,78 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import i18n from "i18next";
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 import DynamicDoughnut from 'Containers/Charts/DynamicDoughnut';
 import HorizontalBar from 'Containers/Charts/HorizontalBar';
 import Bar from 'Containers/Charts/Bar';
 import Pie from 'Containers/Charts/Pie';
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
-class Dashboard extends Component {
-    render() {
-        return (
-            <div>
-                <h2>{i18n.t('Dashboard')}</h2>
-                <Grid container className="container-wrap">
-                    <Grid item xs={5}>
-                        <DynamicDoughnut />
-                    </Grid>
-                    <Grid item xs={2} />
-                    <Grid item xs={5}>
-                        <Pie />
-                    </Grid>
-                    <Grid item xs={7}>
-                        <Bar />
-                    </Grid>
-                    <Grid item xs={5}>
-                        <HorizontalBar />
-                    </Grid>
+export const Dashboard = () => {
+    const classes = useStyles();
+    return (
+        <div className="page-container">
+            <h2>{i18n.t('Dashboard')}</h2>
+            <Grid container className="container-wrap">
+                <Grid item xs={5}>
+                    <Card className={classes.root}>
+                        <CardContent>
+                            <DynamicDoughnut />
+                        </CardContent>
+                    </Card>
                 </Grid>
-            </div>
-        );
-    }
+                <Grid item xs={7}>
+                    <Card className={classes.root}>
+                        <CardContent>
+                            <HorizontalBar />
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={4}>
+                    <Card className={classes.root}>
+                        <CardContent>
+                            <HorizontalBar />
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={8}>
+                    <Card className={classes.root}>
+                        <Grid container>
+                            <Grid item xs={6}>
+                                <CardContent>
+                                    <Bar />
+                                </CardContent>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <CardContent>
+                                    <Bar />
+                                </CardContent>
+                            </Grid> 
+                        </Grid> 
+                    </Card>
+                </Grid>
+            </Grid>
+        </div>
+    );
 }
 
 export default Dashboard;
