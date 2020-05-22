@@ -11,3 +11,4 @@ export const theme = createMuiTheme({
     danger: 'orange',
   },
 });
+export default theme;
