@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search } from '../../components/Inputs';
-import './styles.scss';
+import './Header.scss';
 
 export default function Header() {
     return (

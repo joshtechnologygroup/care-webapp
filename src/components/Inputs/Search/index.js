@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControl, FilledInput, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import './styles.scss';
+import './Search.scss';
 
 export default function Search() {
     return (
