@@ -1,3 +1,8 @@
+import {
+  FacilityTypeRenderer
+} from 'Components/CellRenderer';
+
+
 export const CONFIG = {
   columnDefs: [
     { headerName: 'ICMR ID', field: 'idICMR' },
@@ -12,7 +17,8 @@ export const CONFIG = {
     { headerName: 'Admission Date', field: 'admissionDate', minWidth: 130 },
     { headerName: 'Discharge Date', field: 'dischargeDate', minWidth: 130 },
     { headerName: 'Patient District', field: 'patientDistrict', minWidth: 125 },
-    { headerName: 'Facility', field: 'facility' },
+    { headerName: 'Facility Type', field: 'facilityType', cellRenderer: 'FacilityTypeRenderer' },
+    { headerName: 'Facility', field: 'facility', },
     { headerName: 'Action', field: 'action' },
   ],
   defaultColDef: {
@@ -28,4 +34,7 @@ export const CONFIG = {
   },
   rowHeight: 76,
   headerHeight: 76,
+  frameworkComponents: {
+    FacilityTypeRenderer: FacilityTypeRenderer,
+  }
 };

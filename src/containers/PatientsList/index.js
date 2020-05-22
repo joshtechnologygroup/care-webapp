@@ -45,6 +45,7 @@ export function PatientsList(props) {
     dischargeDate: '01/04/2020',
     patientDistrict: 'ABCDistrict',
     facility: 'ABCFicility',
+    facilityType: 'PMC',
     action: 'do Action'
   },
   {
@@ -61,6 +62,7 @@ export function PatientsList(props) {
     dischargeDate: '01/04/2020',
     patientDistrict: 'ABCDistrict',
     facility: 'ABCFicility',
+    facilityType: 'PMC',
     action: 'do Action'
   },
   {
@@ -77,8 +79,10 @@ export function PatientsList(props) {
     dischargeDate: '01/04/2020',
     patientDistrict: 'ABCDistrict',
     facility: 'ABCFicility',
+    facilityType: 'PMC',
     action: 'do Action'
   }];
+
   return (
     <div>
       <TableComponent
@@ -91,6 +95,7 @@ export function PatientsList(props) {
         rowSelection={CONFIG.rowSelection}
         rowGroupPanelShow={CONFIG.rowGroupPanelShow}
         pivotPanelShow={CONFIG.pivotPanelShow}
+        frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
         rowData={patients}
       />

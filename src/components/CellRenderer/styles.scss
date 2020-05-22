@@ -1,0 +1,18 @@
+@import '../../styles/index.scss';
+
+.facility-container {
+    display: flex;
+    align-items: center;
+
+    .dot {
+        margin: 0 0.8rem;
+        height: 1.2rem;
+        width: 1.2rem;
+        background-color: $black;
+        border-radius: 50%;
+    }
+
+    .dot-orange {
+        background-color: $orange;
+    }
+}
