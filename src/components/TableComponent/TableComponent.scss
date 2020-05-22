@@ -13,6 +13,12 @@
     .ag-row {
         color: $black-dark;
         box-shadow: $shadow !important;
+
+        .ag-cell {
+            display: flex;
+            align-items: center;
+
+        }
     }
 
     .ag-ltr {

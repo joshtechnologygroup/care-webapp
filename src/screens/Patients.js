@@ -12,7 +12,7 @@ class Patients extends Component {
                 className="outer-container"
             >
                 <div className="primary-bg-light">
-                    <Header />
+                    <Header searchPlaceholder='Search Patient name or ID'/>
                     <div className="table-container">
                         <PatientsList />
                     </div>

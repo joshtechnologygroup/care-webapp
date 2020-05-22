@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
+import { Grid } from '@material-ui/core';
+import FacilitiesList from '../containers/FacilitiesList';
+import Header from '../containers/Header';
 
 class Fecilities extends Component {
     render() {
         return (
-            <div>
-                <h2>{i18n.t('Fecilities')}</h2>
-            </div>
+            <Grid
+                container
+                direction="column"
+                className="outer-container"
+            >
+                <div className="primary-bg-light">
+                    <Header searchPlaceholder='Search' />
+                    <div className="table-container">
+                        <FacilitiesList />
+                    </div>
+                </div>
+            </Grid>
         );
     }
 }

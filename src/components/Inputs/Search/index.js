@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import './styles.scss';
 
-export default function Search() {
+export default function Search({ searchPlaceholder }) {
     return (
         <div className="search-container">
             <FormControl fullWidth variant="filled">
@@ -12,7 +12,7 @@ export default function Search() {
                     id="filled-adornment-amount"
                     onChange={null}
                     disableUnderline={true}
-                    placeholder="Search Patient name or ID"
+                    placeholder={searchPlaceholder}
                     startAdornment={<InputAdornment position="start"><SearchIcon fontSize="large" />
                     </InputAdornment>}
                 />

@@ -4,16 +4,16 @@ import {
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Grid from '@material-ui/core/Grid';
-import {withRouter} from 'react-router-dom'
-import { Dashboard, SettingsOutlined, InsertDriveFile, People, ExitToApp, SyncAlt, LocationCity, AccountCircle  } from '@material-ui/icons';
+import { withRouter } from 'react-router-dom'
+import { Dashboard, SettingsOutlined, InsertDriveFile, People, ExitToApp, SyncAlt, LocationCity, AccountCircle } from '@material-ui/icons';
 import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
 export function NavigationPanel(props) {
   const { i18n } = useTranslation();
   function changeLang(e) {
-      i18n.changeLanguage(e.target.value || 'en');
+    i18n.changeLanguage(e.target.value || 'en');
   };
-  function getActivatedRoute(path){
+  function getActivatedRoute(path) {
     return path === props.location.pathname;
   }
   return (
@@ -31,25 +31,25 @@ export function NavigationPanel(props) {
         <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/dashboard') ? 'active' : ''}>
             <Link to={'/dashboard'} className="nav-link">
-              <Dashboard   />
+              <Dashboard />
               {i18n.t('Dashboard')}
             </Link>
           </li>
           <li className={getActivatedRoute('/fecilities') ? 'active' : ''}>
             <Link to={'/fecilities'} className="nav-link">
-              <LocationCity   />
+              <LocationCity />
               {i18n.t('Fecilities')}
             </Link>
           </li>
           <li className={getActivatedRoute('/patients') ? 'active' : ''}>
             <Link to={'/patients'} className="nav-link">
-              <People   />
+              <People />
               {i18n.t('Patients')}
             </Link>
           </li>
           <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
             <Link to={'/transfer'} className="nav-link">
-              <SyncAlt   />
+              <SyncAlt />
               {i18n.t('Transfer')}
             </Link>
           </li>
@@ -60,13 +60,13 @@ export function NavigationPanel(props) {
         <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/reports') ? 'active' : ''}>
             <Link to={'/reports'} className="nav-link">
-              <InsertDriveFile   />
+              <InsertDriveFile />
               {i18n.t('Reports')}
             </Link>
           </li>
           <li className={getActivatedRoute('/settings') ? 'active' : ''}>
             <Link to={'/settings'} className="nav-link">
-            <SettingsOutlined   />
+              <SettingsOutlined />
               {i18n.t('Settings')}
             </Link>
           </li>
@@ -75,13 +75,13 @@ export function NavigationPanel(props) {
         <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/profile') ? 'active' : ''}>
             <Link to={'/profile'} className="nav-link">
-              <AccountCircle   />
+              <AccountCircle />
               {i18n.t('Profile')}
             </Link>
           </li>
           <li className={getActivatedRoute('/logout') ? 'active' : ''}>
             <Link to={'/logout'} className="nav-link">
-              <ExitToApp   />
+              <ExitToApp />
               {i18n.t('Logout')}
             </Link>
           </li>
