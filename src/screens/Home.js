@@ -19,7 +19,7 @@ import NavigationPanel from 'Containers/NavigationPanel';
 function Home() {
     return (
         <Grid container className="container-wrap">
-            <Grid item xs={2}>
+            <Grid item xs={2} className="container-wrap__navigation">
                 <NavigationPanel />
             </Grid>
             <Grid item xs={10}>

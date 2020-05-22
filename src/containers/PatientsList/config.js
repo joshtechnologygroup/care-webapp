@@ -32,8 +32,8 @@ export const CONFIG = {
     flex: 1,
     minWidth: 100,
   },
-  rowHeight: 76,
-  headerHeight: 76,
+  rowHeight: 40,
+  headerHeight: 40,
   frameworkComponents: {
     FacilityTypeRenderer: FacilityTypeRenderer,
   }

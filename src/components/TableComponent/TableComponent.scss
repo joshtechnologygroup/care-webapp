@@ -8,30 +8,35 @@
 .ag-theme-balham {
     font-weight: $font-weight-normal;
     font-family: $font;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 
     .ag-row {
         color: $black-dark;
         box-shadow: $shadow !important;
-        // box-shadow: 0 0 2px rgba(0, 0, 0, 0.15) !important;
-
-        .ag-cell {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        }
     }
 
     .ag-ltr {
         .ag-cell {
             border-right: 1px solid $DBDFE9;
-
         }
     }
 
     .ag-header-cell {
         border-right: 1px solid $DBDFE9;
+
+        &::after {
+            display: none;
+        }
+    }
+
+    .ag-header-group-cell {
+        &::after {
+            display: none;
+        }
+    }
+
+    .ag-root-wrapper {
+        border: solid 0.5px $DBDFE9;
     }
 
     .ag-header {

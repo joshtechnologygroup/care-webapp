@@ -1,0 +1,36 @@
+@import '../../../styles/index.scss';
+
+.search-container {
+
+    .MuiFormControl-root,
+    .MuiFilledInput-adornedStart {
+        font-family: $font;
+        background-color: $white;
+        box-shadow: $search-shadow;
+    }
+
+    .MuiFilledInput-root:hover {
+        background-color: $white;
+    }
+
+    .MuiFilledInput-root.Mui-focused {
+        background-color: $white;
+    }
+
+    .MuiInputBase-input {
+        font-size: 1.4rem;
+        padding: 1rem 0;
+    }
+
+    .MuiFilledInput-underline:before {
+        border-bottom: 0;
+    }
+
+    .MuiSvgIcon-fontSizeLarge {
+        color: $grey;
+    }
+
+    .MuiInputAdornment-filled.MuiInputAdornment-positionStart:not(.MuiInputAdornment-hiddenLabel) {
+        margin-top: 0;
+    }
+}
