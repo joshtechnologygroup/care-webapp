@@ -6,7 +6,7 @@ import './styles.scss';
 
 export default function Search() {
     return (
-        <div class="search-container">
+        <div className="search-container">
             <FormControl fullWidth variant="filled">
                 <FilledInput
                     id="filled-adornment-amount"
