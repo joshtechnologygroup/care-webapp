@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import Grid from '@material-ui/core/Grid';
 import {withRouter} from 'react-router-dom'
 import { Dashboard, SettingsOutlined, InsertDriveFile, People, ExitToApp, SyncAlt, LocationCity, AccountCircle  } from '@material-ui/icons';
-import './Navigation.scss';
+import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
-export function Navigation(props) {
+export function NavigationPanel(props) {
   const { i18n } = useTranslation();
   function changeLang(e) {
       i18n.changeLanguage(e.target.value || 'en');
@@ -97,4 +97,4 @@ export function Navigation(props) {
   );
 }
 
-export default withRouter(Navigation);
+export default withRouter(NavigationPanel);
