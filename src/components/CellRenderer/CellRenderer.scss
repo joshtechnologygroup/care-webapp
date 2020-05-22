@@ -1,14 +1,14 @@
 @import '../../styles/index.scss';
 
-.facility-container {
+.renderer-container {
     display: flex;
     align-items: center;
 
-    .icon {
+    &__icon {
         margin-left: 0.5rem;
     }
 
-    .dot {
+    &__dot {
         margin-right: 0.8rem;
         height: 1.2rem;
         width: 1.2rem;
@@ -16,15 +16,15 @@
         border-radius: 50%;
     }
 
-    .dot-orange {
+    &__dot-orange {
         background-color: $orange;
     }
 
-    .dot-green {
+    &__dot-green {
         background-color: $green;
     }
 
-    .dot-grey {
+    &__dot-grey {
         background-color: $grey-dot;
     }
 }

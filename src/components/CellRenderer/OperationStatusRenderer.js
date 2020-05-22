@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.scss';
+import './CellRenderer.scss';
 
 const OperationStatusRenderer = ({ value }) => {
 
@@ -12,8 +12,8 @@ const OperationStatusRenderer = ({ value }) => {
     }
 
     return (
-        <div className="facility-container">
-            <div className={`dot ${getColorClass()}`}></div>
+        <div className="renderer-container">
+            <div className={`renderer-container__dot renderer-container__${getColorClass()}`}></div>
         </div>
     );
 };
