@@ -1,0 +1,76 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.login {
+  background: $alice-blue;
+  flex-direction: row-reverse;
+  @include for-below-tablet {
+    flex-direction: column-reverse;
+  }
+  &__left-pane {
+    background: url(../../assets/images/login-banner.png) no-repeat;
+    background-size: contain;
+    background-color: $white;
+    background-position: 50% 90%;
+    padding: 56px 60px 200px;
+    box-shadow: $paper-shadow;
+    @include for-above-tablet {
+      padding-bottom: 56px;
+      min-height: 100vh;
+    }
+  }
+  &__right-pane {
+    padding: 56px 50px;
+    @include for-above-tablet {
+      min-height: 100vh;
+    }
+  }
+  &__logo {
+    margin-bottom: 20px;
+    width: 230px;
+    @include for-above-tablet {
+      margin-bottom: 100px;
+    }
+    img {
+      width: 100%;
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    max-width: 460px;
+    width: 100%;
+  }
+  .heading--xl {
+    @include for-phone-only {
+      font-size: 3.6rem;
+      line-height: 4.4rem;
+    }  
+  }
+  .text--link {
+    align-self: flex-start;
+  }
+  .heading--lg { 
+    + {
+      .text--secondary {
+        margin-top: 50px;
+      }
+    }
+  }
+  .text--link {
+    margin-top: 36px;
+  }
+  .btn,
+  .form-field {
+    margin-top: 24px;
+  }
+}
+.contact-heading {
+  display: flex;
+  align-items: center;
+  color: $blue-primary;
+  svg {
+    font-size: 3.6rem;
+    margin-right: 20px;
+  }
+}

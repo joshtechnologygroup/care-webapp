@@ -4,21 +4,20 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import LoginContainer from 'Containers/LoginContainer';
-import { regex } from 'Constants/app.const';
 import { Typography } from '@material-ui/core';
+import { regex } from 'Constants/app.const';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   // const [email, password] = React.useState('Cat in the Hat');
   constructor (props) {
     super(props);
     this.state = {
       email: '',
-      password: '',
       errors: {
         email: false,
-        password: false,
         form: ''
-      }
+      },
+      success: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,15 +27,7 @@ class Login extends Component {
   handleChange (e) {
     const { name, value } = e.target;
     const errors = {};
-    switch (name) {
-      case 'email':
-        errors.email = (regex.email).test(value) ? false : true;
-        break;
-      case 'password':
-        errors.password = value ? false : true;
-        break;
-      default: break;
-    }
+    errors.email = (regex.email).test(value) ? false : true;
     this.setState({
       errors: {...this.state.errors, ...errors},
       [name]: value,
@@ -44,20 +35,11 @@ class Login extends Component {
   }
 
   handleSubmit () {
-    let emailError =false,
-        passwordError = false;
     if (!this.state.email) {
-      emailError = true;
-    }
-    if (!this.state.password) {
-      passwordError = true;
-    }
-    if (emailError || passwordError) {
       this.setState({
         errors: {
           ...this.state.errors,
-          email: emailError,
-          password: passwordError
+          email: true,
         }
       });
     }
@@ -65,22 +47,20 @@ class Login extends Component {
       this.setState({
         errors: {
           ...this.state.errors,
-          form: i18n.t('Invalid email or password')
-        }
+          form: i18n.t('This email is not registered with us.')
+        },
+        success: i18n.t(' If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.', {EMAIL: this.state.email})
       });
     }
   }
 
   render() {
-    const { email, password, errors } = this.state;
+    const { email, errors, success } = this.state;
     return (
-      <LoginContainer head={i18n.t('Welcome!')} subhead={i18n.t('LOG IN')}>
-        {
-          errors.form &&
-          <Typography className="mt-24" variant="h5" color="error">
-            {errors.form}
-          </Typography>
-        }
+      <LoginContainer subhead={i18n.t('Forgot your password')}>
+        <Typography variant="h5" className="mt-24">
+          {i18n.t('Enter your email address to reset your password. You may need to check your spam folder in your email.')}
+        </Typography>
         <TextField
           type="email"
           name="email"
@@ -88,41 +68,41 @@ class Login extends Component {
           className="form-field"
           placeholder={i18n.t('Email')}
           onChange={this.handleChange}
-          value={email} 
+          value={email}
           error={errors.email}
-        />
-        <TextField
-          type="password"
-          name="password"
-          variant="outlined"
-          className="form-field"
-          placeholder={i18n.t('Password')}
-          onChange={this.handleChange}
-          value={password}
-          error={errors.password}
         />
         <Button
           variant="contained"
           color="primary"
           disableElevation
-          size="medium"
           className="btn"
           onClick={this.handleSubmit}
-          disabled={errors.email || errors.password}
         >
-          {i18n.t('LOG IN')}
-        </Button>
+          {i18n.t('SUBMIT')
+        }</Button>
         <Link
-          to={'/forgot-password'}
-          color="primary"
-          underline="hover"
+          to={'/login'}
           className="text--link"
         >
-          {i18n.t('Forgot Password?')}
+          {i18n.t('Go back to Login page')}
         </Link>
+        <Link
+          to={'/contact'}
+          className="text--link mt-10"
+        >
+          {i18n.t('Still having a problem. Need Help.')}
+        </Link>
+        {
+          errors.form &&
+          <p className="success-box">{errors.form}</p>
+        }
+        {
+          success &&
+          <p className="success-box">{success}</p>
+        }
       </LoginContainer>
     );
   }
 }
 
-export default Login;
+export default ForgotPassword;

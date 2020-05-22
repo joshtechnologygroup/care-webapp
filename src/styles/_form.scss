@@ -1,0 +1,27 @@
+.form-field {
+    .MuiInputBase-formControl {
+        border-radius: 0;
+    }
+    input {
+        font-size: 1.4rem;
+        line-height: 1.6rem;
+        background: $white;
+        box-shadow: $input-shadow;
+        border: 0;
+        padding: 16px 24px;
+        &:hover,
+        &:focus {
+            outline: 0;
+            border: 0;
+        }
+    }
+}
+
+.btn {
+    &.MuiButton-root {
+        font-size: 1.4rem;
+        font-weight: 600;
+        padding: 14px;
+        border-radius: 0;
+    }
+}

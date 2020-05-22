@@ -20,6 +20,15 @@
     color: $black-dark;
     text-align: center;
 }
+.success-box {
+    border: 1px $green solid;
+    color: rgba($black, .8);
+    background: $green-tint;
+    padding: 16px;
+    font-size: 1.6rem;
+    line-height: 2.3rem;
+    margin-top: 36px;
+}
 .page-header {
     padding: 2rem 3rem;
     text-align: right;
