@@ -8,5 +8,10 @@
     "Settings": "Settings", 
     "Profile": "Profile",
     "Language": "Language",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Generate Reports": "Generate Reports",
+    "Select Report Type": "Select Report Type",
+    "Select Juridiction": "Select Juridiction",
+    "Select Date OR Range": "Select Date OR Range",
+    "Download": "Download"
 }
