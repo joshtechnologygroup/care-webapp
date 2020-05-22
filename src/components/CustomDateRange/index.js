@@ -23,6 +23,7 @@ export default function CustomDateRange(props) {
                 {label}
             </div>
             <DateRange
+                className="date-wrap"
                 editableDateInputs={true}
                 onChange={handleChange}
                 moveRangeOnFirstSelection={false}

@@ -41,7 +41,7 @@ export const GenerateReports = (props) => {
                     <ButtonToggle label={i18n.t('Select Juridiction')} defaultSelected="PCMC" data={Juridiction} onChange={handleJuri} />
                 </Grid>
                 <Grid item xs={12}>
-                    <CustomDateRange label={i18n.t('Select Date OR Range')} onChange={onRangeSelected} />
+                    <CustomDateRange label={i18n.t('Select Date or Range')} onChange={onRangeSelected} />
                 </Grid>
                 <Grid item xs={12}>
                     <Button
