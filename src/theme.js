@@ -1,10 +1,23 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
-import blue from '@material-ui/core/colors/blue';
 
 export const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Lato',
+      // '-apple-system',
+      // 'BlinkMacSystemFont',
+      // '"Segoe UI"',
+      // '"Helvetica Neue"',
+      // 'Arial',
+      'sans-serif',
+      // '"Apple Color Emoji"',
+      // '"Segoe UI Emoji"',
+      // '"Segoe UI Symbol"',
+    ].join(','),
+  },
   palette: {
-    primary: blue,
+    primary: {'main': '#007aff'},
     secondary: purple,
   },
   status: {
