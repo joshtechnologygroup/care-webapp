@@ -1,5 +1,4 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@import '../../styles/import';
 
 .login {
   background: $alice-blue;
@@ -18,11 +17,17 @@
       padding-bottom: 56px;
       min-height: 100vh;
     }
+    @include for-phone-only {
+      padding: 36px 32px 200px;
+    }
   }
   &__right-pane {
     padding: 56px 50px;
     @include for-above-tablet {
       min-height: 100vh;
+    }
+    @include for-phone-only {
+      padding: 56px 32px;
     }
   }
   &__logo {
@@ -42,10 +47,14 @@
     width: 100%;
   }
   .heading--xl {
+    span {
+      display: block;
+      margin-bottom: inherit;
+    }
     @include for-phone-only {
       font-size: 3.6rem;
       line-height: 4.4rem;
-    }  
+    }
   }
   .text--link {
     align-self: flex-start;

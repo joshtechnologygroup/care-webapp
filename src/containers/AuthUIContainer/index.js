@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import './AuthUIContainer.scss';
 import Grid from '@material-ui/core/Grid';
 import logo from 'Assets/images/logo.svg';
+import { PropTypes } from 'prop-types';
 
 export function AuthUIContainer(props) {
   const { i18n } = useTranslation();
@@ -38,12 +39,24 @@ export function AuthUIContainer(props) {
         <div className="login__logo">
           <img src={logo} alt={i18n.t('Covid Control')} />
         </div>
-        <h1 className="heading--xl">{i18n.t('Manage.')}</h1>
-        <h1 className="heading--xl">{i18n.t('Control.')}</h1>
-        <h1 className="heading--xl">{i18n.t('Save.')}</h1>
+        <h1 className="heading--xl">
+          <span>{i18n.t('Manage.')}</span>
+          <span>{i18n.t('Control.')}</span>
+          <span>{i18n.t('Save.')}</span>
+        </h1>
       </Grid>
     </Grid>
   );
 }
+
+AuthUIContainer.propTypes = {
+  head: PropTypes.string,
+  subhead: PropTypes.string
+};
+
+AuthUIContainer.defaultProps = {
+  head: '',
+  subhead: ''
+};
 
 export default AuthUIContainer;

@@ -15,7 +15,7 @@ class ContactPage extends Component {
             fontSize="large"
           />
           <a
-            href={'tel: 99999 99999'}
+            href={'tel: 9999999999'}
             className="heading--lg text--link m-0"
           >
             99999 99999
@@ -25,7 +25,7 @@ class ContactPage extends Component {
           to={'/login'}
           className="text--link"
         >
-          {i18n.t('back to login page')}
+          {i18n.t('Go back to Login page')}
         </Link>
       </AuthUIContainer>
     );
