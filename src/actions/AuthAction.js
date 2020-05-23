@@ -1,40 +1,41 @@
 import * as HttpStatus from 'http-status-codes'
 
+import * as CookieService from 'Services/CookieService';
+
+import * as CommonServiceUtils from "Src/utils/services";
+
 import {
     LOGIN_URL,
     LOGOUT_URL
 } from 'Src/routes';
 
 import {
-    setTokenCookie,
-    getTokenCookie,
-    deleteTokenCookie
-} from 'Services/CookieService';
-
-import {
-    USER,
-    CLEAR_USER
+    SET_USER,
+    CLEAR_USER,
 } from 'Reducers/Types'
 
-import { POST, DELETE } from "Src/constants";
+import { 
+    POST, 
+    DELETE,
+    APPLICATION_JSON,
+} from "Src/constants";
 
-
-import { Service } from "../utils/services";
 
 const login = (email, password) => async (dispatch) => {
     const headers = {
-        'Content-Type': 'application/json',
+        'Content-Type': APPLICATION_JSON,
     };
     const body =  JSON.stringify({
         email: email,
         password: password,
     })
-    const response = await Service(LOGIN_URL, POST, body, headers)
+    const response = await CommonServiceUtils.makeApiCall(LOGIN_URL, POST, body, headers)
     const data = await response.json();
+    console.log(data);
     if (response.status === HttpStatus.OK) {
-        setTokenCookie(data.token);
+        CookieService.setTokenCookie(data.token);
         dispatch({
-            type: USER,
+            type: SET_USER,
             data: data
         });
         return { status: response.ok };
@@ -45,12 +46,12 @@ const login = (email, password) => async (dispatch) => {
 
 const logout = () => async (dispatch) => {
     const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${ getTokenCookie() }`,
+        'Content-Type': APPLICATION_JSON,
+        'Authorization': `Token ${ CookieService.getTokenCookie() }`,
     };
     const body = {}
-    const response = await Service(LOGOUT_URL, DELETE, body, headers);
-    deleteTokenCookie();
+    const response = await CommonServiceUtils.makeApiCall(LOGOUT_URL, DELETE, body, headers);
+    CookieService.deleteTokenCookie();
     if (response.status === HttpStatus.NO_CONTENT) {
         dispatch({
             type: CLEAR_USER

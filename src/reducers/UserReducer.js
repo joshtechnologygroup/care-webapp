@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
     switch (action.type) {
 
         case SET_USER:
-            return {...state,...action.data};
+            return { ...state,...action.data };
 
         case CLEAR_USER:
             return {...initialState}
