@@ -1,53 +1,39 @@
-export const CONFIG  = {
-      columnDefs: [
-        // {
-        //   field: 'athlete',
-        //   minWidth: 170,
-        //   checkboxSelection: function(params) {
-        //     return params.columnApi.getRowGroupColumns().length === 0;
-        //   },
-        //   headerCheckboxSelection: function(params) {
-        //     return params.columnApi.getRowGroupColumns().length === 0;
-        //   },
-        // },
-        { field: 'age' },
-        { field: 'country' },
-        { field: 'year' },
-        { field: 'date' },
-        { field: 'sport' },
-        { field: 'gold' },
-        { field: 'silver' },
-        { field: 'bronze' },
-        { field: 'total' },
-      ],
-      autoGroupColumnDef: {
-        headerName: 'Group',
-        minWidth: 170,
-        field: 'athlete',
-        valueGetter: function(params) {
-          if (params.node.group) {
-            return params.node.key;
-          } else {
-            return params.data[params.colDef.field];
-          }
-        },
-        headerCheckboxSelection: true,
-        cellRenderer: 'agGroupCellRenderer',
-        cellRendererParams: { checkbox: true },
-      },
-      defaultColDef: {
-        editable: true,
-        enableRowGroup: true,
-        enablePivot: true,
-        enableValue: true,
-        sortable: true,
-        resizable: true,
-        filter: true,
-        flex: 1,
-        minWidth: 100,
-      },
-    //   rowSelection: 'multiple',
-      rowGroupPanelShow: 'always',
-      pivotPanelShow: 'always',
-      rowData: [],
+import {
+  FacilityTypeRenderer
+} from 'Components/CellRenderer';
+import { GRID_CONFIG } from 'Constants/app.const';
+
+
+export const CONFIG = {
+  columnDefs: [
+    { headerName: 'ICMR ID', field: 'idICMR' },
+    { headerName: 'Govt. ID', field: 'idGovt' },
+    { headerName: 'Facility ID', field: 'idFacility', minWidth: 100 },
+    { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },
+    { headerName: 'Age', field: 'age', minWidth: 70 },
+    { headerName: 'Gender', field: 'gender' },
+    { headerName: 'Clinical Status', field: 'clinicalStatus', minWidth: 120 },
+    { headerName: 'Covid Status', field: 'covidStatus', minWidth: 110, },
+    { headerName: 'Health Conditions', field: 'healthConditions', minWidth: 140 },
+    { headerName: 'Admission Date', field: 'admissionDate', minWidth: 125 },
+    { headerName: 'Discharge Date', field: 'dischargeDate', minWidth: 125 },
+    { headerName: 'Patient District', field: 'patientDistrict', minWidth: 125 },
+    { headerName: 'Facility Type', field: 'facilityType', minWidth: 110, cellRenderer: 'FacilityTypeRenderer' },
+    { headerName: 'Facility', field: 'facility', },
+    { headerName: 'Action', field: 'action' },
+  ],
+  defaultColDef: {
+    editable: GRID_CONFIG.editable,
+    sortable: GRID_CONFIG.sortable,
+    resizable: GRID_CONFIG.resizable,
+    filter: GRID_CONFIG.filter,
+    flex: GRID_CONFIG.flex,
+    minWidth: 90,
+  },
+  rowHeight: GRID_CONFIG.rowHeight,
+  headerHeight: GRID_CONFIG.headerHeight,
+  suppressContextMenu: GRID_CONFIG.suppressContextMenu,
+  frameworkComponents: {
+    FacilityTypeRenderer: FacilityTypeRenderer,
+  }
 };
