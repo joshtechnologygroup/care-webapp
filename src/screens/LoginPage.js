@@ -7,7 +7,7 @@ class LoginPage extends Component {
   render() {
     return (
       <AuthUIContainer head={i18n.t('Welcome!')} subhead={i18n.t('LOG IN')}>
-        <Login />
+        <Login {...this.props}/>
       </AuthUIContainer>
     );
   }
