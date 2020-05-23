@@ -31,7 +31,6 @@ const login = (email, password) => async (dispatch) => {
     })
     const response = await CommonServiceUtils.makeApiCall(LOGIN_URL, POST, body, headers)
     const data = await response.json();
-    console.log(data);
     if (response.status === HttpStatus.OK) {
         CookieService.setTokenCookie(data.token);
         dispatch({
