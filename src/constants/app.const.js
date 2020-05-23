@@ -1,4 +1,4 @@
- export const ReportType = [
+export const ReportType = [
     {
         title: 'Patient',
         value: 'patient',
@@ -27,6 +27,17 @@ export const Juridiction = [
         value: 'CS',
     }
 ];
+
+export const GRID_CONFIG = {
+    rowHeight: 40,
+    headerHeight: 40,
+    editable: false,
+    sortable: true,
+    resizable: true,
+    filter: true,
+    flex: 1,
+    suppressContextMenu: true,
+}
 
 export const regex = {
     email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line

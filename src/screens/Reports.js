@@ -21,22 +21,23 @@ export const Reports = () => {
         <Grid
             container
             direction="column"
-            justify="flex-start"
-            alignItems="stretch"
+            className="outer-container"
         >
-            <div className="page-header">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    onClick={handleClick}
-                    startIcon={<InsertDriveFile />}
-                >
-                    GENERATE NEW
-                </Button>
-            </div>
-            <div className="page-container primary-bg-light">
-                <ReportsList />
+            <div className="primary-bg-light">
+                <div className="page-header header-container">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        onClick={handleClick}
+                        startIcon={<InsertDriveFile />}
+                    >
+                        GENERATE NEW
+                    </Button>
+                </div>
+                <div className="table-container">
+                    <ReportsList />
+                </div>
                 <GenerateReports open={open} onClose={handleClose} />
             </div>
         </Grid>

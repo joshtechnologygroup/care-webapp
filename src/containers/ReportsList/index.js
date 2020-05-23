@@ -33,6 +33,8 @@ export function ReportsList(props) {
         <TableComponent
           modules={CONFIG.modules}
           columnDefs={CONFIG.columnDefs}
+          rowHeight={CONFIG.rowHeight}
+          headerHeight={CONFIG.headerHeight}
           autoGroupColumnDef={CONFIG.autoGroupColumnDef}
           defaultColDef={CONFIG.defaultColDef}
           rowSelection={CONFIG.rowSelection}

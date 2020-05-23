@@ -41,7 +41,7 @@ function Home() {
                 </div>
             </Hidden>
             <Grid container className="container-wrap">
-                <Grid item md={2}>
+                <Grid item md={2} className="container-wrap__navigation">
                     <Hidden smDown>
                         <NavigationPanel />
                     </Hidden>

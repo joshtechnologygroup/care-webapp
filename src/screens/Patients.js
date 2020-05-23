@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
 import PatientsList from 'Containers/PatientsList';
+import { Grid } from '@material-ui/core';
+import Header from 'Containers/Header';
 
 class Patients extends Component {
     render() {
         return (
-            <div>
-                <h2>{i18n.t('Patients')}</h2>
-                <PatientsList />
-            </div>
+            <Grid
+                container
+                direction="column"
+                className="outer-container"
+            >
+                <div className="primary-bg-light">
+                    <Header searchPlaceholder='Search Patient name or ID' />
+                    <div className="table-container">
+                        <PatientsList />
+                    </div>
+                </div>
+            </Grid>
         );
     }
 }

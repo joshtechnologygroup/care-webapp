@@ -1,0 +1,30 @@
+@import '../../styles/import';
+
+.renderer-container {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+        margin-left: 0.5rem;
+    }
+
+    &__dot {
+        margin-right: 0.8rem;
+        height: 1.2rem;
+        width: 1.2rem;
+        background-color: $black;
+        border-radius: 50%;
+    }
+
+    &__dot-orange {
+        background-color: $orange;
+    }
+
+    &__dot-green {
+        background-color: $green;
+    }
+
+    &__dot-grey {
+        background-color: $grey-dot;
+    }
+}
