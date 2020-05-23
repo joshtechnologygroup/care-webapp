@@ -14,7 +14,6 @@ export default function (state = initialState, action) {
     switch (action.type) {
 
         case USER:
-            console.log(action.data)  
             return {
                 ...state,
                 id: action.data.id,
