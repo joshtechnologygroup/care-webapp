@@ -1,3 +1,13 @@
+@mixin for-below-tablet {
+  @media only screen and (max-width: $tablet-landscape) {
+    @content;
+  }
+}
+@mixin for-above-tablet {
+  @media only screen and (min-width: $tablet-landscape) {
+    @content;
+  }
+}
 @mixin for-phone-only {
   @media only screen and (max-width: $mob-min) {
     @content;

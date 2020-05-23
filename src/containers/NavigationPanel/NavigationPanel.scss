@@ -1,3 +1,5 @@
+@import '../../styles/import';
+
 .nav-logo, .nav-link {
     text-decoration: none;
     font-size: 1.6rem;
@@ -19,9 +21,7 @@
   height: 100%;
   font-size: 16px;
   line-height: 1.2;
-  // min-width: 180px;
-  
-  box-shadow: 1px 0 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: $paper-shadow;
   .navbar-nav li {
     // float: left;
     list-style: none;
