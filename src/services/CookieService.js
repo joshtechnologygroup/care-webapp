@@ -14,4 +14,3 @@ const deleteTokenCookie = () => {
 };
 
 export { setTokenCookie, getTokenCookie, deleteTokenCookie };
-
