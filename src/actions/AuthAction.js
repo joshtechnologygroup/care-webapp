@@ -29,11 +29,7 @@ const login = (email, password) => async (dispatch) => {
         email: email,
         password: password,
     })
-<<<<<<< HEAD
-    const response = await Service(LOGIN_URL,POST, body, headers)
-=======
     const response = await Service(LOGIN_URL, POST, body, headers)
->>>>>>> bcd7eb6e87c5a89f93e1f406f7ab5e72e8a4af72
     const data = await response.json();
     if (response.status === HttpStatus.OK) {
         setTokenCookie(data.token);
