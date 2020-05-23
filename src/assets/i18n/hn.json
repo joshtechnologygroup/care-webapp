@@ -8,12 +8,27 @@
     "Settings": "समायोजन",
     "Profile": "प्रोफ़ाइल",
     "Language": "भाषा",
-    "Logout": "बाहर आए"
+    "Logout": "बाहर आए",
+    "Generate Reports": "रिपोर्ट जनरेट करें",
+    "Select Report Type": "रिपोर्ट प्रकार का चयन करें",
+    "Select Juridiction": "Juridiction चुनें",
+    "Select Date or Range": "दिनांक या श्रेणी का चयन करें",
+    "Download": "डाउनलोड",
+    "Manage.": "प्रबंधन करें।",
+    "Control.": "नियंत्रण करें।",
+    "Save.": "सहेजें।",
+    "Welcome!": "स्वागत है!",
+    "LOG IN": "लॉग इन करें",
+    "Forgot Password?": "पासवर्ड भूल गए?",
+    "Still having a problem?": "फिर भी कोई समस्या है?",
+    "Forgot your password": "अपना कूट शब्द भूल गए",
+    "Email": "ईमेल",
+    "Password": "कुंजिका",
+    "Enter your email address to reset your password. You may need to check your spam folder in your email.": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल पता दर्ज करें। आपको अपने ईमेल में अपने स्पैम फोल्डर को जांचना होगा।",
+    "Still having a problem. Need Help.": "फिर भी समस्या हो रही है। मदद की ज़रूरत है।",
+    "Go back to Login page": "लॉगइन पेज पर वापस जाएं",
+    "Invalid email or password": "अमान्य ईमेल या पासवर्ड",
+    "SUBMIT": "प्रस्तुत",
+    "This email is not registered with us.": "यह ईमेल हमारे साथ पंजीकृत नहीं है।",
+    "If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.": "यदि {{EMAIL}} के लिए कोई खाता मौजूद है, तो आगे के निर्देशों के साथ एक ई-मेल भेजा जाएगा।"
 }
-
-
-
-
-
-
-

@@ -1,0 +1,14 @@
+@import '~react-date-range/dist/styles.css'; // main css file
+@import '~react-date-range/dist/theme/default.css'; // theme css file
+
+.label {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 1.4rem;
+    opacity: 0.4;
+    padding: 0.2rem;
+    margin-bottom: 0.5rem;
+}
+.date-wrap {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
