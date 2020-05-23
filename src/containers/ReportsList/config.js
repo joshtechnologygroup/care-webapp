@@ -40,7 +40,7 @@ export const CONFIG  = {
       //   cellRendererParams: { checkbox: true },
       // },
       defaultColDef: {
-        editable: true,
+        editable: false,
         enableRowGroup: true,
         enablePivot: true,
         enableValue: true,

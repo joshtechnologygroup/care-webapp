@@ -19,7 +19,7 @@ export const CONFIG = {
         { headerName: 'Cred.', field: 'cred' },
     ],
     defaultColDef: {
-        editable: true,
+        editable: false,
         enableRowGroup: true,
         enablePivot: true,
         enableValue: true,

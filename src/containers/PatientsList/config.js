@@ -22,7 +22,7 @@ export const CONFIG = {
     { headerName: 'Action', field: 'action' },
   ],
   defaultColDef: {
-    editable: true,
+    editable: false,
     enableRowGroup: true,
     enablePivot: true,
     enableValue: true,
