@@ -8,7 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import DynamicDoughnut from 'Containers/Charts/DynamicDoughnut';
 import HorizontalBar from 'Containers/Charts/HorizontalBar';
 import Bar from 'Containers/Charts/Bar';
-import Pie from 'Containers/Charts/Pie';
 
 const useStyles = makeStyles({
   root: {
@@ -32,7 +31,7 @@ export const Dashboard = () => {
     return (
         <div className="page-container">
             <h2>{i18n.t('Dashboard')}</h2>
-            <Grid container className="container-wrap">
+            <Grid container justify="center" spacing="4" className="container-wrap">
                 <Grid item xs={5}>
                     <Card className={classes.root}>
                         <CardContent>
@@ -40,7 +39,7 @@ export const Dashboard = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={6}>
                     <Card className={classes.root}>
                         <CardContent>
                             <HorizontalBar />
