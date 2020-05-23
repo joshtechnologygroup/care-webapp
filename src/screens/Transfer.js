@@ -1,14 +1,37 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
+import { Grid, Button } from '@material-ui/core';
+
+import Header from 'Containers/Header';
+import TransfersList from 'Containers/TransfersList';
 
 class Transfer extends Component {
-    render() {
-        return (
-            <div>
-                <h2>{i18n.t('Transfer')}</h2>
+  render() {
+    return (
+      <Grid
+        container
+        direction="column"
+        className="outer-container"
+      >
+        <div className="primary-bg-light">
+          <Header>
+            <div className="button-container">
+              <Button
+                variant="contained"
+                color="primary"
+                size="medium"
+                onClick={() => { console.log('initiate') }}
+              >
+                initiate
+                    </Button>
             </div>
-        );
-    }
+          </Header>
+          <div className="table-container">
+            <TransfersList />
+          </div>
+        </div>
+      </Grid>
+    );
+  }
 }
 
 export default Transfer;

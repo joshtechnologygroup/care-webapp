@@ -1,74 +1,72 @@
 .container-wrap {
-    min-height: 100vh;
-    background: #fff;
+  min-height: 100vh;
+  background: #fff;
 
-    &__navigation {
-        z-index: 1;
-    }
+  &__navigation {
+    z-index: 1;
+  }
 }
 
 .page-container {
-    padding: 2rem 3rem;
-    height: 100vh;
-    overflow: auto;
+  padding: 2rem 3rem;
+  height: 100vh;
+  overflow: auto;
 }
 
 .full-height {
-    height: 100%;
+  height: 100%;
 }
 
 .error-title {
-    font-size: 12rem;
-    line-height: 1.2;
-    color: $black-dark;
-    text-align: center;
+  font-size: 12rem;
+  line-height: 1.2;
+  color: $black-dark;
+  text-align: center;
 }
 
 .error-text {
-    font-size: 2rem;
-    line-height: 1.2;
-    color: $black-dark;
-    text-align: center;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: $black-dark;
+  text-align: center;
 }
 
 .success-box {
-    border: 1px $green solid;
-    color: rgba($black, .8);
-    background: $green-tint;
-    padding: 16px;
-    font-size: 1.6rem;
-    line-height: 2.3rem;
-    margin-top: 36px;
-    word-break: break-word;
+  border: 1px $green solid;
+  color: rgba($black, .8);
+  background: $green-tint;
+  padding: 16px;
+  font-size: 1.6rem;
+  line-height: 2.3rem;
+  margin-top: 36px;
+  word-break: break-word;
 }
 
-.page-header {
-    padding: 2rem 3rem;
-    text-align: right;
-    background: $white;
+.button-container {
+  padding: 0 3rem;
+  margin-left: auto;
 }
 
-.primary-bg-light {
-    // background: $blue-primary-bg;
-}
 
 .outer-container {
-    background: $blue-primary-bg;
-    min-height: 100vh;
+  background: $blue-primary-bg;
+  min-height: 100vh;
 }
 
 .table-container {
-    padding: 1rem 3rem 0 3rem;
+  padding: 1rem 3rem 0 3rem;
 }
+
 .mob-header {
-    // background: rgba(173, 171, 189, 0.2);
-    background: $blue-primary-bg-dark;
-    padding: 6px 0px;
+  // background: rgba(173, 171, 189, 0.2);
+  background: $blue-primary-bg-dark;
+  padding: 6px 0px;
 }
+
 .mob-logo {
-    width: 100px;
-    left: calc(50% - 100px);
-    margin: 8px 0;
-    vertical-align: top;
-    position: relative;
+  width: 100px;
+  left: calc(50% - 100px);
+  margin: 8px 0;
+  vertical-align: top;
+  position: relative;
 }
