@@ -40,25 +40,23 @@ export const CONFIG  = {
       //   cellRendererParams: { checkbox: true },
       // },
       defaultColDef: {
-        // enableRowGroup: true,
-        // enablePivot: true,
-        // enableValue: true,
-        flex: 1,
-        minWidth: 100,
-        sortable: true, // Set is true for sorting
-        resizable: true, // Set is true for column resizable
-        suppressMenu: true, // Set it false to show menu options
-        suppressMovable: false, // Set it true to stop column re-ordering
+        editable: true,
+        enableRowGroup: true,
+        enablePivot: true,
+        enableValue: true,
+        sortable: true,
+        resizable: true,
         filter: true,
-        editable: false, // Set true in case editing cells
+        flex: 1,
+        minWidth: 90,
       },
-    //   rowSelection: 'multiple',
+      rowHeight: 40,
+      headerHeight: 40,
+      //   rowSelection: 'multiple',
       // rowGroupPanelShow: 'always',
       // pivotPanelShow: 'always',
       suppressContextMenu: true, // Set true to hide cell option menu that opens on right click
-      rowHeight: 60,
-      headerHeight: 60,
-      rowSelection: 'single',
+      // rowSelection: 'single',
       rowData: [],
       frameworkComponents: {
         DownloadIconRenderer: DownloadIconRenderer,
