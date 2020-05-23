@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { regex } from 'Constants/app.const';
 import { Typography } from '@material-ui/core';
+import { login } from '../../actions/AuthAction';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Login extends Component {
   constructor (props) {
@@ -41,7 +44,7 @@ class Login extends Component {
     });
   }
 
-  handleSubmit () {
+  async handleSubmit () {
     let emailError =false,
         passwordError = false;
     if (!this.state.email) {
@@ -59,13 +62,18 @@ class Login extends Component {
         }
       });
     }
-    else {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          form: i18n.t('Invalid email or password')
+    else {    
+        const response = await this.props.login(this.state.email, this.state.password);
+        if(response.status){
+            this.props.history.push('/')
+        } else {
+            this.setState({
+                errors: {
+                    ...this.state.errors,
+                    form: i18n.t(response.error_message)
+                }
+            });
         }
-      });
     }
   }
 
@@ -123,4 +131,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+});
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+
+export default connect(mapStateToProps, { login })(Login);
