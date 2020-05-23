@@ -12,5 +12,5 @@ const getTokenCookie = () => {
 const deleteTokenCookie = () => {
     cookie.remove(token, { path: '/' });
 };
-
 export { setTokenCookie, getTokenCookie, deleteTokenCookie };
+
