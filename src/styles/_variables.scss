@@ -1,22 +1,32 @@
-$blue-primary: #007aff;
-$blue-primary-bg: #f5faff;
-$blue-medium: #006FAC;
-$blue-dark: #004A82;
+$blue-primary:      #007aff;
+$blue-primary-bg:   #f5faff;
+$blue-primary-bg-dark: #c3e1ff;
+$blue-medium:       #006FAC;
+$blue-dark:         #004A82;
 
-$yellow: #FFEB2A;
-$grey-light: #E3E4E5;
-$grey-dark: #C9CCCC;
-$grey-dark-font: #909295;
+$yellow:            #FFEB2A;
+$grey-light:        #E3E4E5;
+$grey-dark:         #C9CCCC;
+$grey-dark-font:    #909295;
 
-$black-light: #424243;
-$black-dark: #333;
-$black: #000000;
-$white: #ffffff;
+$black-light:       #424243;
+$black-dark:        #333;
+$black:             #000000;
+$white:             #ffffff;
+$red:               #ff2b1f;
+$alice-blue:        #f5faff;
+$green:             #4cd964;
+$green-tint:        #edfbef;
 
 $shadow: 0.1rem 0.2rem 0.3rem 0.4rem rgba($black, 0.03);
+$paper-shadow: 1px 0 10px 0 rgba($black, 0.1);;
+$input-shadow: 0 1px 5px 0 rgba($black, 0.15);
+
 $hero-img: "../../img/hero.png";
 
 $primary-font: "Proxima Nova Thin";
 $primary-font-bold: "Proxima Nova Regular";
 
+// Breakpoints
 $mob-min: 48em;
+$tablet-landscape: 960px;

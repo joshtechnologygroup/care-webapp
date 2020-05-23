@@ -20,10 +20,32 @@
     color: $black-dark;
     text-align: center;
 }
+.success-box {
+    border: 1px $green solid;
+    color: rgba($black, .8);
+    background: $green-tint;
+    padding: 16px;
+    font-size: 1.6rem;
+    line-height: 2.3rem;
+    margin-top: 36px;
+    word-break: break-word;
+}
 .page-header {
     padding: 2rem 3rem;
     text-align: right;
 }
 .primary-bg-light {
     // background: $blue-primary-bg;
+}
+.mob-header {
+    // background: rgba(173, 171, 189, 0.2);
+    background: $blue-primary-bg-dark;
+    padding: 6px 0px;
+}
+.mob-logo {
+    width: 100px;
+    left: calc(50% - 100px);
+    margin: 8px 0;
+    vertical-align: top;
+    position: relative;
 }

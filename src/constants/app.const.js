@@ -27,3 +27,7 @@ export const Juridiction = [
         value: 'CS',
     }
 ];
+
+export const regex = {
+    email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
+}
