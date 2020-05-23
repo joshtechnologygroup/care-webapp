@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { regex } from 'Constants/app.const';
 import { Typography } from '@material-ui/core';
-import { login } from '../../actions/AuthAction';
+import { login } from 'Actions/AuthAction';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 

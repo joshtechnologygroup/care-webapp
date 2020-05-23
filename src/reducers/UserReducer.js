@@ -1,4 +1,4 @@
-import { USER } from './Types';
+import { USER } from 'Reducers/Types';
 
 const initialState = {
   id: null,

@@ -1,14 +1,14 @@
 import {
     setTokenCookie,
-} from '../services/CookieService';
+} from 'Services/CookieService';
 
 import {
     USER
-} from '../reducers/Types'
+} from 'Reducers/Types'
 
 import {
     LoginUserService
-} from '../services/AuthService'
+} from 'Services/AuthService'
 
 
 const login = (email, password) => async (dispatch) => {
