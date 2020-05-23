@@ -1,0 +1,56 @@
+{
+    "facilities": [
+        {
+            "opStatus": "yes",
+            "facilityName": "PDEA Ayurveda Rugnalaya",
+            "area": "Bhosari",
+            "jurisdiction": "PMC",
+            "bedsCapacity": 1000,
+            "icuCapacity": 200,
+            "ventCapacity": 10,
+            "doctors": 8,
+            "checklistStore": 10,
+            "owner": "Govt",
+            "cred": "yes"
+        },
+        {
+            "opStatus": "no",
+            "facilityName": "PDEA Ayurveda Rugnalaya",
+            "area": "Bhosari ABC",
+            "jurisdiction": "PCMC",
+            "bedsCapacity": 1000,
+            "icuCapacity": 200,
+            "ventCapacity": 10,
+            "doctors": 8,
+            "checklistStore": 10,
+            "owner": "Pvt",
+            "cred": "yes"
+        },
+        {
+            "opStatus": "yes",
+            "facilityName": "PDEA Ayurveda Rugnalaya",
+            "area": "Bhosari",
+            "jurisdiction": "PMC",
+            "bedsCapacity": 1000,
+            "icuCapacity": 200,
+            "ventCapacity": 10,
+            "doctors": 8,
+            "checklistStore": 10,
+            "owner": "PvtCross",
+            "cred": "yes"
+        },
+        {
+            "opStatus": "yes",
+            "facilityName": "PDEA Ayurveda Rugnalaya",
+            "area": "Bhosari",
+            "jurisdiction": "PMC",
+            "bedsCapacity": 1000,
+            "icuCapacity": 200,
+            "ventCapacity": 10,
+            "doctors": 8,
+            "checklistStore": 10,
+            "owner": "PvtRefresh",
+            "cred": "yes"
+        }
+    ]
+}

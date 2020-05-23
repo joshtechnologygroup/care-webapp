@@ -299,6 +299,7 @@ module.exports = function(webpackEnv) {
         Reducers: path.resolve(__dirname, '../src/reducers'),
         Src: path.resolve(__dirname, '../src'),
         Services: path.resolve(__dirname, '../src/services'),
+        Mockdata: path.resolve(__dirname, '../src/__MOCK_DATA'),
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
