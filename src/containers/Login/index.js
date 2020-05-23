@@ -63,7 +63,8 @@ class Login extends Component {
       });
     }
     else {    
-        const response = await this.props.login(this.state.email, this.state.password);
+        const { email, password } = { ...this.state };
+        const response = await this.props.login(email, password);
         if(response.status){
             this.props.history.push('/')
         } else {

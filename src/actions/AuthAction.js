@@ -1,3 +1,9 @@
+import * as HttpStatus from 'http-status-codes'
+
+import {
+    LOGIN_URL,
+} from 'Src/routes';
+
 import {
     setTokenCookie,
 } from 'Services/CookieService';
@@ -6,15 +12,20 @@ import {
     USER
 } from 'Reducers/Types'
 
-import {
-    LoginUserService
-} from 'Services/AuthService'
 
+import { Service } from "../utils/services";
 
 const login = (email, password) => async (dispatch) => {
-    const response = await LoginUserService(email, password);
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+    const body =  JSON.stringify({
+        email: email,
+        password: password,
+    })
+    const response = await Service(LOGIN_URL,'POST', null, body, headers)
     const data = await response.json();
-    if (response.status === 200) {
+    if (response.status === HttpStatus.OK) {
         setTokenCookie(data.token);
         dispatch({
             type: USER,
