@@ -1,5 +1,6 @@
 import {
-  FacilityTypeRenderer
+  FacilityTypeRenderer,
+  OperationStatusRenderer
 } from 'Components/CellRenderer';
 import { GRID_CONFIG } from 'Constants/app.const';
 
@@ -10,17 +11,23 @@ export const CONFIG = {
     { headerName: 'Govt. ID', field: 'idGovt' },
     { headerName: 'Facility ID', field: 'idFacility', minWidth: 100 },
     { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },
-    { headerName: 'Age', field: 'age', minWidth: 70 },
     { headerName: 'Gender', field: 'gender' },
-    { headerName: 'Clinical Status', field: 'clinicalStatus', minWidth: 120 },
-    { headerName: 'Covid Status', field: 'covidStatus', minWidth: 110, },
-    { headerName: 'Health Conditions', field: 'healthConditions', minWidth: 140 },
-    { headerName: 'Admission Date', field: 'admissionDate', minWidth: 125 },
-    { headerName: 'Discharge Date', field: 'dischargeDate', minWidth: 125 },
-    { headerName: 'Patient District', field: 'patientDistrict', minWidth: 125 },
-    { headerName: 'Facility Type', field: 'facilityType', minWidth: 110, cellRenderer: 'FacilityTypeRenderer' },
-    { headerName: 'Facility', field: 'facility', },
-    { headerName: 'Action', field: 'action' },
+    { headerName: 'Age(Years)', field: 'ageYears', minWidth: 100 },
+    { headerName: 'Age(Months)', field: 'ageMonths', minWidth: 110 },
+    { headerName: 'Contact Number', field: 'contactNo', minWidth: 130 },
+    { headerName: 'Address', field: 'address', },
+    { headerName: 'Address District', field: 'addressDistrict', minWidth: 140 },
+    { headerName: 'Cluster Group', field: 'clusterGroup', minWidth: 120 },
+    { headerName: 'Status', field: 'status', },
+    { headerName: 'COVID-19 Status', field: 'covidStatus', minWidth: 135, },
+    { headerName: 'Clinical Status', field: 'clinicalStatus', minWidth: 120, cellRenderer: 'OperationStatusRenderer', },
+    { headerName: 'Clinical Status updated At', field: 'clinicalStatusUpdatedAt', minWidth: 180 },
+    { headerName: 'Portea called At', field: 'porteaCalled', minWidth: 140 },
+    { headerName: 'Portea Able to contact Patient/Relative', field: 'porteaContact', minWidth: 250 },
+    { headerName: 'Facility Name', field: 'facilityName', minWidth: 120 },
+    { headerName: 'Facility District', field: 'facilityDistrict', minWidth: 120 },
+    { headerName: 'Facility Type', field: 'facilityType', cellRenderer: 'FacilityTypeRenderer', minWidth: 120 },
+    { headerName: 'Facility Ownership Type', field: 'facilityOwnershipType', minWidth: 170, },
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
@@ -35,5 +42,6 @@ export const CONFIG = {
   suppressContextMenu: GRID_CONFIG.suppressContextMenu,
   frameworkComponents: {
     FacilityTypeRenderer: FacilityTypeRenderer,
+    OperationStatusRenderer: OperationStatusRenderer
   }
 };
