@@ -1,0 +1,72 @@
+{
+    "patients": [
+        {
+            "patientName": "Patient A",
+            "age": 12,
+            "gender": "male",
+            "idICMR": 786876876,
+            "idGovt": 76875765,
+            "idFacility": 7676786,
+            "clinicalStatus": "Moderate",
+            "covidStatus": "positive",
+            "healthConditions": "Oxygen",
+            "admissionDate": "01/04/2020",
+            "dischargeDate": "01/04/2020",
+            "patientDistrict": "ABCDistrict",
+            "facility": "ABCFicility",
+            "facilityType": "PMC",
+            "action": "do Action"
+        },
+        {
+            "patientName": "Patient A",
+            "age": 12,
+            "gender": "male",
+            "idICMR": 786876876,
+            "idGovt": 76875765,
+            "idFacility": 7676786,
+            "clinicalStatus": "Moderate",
+            "covidStatus": "positive",
+            "healthConditions": "Oxygen",
+            "admissionDate": "01/04/2020",
+            "dischargeDate": "01/04/2020",
+            "patientDistrict": "ABCDistrict",
+            "facility": "ABCFicility",
+            "facilityType": "PMC",
+            "action": "do Action"
+        },
+        {
+            "patientName": "Patient B",
+            "age": 12,
+            "gender": "male",
+            "idICMR": 786876876,
+            "idGovt": 76875765,
+            "idFacility": 7676786,
+            "clinicalStatus": "Moderate",
+            "covidStatus": "positive",
+            "healthConditions": "Oxygen",
+            "admissionDate": "01/04/2020",
+            "dischargeDate": "01/04/2020",
+            "patientDistrict": "ABCDistrict",
+            "facility": "ABCFicility",
+            "facilityType": "PMC",
+            "action": "do Action"
+        },
+        {
+            "patientName": "Patient B",
+            "age": 12,
+            "gender": "male",
+            "idICMR": 786876876,
+            "idGovt": 76875765,
+            "idFacility": 7676786,
+            "clinicalStatus": "Moderate",
+            "covidStatus": "positive",
+            "healthConditions": "Oxygen",
+            "admissionDate": "01/04/2020",
+            "dischargeDate": "01/04/2020",
+            "patientDistrict": "ABCDistrict",
+            "facility": "ABCFicility",
+            "facilityType": "PMC",
+            "action": "do Action"
+        }
+    ]
+}

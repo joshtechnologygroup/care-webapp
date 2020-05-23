@@ -1,7 +1,8 @@
 import {
     OperationStatusRenderer,
     OwnerRenderer
-  } from 'Components/CellRenderer';
+} from 'Components/CellRenderer';
+import { GRID_CONFIG } from 'Constants/app.const';
 
 
 export const CONFIG = {
@@ -19,18 +20,16 @@ export const CONFIG = {
         { headerName: 'Cred.', field: 'cred' },
     ],
     defaultColDef: {
-        editable: false,
-        enableRowGroup: true,
-        enablePivot: true,
-        enableValue: true,
-        sortable: true,
-        resizable: true,
-        filter: true,
-        flex: 1,
+        editable: GRID_CONFIG.editable,
+        sortable: GRID_CONFIG.sortable,
+        resizable: GRID_CONFIG.resizable,
+        filter: GRID_CONFIG.filter,
+        flex: GRID_CONFIG.flex,
         minWidth: 70,
     },
-    rowHeight: 40,
-    headerHeight: 40,
+    rowHeight: GRID_CONFIG.rowHeight,
+    headerHeight: GRID_CONFIG.headerHeight,
+    suppressContextMenu: GRID_CONFIG.suppressContextMenu,
     frameworkComponents: {
         OperationStatusRenderer: OperationStatusRenderer,
         OwnerRenderer: OwnerRenderer

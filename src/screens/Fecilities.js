@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
-import FacilitiesList from '../containers/FacilitiesList';
-import Header from '../containers/Header';
+import FacilitiesList from 'Containers/FacilitiesList';
+import Header from 'Containers/Header';
 
 class Fecilities extends Component {
     render() {

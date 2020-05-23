@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PatientsList from 'Containers/PatientsList';
 import { Grid } from '@material-ui/core';
-import Header from '../containers/Header';
+import Header from 'Containers/Header';
 
 class Patients extends Component {
     render() {
@@ -12,7 +12,7 @@ class Patients extends Component {
                 className="outer-container"
             >
                 <div className="primary-bg-light">
-                    <Header searchPlaceholder='Search Patient name or ID'/>
+                    <Header searchPlaceholder='Search Patient name or ID' />
                     <div className="table-container">
                         <PatientsList />
                     </div>

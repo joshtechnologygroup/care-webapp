@@ -1,4 +1,4 @@
-@import '../../styles/index.scss';
+@import '../../styles/import';
 
 .grid-wrapper {
     height: 80vh;
@@ -23,12 +23,12 @@
 
     .ag-ltr {
         .ag-cell {
-            border-right: 1px solid $DBDFE9;
+            border-right: 1px solid $cell-border-color;
         }
     }
 
     .ag-header-cell {
-        border-right: 1px solid $DBDFE9;
+        border-right: 1px solid $cell-border-color;
 
         &::after {
             display: none;
@@ -42,7 +42,7 @@
     }
 
     .ag-root-wrapper {
-        border: solid 0.5px $DBDFE9;
+        border: solid 0.5px $cell-border-color;
     }
 
     .ag-header {
@@ -55,7 +55,7 @@
     }
 
     .ag-row-even {
-        background: $FAFAFA;
+        background: $row-bg-dark;
     }
 
     .ag-row-odd {
