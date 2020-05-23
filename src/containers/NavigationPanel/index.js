@@ -109,4 +109,4 @@ NavigationPanel.propTypes = {
 };
 
 
-export default connect(mapStateToProps, { logout })(withRouter( NavigationPanel));
+export default connect(mapStateToProps, { logout })(withRouter(NavigationPanel));
