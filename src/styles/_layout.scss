@@ -37,3 +37,15 @@
 .primary-bg-light {
     // background: $blue-primary-bg;
 }
+.mob-header {
+    // background: rgba(173, 171, 189, 0.2);
+    background: $blue-primary-bg-dark;
+    padding: 6px 0px;
+}
+.mob-logo {
+    width: 100px;
+    left: calc(50% - 100px);
+    margin: 8px 0;
+    vertical-align: top;
+    position: relative;
+}
