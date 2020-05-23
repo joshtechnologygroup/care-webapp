@@ -80,7 +80,7 @@ export function NavigationPanel(props) {
             </Link>
           </li>
           <li className={getActivatedRoute('/logout') ? 'active' : ''}>
-            <Link to={'/logout'} className="nav-link">
+            <Link to={'/login'} className="nav-link">
               <ExitToApp   />
               {i18n.t('Logout')}
             </Link>

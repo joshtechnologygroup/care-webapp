@@ -19,7 +19,8 @@
   height: 100%;
   font-size: 16px;
   line-height: 1.2;
-  // padding: 10px;
+  // min-width: 180px;
+  
   box-shadow: 1px 0 10px 0 rgba(0, 0, 0, 0.1);
   .navbar-nav li {
     // float: left;
@@ -40,6 +41,12 @@
         color: #007aff;
       }
     }
+  }
+
+  @media only screen and (max-width: 960px) {
+    // display: none !important;
+    min-width: 220px;
+    flex-wrap: nowrap !important;
   }
 }
 .nav-logo {
