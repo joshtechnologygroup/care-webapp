@@ -1,4 +1,4 @@
-import { USER } from 'Reducers/Types';
+import { SET_USER } from 'Reducers/Types';
 
 const initialState = {
   id: null,
@@ -7,7 +7,7 @@ const initialState = {
 export default function (state = initialState, action) {    
     switch (action.type) {
 
-        case USER:
+        case SET_USER:
             return {...state,...action.data};
 
         default:

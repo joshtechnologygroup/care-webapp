@@ -10,7 +10,9 @@ import {
 
 import {
     USER
-} from 'Reducers/Types'
+} from 'Reducers/Types';
+
+import { POST } from "Src/constants";
 
 
 import { Service } from "../utils/services";
@@ -23,7 +25,7 @@ const login = (email, password) => async (dispatch) => {
         email: email,
         password: password,
     })
-    const response = await Service(LOGIN_URL,'POST', null, body, headers)
+    const response = await Service(LOGIN_URL, POST, body, headers)
     const data = await response.json();
     if (response.status === HttpStatus.OK) {
         setTokenCookie(data.token);
