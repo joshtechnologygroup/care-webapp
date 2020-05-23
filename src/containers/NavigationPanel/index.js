@@ -38,7 +38,7 @@ export function NavigationPanel(props) {
           <li className={getActivatedRoute('/fecilities') ? 'active' : ''}>
             <Link to={'/fecilities'} className="nav-link">
               <LocationCity />
-              {i18n.t('Fecilities')}
+              {i18n.t('Facilities')}
             </Link>
           </li>
           <li className={getActivatedRoute('/patients') ? 'active' : ''}>

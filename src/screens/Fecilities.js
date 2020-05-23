@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import FacilitiesList from 'Containers/FacilitiesList';
 import Header from 'Containers/Header';
 
-class Fecilities extends Component {
+class Facilities extends Component {
     render() {
         return (
             <Grid
@@ -22,4 +22,4 @@ class Fecilities extends Component {
     }
 }
 
-export default Fecilities;
+export default Facilities;
