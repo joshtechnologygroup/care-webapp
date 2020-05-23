@@ -6,13 +6,15 @@ const initialState = {};
 
 const middleware = [thunk];
 
+let args = [ applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() ]
+if(process.env.NODE_ENV !== 'development'){
+    args.pop()
+}
+
 const store = createStore(
-  rootReducer,
-  initialState,
-  compose(
-    applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // extention for viewing the current state of the Redux
-  )
+    rootReducer,
+    initialState,
+    compose(...args)
 );
 
 export default store;
