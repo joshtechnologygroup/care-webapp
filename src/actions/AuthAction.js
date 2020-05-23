@@ -1,13 +1,17 @@
 import {
     setTokenCookie,
+    getTokenCookie,
+    deleteTokenCookie
 } from 'Services/CookieService';
 
 import {
-    USER
+    USER,
+    CLEAR_USER
 } from 'Reducers/Types'
 
 import {
-    LoginUserService
+    LoginUserService,
+    LogoutUserService
 } from 'Services/AuthService'
 
 
@@ -26,4 +30,14 @@ const login = (email, password) => async (dispatch) => {
     }
 };
 
-export { login };
+const logout = () => async (dispatch) => {
+    const response = await LogoutUserService(getTokenCookie());
+    deleteTokenCookie();
+    if (response.status === 204) {
+        dispatch({
+            type: CLEAR_USER
+        });
+    }
+};
+
+export { login, logout };

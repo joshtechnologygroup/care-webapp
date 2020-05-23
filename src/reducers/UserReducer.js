@@ -1,4 +1,7 @@
-import { USER } from 'Reducers/Types';
+import { 
+    USER,
+    CLEAR_USER
+} from 'Reducers/Types';
 
 const initialState = {
   id: null,
@@ -11,6 +14,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {    
+
     switch (action.type) {
 
         case USER:
@@ -24,6 +28,9 @@ export default function (state = initialState, action) {
                 gender: action.data.gender,
                 phone_number: action.data.phone_number
             };
+
+        case CLEAR_USER:
+            return {...initialState}
 
         default:
             return state;

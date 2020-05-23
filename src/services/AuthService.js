@@ -1,5 +1,6 @@
 import {
     LOGIN_URL,
+    LOGOUT_URL
 } from 'Src/routes';
 
 async function LoginUserService(email, password) {
@@ -14,8 +15,19 @@ async function LoginUserService(email, password) {
         }),
     });
     return await response;
-  }
+}
+
+async function LogoutUserService(token) {
+    const response = await fetch(LOGOUT_URL, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token ${ token }`,
+        },
+    });
+    return await response;
+}
 
 export {
-    LoginUserService
+    LoginUserService,
+    LogoutUserService
 };
