@@ -31,15 +31,15 @@ function Home() {
     };
     return (
         <React.Fragment>
-            <div className="mob-header">
-                <Hidden mdUp>
-                    <Button onClick={toggleDrawer(true)}><MenuIcon /></Button>
-                    <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-                        <NavigationPanel />
-                    </Drawer>
-                    <img className="mob-logo" src={logo} alt="covid care" />
-                </Hidden>
-            </div>
+            <Hidden mdUp>
+                <div className="mob-header">
+                        <Button onClick={toggleDrawer(true)}><MenuIcon /></Button>
+                        <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+                            <NavigationPanel />
+                        </Drawer>
+                        <img className="mob-logo" src={logo} alt="covid care" />
+                </div>
+            </Hidden>
             <Grid container className="container-wrap">
                 <Grid item md={2}>
                     <Hidden smDown>
