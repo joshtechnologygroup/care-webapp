@@ -62,7 +62,7 @@ class TableComponent extends Component {
             rowData={this.props.rowData}
             frameworkComponents={this.props.frameworkComponents}
           />
-          <GridColumns columnDefs={this.props.columnDefs} open={this.props.showColumnsPanel} onChange={this.onChange} />
+          <GridColumns columnDefs={this.props.columnDefs} open={this.props.showColumnsPanel} onChange={this.onChange} onClose={this.props.onCloseColumnsPanel} />
         </div>
       </div>
     );
