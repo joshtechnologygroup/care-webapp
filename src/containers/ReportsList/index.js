@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import TableComponent from 'Components/TableComponent';
+import Grid from '@material-ui/core/Grid';
 
-
+import PaginationController from 'Components/PaginationController';
 import { CONFIG } from './config';
 import './ReportsList.scss';
 
@@ -29,7 +30,23 @@ export function ReportsList(props) {
     };
   };
   return (
-    <div>
+    <React.Fragment>
+      <Grid
+        container
+        direction="row"
+        justify="flex-end"
+        alignItems="flex-start"
+      >
+        <PaginationController
+          resultsShown={10}
+          totalResults={56}
+          onFirst={() => { console.log('on First Page') }}
+          onPrevious={() => { console.log('on Previous Page') }}
+          onNext={() => { console.log('on Next Page') }}
+          onLast={() => { console.log('on Last Page') }}
+          onShowList={() => { console.log('on Show List') }}
+        />
+      </Grid>
         <TableComponent
           modules={CONFIG.modules}
           columnDefs={CONFIG.columnDefs}
@@ -44,7 +61,7 @@ export function ReportsList(props) {
           rowData={data}
           frameworkComponents={CONFIG.frameworkComponents}
         />
-    </div>
+    </React.Fragment>
   );
 }
 

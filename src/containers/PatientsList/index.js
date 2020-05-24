@@ -1,8 +1,8 @@
 import React from 'react';
 import TableComponent from 'Components/TableComponent';
+import Grid from '@material-ui/core/Grid';
 
 import { CONFIG } from './config';
-import './PatientsList.scss';
 
 import { patients } from 'Mockdata/patients_list.json';
 import PaginationController from 'Components/PaginationController';
@@ -10,8 +10,13 @@ import PaginationController from 'Components/PaginationController';
 export function PatientsList(props) {
 
   return (
-    <div className="patients">
-      <div className="patients__pagination-container">
+    <React.Fragment>
+      <Grid
+        container
+        direction="row"
+        justify="flex-end"
+        alignItems="flex-start"
+      >
         <PaginationController
           resultsShown={10}
           totalResults={56}
@@ -21,7 +26,7 @@ export function PatientsList(props) {
           onLast={() => { console.log('on Last Page') }}
           onShowList={() => { console.log('on Show List') }}
         />
-      </div>
+      </Grid>
       <TableComponent
         modules={CONFIG.modules}
         columnDefs={CONFIG.columnDefs}
@@ -36,7 +41,7 @@ export function PatientsList(props) {
         cellStyle={CONFIG.cellStyle}
         rowData={patients}
       />
-    </div>
+    </React.Fragment>
   );
 }
 

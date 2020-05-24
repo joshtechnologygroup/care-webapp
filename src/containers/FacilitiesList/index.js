@@ -1,16 +1,20 @@
 import React from 'react';
 import TableComponent from 'Components/TableComponent';
-
+import Grid from '@material-ui/core/Grid';
 import { CONFIG } from './config';
 import { facilities } from 'Mockdata/facilities_list.json';
-import './FacilitiesList.scss';
 import PaginationController from 'Components/PaginationController';
 
 export function FacilitiesList(props) {
 
   return (
-    <div className="facility">
-      <div className="facility__pagination-container">
+    <React.Fragment>
+      <Grid
+        container
+        direction="row"
+        justify="flex-end"
+        alignItems="flex-start"
+      >
         <PaginationController
           resultsShown={10}
           totalResults={56}
@@ -20,7 +24,7 @@ export function FacilitiesList(props) {
           onLast={() => { console.log('on Last Page') }}
           onShowList={() => { console.log('on Show List') }}
         />
-      </div>
+      </Grid>
       <TableComponent
         modules={CONFIG.modules}
         columnDefs={CONFIG.columnDefs}
@@ -35,7 +39,7 @@ export function FacilitiesList(props) {
         cellStyle={CONFIG.cellStyle}
         rowData={facilities}
       />
-    </div>
+    </React.Fragment>
   );
 }
 
