@@ -3,10 +3,9 @@ import i18n from 'i18next';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { Typography, Checkbox } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { reset_password } from 'Actions/AuthAction';
 import { 
-  GET,
   POST
 } from "Src/constants";
 import PropTypes from 'prop-types';
