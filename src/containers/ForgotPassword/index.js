@@ -127,4 +127,3 @@ ForgotPassword.propTypes = {
 };
 
 export default connect(mapStateToProps, { forgot_password })(ForgotPassword);
-// export default ForgotPassword;
