@@ -35,7 +35,6 @@ function ResetPassword(props){
         error.confirm_password = true
       else if(initial_password !== confirm_password)
         error.error_message = 'Password Mismatch'
-      console.log({...errors, ...error});
       setErrors({...errors, ...error});
     }
     else {
