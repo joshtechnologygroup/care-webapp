@@ -9,7 +9,7 @@ import { forgot_password } from 'Actions/AuthAction';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as HttpStatus from 'http-status-codes'
-// import { Stats } from 'webpack';
+import * as StringUtils from 'Src/utils/stringformatting';
 
 class ForgotPassword extends Component {
   constructor (props) {
@@ -47,12 +47,16 @@ class ForgotPassword extends Component {
       });
     }
     else {
+        const [ success_template, form_template ] = [ 
+            ' If an account exists for {0}, an e-mail will be sent with further instructions.', 
+            'This email is not registered with us.' 
+        ];
         const { errors, email } = this.state
         const status_code = await this.props.forgot_password(email);
         let [ success, form ] = [ '', '' ];
-        ( status_code === HttpStatus.OK )?
-            success = ` If an account exists for ${this.state.email}, an e-mail will be sent with further instructions.` :
-            form = 'This email is not registered with us.'
+        ( status_code === HttpStatus.OK ) ?
+            success = StringUtils.formatVarString(success_template, [email]):
+            form = StringUtils.formatVarString(form_template, [])
         this.setState({
             success: i18n.t(success),
             errors: {
