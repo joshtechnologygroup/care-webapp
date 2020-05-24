@@ -12,6 +12,8 @@ import * as HttpStatus from 'http-status-codes'
 import * as StringUtils from 'Src/utils/stringformatting';
 
 class ForgotPassword extends Component {
+  SUCCESS_TEMPLATE = 'If an account exists for {0}, an e-mail will be sent with further instructions.';
+  FORM_TEMPLATE = 'This email is not registered with us.';
   constructor (props) {
     super(props);
     this.state = {
@@ -47,24 +49,20 @@ class ForgotPassword extends Component {
       });
     }
     else {
-        const [ success_template, form_template ] = [ 
-            ' If an account exists for {0}, an e-mail will be sent with further instructions.', 
-            'This email is not registered with us.' 
-        ];
-        let [ success, form ] = [ '', '' ];
-        const { errors, email } = this.state
-        const status_code = await this.props.forgot_password(email);
-        
-        ( status_code === HttpStatus.OK ) ?
-            success = StringUtils.formatVarString(success_template, [email]):
-            form = StringUtils.formatVarString(form_template, [])
-        this.setState({
-            success: i18n.t(success),
-            errors: {
-                ...errors,
-                form: i18n.t(form),
-            },
-        });
+      let [ success, form ] = [ '', '' ];
+      const { errors, email } = this.state
+      const status_code = await this.props.forgot_password(email);
+      
+      ( status_code === HttpStatus.OK ) ?
+          success = StringUtils.formatVarString(this.SUCCESS_TEMPLATE, [email]):
+          form = StringUtils.formatVarString(this.FORM_TEMPLATE, [])
+      this.setState({
+          success: i18n.t(success),
+          errors: {
+              ...errors,
+              form: i18n.t(form),
+          },
+      });
     }
   }
 

@@ -6,4 +6,3 @@ export const formatVarString = (template, args) => {
     }
     return s;
 }
-
