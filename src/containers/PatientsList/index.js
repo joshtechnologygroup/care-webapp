@@ -39,6 +39,7 @@ export function PatientsList(props) {
         pivotPanelShow={CONFIG.pivotPanelShow}
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
+        pagination={CONFIG.pagination}
         rowData={patients}
       />
     </React.Fragment>

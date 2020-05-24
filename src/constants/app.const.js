@@ -37,6 +37,8 @@ export const GRID_CONFIG = {
     filter: true,
     flex: 1,
     suppressContextMenu: true,
+    minWidth: 90,
+    pagination: false,
 }
 
 export const regex = {

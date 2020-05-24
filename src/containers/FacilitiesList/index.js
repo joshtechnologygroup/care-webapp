@@ -37,6 +37,7 @@ export function FacilitiesList(props) {
         pivotPanelShow={CONFIG.pivotPanelShow}
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
+        pagination={CONFIG.pagination}
         rowData={facilities}
       />
     </React.Fragment>

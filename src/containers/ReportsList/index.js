@@ -1,34 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
-
-import PaginationController from 'Components/PaginationController';
 import { CONFIG } from './config';
-import './ReportsList.scss';
+import { reports } from 'Mockdata/reports_list.json';
+import PaginationController from 'Components/PaginationController';
 
 export function ReportsList(props) {
-  const [data, setData] = useState([]);
 
-  function onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
-    const httpRequest = new XMLHttpRequest();
-    const updateData = data => {
-      setData(data);
-    };
-
-    httpRequest.open(
-      'GET',
-      'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinnersSmall.json'
-    );
-    httpRequest.send();
-    httpRequest.onreadystatechange = () => {
-      if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        updateData(JSON.parse(httpRequest.responseText));
-      }
-    };
-  };
   return (
     <React.Fragment>
       <Grid
@@ -47,20 +25,21 @@ export function ReportsList(props) {
           onShowList={() => { console.log('on Show List') }}
         />
       </Grid>
-        <TableComponent
-          modules={CONFIG.modules}
-          columnDefs={CONFIG.columnDefs}
-          rowHeight={CONFIG.rowHeight}
-          headerHeight={CONFIG.headerHeight}
-          autoGroupColumnDef={CONFIG.autoGroupColumnDef}
-          defaultColDef={CONFIG.defaultColDef}
-          rowSelection={CONFIG.rowSelection}
-          rowGroupPanelShow={CONFIG.rowGroupPanelShow}
-          pivotPanelShow={CONFIG.pivotPanelShow}
-          onGridReady={onGridReady}
-          rowData={data}
-          frameworkComponents={CONFIG.frameworkComponents}
-        />
+      <TableComponent
+        modules={CONFIG.modules}
+        columnDefs={CONFIG.columnDefs}
+        rowHeight={CONFIG.rowHeight}
+        headerHeight={CONFIG.headerHeight}
+        autoGroupColumnDef={CONFIG.autoGroupColumnDef}
+        defaultColDef={CONFIG.defaultColDef}
+        rowSelection={CONFIG.rowSelection}
+        rowGroupPanelShow={CONFIG.rowGroupPanelShow}
+        pivotPanelShow={CONFIG.pivotPanelShow}
+        frameworkComponents={CONFIG.frameworkComponents}
+        cellStyle={CONFIG.cellStyle}
+        pagination={CONFIG.pagination}
+        rowData={reports}
+      />
     </React.Fragment>
   );
 }
