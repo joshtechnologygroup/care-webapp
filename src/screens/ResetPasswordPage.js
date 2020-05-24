@@ -34,7 +34,7 @@ class ResetPasswordPage extends Component {
   render() {
     const { isLoading, isValid } = this.state
     if(isLoading){
-      return <p>Loading</p> // TODO: add a loader
+      return <p>Loading...</p> // TODO: add a loader
     } else {
       const heading = (isValid)? 'Reset your password': '';
       return (
