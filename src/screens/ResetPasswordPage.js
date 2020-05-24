@@ -21,8 +21,7 @@ function ResetPasswordPage(props) {
 
   const handleApi = async (user_id, token) => {
     const status = await props.reset_password(GET, user_id, token);
-    // setIsValid(status === HttpStatus.OK);
-    setIsValid(true);
+    setIsValid(status === HttpStatus.OK);
     setIsLoading(false);
   };
 

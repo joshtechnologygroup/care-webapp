@@ -4,6 +4,8 @@ import * as CookieService from 'Services/CookieService';
 
 import * as CommonServiceUtils from "Src/utils/services";
 
+import * as StringUtils from 'Src/utils/stringformatting';
+
 import {
     LOGIN_URL,
     LOGOUT_URL,
@@ -75,7 +77,7 @@ const reset_password = (method, user_id, token, body = null) => async (dispatch)
     const headers = {
         'Content-Type': APPLICATION_JSON,
     };
-    const url = PASSWORD_RESET_URL + user_id + '/' + token + ''
+    const url = StringUtils.formatVarString( PASSWORD_RESET_URL, [ user_id, token ] );
     const response = await CommonServiceUtils.makeApiCall(url, method, body, headers);
     return response.status;
 };
