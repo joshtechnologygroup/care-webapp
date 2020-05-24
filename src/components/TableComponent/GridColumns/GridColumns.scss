@@ -1,0 +1,18 @@
+@import '../../../styles/import';
+
+.grid-column-panel.grid-column-panel {
+    position: absolute;
+    right: -210px;
+    width: 200px;
+    top: 0;
+    bottom: 0;
+    background: rgba(255,255,255, 1);
+    box-shadow: -3px 0 7px 0px rgba(0,0,0,0.2);
+    padding: 15px;
+    overflow: auto;
+    transition: right 0.2s linear;
+    border: 1px solid $cell-border-color;
+    &.active {
+        right: 0;
+    }
+}
