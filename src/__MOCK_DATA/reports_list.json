@@ -1,0 +1,28 @@
+{
+  "reports": [
+    {
+      "reportType": "Facilities Report",
+      "generatedOn": "1590278400",
+      "startDate": "1590278400",
+      "endDate": "1590278400"
+    },
+    {
+      "reportType": "Patient Report",
+      "generatedOn": "1590278400",
+      "startDate": "1590278400",
+      "endDate": "1590278400"
+    },
+    {
+      "reportType": "Facilities Report",
+      "generatedOn": "1590145200",
+      "startDate": "1590145200",
+      "endDate": "1590145200"
+    },
+    {
+      "reportType": "Patient Report",
+      "generatedOn": "1590145200",
+      "startDate": "1590145200",
+      "endDate": "1590145200"
+    }
+  ]
+}
