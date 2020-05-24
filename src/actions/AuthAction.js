@@ -6,7 +6,8 @@ import * as CommonServiceUtils from "Src/utils/services";
 
 import {
     LOGIN_URL,
-    LOGOUT_URL
+    LOGOUT_URL,
+    PASSWORD_FORGOT_URL
 } from 'Src/routes';
 
 import {
@@ -43,6 +44,17 @@ const login = (email, password) => async (dispatch) => {
     }
 };
 
+const forgot_password = (email) => async (dispatch) => {
+    const headers = {
+        'Content-Type': APPLICATION_JSON
+    };
+    const body = JSON.stringify({
+        email: email
+    })
+    const response = await CommonServiceUtils.makeApiCall(PASSWORD_FORGOT_URL, POST, body, headers);
+    return response.status
+}
+
 const logout = () => async (dispatch) => {
     const headers = {
         'Content-Type': APPLICATION_JSON,
@@ -58,4 +70,4 @@ const logout = () => async (dispatch) => {
     }
 };
 
-export { login, logout };
+export { login, logout, forgot_password };

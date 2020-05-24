@@ -20,7 +20,7 @@ export default function ButtonToggle(props) {
         </div>
         <ToggleButtonGroup size="medium" value={alignment} exclusive onChange={handleChange}>
             {data && data.map((item, index) => {
-                return (<ToggleButton value={item.value} className={classes.root}>
+                return (<ToggleButton key={index} value={item.value} className={classes.root}>
                             {item.title}
                         </ToggleButton>)
             })}
