@@ -5,6 +5,11 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { regex } from 'Constants/app.const';
+import { forgot_password } from 'Actions/AuthAction';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as HttpStatus from 'http-status-codes'
+// import { Stats } from 'webpack';
 
 class ForgotPassword extends Component {
   constructor (props) {
@@ -32,7 +37,7 @@ class ForgotPassword extends Component {
     });
   }
 
-  handleSubmit () {
+  async handleSubmit () {
     if (!this.state.email) {
       this.setState({
         errors: {
@@ -42,13 +47,19 @@ class ForgotPassword extends Component {
       });
     }
     else {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          form: i18n.t('This email is not registered with us.')
-        },
-        success: i18n.t(' If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.', {EMAIL: this.state.email})
-      });
+        const { errors, email } = this.state
+        const status_code = await this.props.forgot_password(email);
+        let [ success, form ] = [ '', '' ];
+        ( status_code === HttpStatus.OK )?
+            success = ` If an account exists for ${this.state.email}, an e-mail will be sent with further instructions.` :
+            form = 'This email is not registered with us.'
+        this.setState({
+            success: i18n.t(success),
+            errors: {
+                ...errors,
+                form: i18n.t(form),
+            },
+        });
     }
   }
 
@@ -103,4 +114,12 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+const mapStateToProps = (state) => ({
+});
+
+ForgotPassword.propTypes = {
+    forgot_password: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { forgot_password })(ForgotPassword);
+// export default ForgotPassword;
