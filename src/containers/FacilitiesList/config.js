@@ -7,17 +7,15 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
     columnDefs: [
-        { headerName: 'Op. Stat.', field: 'opStatus', cellRenderer: 'OperationStatusRenderer', minWidth: 90 },
-        { headerName: 'Facility Name', field: 'facilityName', minWidth: 170 },
-        { headerName: 'Area', field: 'area' },
-        { headerName: 'Jurisdiction', field: 'jurisdiction', minWidth: 105 },
-        { headerName: 'Beds Capacity', field: 'bedsCapacity', minWidth: 120 },
-        { headerName: 'ICU Capacity', field: 'icuCapacity', minWidth: 120 },
-        { headerName: 'Vent. Capacity', field: 'ventCapacity', minWidth: 120 },
-        { headerName: 'Doctors', field: 'doctors', minWidth: 85 },
-        { headerName: 'Checklist Store', field: 'checklistStore', minWidth: 120 },
-        { headerName: 'Owner.', field: 'owner', minWidth: 80, cellRenderer: 'OwnerRenderer' },
-        { headerName: 'Cred.', field: 'cred' },
+        { headerName: 'Facility Code', field: 'facility_code', minWidth: 90 },
+        { headerName: 'Name', field: 'name', minWidth: 170 },
+        { headerName: 'Address', field: 'address' },
+        { headerName: 'district', field: 'district', minWidth: 105 },
+        { headerName: 'Facility Type', field: 'facility_type', minWidth: 120 },
+        { headerName: 'Facility Ownership Type', field: 'owned_by', minWidth: 120 },
+        { headerName: 'Total #', field: 'total_patient', minWidth: 120 },
+        { headerName: 'Positive Patient #', field: 'positive_patient', minWidth: 85 },
+        { headerName: 'Negative Patient #', field: 'negative_patient', minWidth: 120 },
     ],
     defaultColDef: {
         editable: GRID_CONFIG.editable,
