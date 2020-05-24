@@ -22,7 +22,7 @@ export function GridColumns(props) {
     useEffect(() => {
         const temp = {};
         columnDefs && columnDefs.forEach(item => {
-            temp[item.field] = item.hide === undefined ? true : item.hide;
+            temp[item.field] = item.hide === undefined ? true : !item.hide;
         })
         setState(temp);
     }, [columnDefs]);
