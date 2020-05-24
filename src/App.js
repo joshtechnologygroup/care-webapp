@@ -4,6 +4,7 @@ import Home from 'Screens/Home';
 import LoginPage from 'Screens/LoginPage';
 import ContactPage from 'Screens/ContactPage';
 import ForgotPasswordPage from 'Screens/ForgotPasswordPage';
+import ResetPasswordPage from 'Screens/ResetPasswordPage';
 
 require('dotenv').config()
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/forgot-password" component={ForgotPasswordPage} />
         <Route path="/contact" component={ContactPage} />
+        <Route path="/reset-password/:user_id/:token" component={ResetPasswordPage} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>

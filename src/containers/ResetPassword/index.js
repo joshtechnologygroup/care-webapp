@@ -3,24 +3,32 @@ import i18n from 'i18next';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { Typography } from '@material-ui/core';
-import { regex } from 'Constants/app.const';
-import { forgot_password } from 'Actions/AuthAction';
+import { Typography, Checkbox } from '@material-ui/core';
+import { reset_password } from 'Actions/AuthAction';
+import { 
+  GET,
+  POST
+} from "Src/constants";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as HttpStatus from 'http-status-codes'
-import * as StringUtils from 'Src/utils/stringformatting';
 
-class ForgotPassword extends Component {
+class ResetPassword extends Component {
+  SUCCESS_TEMPLATE = "Your password has been changed, your been redirected to the login page"
+  ERROR = "Sorry there is an error with the server, please contact the manager"
   constructor (props) {
     super(props);
     this.state = {
-      email: '',
+      initial_password: '',
+      confirm_password: '',
       errors: {
-        email: false,
-        form: ''
+        initial_password: false,
+        confirm_password: false,
+        error_message: ''
       },
-      success: ''
+      success: '',
+      user_id: this.props.match.params.user_id,
+      token: this.props.match.params.token,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,61 +37,74 @@ class ForgotPassword extends Component {
 
   handleChange (e) {
     const { name, value } = e.target;
-    const errors = {};
-    errors.email = (regex.email).test(value) ? false : true;
     this.setState({
-      errors: {...this.state.errors, ...errors},
       [name]: value,
     });
   }
 
   async handleSubmit () {
-    if (!this.state.email) {
+    const { initial_password, confirm_password, user_id, token } = this.state;
+    if(!initial_password | !confirm_password | initial_password !== confirm_password){
+      let errors = {};
+      if(!initial_password)
+        errors.initial_password = true
+      else if(!confirm_password)
+        errors.confirm_password = true
+      else if(initial_password !== confirm_password)
+        errors.error_message = 'Password Mismatch'
       this.setState({
-        errors: {
-          ...this.state.errors,
-          email: true,
-        }
+        errors: {...this.state.errors, ...errors},
       });
     }
     else {
-        const [ success_template, form_template ] = [ 
-            ' If an account exists for {0}, an e-mail will be sent with further instructions.', 
-            'This email is not registered with us.' 
-        ];
-        const { errors, email } = this.state
-        const status_code = await this.props.forgot_password(email);
-        let [ success, form ] = [ '', '' ];
+        let [ success, error_message ] = [ '', '' ]
+        const body = JSON.stringify({
+          'password_1': initial_password,
+          'password_2': confirm_password
+        })
+        const status_code = await this.props.reset_password(POST, user_id, token, body);
         ( status_code === HttpStatus.OK ) ?
-            success = StringUtils.formatVarString(success_template, [email]):
-            form = StringUtils.formatVarString(form_template, [])
+            success = this.SUCCESS_TEMPLATE :
+            error_message = this.ERROR
         this.setState({
             success: i18n.t(success),
             errors: {
-                ...errors,
-                form: i18n.t(form),
+                ...this.state.errors,
+                error_message: i18n.t(error_message),
             },
         });
     }
   }
 
   render() {
-    const { email, errors, success } = this.state;
+    const { initial_password, confirm_password , errors, success } = this.state;
     return (
       <div className="login__content">
         <Typography variant="h5" className="mt-24">
-          {i18n.t('Enter your email address to reset your password. You may need to check your spam folder in your email.')}
+          {i18n.t('Create a new Password')}
         </Typography>
         <TextField
-          type="email"
-          name="email"
+          type="password"
+          name="initial_password"
           variant="outlined"
           className="form-field"
-          placeholder={i18n.t('Email')}
+          placeholder={i18n.t('Password')}
           onChange={this.handleChange}
-          value={email}
-          error={errors.email}
+          value={initial_password}
+          error={errors.initial_password}
         />
+
+        <TextField
+          type="password"
+          name="confirm_password"
+          variant="outlined"
+          className="form-field"
+          placeholder={i18n.t('Confirm Password')}
+          onChange={this.handleChange}
+          value={confirm_password}
+          error={errors.confirm_password}
+        />
+
         <Button
           variant="contained"
           color="primary"
@@ -91,7 +112,7 @@ class ForgotPassword extends Component {
           className="btn"
           onClick={this.handleSubmit}
         >
-          {i18n.t('SUBMIT')
+          {i18n.t('CHANGE PASSWORD')
         }</Button>
         <Link
           to={'/login'}
@@ -99,15 +120,10 @@ class ForgotPassword extends Component {
         >
           {i18n.t('Go back to Login page')}
         </Link>
-        <Link
-          to={'/contact'}
-          className="text--link mt-10"
-        >
-          {i18n.t('Still having a problem. Need Help.')}
-        </Link>
+
         {
-          errors.form &&
-          <p className="success-box">{errors.form}</p>
+          errors.error_message &&
+          <p className="success-box">{errors.error_message}</p>
         }
         {
           success &&
@@ -121,9 +137,8 @@ class ForgotPassword extends Component {
 const mapStateToProps = (state) => ({
 });
 
-ForgotPassword.propTypes = {
-    forgot_password: PropTypes.func.isRequired,
+ResetPassword.propTypes = {
+  reset_password: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { forgot_password })(ForgotPassword);
-// export default ForgotPassword;
+export default connect(mapStateToProps, { reset_password })(ResetPassword);
