@@ -10,14 +10,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 function ResetPasswordPage(props) {
+  // eslint-disable-next-line no-unused-vars
   const [user_id, setUserId] = useState(props.match.params.user_id);
+  // eslint-disable-next-line no-unused-vars
   const [token, setToken] = useState(props.match.params.token);
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     handleApi(user_id, token);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ ]); 
 
   const handleApi = async (user_id, token) => {
     const status = await props.reset_password(GET, user_id, token);
