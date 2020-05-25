@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import * as HttpStatus from 'http-status-codes'
 
 function ResetPassword(props){
-  const SUCCESS_TEMPLATE = "Your password has been changed, you are being re-directed to the login page"
+  const SUCCESS_TEMPLATE = "Your password has been changed, you can login again from login page"
   const ERROR = "Sorry, Something went wrong. Please contact the manager."
   const [initial_password, setInitialPassword] = useState('');
   const [confirm_password, setConfirmPassword] = useState('');
