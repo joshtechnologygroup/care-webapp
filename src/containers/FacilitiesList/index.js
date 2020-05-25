@@ -20,82 +20,92 @@ export function FacilitiesList(props) {
         fetchFacilityTypeList,
         fetchDistrictList,
         fetchFacilityOwnershipTypeList,
-        list,
+        facilityList,
         queryParams,
         districtsList,
         ownershipTypesList,
         facilityTypesList,
-        count
+        count,
     } = props;
-    const itemsPerPage = 1;
+    const itemsPerPage = 3;
 
-    const [offset, setOffset] = useState(0)
+    const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
 
     const updateFacilityListWithNames = (
-        list,
+        facilityList,
         districtsList,
         facilityTypesList,
         ownershipTypesList
     ) => {
         if (
-            !_.isEmpty(list) &&
             !_.isEmpty(districtsList) &&
-            !_.isEmpty(facilityTypesList) &&
-            !_.isEmpty(ownershipTypesList)
+            !_.isEmpty(ownershipTypesList) &&
+            !_.isEmpty(facilityTypesList)
         ) {
-            list.map(facility => {
-                const districts = districtsList.filter(
+            facilityList.map(facility => {
+                const district = districtsList.find(
                     district => district.id === facility.district
                 );
-                if (districts.length > 0) facility.district = districts[0].name;
-                const ownershipTypes = ownershipTypesList.filter(
+                if (district) {
+                    facility.district = district.name;
+                }
+                const ownershipType = ownershipTypesList.find(
                     ownershipType => ownershipType.id === facility.owned_by
                 );
-                if (ownershipTypes.length > 0)
-                    facility.owned_by = ownershipTypes[0].name;
-                const facilityTypes = facilityTypesList.filter(
+                if (ownershipType) {
+                    facility.owned_by = ownershipType.name;
+                }
+                const facilityType = facilityTypesList.find(
                     facilityType => facilityType.id === facility.facility_type
                 );
-                if (facilityTypes.length > 0)
-                    facility.facility_type = facilityTypes[0].name;
+                if (facilityType) {
+                    facility.facility_type = facilityType.name;
+                }
                 return facility;
             });
         }
-        return list;
+        return facilityList;
     };
 
     // Handle has more.
     useEffect(() => {
-        if (!_.isEmpty(list)) {
-            setHasPrev(offset - list.length >= 0 ? true : false);
-            setHasMore(offset + list.length < count ? true : false);
+        if (!_.isEmpty(facilityList)) {
+            setHasPrev(offset - facilityList.length >= 0 ? true : false);
+            setHasMore(offset + facilityList.length < count ? true : false);
         }
-    }, [list, offset, count]);
+    }, [facilityList, offset, count]);
 
     const fetchMoreFacilites = () => {
         if (hasMore) {
-            setOffset(offset + list.length);
+            setOffset(offset + facilityList.length);
         }
     };
 
     const fetchPrevFacilities = () => {
         if (hasPrev) {
-            setOffset(offset - list.length);
+            setOffset(offset - facilityList.length);
         }
     };
 
     useEffect(() => {
-        if (!facilityTypesList) fetchFacilityTypeList();
-        if (!districtsList) fetchDistrictList();
-        if (!ownershipTypesList) fetchFacilityOwnershipTypeList();
+        if (!facilityTypesList) {
+            fetchFacilityTypeList();
+        }
+        if (!districtsList) {
+            fetchDistrictList();
+        }
+        if (!ownershipTypesList) {
+            fetchFacilityOwnershipTypeList();
+        }
     });
 
     useEffect(() => {
+        console.log(offset);
         fetchFacilityList({
             ...queryParams,
-            offset: offset
+            offset: offset,
         });
     }, [queryParams, offset, fetchFacilityList]);
 
@@ -116,7 +126,8 @@ export function FacilitiesList(props) {
                     onPrevious={() => fetchPrevFacilities()}
                     onNext={() => fetchMoreFacilites()}
                     onLast={() => {
-                        setOffset(count - itemsPerPage);
+                        console.log(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
+                        setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
                     }}
                     onShowList={() => {
                         console.log("on Show List");
@@ -137,7 +148,7 @@ export function FacilitiesList(props) {
                 cellStyle={CONFIG.cellStyle}
                 pagination={CONFIG.pagination}
                 rowData={updateFacilityListWithNames(
-                    list,
+                    facilityList,
                     districtsList,
                     facilityTypesList,
                     ownershipTypesList
@@ -148,17 +159,17 @@ export function FacilitiesList(props) {
 }
 
 FacilitiesList.propTypes = {
-    list: PropTypes.arrayOf(PropTypes.object),
+    facilityList: PropTypes.arrayOf(PropTypes.object),
     fetchFacilityList: PropTypes.func,
     fetchFacilityTypeList: PropTypes.func,
     fetchDistrictList: PropTypes.func,
     fetchFacilityOwnershipTypeList: PropTypes.func,
     queryParams: PropTypes.object,
-    count: PropTypes.number
+    count: PropTypes.number,
 };
 
 FacilitiesList.defaultProps = {
-    list: [],
+    facilityList: [],
     fetchFacilityList: () => {},
     fetchFacilityTypeList: () => {},
     fetchDistrictList: () => {},
@@ -170,7 +181,7 @@ FacilitiesList.defaultProps = {
 const mapStateToProps = state => {
     const { facilities, districts, ownershipTypes, facilityTypes } = state;
     return {
-        list: facilities.results,
+        facilityList: facilities.results,
         count: facilities.count,
         districtsList: districts.results,
         ownershipTypesList: ownershipTypes.results,
