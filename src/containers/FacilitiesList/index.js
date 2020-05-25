@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { connect } from "react-redux";
 import { useEffect } from "react";
 import TableComponent from "Components/TableComponent";
@@ -22,6 +22,7 @@ export function FacilitiesList(props) {
         ownershipTypesList,
         facilityTypesList,
     } = props;
+    const [showColumnsPanel, setShowColumnsPanel] = useState(false);
 
     useEffect(() => {
         fetchFacilityList({});
@@ -48,7 +49,7 @@ export function FacilitiesList(props) {
           onPrevious={() => { console.log('on Previous Page') }}
           onNext={() => { console.log('on Next Page') }}
           onLast={() => { console.log('on Last Page') }}
-          onShowList={() => { console.log('on Show List') }}
+          onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
         />
       </Grid>
       <TableComponent
@@ -65,6 +66,8 @@ export function FacilitiesList(props) {
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
         rowData={list}
+        showColumnsPanel={showColumnsPanel}
+        onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
     </React.Fragment>
   );

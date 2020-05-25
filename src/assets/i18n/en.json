@@ -30,5 +30,14 @@
     "Invalid email or password": "Invalid email or password",
     "SUBMIT": "SUBMIT",
     "This email is not registered with us.": "This email is not registered with us.",
-    "If a account exists for {{EMAIL}}, an e-mail will be sent with further instructions.": "If a account exists for {{EMAIL}}, an e-mail will be sent with further instructions."
+    "If a account exists for {{EMAIL}}, an e-mail will be sent with further instructions.": "If a account exists for {{EMAIL}}, an e-mail will be sent with further instructions.",
+    "Add Patient": "Add Patient",
+    "Hospitals": "Hospitals",
+    "HCC": "HCC",
+    "Care Centers": "Care Centers",
+    "Private Quarantine": "Private Quarantine",
+    "Wards / Beds": "Wards / Beds",
+    "Doctor / Attendant": "Doctor / Attendant",
+    "Manage Users": "Manage Users",
+    "Facility Details": "Facility Details"
 }

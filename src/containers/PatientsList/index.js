@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 
@@ -8,7 +8,7 @@ import { patients } from 'Mockdata/patients_list.json';
 import PaginationController from 'Components/PaginationController';
 
 export function PatientsList(props) {
-
+  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   return (
     <React.Fragment>
       <Grid
@@ -24,7 +24,7 @@ export function PatientsList(props) {
           onPrevious={() => { console.log('on Previous Page') }}
           onNext={() => { console.log('on Next Page') }}
           onLast={() => { console.log('on Last Page') }}
-          onShowList={() => { console.log('on Show List') }}
+          onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
         />
       </Grid>
       <TableComponent
@@ -41,6 +41,8 @@ export function PatientsList(props) {
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
         rowData={patients}
+        showColumnsPanel={showColumnsPanel}
+        onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
     </React.Fragment>
   );
