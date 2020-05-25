@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './CellRenderer.scss';
 
 const FacilityTypeRenderer = (item) => {

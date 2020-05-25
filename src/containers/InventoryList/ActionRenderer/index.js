@@ -20,7 +20,7 @@ export const ActionRenderer = (item) => {
     <AgProvider>
       <div className="ag-cell-icon-wrap">
         <IconButton aria-label="delete" onClick={handleClick}>
-          <EditIcon fontSize="large" color="primary" />
+          <EditIcon color="primary" />
         </IconButton>
       </div>
       <InventoryForm data={data} open={open} onClose={handleClose} />

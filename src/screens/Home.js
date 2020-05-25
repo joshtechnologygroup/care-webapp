@@ -23,7 +23,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import logo from 'Assets/images/logo.svg';
 
 function Home() {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (isOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

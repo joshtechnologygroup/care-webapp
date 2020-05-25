@@ -12,7 +12,8 @@ import {
     getFacilityTypeList,
 } from "Actions/FacilitiesAction";
 import { getDistrictList, getOwnershipTypeList } from "Actions/MiscAction";
-import PaginationController from "Components/PaginationController";
+import PaginationController from 'Components/PaginationController';
+import Sort from 'Components/Sort';
 
 export function FacilitiesList(props) {
     const {
@@ -112,11 +113,18 @@ export function FacilitiesList(props) {
     return (
         <React.Fragment>
             <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="flex-start"
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
             >
+              <Grid item xs={12} sm={3} >
+                <Sort
+                  onSelect={(val) => console.log(`Sort By ${val} using API`)}
+                  options={CONFIG.columnDefs}
+                  onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+              </Grid>
+              <Grid item xs={12} sm={4} >
                 <PaginationController
                     resultsShown={10}
                     totalResults={56}
@@ -130,6 +138,7 @@ export function FacilitiesList(props) {
                     }}
                     onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
                 />
+              </Grid>
             </Grid>
             <TableComponent
                 modules={CONFIG.modules}
