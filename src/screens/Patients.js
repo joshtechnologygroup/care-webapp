@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import PatientsList from 'Containers/PatientsList';
+import i18n from "i18next";
 import { Grid } from '@material-ui/core';
 import Header from 'Containers/Header';
+import PatientsList from 'Containers/PatientsList';
+import { Search } from 'Components/Inputs';
 import { getPatientList } from 'Actions/PatientsAction';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,7 +21,6 @@ function Patients(props){
         setData({...data});
         setIsLoading(false);
     }
-
     return (
         <Grid
             container
@@ -27,7 +28,11 @@ function Patients(props){
             className="outer-container"
         >
             <div className="primary-bg-light">
-                <Header searchPlaceholder='Search Patient name or ID' />
+                <Header>
+                    <div className="header-container__search-container">
+                        <Search searchPlaceholder={i18n.t('search.placeholder.patients')} />
+                    </div>
+                </Header>
                 <div className="table-container">
                     {isLoading && <p>Loading...</p>}
                     {!isLoading && <PatientsList data={data}/>}

@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 
 import { CONFIG } from './config';
 import { getPatientList } from 'Actions/PatientsAction';
+import Sort from 'Components/Sort';
 import PaginationController from 'Components/PaginationController';
+// import { patients } from 'Mockdata/patients_list.json';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -24,18 +26,26 @@ export function PatientsList( props ) {
       <Grid
         container
         direction="row"
-        justify="flex-end"
-        alignItems="flex-start"
+        justify="space-between"
+        alignItems="center"
       >
-        <PaginationController
-          resultsShown={1}
-          totalResults={props.count}
-          onFirst={() => handlePage(1)}
-          onPrevious={() => handlePage(page-1) }
-          onNext={() => handlePage(page+1)}
-          onLast={() => handlePage(props.count)}
-          onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
-        />
+        <Grid item xs={12} sm={3} >
+          <Sort
+            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            options={CONFIG.columnDefs}
+            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+        </Grid>
+        <Grid item xs={12} sm={4} >
+          <PaginationController
+            resultsShown={1}  
+            totalResults={props.count}
+            onFirst={() => handlePage(1)}
+            onPrevious={() => handlePage(page-1) }
+            onNext={() => handlePage(page+1)}
+            onLast={() => handlePage(props.count)}
+            onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+          />
+        </Grid>
       </Grid>
       <TableComponent
         modules={CONFIG.modules}

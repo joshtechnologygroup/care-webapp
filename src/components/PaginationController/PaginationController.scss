@@ -2,7 +2,29 @@
 
 .pagination-controller {
   margin: 1rem 0;
-  max-width: 50rem;
+
+  .MuiButton-root {
+    min-width: 2px;
+    padding: 6px 16px;
+
+    @include for-below-tablet {
+      padding: 6px 10px;
+    }
+
+    @include for-phone-only {
+      padding: 0.6rem;
+    }
+  }
+
+  .MuiGrid-spacing-xs-2 {
+    .MuiGrid-item {
+
+      &:first-child,
+      &:last-child {
+        padding: 0.8rem 0;
+      }
+    }
+  }
 
   .MuiGrid-spacing-xs-2 {
     width: auto;
@@ -26,5 +48,14 @@
     align-items: center;
     height: 40px;
     justify-content: center;
+    text-align: center;
+  }
+
+  &__page-number {
+    font-size: 10px;
+
+    @include for-phone-only {
+      font-size: 0.8rem;
+    }
   }
 }

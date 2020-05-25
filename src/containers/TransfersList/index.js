@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
-import TableComponent from 'Components/TableComponent';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { CONFIG } from './config';
-import { facilityBeds } from 'Mockdata/facility_beds_list.json';
+
+import TableComponent from 'Components/TableComponent';
+import { patients_transfers } from 'Mockdata/patients_transfer_list.json';
 import PaginationController from 'Components/PaginationController';
+import { CONFIG } from './config';
 import Sort from 'Components/Sort';
 
-export function BedsList(props) {
+export function TransfersList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   return (
     <React.Fragment>
@@ -47,8 +48,7 @@ export function BedsList(props) {
         pivotPanelShow={CONFIG.pivotPanelShow}
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
-        pagination={CONFIG.pagination}
-        rowData={facilityBeds}
+        rowData={patients_transfers}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
@@ -56,4 +56,4 @@ export function BedsList(props) {
   );
 }
 
-export default BedsList;
+export default TransfersList;
