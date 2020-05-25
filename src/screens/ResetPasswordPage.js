@@ -34,7 +34,7 @@ function ResetPasswordPage(props) {
     const heading = isValid ? "Reset your password" : "";
     return (
       <AuthUIContainer subhead={i18n.t(heading)}>
-        {isValid && <ResetPassword {...props} />}
+        {isValid && <ResetPassword user_id={user_id} token={token} />}
         {!isValid && <ErrorPage title={404} text="Page Not Found!" />}
       </AuthUIContainer>
     );
