@@ -8,3 +8,30 @@ export const GET = 'GET';
 export const TOKEN = 'Token';
 export const APPLICATION_JSON = 'application/json';
 
+// Mapping between patient attr and column headings
+export const MAPPING_PATIENTS_ATTRIBUTES = {
+    'icmr_id':'idICMR',
+    'govt_id': 'idGovt',
+    'facility': 'idFacility',
+    'name': 'patientName',
+    'gender': 'gender',
+    'year': 'ageYears',
+    'month':'ageMonths',
+    'phone_number':'contactNo',
+    'address':'address',
+    'address_district':'addressDistrict',
+    'cluster_group_name':'clusterGroup',
+    'status':'status',
+    'covid_status':'covidStatus',
+    'covid_19_status':'covidStatus',
+    'clinical_status_name':'clinicalStatus',
+    'clinical_status_updated_at':'clinicalStatusUpdatedAt',
+    'portea_called_at':'porteaCalled',
+    'portea_able_to_connect':'porteaContact',
+    'facility_name':'facilityName',
+    'facility_district':'facilityDistrict',
+    'facility_type':'facilityType',
+    'ownership_type':'facilityOwnershipType'
+}
+export const CLINICAL_STATUS_UPDATED_AT = 'clinical_status_updated_at'
+export const PORTEA_CALLED_AT = 'portea_called_at'

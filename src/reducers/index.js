@@ -1,12 +1,15 @@
 import { combineReducers } from "redux";
-import UserReducer from "Reducers/UserReducer";
+
+import { user } from "Reducers/UserReducer";
 import { facilities, facilityTypes } from "Reducers/FacilityReducer";
+import { patients } from "Reducers/PatientReducer";
 import { ownershipTypes, districts } from "Reducers/MiscReducer";
 
 export default combineReducers({
-    User: UserReducer,
+    user: user,
     facilities: facilities,
+    facilityTypes: facilityTypes,
     ownershipTypes: ownershipTypes,
     districts: districts,
-    facilityTypes: facilityTypes
+    patients: patients
 });

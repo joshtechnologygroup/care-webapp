@@ -1,13 +1,23 @@
-import React from 'react';
-import TableComponent from 'Components/TableComponent';
+import React, { useState } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 
+import TableComponent from 'Components/TableComponent';
 import { CONFIG } from './config';
-
-import { patients } from 'Mockdata/patients_list.json';
+import { getPatientList } from 'Actions/PatientsAction';
 import PaginationController from 'Components/PaginationController';
 
-export function PatientsList(props) {
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+export function PatientsList( props ) {
+  const [ page, setPage ] = useState(1);
+
+  const handlePage = async ( next_page ) => {
+    const response = await props.getPatientList(next_page);
+    if(response)
+      setPage(next_page);
+  }
 
   return (
     <React.Fragment>
@@ -18,12 +28,12 @@ export function PatientsList(props) {
         alignItems="flex-start"
       >
         <PaginationController
-          resultsShown={10}
-          totalResults={56}
-          onFirst={() => { console.log('on First Page') }}
-          onPrevious={() => { console.log('on Previous Page') }}
-          onNext={() => { console.log('on Next Page') }}
-          onLast={() => { console.log('on Last Page') }}
+          resultsShown={1}
+          totalResults={props.count}
+          onFirst={() => handlePage(1)}
+          onPrevious={() => handlePage(page-1)}
+          onNext={() => handlePage(page+1)}
+          onLast={() => handlePage(props.count)}
           onShowList={() => { console.log('on Show List') }}
         />
       </Grid>
@@ -40,10 +50,20 @@ export function PatientsList(props) {
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
-        rowData={patients}
+        rowData={props.patients}
       />
     </React.Fragment>
   );
 }
 
-export default PatientsList;
+const mapStateToProps = (state) => ({
+  patients: state.patients.patients,
+  count: state.patients.count,
+});
+
+PatientsList.propTypes = {
+  patients: PropTypes.array.isRequired,
+  getPatientList: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { getPatientList })(PatientsList);

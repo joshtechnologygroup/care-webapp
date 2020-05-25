@@ -7,7 +7,7 @@ const initialState = {
   id: null,
 };
 
-export default function (state = initialState, action) {    
+const user = (state = initialState, action) => {    
 
     switch (action.type) {
 
@@ -21,3 +21,5 @@ export default function (state = initialState, action) {
             return state;
     }
 }
+
+export { user };
