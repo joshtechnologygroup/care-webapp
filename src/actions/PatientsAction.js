@@ -1,5 +1,10 @@
 import * as CommonService from "Src/utils/services";
-import { GET, MAPPING_PATIENTS_ATTRIBUTES, CLINICAL_STATUS_UPDATED_AT, PORTEA_CALLED_AT } from "Src/constants";
+import { 
+    GET, 
+    MAPPING_PATIENTS_ATTRIBUTES, 
+    CLINICAL_STATUS_UPDATED_AT, 
+    PORTEA_CALLED_AT 
+} from "Src/constants";
 import { 
     PATIENT_LIST_URL, 
     CLINICAL_STATUS_LIST_URL, 
