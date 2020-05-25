@@ -39,10 +39,10 @@ export function NavigationPanel(props) {
               {i18n.t('Dashboard')}
             </Link>
           </li>
-          <li className={getActivatedRoute('/fecilities') ? 'active' : ''}>
-            <Link to={'/fecilities'} className="nav-link">
-              <LocationCity />
-              {i18n.t('Facilities')}
+          <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
+            <Link to={'/transfer'} className="nav-link">
+              <SyncAlt />
+              {i18n.t('Transfer')}
             </Link>
           </li>
           <li className={getActivatedRoute('/patients') ? 'active' : ''}>
@@ -50,12 +50,61 @@ export function NavigationPanel(props) {
               <People />
               {i18n.t('Patients')}
             </Link>
+            <ul className="navbar-nav sub-nav clearfix">
+              <li className={getActivatedRoute('/patients/add') ? 'active' : ''}>
+                <Link to={'/patients/add'} className="nav-link">
+                  {i18n.t('Add Patient')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/patients/hospitals') ? 'active' : ''}>
+                <Link to={'/patients/hospitals'} className="nav-link">
+                  {i18n.t('Hospitals')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/patients/hcc') ? 'active' : ''}>
+                <Link to={'/patients/hcc'} className="nav-link">
+                  {i18n.t('HCC')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/patients/care-centers') ? 'active' : ''}>
+                <Link to={'/patients/care-centers'} className="nav-link">
+                  {i18n.t('Care Centers')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/patients/private-quarantine') ? 'active' : ''}>
+                <Link to={'/patients/private-quarantine'} className="nav-link">
+                  {i18n.t('Private Quarantine')}
+                </Link>
+              </li>
+            </ul>
           </li>
-          <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
-            <Link to={'/transfer'} className="nav-link">
-              <SyncAlt />
-              {i18n.t('Transfer')}
+          <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
+            <Link to={'/facilities'} className="nav-link">
+              <LocationCity />
+              {i18n.t('Facilities')}
             </Link>
+            <ul className="navbar-nav sub-nav clearfix">
+              <li className={getActivatedRoute('/facilities/wards-beds') ? 'active' : ''}>
+                <Link to={'/facilities/wards-beds'} className="nav-link">
+                  {i18n.t('Wards / Beds')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/facilities/doctor-attendant') ? 'active' : ''}>
+                <Link to={'/facilities/doctor-attendant'} className="nav-link">
+                  {i18n.t('Doctor / Attendant')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/facilities/manage-users') ? 'active' : ''}>
+                <Link to={'/facilities/manage-users'} className="nav-link">
+                  {i18n.t('Manage Users')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/facilities/facility-details') ? 'active' : ''}>
+                <Link to={'/facilities/facility-details'} className="nav-link">
+                  {i18n.t('Facility Details')}
+                </Link>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
