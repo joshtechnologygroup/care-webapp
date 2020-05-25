@@ -32,7 +32,7 @@ class TableComponent extends Component {
             rowGroupPanelShow={this.props.rowGroupPanelShow}
             pivotPanelShow={this.props.pivotPanelShow}
             enableRangeSelection={true}
-            pagination={true}
+            pagination={this.props.pagination}
             onGridReady={this.props.onGridReady}
             rowData={this.props.rowData}
             frameworkComponents={this.props.frameworkComponents}

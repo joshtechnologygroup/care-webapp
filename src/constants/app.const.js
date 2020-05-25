@@ -32,11 +32,13 @@ export const GRID_CONFIG = {
     rowHeight: 40,
     headerHeight: 40,
     editable: false,
-    sortable: true,
+    sortable: false,
     resizable: true,
-    filter: true,
+    filter: false,
     flex: 1,
     suppressContextMenu: true,
+    minWidth: 90,
+    pagination: false,
 }
 
 export const regex = {

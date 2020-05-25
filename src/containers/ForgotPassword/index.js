@@ -5,8 +5,15 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { regex } from 'Constants/app.const';
+import { forgot_password } from 'Actions/AuthAction';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as HttpStatus from 'http-status-codes'
+import * as StringUtils from 'Src/utils/stringformatting';
 
 class ForgotPassword extends Component {
+  SUCCESS_TEMPLATE = 'If an account exists for {0}, an e-mail will be sent with further instructions.';
+  FORM_TEMPLATE = 'This email is not registered with us.';
   constructor (props) {
     super(props);
     this.state = {
@@ -32,7 +39,7 @@ class ForgotPassword extends Component {
     });
   }
 
-  handleSubmit () {
+  async handleSubmit () {
     if (!this.state.email) {
       this.setState({
         errors: {
@@ -42,12 +49,19 @@ class ForgotPassword extends Component {
       });
     }
     else {
+      let [ success, form ] = [ '', '' ];
+      const { errors, email } = this.state
+      const status_code = await this.props.forgot_password(email);
+      
+      ( status_code === HttpStatus.OK ) ?
+          success = StringUtils.formatVarString(this.SUCCESS_TEMPLATE, [email]):
+          form = StringUtils.formatVarString(this.FORM_TEMPLATE, [])
       this.setState({
-        errors: {
-          ...this.state.errors,
-          form: i18n.t('This email is not registered with us.')
-        },
-        success: i18n.t(' If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.', {EMAIL: this.state.email})
+          success: i18n.t(success),
+          errors: {
+              ...errors,
+              form: i18n.t(form),
+          },
       });
     }
   }
@@ -103,4 +117,11 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+const mapStateToProps = (state) => ({
+});
+
+ForgotPassword.propTypes = {
+    forgot_password: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { forgot_password })(ForgotPassword);

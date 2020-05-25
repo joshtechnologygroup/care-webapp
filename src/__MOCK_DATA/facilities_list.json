@@ -1,56 +1,64 @@
 {
-    "facilities": [
-        {
-            "opStatus": "yes",
-            "facilityName": "PDEA Ayurveda Rugnalaya",
-            "area": "Bhosari",
-            "jurisdiction": "PMC",
-            "bedsCapacity": 1000,
-            "icuCapacity": 200,
-            "ventCapacity": 10,
-            "doctors": 8,
-            "checklistStore": 10,
-            "owner": "Govt",
-            "cred": "yes"
-        },
-        {
-            "opStatus": "no",
-            "facilityName": "PDEA Ayurveda Rugnalaya",
-            "area": "Bhosari ABC",
-            "jurisdiction": "PCMC",
-            "bedsCapacity": 1000,
-            "icuCapacity": 200,
-            "ventCapacity": 10,
-            "doctors": 8,
-            "checklistStore": 10,
-            "owner": "Pvt",
-            "cred": "yes"
-        },
-        {
-            "opStatus": "yes",
-            "facilityName": "PDEA Ayurveda Rugnalaya",
-            "area": "Bhosari",
-            "jurisdiction": "PMC",
-            "bedsCapacity": 1000,
-            "icuCapacity": 200,
-            "ventCapacity": 10,
-            "doctors": 8,
-            "checklistStore": 10,
-            "owner": "PvtCross",
-            "cred": "yes"
-        },
-        {
-            "opStatus": "yes",
-            "facilityName": "PDEA Ayurveda Rugnalaya",
-            "area": "Bhosari",
-            "jurisdiction": "PMC",
-            "bedsCapacity": 1000,
-            "icuCapacity": 200,
-            "ventCapacity": 10,
-            "doctors": 8,
-            "checklistStore": 10,
-            "owner": "PvtRefresh",
-            "cred": "yes"
-        }
-    ]
+  "facilities": [
+    {
+      "facilityCode": "1234",
+      "facilityName": "PDEA Ayurveda Ab.",
+      "facilityAddress": "Carol Bagh Delhi",
+      "facilityDistrict": "District A",
+      "bedsCapacity": 1000,
+      "bedsOccupied": 900,
+      "bedsAvailable": 100,
+      "totalPatient": 500,
+      "totalPositive": 50,
+      "totalNagative": 80,
+      "doctor": 10,
+      "nurse": 30,
+      "otherStaff": 60
+    },
+    {
+      "facilityCode": "1234",
+      "facilityName": "PDEA Ayurveda Ab.",
+      "facilityAddress": "Carol Bagh Delhi",
+      "facilityDistrict": "District A",
+      "bedsCapacity": 1000,
+      "bedsOccupied": 900,
+      "bedsAvailable": 100,
+      "totalPatient": 500,
+      "totalPositive": 50,
+      "totalNagative": 80,
+      "doctor": 10,
+      "nurse": 30,
+      "otherStaff": 60
+    },
+    {
+      "facilityCode": "1234",
+      "facilityName": "PDEA Ayurveda Ab.",
+      "facilityAddress": "Carol Bagh Delhi",
+      "facilityDistrict": "District A",
+      "bedsCapacity": 1000,
+      "bedsOccupied": 900,
+      "bedsAvailable": 100,
+      "totalPatient": 500,
+      "totalPositive": 50,
+      "totalNagative": 80,
+      "doctor": 10,
+      "nurse": 30,
+      "otherStaff": 60
+    },
+    {
+      "facilityCode": "1234",
+      "facilityName": "PDEA Ayurveda Ab.",
+      "facilityAddress": "Carol Bagh Delhi",
+      "facilityDistrict": "District A",
+      "bedsCapacity": 1000,
+      "bedsOccupied": 900,
+      "bedsAvailable": 100,
+      "totalPatient": 500,
+      "totalPositive": 50,
+      "totalNagative": 80,
+      "doctor": 10,
+      "nurse": 30,
+      "otherStaff": 60
+    }
+  ]
 }
