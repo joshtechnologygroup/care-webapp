@@ -1,4 +1,4 @@
-import { POST, PATCH, PUT, GET, APPLICATION_JSON } from "Src/constants";
+import { GET, APPLICATION_JSON } from "Src/constants";
 import * as CookieService from 'Services/CookieService';
 
 async function makeApiCall(base_url, method = GET, body = {}, headers = {}, params = {} ) {

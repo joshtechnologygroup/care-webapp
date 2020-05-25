@@ -8,3 +8,4 @@ export const GET = 'GET';
 export const TOKEN = 'Token';
 export const APPLICATION_JSON = 'application/json';
 
+export const ORDERING_KEY = 'ordering';
