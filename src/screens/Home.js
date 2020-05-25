@@ -13,6 +13,7 @@ import Patients from 'Screens/Patients';
 import Transfer from 'Screens/Transfer';
 import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
+import Inventory from 'Screens/Inventory';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
@@ -56,6 +57,7 @@ function Home() {
                         <Route path={`/reports`} component={Reports} />
                         <Route path={`/settings`} component={Settings} />
                         <Route path={`/profile`} component={Profile} />
+                        <Route path={`/inventory`} component={Inventory} />
                         <Route path={`/error/:errorCode`}>
                             <ErrorPage text="Oops! Error occured." />
                         </Route>
