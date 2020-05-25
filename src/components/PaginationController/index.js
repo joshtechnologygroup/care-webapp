@@ -16,7 +16,7 @@ export default function PaginationController({
 }) {
   return (
     <div className="pagination-controller">
-      <Grid container direction="row" spacing={2} justify="center">
+      <Grid container direction="row" spacing={1} justify="center">
         <Grid item xs={2}>
           <Grid container justify="flex-start">
             <Button onClick={onFirst} className="pagination-controller__button" variant="contained" >First</Button>

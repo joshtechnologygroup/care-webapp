@@ -17,13 +17,13 @@ export function PatientsList(props) {
         justify="space-between"
         alignItems="center"
       >
-        <Grid item xs={12} sm={4} >
+        <Grid item xs={12} sm={3} >
           <Sort
             onSelect={(val) => console.log(`Sort By ${val} using API`)}
             options={CONFIG.columnDefs}
             onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
         </Grid>
-        <Grid item xs={12} sm={5} >
+        <Grid item xs={12} sm={4} >
           <PaginationController
             resultsShown={10}
             totalResults={56}

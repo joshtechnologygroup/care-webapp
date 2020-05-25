@@ -7,12 +7,12 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'idICMR', isSortable: true },
-    { headerName: 'Govt. ID', field: 'idGovt', isSortable: true },
-    { headerName: 'Facility ID', field: 'idFacility', minWidth: 100, isSortable: true },
+    { headerName: 'ICMR ID', field: 'idICMR', cellRendererParams: { isSortable: true } },
+    { headerName: 'Govt. ID', field: 'idGovt', cellRendererParams: { isSortable: true } },
+    { headerName: 'Facility ID', field: 'idFacility', minWidth: 100, cellRendererParams: { isSortable: true } },
     { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },
     { headerName: 'Gender', field: 'gender' },
-    { headerName: 'Age(Years)', field: 'ageYears', minWidth: 100, isSortable: true, sortable: true },
+    { headerName: 'Age(Years)', field: 'ageYears', minWidth: 100, cellRendererParams: { isSortable: true } },
     { headerName: 'Age(Months)', field: 'ageMonths', minWidth: 110 },
     { headerName: 'Contact Number', field: 'contactNo', minWidth: 130 },
     { headerName: 'Address', field: 'address', },

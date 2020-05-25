@@ -6,7 +6,7 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'idICMR', isSortable: true },
+    { headerName: 'ICMR ID', field: 'idICMR', cellRendererParams: { isSortable: true } },
     { headerName: 'Govt. ID', field: 'idGovt' },
     { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },
     { headerName: 'Gender', field: 'gender' },
