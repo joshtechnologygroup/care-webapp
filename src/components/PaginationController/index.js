@@ -16,26 +16,38 @@ export default function PaginationController({
 }) {
   return (
     <div className="pagination-controller">
-      <Grid container direction="row" spacing={2} >
+      <Grid container direction="row" spacing={2} justify="center">
         <Grid item xs={2}>
-          <Button onClick={onFirst} className="pagination-controller__button" variant="contained" >First</Button>
+          <Grid container justify="flex-start">
+            <Button onClick={onFirst} className="pagination-controller__button" variant="contained" >First</Button>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={onPrevious} variant="contained" ><KeyboardArrowLeft fontSize="large" /></Button>
+          <Grid container justify="center">
+            <Button onClick={onPrevious} variant="contained" ><KeyboardArrowLeft fontSize="large" /></Button>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
-          <div className="pagination-controller__range">
-            <h3>{resultsShown} of {totalResults}</h3>
-          </div>
+          <Grid container justify="center">
+            <div className="pagination-controller__range">
+              <h3 className="pagination-controller__page-number">{resultsShown} of {totalResults}</h3>
+            </div>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={onNext} variant="contained" ><KeyboardArrowRight fontSize="large" /></Button>
+          <Grid container justify="center">
+            <Button onClick={onNext} variant="contained" ><KeyboardArrowRight fontSize="large" /></Button>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={onLast} variant="contained" >Last</Button>
+          <Grid container justify="center">
+            <Button onClick={onLast} variant="contained" >Last</Button>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={onShowList} variant="contained" ><List fontSize="large" /></Button>
+          <Grid container justify="flex-end">
+            <Button onClick={onShowList} variant="contained" ><List fontSize="large" /></Button>
+          </Grid>
         </Grid>
       </Grid>
     </div>

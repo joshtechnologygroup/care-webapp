@@ -7,7 +7,7 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'idICMR' },
+    { headerName: 'ICMR ID', field: 'idICMR', sort: true },
     { headerName: 'Govt. ID', field: 'idGovt' },
     { headerName: 'Facility ID', field: 'idFacility', minWidth: 100 },
     { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },

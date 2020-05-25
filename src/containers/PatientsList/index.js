@@ -1,11 +1,11 @@
 import React from 'react';
-import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 
-import { CONFIG } from './config';
-
-import { patients } from 'Mockdata/patients_list.json';
+import TableComponent from 'Components/TableComponent';
+import Sort from 'Components/Sort';
 import PaginationController from 'Components/PaginationController';
+import { patients } from 'Mockdata/patients_list.json';
+import { CONFIG } from './config';
 
 export function PatientsList(props) {
 
@@ -14,18 +14,24 @@ export function PatientsList(props) {
       <Grid
         container
         direction="row"
-        justify="flex-end"
-        alignItems="flex-start"
+        justify="space-between"
+        alignItems="center"
       >
-        <PaginationController
-          resultsShown={10}
-          totalResults={56}
-          onFirst={() => { console.log('on First Page') }}
-          onPrevious={() => { console.log('on Previous Page') }}
-          onNext={() => { console.log('on Next Page') }}
-          onLast={() => { console.log('on Last Page') }}
-          onShowList={() => { console.log('on Show List') }}
-        />
+        <Grid item xs={12} sm={4} >
+          <Sort onSelect={() => console.log('on Sort')} />
+        </Grid>
+        <Grid item xs={12} sm={5} >
+          <PaginationController
+            resultsShown={10}
+            totalResults={56}
+            onFirst={() => { console.log('on First Page') }}
+            onPrevious={() => { console.log('on Previous Page') }}
+            onNext={() => { console.log('on Next Page') }}
+            onLast={() => { console.log('on Last Page') }}
+            onShowList={() => { console.log('on Show List') }}
+          />
+
+        </Grid>
       </Grid>
       <TableComponent
         modules={CONFIG.modules}
