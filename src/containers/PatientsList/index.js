@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 
-import TableComponent from 'Components/TableComponent';
 import Sort from 'Components/Sort';
 import PaginationController from 'Components/PaginationController';
 import { patients } from 'Mockdata/patients_list.json';
 import { CONFIG } from './config';
 
 export function PatientsList(props) {
+  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   return (
     <React.Fragment>
       <Grid
@@ -17,7 +18,7 @@ export function PatientsList(props) {
         alignItems="center"
       >
         <Grid item xs={12} sm={4} >
-          <Sort 
+          <Sort
             onSelect={(val) => console.log(`Sort By ${val} using API`)}
             options={CONFIG.columnDefs}
             onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
@@ -30,9 +31,8 @@ export function PatientsList(props) {
             onPrevious={() => { console.log('on Previous Page') }}
             onNext={() => { console.log('on Next Page') }}
             onLast={() => { console.log('on Last Page') }}
-            onShowList={() => { console.log('on Show List') }}
+            onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
-
         </Grid>
       </Grid>
       <TableComponent
@@ -49,6 +49,8 @@ export function PatientsList(props) {
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
         rowData={patients}
+        showColumnsPanel={showColumnsPanel}
+        onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
     </React.Fragment>
   );

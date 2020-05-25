@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 import { CONFIG } from './config';
-import { reports } from 'Mockdata/reports_list.json';
+import { inventory } from 'Mockdata/inventory_list.json';
 import PaginationController from 'Components/PaginationController';
 
-export function ReportsList(props) {
+export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   return (
     <React.Fragment>
@@ -38,7 +38,7 @@ export function ReportsList(props) {
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
-        rowData={reports}
+        rowData={inventory}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
@@ -46,4 +46,4 @@ export function ReportsList(props) {
   );
 }
 
-export default ReportsList;
+export default InventoryList;

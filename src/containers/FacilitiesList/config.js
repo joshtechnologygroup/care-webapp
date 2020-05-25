@@ -1,25 +1,33 @@
 import {
   OperationStatusRenderer,
-  OwnerRenderer
-} from 'Components/CellRenderer';
-import { GRID_CONFIG } from 'Constants/app.const';
-
+  OwnerRenderer,
+} from "Components/CellRenderer";
+import { GRID_CONFIG } from "Constants/app.const";
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'Facility Code', field: 'facilityCode', minWidth: 110 },
-    { headerName: 'Name', field: 'facilityName', minWidth: 150 },
-    { headerName: 'Address', field: 'facilityAddress', minWidth: 120 },
-    { headerName: 'District', field: 'facilityDistrict', minWidth: 100 },
-    { headerName: 'Beds #', field: 'bedsCapacity', minWidth: 90, isSortable: true },
-    { headerName: 'Occupied Beds #', field: 'bedsOccupied', minWidth: 140 },
-    { headerName: 'Available Beds #', field: 'bedsAvailable', minWidth: 130 },
-    { headerName: 'Total Patient #', field: 'totalPatient', minWidth: 120 },
-    { headerName: 'Positive Patient #', field: 'totalPositive', minWidth: 140, isSortable: true },
-    { headerName: 'Negative Patient #', field: 'totalNagative', minWidth: 140, isSortable: true },
-    { headerName: 'Doctor #', field: 'doctor', minWidth: 95, isSortable: true },
-    { headerName: 'Nurse #', field: 'nurse', minWidth: 85 },
-    { headerName: 'Other Staff #', field: 'otherStaff', minWidth: 120 },
+    { headerName: "Facility Code", field: "facility_code", minWidth: 110 },
+    { headerName: "Name", field: "name", minWidth: 150 },
+    { headerName: "Address", field: "address", minWidth: 120 },
+    { headerName: "district", field: "district", minWidth: 100 },
+    { headerName: "Facility Type", field: "facility_type", minWidth: 90 },
+    {
+      headerName: "Facility Ownership Type",
+      field: "owned_by",
+      minWidth: 140,
+    },
+    { headerName: "Total #", field: "total_patient", minWidth: 130, isSortable: true },
+    {
+      headerName: "Positive Patient #",
+      field: "positive_patient",
+      minWidth: 120,
+      isSortable: true
+    },
+    {
+      headerName: "Negative Patient #",
+      field: "negative_patient",
+      minWidth: 140,
+    },
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
@@ -35,6 +43,6 @@ export const CONFIG = {
   suppressContextMenu: GRID_CONFIG.suppressContextMenu,
   frameworkComponents: {
     OperationStatusRenderer: OperationStatusRenderer,
-    OwnerRenderer: OwnerRenderer
-  }
+    OwnerRenderer: OwnerRenderer,
+  },
 };

@@ -1,6 +1,5 @@
-import { 
-  GET
-} from "Src/constants";
+import { POST, PATCH, PUT, GET, APPLICATION_JSON } from "Src/constants";
+import * as CookieService from 'Services/CookieService';
 
 async function makeApiCall(base_url, method = GET, body = {}, headers = {}, params = {} ) {
     const url = new URL(base_url);
@@ -16,6 +15,12 @@ async function makeApiCall(base_url, method = GET, body = {}, headers = {}, para
     return await response;
 }
 
-export {
-    makeApiCall
-};
+async function makeAuthorizedApiCall(base_url, method = GET, body = {}, params = {} ) {
+    const headers = {
+        'Authorization': `Token ${ CookieService.getTokenCookie() }`, 
+        'Content-Type': APPLICATION_JSON,
+    };
+    return makeApiCall(base_url, method, body, headers, params)
+}
+
+export { makeApiCall, makeAuthorizedApiCall };

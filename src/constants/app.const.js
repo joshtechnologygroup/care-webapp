@@ -4,8 +4,8 @@ export const ReportType = [
         value: 'patient',
     },
     {
-        title: 'Fecility',
-        value: 'fecility',
+        title: 'Facility',
+        value: 'facility',
     },
 ];
 

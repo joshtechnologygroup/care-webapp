@@ -36,5 +36,14 @@
       "facilities": "Search",
       "patients": "Search Patient name or ID"
     }
-  }
+  },
+  "Add Patient": "Add Patient",
+  "Hospitals": "Hospitals",
+  "HCC": "HCC",
+  "Care Centers": "Care Centers",
+  "Private Quarantine": "Private Quarantine",
+  "Wards / Beds": "Wards / Beds",
+  "Doctor / Attendant": "Doctor / Attendant",
+  "Manage Users": "Manage Users",
+  "Facility Details": "Facility Details"
 }

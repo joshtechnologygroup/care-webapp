@@ -36,5 +36,14 @@
       "facilities": "खोज",
       "patients": "रोगी का नाम या आईडी खोजें"
     }
-  }
+  },
+  "Add Patient": "रोगी जोड़ें",
+  "Hospitals": "अस्पताल",
+  "HCC": "एचसीसी",
+  "Care Centers": "देखभाल केंद्र",
+  "Private Quarantine": "निजी संगरोध",
+  "Wards / Beds": "वार्ड / बेड",
+  "Doctor / Attendant": "डॉक्टर / परिचारक",
+  "Manage Users": "उपयोगकर्ताओं को प्रबंधित करें",
+  "Facility Details": "सुविधा विवरण"
 }

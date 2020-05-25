@@ -3,4 +3,12 @@ const API_V1 = 'api/v1/';
 export const LOGIN_URL = SERVER + API_V1 + 'accounts/login/';
 export const LOGOUT_URL = SERVER + API_V1 + 'accounts/logout/';
 export const PASSWORD_FORGOT_URL = SERVER + API_V1 + 'accounts/forgot-password/';
-export const PASSWORD_RESET_URL = SERVER + API_V1 + 'accounts/password-reset-confirm/{0}/{1}';
+export const PASSWORD_RESET_URL = SERVER + API_V1 + 'accounts/password-reset-confirm/{0}/{1}/';
+
+// Facilities
+export const FACILITY_LIST_URL = SERVER + API_V1 + 'facilities/facility'
+export const FACILITY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/facility-type'
+
+// commons
+export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/'
+export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type/'
