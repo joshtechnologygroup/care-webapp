@@ -1,12 +1,38 @@
-import React, {useState} from 'react';
-import TableComponent from 'Components/TableComponent';
+import React, {useState} from "react";
+import { connect } from "react-redux";
+import { useEffect } from "react";
+import TableComponent from "Components/TableComponent";
 import Grid from '@material-ui/core/Grid';
-import { CONFIG } from './config';
-import { facilities } from 'Mockdata/facilities_list.json';
+import { PropTypes } from 'prop-types';
+
+import { CONFIG } from "./config";
+import { getFacilitiesList, getFacilityTypeList } from "Actions/FacilitiesAction";
+import { getDistrictList, getOwnershipTypeList } from "Actions/MiscAction";
 import PaginationController from 'Components/PaginationController';
 
 export function FacilitiesList(props) {
-  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+    const {
+        fetchFacilityList,
+        fetchFacilityTypeList,
+        fetchDistrictList,
+        fetchFacilityOwnershipTypeList,
+        list,
+        queryParams,
+        distrcitsList,
+        ownershipTypesList,
+        facilityTypesList,
+    } = props;
+    const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+
+    useEffect(() => {
+        fetchFacilityList({});
+    }, [queryParams]);
+
+    useEffect(() => {
+        fetchFacilityTypeList();
+        fetchDistrictList();
+        fetchFacilityOwnershipTypeList();
+    }, []);
 
   return (
     <React.Fragment>
@@ -39,7 +65,7 @@ export function FacilitiesList(props) {
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
-        rowData={facilities}
+        rowData={list}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
@@ -47,4 +73,49 @@ export function FacilitiesList(props) {
   );
 }
 
-export default FacilitiesList;
+FacilitiesList.propTypes = {
+    list: PropTypes.arrayOf(PropTypes.object),
+    fetchFacilityList: PropTypes.func,
+    fetchFacilityTypeList: PropTypes.func,
+    fetchDistrictList: PropTypes.func,
+    fetchFacilityOwnershipTypeList: PropTypes.func,
+    queryParams: PropTypes.object,
+  };
+
+FacilitiesList.defaultProps = {
+    list: [],
+    fetchFacilityList: () => {},
+    fetchFacilityTypeList: () => {},
+    fetchDistrictList: () => {},
+    fetchFacilityOwnershipTypeList: () => {},
+    queryParams: {},
+};
+
+const mapStateToProps = state => {
+    const { facilities, districts, ownershipTypes, facilityTypes } = state;
+    return {
+        list: facilities.results,
+        distrcitsList: districts.results,
+        ownershipTypesList: ownershipTypes.results,
+        facilityTypesList: facilityTypes.results,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchFacilityList: params => {
+            dispatch(getFacilitiesList(params));
+        },
+        fetchFacilityTypeList: params => {
+            dispatch(getFacilityTypeList(params));
+        },
+        fetchDistrictList: params => {
+            dispatch(getDistrictList(params));
+        },
+        fetchFacilityOwnershipTypeList: params => {
+            dispatch(getOwnershipTypeList(params));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FacilitiesList);

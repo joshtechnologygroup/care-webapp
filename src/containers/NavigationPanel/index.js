@@ -115,8 +115,8 @@ export function NavigationPanel(props) {
         </ul>
       </div>
       <div>
-        <div className="nav-divider"></div>
-        <ul className="navbar-nav clearfix">
+        {/* <div className="nav-divider"></div> */}
+        {/* <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/reports') ? 'active' : ''}>
             <Link to={'/reports'} className="nav-link">
               <InsertDriveFile />
@@ -129,7 +129,7 @@ export function NavigationPanel(props) {
               {i18n.t('Settings')}
             </Link>
           </li>
-        </ul>
+        </ul> */}
         <div className="nav-divider"></div>
         <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/profile') ? 'active' : ''}>
