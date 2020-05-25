@@ -11,8 +11,10 @@ import Hidden from '@material-ui/core/Hidden';
 import Dashboard from 'Screens/Dashboard';
 import Patients from 'Screens/Patients';
 import Transfer from 'Screens/Transfer';
-import Fecilities from 'Screens/Fecilities';
+import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
+import Inventory from 'Screens/Inventory';
+import Beds from 'Screens/Facilities/Beds';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
@@ -50,12 +52,14 @@ function Home() {
                     <Switch>
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
-                        <Route path={`/fecilities`} component={Fecilities} />
+                        <Route path={`/facilities/beds`} component={Beds} />
+                        <Route path={`/facilities`} component={Facilities} />
                         <Route path={`/patients`} component={Patients} />
                         <Route path={`/transfer`} component={Transfer} />
                         <Route path={`/reports`} component={Reports} />
                         <Route path={`/settings`} component={Settings} />
                         <Route path={`/profile`} component={Profile} />
+                        <Route path={`/inventory`} component={Inventory} />
                         <Route path={`/error/:errorCode`}>
                             <ErrorPage text="Oops! Error occured." />
                         </Route>
