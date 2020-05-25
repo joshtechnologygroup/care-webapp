@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { connect } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import TableComponent from "Components/TableComponent";
 import Grid from "@material-ui/core/Grid";
 import { PropTypes } from "prop-types";
@@ -27,8 +27,9 @@ export function FacilitiesList(props) {
         facilityTypesList,
         count,
     } = props;
-    const itemsPerPage = 3;
+    const itemsPerPage = 4;
 
+    const [showColumnsPanel, setShowColumnsPanel] = useState(false);
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
@@ -102,7 +103,6 @@ export function FacilitiesList(props) {
     });
 
     useEffect(() => {
-        console.log(offset);
         fetchFacilityList({
             ...queryParams,
             offset: offset,
@@ -126,12 +126,9 @@ export function FacilitiesList(props) {
                     onPrevious={() => fetchPrevFacilities()}
                     onNext={() => fetchMoreFacilites()}
                     onLast={() => {
-                        console.log(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
                         setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
                     }}
-                    onShowList={() => {
-                        console.log("on Show List");
-                    }}
+                    onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
                 />
             </Grid>
             <TableComponent
@@ -153,6 +150,8 @@ export function FacilitiesList(props) {
                     facilityTypesList,
                     ownershipTypesList
                 )}
+                showColumnsPanel={showColumnsPanel}
+                onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
             />
         </React.Fragment>
     );

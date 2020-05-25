@@ -30,5 +30,14 @@
     "Invalid email or password": "अमान्य ईमेल या पासवर्ड",
     "SUBMIT": "प्रस्तुत",
     "This email is not registered with us.": "यह ईमेल हमारे साथ पंजीकृत नहीं है।",
-    "If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.": "यदि {{EMAIL}} के लिए कोई खाता मौजूद है, तो आगे के निर्देशों के साथ एक ई-मेल भेजा जाएगा।"
+    "If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.": "यदि {{EMAIL}} के लिए कोई खाता मौजूद है, तो आगे के निर्देशों के साथ एक ई-मेल भेजा जाएगा।",
+    "Add Patient": "रोगी जोड़ें",
+    "Hospitals": "अस्पताल",
+    "HCC": "एचसीसी",
+    "Care Centers": "देखभाल केंद्र",
+    "Private Quarantine": "निजी संगरोध",
+    "Wards / Beds": "वार्ड / बेड",
+    "Doctor / Attendant": "डॉक्टर / परिचारक",
+    "Manage Users": "उपयोगकर्ताओं को प्रबंधित करें",
+    "Facility Details": "सुविधा विवरण"
 }
