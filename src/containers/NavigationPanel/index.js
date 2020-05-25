@@ -84,8 +84,8 @@ export function NavigationPanel(props) {
               {i18n.t('Facilities')}
             </Link>
             <ul className="navbar-nav sub-nav clearfix">
-              <li className={getActivatedRoute('/facilities/wards-beds') ? 'active' : ''}>
-                <Link to={'/facilities/wards-beds'} className="nav-link">
+              <li className={getActivatedRoute('/facilities/beds') ? 'active' : ''}>
+                <Link to={'/facilities/beds'} className="nav-link">
                   {i18n.t('Wards / Beds')}
                 </Link>
               </li>
