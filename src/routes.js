@@ -15,3 +15,6 @@ export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type
 
 // Patients
 export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
+export const CLINICAL_STATUS_LIST_URL = SERVER + API_V1 + 'patients/clinical-status/'
+export const CLUSTER_GROUP_LIST_URL = SERVER + API_V1 + 'patients/patient-groups/'
+export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/'
