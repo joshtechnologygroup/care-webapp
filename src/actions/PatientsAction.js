@@ -1,6 +1,6 @@
 import * as CommonService from "Src/utils/services";
-import { GET, MAPPING_PATIENTS_ATTRIBUTES } from "Src/constants";
-import { PATIENT_LIST_URL, CLINICAL_STATUS_UPDATED_AT, PORTEA_CALLED_AT } from 'Src/routes';
+import { GET, MAPPING_PATIENTS_ATTRIBUTES, CLINICAL_STATUS_UPDATED_AT, PORTEA_CALLED_AT } from "Src/constants";
+import { PATIENT_LIST_URL } from 'Src/routes';
 import * as HttpStatus from 'http-status-codes'
 import moment from 'moment';
 import {
