@@ -3,20 +3,16 @@ import * as CookieService from 'Services/CookieService';
 
 async function makeApiCall(base_url, method = GET, body = {}, headers = {}, params = {} ) {
     const url = new URL(base_url);
+    let options = {
+        method: method,
+        headers: headers,
+    }
+    if(method !== GET){
+      options.body = body
+    }
     for (const x in params) url.searchParams.append(x, params[x])
-    if(method === POST || method === PATCH || method === PUT) {
-        return await fetch(url.href, {
-            method: method,
-            headers: headers,
-            body: body,
-        });
-    }
-    else {
-        return await fetch(url.href, {
-            method: method,
-            headers: headers,
-        });
-    }
+    const response = await fetch(url.href, options);
+    return await response;
 }
 
 async function makeAuthorizedApiCall(base_url, method = GET, body = {}, params = {} ) {
