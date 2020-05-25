@@ -111,12 +111,12 @@ export function FacilitiesList(props) {
                     resultsShown={10}
                     totalResults={56}
                     onFirst={() => {
-                        setOffset(offset => 0);
+                        setOffset(0);
                     }}
                     onPrevious={() => fetchPrevFacilities()}
                     onNext={() => fetchMoreFacilites()}
                     onLast={() => {
-                        setOffset(offset => count - itemsPerPage);
+                        setOffset(count - itemsPerPage);
                     }}
                     onShowList={() => {
                         console.log("on Show List");
