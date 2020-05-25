@@ -98,12 +98,12 @@ class ForgotPassword extends Component {
         >
           {i18n.t('Go back to Login page')}
         </Link>
-        <Link
+        {/* <Link
           to={'/contact'}
           className="text--link mt-10"
         >
           {i18n.t('Still having a problem. Need Help.')}
-        </Link>
+        </Link> */}
         {
           errors.form &&
           <p className="success-box">{errors.form}</p>
