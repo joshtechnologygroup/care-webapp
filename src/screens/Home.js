@@ -14,6 +14,7 @@ import Transfer from 'Screens/Transfer';
 import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
 import Inventory from 'Screens/Inventory';
+import Beds from 'Screens/Facilities/Beds';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
@@ -51,6 +52,7 @@ function Home() {
                     <Switch>
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
+                        <Route path={`/facilities/beds`} component={Beds} />
                         <Route path={`/facilities`} component={Facilities} />
                         <Route path={`/patients`} component={Patients} />
                         <Route path={`/transfer`} component={Transfer} />
