@@ -1,7 +1,7 @@
-import { POST, PATCH, PUT, APPLICATION_JSON } from "Src/constants";
+import { POST, PATCH, PUT, GET, APPLICATION_JSON } from "Src/constants";
 import * as CookieService from 'Services/CookieService';
 
-async function makeApiCall(base_url, method, body = {}, headers = {}, params = {} ) {
+async function makeApiCall(base_url, method = GET, body = {}, headers = {}, params = {} ) {
     const url = new URL(base_url);
     for (const x in params) url.searchParams.append(x, params[x])
     if(method === POST || method === PATCH || method === PUT) {
@@ -19,7 +19,7 @@ async function makeApiCall(base_url, method, body = {}, headers = {}, params = {
     }
 }
 
-async function makeAuthorizedApiCall(base_url, method, body = {}, params = {} ) {
+async function makeAuthorizedApiCall(base_url, method = GET, body = {}, params = {} ) {
     const headers = {
         'Authorization': `Token ${ CookieService.getTokenCookie() }`, 
         'Content-Type': APPLICATION_JSON,
