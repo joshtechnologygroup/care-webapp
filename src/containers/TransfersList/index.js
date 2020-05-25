@@ -5,6 +5,7 @@ import TableComponent from 'Components/TableComponent';
 import { patients_transfers } from 'Mockdata/patients_transfer_list.json';
 import PaginationController from 'Components/PaginationController';
 import { CONFIG } from './config';
+import Sort from 'Components/Sort';
 
 export function TransfersList(props) {
 
@@ -13,18 +14,27 @@ export function TransfersList(props) {
       <Grid
         container
         direction="row"
-        justify="flex-end"
-        alignItems="flex-start"
+        justify="space-between"
+        alignItems="center"
       >
-        <PaginationController
-          resultsShown={10}
-          totalResults={56}
-          onFirst={() => { console.log('on First Page') }}
-          onPrevious={() => { console.log('on Previous Page') }}
-          onNext={() => { console.log('on Next Page') }}
-          onLast={() => { console.log('on Last Page') }}
-          onShowList={() => { console.log('on Show List') }}
-        />
+        <Grid item xs={12} sm={4} >
+          <Sort
+            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            options={CONFIG.columnDefs}
+            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+        </Grid>
+        <Grid item xs={12} sm={5} >
+
+          <PaginationController
+            resultsShown={10}
+            totalResults={56}
+            onFirst={() => { console.log('on First Page') }}
+            onPrevious={() => { console.log('on Previous Page') }}
+            onNext={() => { console.log('on Next Page') }}
+            onLast={() => { console.log('on Last Page') }}
+            onShowList={() => { console.log('on Show List') }}
+          />
+        </Grid>
       </Grid>
       <TableComponent
         modules={CONFIG.modules}

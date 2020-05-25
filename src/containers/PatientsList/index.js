@@ -8,7 +8,6 @@ import { patients } from 'Mockdata/patients_list.json';
 import { CONFIG } from './config';
 
 export function PatientsList(props) {
-
   return (
     <React.Fragment>
       <Grid
@@ -18,7 +17,10 @@ export function PatientsList(props) {
         alignItems="center"
       >
         <Grid item xs={12} sm={4} >
-          <Sort onSelect={() => console.log('on Sort')} />
+          <Sort 
+            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            options={CONFIG.columnDefs}
+            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
         </Grid>
         <Grid item xs={12} sm={5} >
           <PaginationController
