@@ -1,30 +1,55 @@
 @import '../../styles/import';
 
+
+
+@mixin getPaperCss($paper-border-color, $paper-fill-color) {
+  border: solid 1px $paper-border-color;
+  background-color: $paper-fill-color;
+}
+
 .renderer-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    &__icon {
-        margin-left: 0.5rem;
-    }
+  &__icon {
+    margin-left: 0.5rem;
+  }
 
-    &__dot {
-        margin-right: 0.8rem;
-        height: 1.2rem;
-        width: 1.2rem;
-        background-color: $black;
-        border-radius: 50%;
-    }
+  &__dot {
+    margin-right: 0.8rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    background-color: $black;
+    border-radius: 50%;
+  }
 
-    &__dot-orange {
-        background-color: $orange;
-    }
+  &__dot-orange {
+    background-color: $orange;
+  }
 
-    &__dot-green {
-        background-color: $green;
-    }
+  &__dot-green {
+    background-color: $green;
+  }
 
-    &__dot-grey {
-        background-color: $grey-dot;
-    }
+  &__dot-grey {
+    background-color: $grey-dot;
+  }
+
+  &__paper {
+    text-align: center;
+    width: 8rem;
+    border-radius: 0.4rem;
+  }
+
+  &__paper-yellow {
+    @include getPaperCss($yellow-paper-border, $yellow-paper-fill);
+  }
+
+  &__paper-green {
+    @include getPaperCss($green-paper-border, $green-paper-fill);
+  }
+
+  &__paper-red {
+    @include getPaperCss($red-paper-border, $red-paper-fill);
+  }
 }

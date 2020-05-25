@@ -1,0 +1,55 @@
+{
+  "patients_transfers": [
+    {
+      "idICMR": 7676786,
+      "idGovt": 7676786,
+      "patientName": "Patient A",
+      "gender": "male",
+      "ageYears": 26,
+      "ageMonths": 623,
+      "contactNo": 9867459865,
+      "idFromFacility": 44,
+      "nameFromFacility": "Facility A",
+      "reqAtFromFacility": "Facility",
+      "idToFacility": 55,
+      "nameToFacility": "Facility B",
+      "statusToFacility": "Pending",
+      "upAtToFacility": "122334",
+      "commentsToFacility": "Fine"
+    },
+    {
+      "idICMR": 7676786,
+      "idGovt": 7676786,
+      "patientName": "Patient A",
+      "gender": "male",
+      "ageYears": 26,
+      "ageMonths": 623,
+      "contactNo": 9867459865,
+      "idFromFacility": 44,
+      "nameFromFacility": "Facility A",
+      "reqAtFromFacility": "Facility",
+      "idToFacility": 55,
+      "nameToFacility": "Facility B",
+      "statusToFacility": "Accepted",
+      "upAtToFacility": "122334",
+      "commentsToFacility": "Fine"
+    },
+    {
+      "idICMR": 7676786,
+      "idGovt": 7676786,
+      "patientName": "Patient A",
+      "gender": "male",
+      "ageYears": 26,
+      "ageMonths": 623,
+      "contactNo": 9867459865,
+      "idFromFacility": 44,
+      "nameFromFacility": "Facility A",
+      "reqAtFromFacility": "Facility",
+      "idToFacility": 55,
+      "nameToFacility": "Facility B",
+      "statusToFacility": "Rejected",
+      "upAtToFacility": "122334",
+      "commentsToFacility": "Fine"
+    }
+  ]
+}

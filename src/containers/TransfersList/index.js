@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TableComponent from 'Components/TableComponent';
-import { patients } from 'Mockdata/patients_list.json';
+import { patients_transfers } from 'Mockdata/patients_transfer_list.json';
 import { CONFIG } from './config';
 
 export function TransfersList(props) {
@@ -20,7 +20,7 @@ export function TransfersList(props) {
 				pivotPanelShow={CONFIG.pivotPanelShow}
 				frameworkComponents={CONFIG.frameworkComponents}
 				cellStyle={CONFIG.cellStyle}
-				rowData={patients}
+				rowData={patients_transfers}
 			/>
 		</div>
 	);

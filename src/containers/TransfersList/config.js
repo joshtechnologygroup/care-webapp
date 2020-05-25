@@ -1,5 +1,5 @@
 import {
-  FacilityTypeRenderer
+  FacilityStatusRenderer,
 } from 'Components/CellRenderer';
 import { GRID_CONFIG } from 'Constants/app.const';
 
@@ -8,19 +8,27 @@ export const CONFIG = {
   columnDefs: [
     { headerName: 'ICMR ID', field: 'idICMR' },
     { headerName: 'Govt. ID', field: 'idGovt' },
-    { headerName: 'Facility ID', field: 'idFacility', minWidth: 100 },
     { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },
-    { headerName: 'Age', field: 'age', minWidth: 70 },
     { headerName: 'Gender', field: 'gender' },
-    { headerName: 'Clinical Status', field: 'clinicalStatus', minWidth: 120 },
-    { headerName: 'Covid Status', field: 'covidStatus', minWidth: 110, },
-    { headerName: 'Health Conditions', field: 'healthConditions', minWidth: 140 },
-    { headerName: 'Admission Date', field: 'admissionDate', minWidth: 125 },
-    { headerName: 'Discharge Date', field: 'dischargeDate', minWidth: 125 },
-    { headerName: 'Patient District', field: 'patientDistrict', minWidth: 125 },
-    { headerName: 'Facility Type', field: 'facilityType', minWidth: 110, cellRenderer: 'FacilityTypeRenderer' },
-    { headerName: 'Facility', field: 'facility', },
-    { headerName: 'Action', field: 'action' },
+    { headerName: 'Age(Years)', field: 'ageYears', minWidth: 100 },
+    { headerName: 'Age(Months)', field: 'ageMonths', minWidth: 110 },
+    { headerName: 'Contact Mobile No.', field: 'contactNo', minWidth: 140 },
+    {
+      headerName: 'From Facility', children: [
+        { headerName: 'Facility ID', field: 'idFromFacility', minWidth: 100 },
+        { headerName: 'Facility Name', field: 'nameFromFacility', minWidth: 120 },
+        { headerName: 'Requested At', field: 'reqAtFromFacility', minWidth: 120 },
+      ]
+    },
+    {
+      headerName: 'To Facility', children: [
+        { headerName: 'Facility ID', field: 'idToFacility', minWidth: 100 },
+        { headerName: 'Facility Name', field: 'nameToFacility', minWidth: 120 },
+        { headerName: 'Status', field: 'statusToFacility', minWidth: 110, cellRenderer: 'FacilityStatusRenderer' },
+        { headerName: 'Status Updated At', field: 'upAtToFacility', minWidth: 130 },
+        { headerName: 'Comments', field: 'commentsToFacility', minWidth: 140 },
+      ]
+    },
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
@@ -34,6 +42,6 @@ export const CONFIG = {
   headerHeight: GRID_CONFIG.headerHeight,
   suppressContextMenu: GRID_CONFIG.suppressContextMenu,
   frameworkComponents: {
-    FacilityTypeRenderer: FacilityTypeRenderer,
+    FacilityStatusRenderer: FacilityStatusRenderer,
   }
 };

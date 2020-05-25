@@ -24,12 +24,12 @@
 
   .ag-ltr {
     .ag-cell {
-      border-right: 1px solid $cell-border-color;
+      border-left: 1px solid $cell-border-color;
     }
   }
 
   .ag-header-cell {
-    border-right: 1px solid $cell-border-color;
+    border-left: 1px solid $cell-border-color;
 
     &::after {
       display: none;
@@ -39,6 +39,16 @@
   .ag-header-group-cell {
     &::after {
       display: none;
+    }
+
+    &-label {
+      display: flex;
+      justify-content: center;
+    }
+
+    &[col-id*="0_0"],
+    &[col-id*="1_0"] {
+      border-left: solid 1px $cell-border-color;
     }
   }
 
