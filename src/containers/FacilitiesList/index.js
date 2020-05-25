@@ -2,11 +2,15 @@ import React, {useState} from "react";
 import { connect } from "react-redux";
 import { useEffect } from "react";
 import TableComponent from "Components/TableComponent";
-import Grid from '@material-ui/core/Grid';
-import { PropTypes } from 'prop-types';
+import Grid from "@material-ui/core/Grid";
+import { PropTypes } from "prop-types";
+import _ from "underscore";
 
 import { CONFIG } from "./config";
-import { getFacilitiesList, getFacilityTypeList } from "Actions/FacilitiesAction";
+import {
+    getFacilitiesList,
+    getFacilityTypeList,
+} from "Actions/FacilitiesAction";
 import { getDistrictList, getOwnershipTypeList } from "Actions/MiscAction";
 import PaginationController from 'Components/PaginationController';
 import Sort from 'Components/Sort';
@@ -17,95 +21,177 @@ export function FacilitiesList(props) {
         fetchFacilityTypeList,
         fetchDistrictList,
         fetchFacilityOwnershipTypeList,
-        list,
+        facilityList,
         queryParams,
-        distrcitsList,
+        districtsList,
         ownershipTypesList,
         facilityTypesList,
+        count,
     } = props;
+    const itemsPerPage = 4;
+
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(false);
+    const [hasPrev, setHasPrev] = useState(false);
+
+    const updateFacilityListWithNames = (
+        facilityList,
+        districtsList,
+        facilityTypesList,
+        ownershipTypesList
+    ) => {
+        if (
+            !_.isEmpty(districtsList) &&
+            !_.isEmpty(ownershipTypesList) &&
+            !_.isEmpty(facilityTypesList)
+        ) {
+            facilityList.map(facility => {
+                const district = districtsList.find(
+                    district => district.id === facility.district
+                );
+                if (district) {
+                    facility.district = district.name;
+                }
+                const ownershipType = ownershipTypesList.find(
+                    ownershipType => ownershipType.id === facility.owned_by
+                );
+                if (ownershipType) {
+                    facility.owned_by = ownershipType.name;
+                }
+                const facilityType = facilityTypesList.find(
+                    facilityType => facilityType.id === facility.facility_type
+                );
+                if (facilityType) {
+                    facility.facility_type = facilityType.name;
+                }
+                return facility;
+            });
+        }
+        return facilityList;
+    };
+
+    // Handle has more.
+    useEffect(() => {
+        if (!_.isEmpty(facilityList)) {
+            setHasPrev(offset - facilityList.length >= 0 ? true : false);
+            setHasMore(offset + facilityList.length < count ? true : false);
+        }
+    }, [facilityList, offset, count]);
+
+    const fetchMoreFacilites = () => {
+        if (hasMore) {
+            setOffset(offset + facilityList.length);
+        }
+    };
+
+    const fetchPrevFacilities = () => {
+        if (hasPrev) {
+            setOffset(offset - facilityList.length);
+        }
+    };
 
     useEffect(() => {
-        fetchFacilityList({});
-    }, [queryParams]);
+        if (!facilityTypesList) {
+            fetchFacilityTypeList();
+        }
+        if (!districtsList) {
+            fetchDistrictList();
+        }
+        if (!ownershipTypesList) {
+            fetchFacilityOwnershipTypeList();
+        }
+    });
 
     useEffect(() => {
-        fetchFacilityTypeList();
-        fetchDistrictList();
-        fetchFacilityOwnershipTypeList();
-    }, []);
+        fetchFacilityList({
+            ...queryParams,
+            offset: offset,
+        });
+    }, [queryParams, offset, fetchFacilityList]);
 
-  return (
-    <React.Fragment>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-      >
-        <Grid item xs={12} sm={3} >
-          <Sort
-            onSelect={(val) => console.log(`Sort By ${val} using API`)}
-            options={CONFIG.columnDefs}
-            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
-        </Grid>
-        <Grid item xs={12} sm={4} >
-
-          <PaginationController
-            resultsShown={10}
-            totalResults={56}
-            onFirst={() => { console.log('on First Page') }}
-            onPrevious={() => { console.log('on Previous Page') }}
-            onNext={() => { console.log('on Next Page') }}
-            onLast={() => { console.log('on Last Page') }}
-            onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
-          />
-        </Grid>
-      </Grid>
-      <TableComponent
-        modules={CONFIG.modules}
-        columnDefs={CONFIG.columnDefs}
-        rowHeight={CONFIG.rowHeight}
-        headerHeight={CONFIG.headerHeight}
-        autoGroupColumnDef={CONFIG.autoGroupColumnDef}
-        defaultColDef={CONFIG.defaultColDef}
-        rowSelection={CONFIG.rowSelection}
-        rowGroupPanelShow={CONFIG.rowGroupPanelShow}
-        pivotPanelShow={CONFIG.pivotPanelShow}
-        frameworkComponents={CONFIG.frameworkComponents}
-        cellStyle={CONFIG.cellStyle}
-        pagination={CONFIG.pagination}
-        rowData={list}
-        showColumnsPanel={showColumnsPanel}
-        onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
-      />
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
+              <Grid item xs={12} sm={3} >
+                <Sort
+                  onSelect={(val) => console.log(`Sort By ${val} using API`)}
+                  options={CONFIG.columnDefs}
+                  onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+              </Grid>
+              <Grid item xs={12} sm={4} >
+                <PaginationController
+                    resultsShown={10}
+                    totalResults={56}
+                    onFirst={() => {
+                        setOffset(0);
+                    }}
+                    onPrevious={() => fetchPrevFacilities()}
+                    onNext={() => fetchMoreFacilites()}
+                    onLast={() => {
+                        setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
+                    }}
+                    onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+                />
+              </Grid>
+            </Grid>
+            <TableComponent
+                modules={CONFIG.modules}
+                columnDefs={CONFIG.columnDefs}
+                rowHeight={CONFIG.rowHeight}
+                headerHeight={CONFIG.headerHeight}
+                autoGroupColumnDef={CONFIG.autoGroupColumnDef}
+                defaultColDef={CONFIG.defaultColDef}
+                rowSelection={CONFIG.rowSelection}
+                rowGroupPanelShow={CONFIG.rowGroupPanelShow}
+                pivotPanelShow={CONFIG.pivotPanelShow}
+                frameworkComponents={CONFIG.frameworkComponents}
+                cellStyle={CONFIG.cellStyle}
+                pagination={CONFIG.pagination}
+                rowData={updateFacilityListWithNames(
+                    facilityList,
+                    districtsList,
+                    facilityTypesList,
+                    ownershipTypesList
+                )}
+                showColumnsPanel={showColumnsPanel}
+                onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
+            />
+        </React.Fragment>
+    );
 }
 
 FacilitiesList.propTypes = {
-    list: PropTypes.arrayOf(PropTypes.object),
+    facilityList: PropTypes.arrayOf(PropTypes.object),
     fetchFacilityList: PropTypes.func,
     fetchFacilityTypeList: PropTypes.func,
     fetchDistrictList: PropTypes.func,
     fetchFacilityOwnershipTypeList: PropTypes.func,
     queryParams: PropTypes.object,
-  };
+    count: PropTypes.number,
+};
 
 FacilitiesList.defaultProps = {
-    list: [],
+    facilityList: [],
     fetchFacilityList: () => {},
     fetchFacilityTypeList: () => {},
     fetchDistrictList: () => {},
     fetchFacilityOwnershipTypeList: () => {},
     queryParams: {},
+    count: 0,
 };
 
 const mapStateToProps = state => {
     const { facilities, districts, ownershipTypes, facilityTypes } = state;
     return {
-        list: facilities.results,
-        distrcitsList: districts.results,
+        facilityList: facilities.results,
+        count: facilities.count,
+        districtsList: districts.results,
         ownershipTypesList: ownershipTypes.results,
         facilityTypesList: facilityTypes.results,
     };
