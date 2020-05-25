@@ -28,7 +28,6 @@ function ResetPassword(props){
     const { user_id, token } = props;
     if(!initial_password | !confirm_password | initial_password !== confirm_password){
       let error = {};
-      console.log(initial_password, confirm_password)
       if(!initial_password.length)
         error.initial_password = true
       else if(!confirm_password.length)

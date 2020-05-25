@@ -1,7 +1,6 @@
 import * as HttpStatus from 'http-status-codes';
 
 const dispatchAction = (actionType, response) => async (dispatch) => {
-    console.log(response);
     const data = await response.json();
     if (response.status === HttpStatus.OK) {
         dispatch({
