@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 import { useEffect } from "react";
 import TableComponent from "Components/TableComponent";
 import Grid from '@material-ui/core/Grid';
+import { PropTypes } from 'prop-types';
 
 import { CONFIG } from "./config";
 import { getFacilitiesList, getFacilityTypeList } from "Actions/FacilitiesAction";
-import { getDistrictList, getOwnershipTypeList } from "Actions/CommonAction";
+import { getDistrictList, getOwnershipTypeList } from "Actions/MiscAction";
 import PaginationController from 'Components/PaginationController';
 
 export function FacilitiesList(props) {
@@ -69,9 +70,21 @@ export function FacilitiesList(props) {
   );
 }
 
+FacilitiesList.propTypes = {
+    list: PropTypes.arrayOf(PropTypes.object),
+    fetchFacilityList: PropTypes.func,
+    fetchFacilityTypeList: PropTypes.func,
+    fetchDistrictList: PropTypes.func,
+    fetchFacilityOwnershipTypeList: PropTypes.func,
+    queryParams: PropTypes.object,
+  };
+
 FacilitiesList.defaultProps = {
     list: [],
     fetchFacilityList: () => {},
+    fetchFacilityTypeList: () => {},
+    fetchDistrictList: () => {},
+    fetchFacilityOwnershipTypeList: () => {},
     queryParams: {},
 };
 

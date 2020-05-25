@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import UserReducer from "Reducers/UserReducer";
 import { facilities, facilityTypes } from "Reducers/FacilityReducer";
-import { ownershipTypes, districts } from "Reducers/CommonReducer";
+import { ownershipTypes, districts } from "Reducers/MiscReducer";
 
 export default combineReducers({
     User: UserReducer,

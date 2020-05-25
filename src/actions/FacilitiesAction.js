@@ -1,45 +1,17 @@
-import * as HttpStatus from 'http-status-codes'
-
-import { makeApiCall } from "Src/utils/services";
+import * as CommonService from "Src/utils/services";
 import { FACILITY_LIST_URL, FACILITY_TYPE_LIST_URL } from 'Src/routes';
-import { GET, APPLICATION_JSON } from "Src/constants";
-import { GET_FACILITY_LIST, GET_FACILITY_TYPE_LIST } from 'Reducers/Types'
-import * as CookieService from 'Services/CookieService';
+import { GET } from "Src/constants";
+import { GET_FACILITY_LIST, GET_FACILITY_TYPE_LIST } from 'Reducers/Types';
+import { dispatchAction } from 'Actions/common';
 
 const getFacilitiesList = (params) => async (dispatch) => {
-    const headers = {
-        'Authorization': `Token ${ CookieService.getTokenCookie() }`, 
-        'Content-Type': APPLICATION_JSON,
-    };
-    const response = await makeApiCall(FACILITY_LIST_URL, GET, {}, headers, params)
-    const data = await response.json();
-    if (response.status === HttpStatus.OK) {
-        dispatch({
-            type: GET_FACILITY_LIST,
-            data: data
-        });
-        return { status: response.ok };
-    } else {
-        return { status: response.ok, error_message: data.non_field_errors };
-    }
+    const response = await CommonService.makeAuthorizedApiCall(FACILITY_LIST_URL, GET, {}, params)
+    dispatch(dispatchAction(GET_FACILITY_LIST, response));
 };
 
 const getFacilityTypeList = (params) => async (dispatch) => {
-    const headers = {
-        'Authorization': `Token ${ CookieService.getTokenCookie() }`, 
-        'Content-Type': APPLICATION_JSON,
-    };
-    const response = await makeApiCall(FACILITY_TYPE_LIST_URL, GET, {}, headers, params)
-    const data = await response.json();
-    if (response.status === HttpStatus.OK) {
-        dispatch({
-            type: GET_FACILITY_TYPE_LIST,
-            data: data
-        });
-        return { status: response.ok };
-    } else {
-        return { status: response.ok, error_message: data.non_field_errors };
-    }
+    const response = await CommonService.makeAuthorizedApiCall(FACILITY_TYPE_LIST_URL, GET, {}, params)
+    dispatch(dispatchAction(GET_FACILITY_TYPE_LIST, response));
 };
 
 export { getFacilitiesList, getFacilityTypeList }
