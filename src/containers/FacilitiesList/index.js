@@ -5,22 +5,15 @@ import TableComponent from "Components/TableComponent";
 import Grid from "@material-ui/core/Grid";
 import { PropTypes } from "prop-types";
 import _ from "underscore";
-
 import { CONFIG } from "./config";
-import {
-    getFacilitiesList,
-    getFacilityTypeList,
-} from "Actions/FacilitiesAction";
-import { getDistrictList, getOwnershipTypeList } from "Actions/MiscAction";
+import { getFacilitiesList, getFacilityDependencies } from "Actions/FacilitiesAction";
 import PaginationController from 'Components/PaginationController';
 import Sort from 'Components/Sort';
 
 export function FacilitiesList(props) {
     const {
         fetchFacilityList,
-        fetchFacilityTypeList,
-        fetchDistrictList,
-        fetchFacilityOwnershipTypeList,
+        fetchFacilityDependencies,
         facilityList,
         queryParams,
         districtsList,
@@ -92,14 +85,8 @@ export function FacilitiesList(props) {
     };
 
     useEffect(() => {
-        if (!facilityTypesList) {
-            fetchFacilityTypeList();
-        }
-        if (!districtsList) {
-            fetchDistrictList();
-        }
-        if (!ownershipTypesList) {
-            fetchFacilityOwnershipTypeList();
+        if (!facilityTypesList || !districtsList || !ownershipTypesList) {
+            fetchFacilityDependencies();
         }
     });
 
@@ -169,9 +156,7 @@ export function FacilitiesList(props) {
 FacilitiesList.propTypes = {
     facilityList: PropTypes.arrayOf(PropTypes.object),
     fetchFacilityList: PropTypes.func,
-    fetchFacilityTypeList: PropTypes.func,
-    fetchDistrictList: PropTypes.func,
-    fetchFacilityOwnershipTypeList: PropTypes.func,
+    fetchFacilityDependencies: PropTypes.func,
     queryParams: PropTypes.object,
     count: PropTypes.number,
 };
@@ -179,9 +164,7 @@ FacilitiesList.propTypes = {
 FacilitiesList.defaultProps = {
     facilityList: [],
     fetchFacilityList: () => {},
-    fetchFacilityTypeList: () => {},
-    fetchDistrictList: () => {},
-    fetchFacilityOwnershipTypeList: () => {},
+    fetchFacilityDependencies: () => {},
     queryParams: {},
     count: 0,
 };
@@ -202,14 +185,8 @@ const mapDispatchToProps = dispatch => {
         fetchFacilityList: params => {
             dispatch(getFacilitiesList(params));
         },
-        fetchFacilityTypeList: params => {
-            dispatch(getFacilityTypeList(params));
-        },
-        fetchDistrictList: params => {
-            dispatch(getDistrictList(params));
-        },
-        fetchFacilityOwnershipTypeList: params => {
-            dispatch(getOwnershipTypeList(params));
+        fetchFacilityDependencies: params => {
+            dispatch(getFacilityDependencies(params));
         },
     };
 };

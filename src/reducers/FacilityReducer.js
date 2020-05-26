@@ -1,4 +1,4 @@
-import { GET_FACILITY_LIST, GET_FACILITY_TYPE_LIST, GET_FACILITY_INVENTORY_LIST } from "Reducers/Types";
+import { GET_FACILITY_LIST, GET_FACILITY_TYPE_LIST, GET_FACILITY_INVENTORY_LIST, GET_INVENTORY_TYPE_LIST } from "Reducers/Types";
 
 const initialState = {};
 
@@ -26,10 +26,20 @@ const facilityInventoryList = (state = initialState, action) => {
     if (action.type === GET_FACILITY_INVENTORY_LIST) {
         return { 
             ...state,
-            ...action.results
+            ...action.data
         };
     }
     return state;
 };
 
-export { facilities, facilityTypes, facilityInventoryList };
+const InventoryTypeList = (state = initialState, action) => {
+    if (action.type === GET_INVENTORY_TYPE_LIST) {
+        return { 
+            ...state,
+            ...action.data
+        };
+    }
+    return state;
+};
+
+export { facilities, facilityTypes, facilityInventoryList, InventoryTypeList };

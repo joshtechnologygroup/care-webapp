@@ -3,38 +3,101 @@ import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 import Sort from 'Components/Sort';
 import { CONFIG } from './config';
+import moment from 'moment';
 import PaginationController from 'Components/PaginationController';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getInventoryList } from 'Actions/FacilitiesAction';
-
+import { getInventoryList, getInventoryDependencies } from 'Actions/FacilitiesAction';
+import _ from "underscore";
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [ offset, setOffset ] = useState(0);
-  const itemsPerPage = 4
+  const [hasMore, setHasMore] = useState(false);
+  const [hasPrev, setHasPrev] = useState(false);
+  const {
+    fetchInventoryList,
+    fetchInventoryDependencies,
+    inventoryList,
+    queryParams,
+    inventoryTypesList,
+    facilityList,
+    count,
+  } = props;
+  const itemsPerPage = 2
 
-  const handleOffset = async (offset) => {
-      const response = await props.getInventoryList(offset);
-      if(response)
-      setOffset(offset);
+  const updateInventoryListWithNames = (
+    facilityList,
+    inventoryTypesList,
+    inventoryList,
+  ) => {
+    if (
+        !_.isEmpty(inventoryTypesList) &&
+        !_.isEmpty(facilityList)
+    ) { 
+      inventoryList.map(inventory => {
+            const date = new Date(inventory.updated_at)
+            inventory.updated_at = moment(date)
+            const inventoryType = inventoryTypesList.find(      
+              inventoryType => inventoryType.id === inventory.item
+            );
+            if (inventoryType) {
+              inventory.item = inventoryType.name;
+            }
+            const facilityListType = facilityList.find(
+                facilityListType => facilityListType.id === inventory.facility
+            );
+            if (facilityListType) {
+              inventory.facility = facilityListType.name;
+            }
+            return inventory;
+        });
+    }
+    console.log(inventoryList)
+    return inventoryList;
+};
+useEffect(() => {
+  if (!_.isEmpty(inventoryList)) {
+      setHasPrev(offset - inventoryList.length >= 0 ? true : false);
+      setHasMore(offset + inventoryList.length < count ? true : false);
   }
-  
-  const fetchMoreInventory = () => {
-      const lastPage = Math.floor((props.count - 1) / itemsPerPage) * itemsPerPage;
-      if (offset + props.inventoryList.length <= lastPage) {
-          setOffset(offset + props.inventoryList.length);
-      }
-  };
+}, [inventoryList, offset, count]);
 
-  const fetchPrevInventory = () => {
-      if (offset - props.inventoryList.length >= 0) {
-          setOffset(offset - InventoryList.length);
-      }
-  };
+const fetchMoreInventory = () => {
+  if (hasMore) {
+      setOffset(offset + inventoryList.length);
+  }
+};
+
+const fetchPrevInventory = () => {
+  if (hasPrev) {
+      setOffset(offset - inventoryList.length);
+  }
+};
 
   useEffect(() => {
-    handleOffset(offset)
-  }, [offset]);
+      if (!inventoryTypesList || !facilityList) {
+        fetchInventoryDependencies();
+      }
+  });
+
+  useEffect(() => {
+      fetchInventoryList({
+        ...queryParams,
+        offset: offset,
+      });
+    }, [queryParams, offset, fetchInventoryList]);
+  
+  // const fetchMoreInventory = () => {
+  //     const lastPage = Math.floor((props.count - 1) / itemsPerPage) * itemsPerPage;
+  //     if (offset + props.inventoryList.length <= lastPage) {
+  //         setOffset(offset + props.inventoryList.length);
+  //     }
+  // };
+
+  // const fetchPrevInventory = () => {
+  //     if (offset - props.inventoryList.length >= 0) {
+  //         setOffset(offset - InventoryList.length);
+  //     }
+  // };
 
   return (
     <React.Fragment>
@@ -54,11 +117,10 @@ export function InventoryList(props) {
 
           <PaginationController
             resultsShown={1}
-            totalResults={props.count}
+            totalResults={count}
             onFirst={() => {
               setOffset(0);
           }}
-            onFirst={() => { handleOffset(0) }}
             onPrevious={() => fetchPrevInventory()}
             onNext={() => fetchMoreInventory()}
             onLast={() => {
@@ -81,7 +143,11 @@ export function InventoryList(props) {
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
-        rowData={props.inventoryList}
+        rowData={updateInventoryListWithNames(
+          facilityList,
+          inventoryTypesList,
+          inventoryList
+        )}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
@@ -90,14 +156,33 @@ export function InventoryList(props) {
 }
 
 
-const mapStateToProps = (state) => ({
-  inventoryList:state.inventory.inventory,
-  count:state.inventory.count
-});
-
-InventoryList.propTypes = {
-  inventoryList: PropTypes.array.isRequired,
-  getInventoryList: PropTypes.func.isRequired,
+InventoryList.defaultProps = {
+  inventoryList: [],
+  fetchInventoryList: () => {},
+  fetchInventoryDependencies: () => {},
+  queryParams: {},
+  count: 0,
 };
 
-export default connect(mapStateToProps, { getInventoryList })(InventoryList);
+const mapStateToProps = state => {
+  const { inventory, inventoryTypes, facilities } = state;
+  return {
+      inventoryList: inventory.results,
+      count: inventory.count,
+      inventoryTypesList: inventoryTypes.results,
+      facilityList: facilities.results,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      fetchInventoryList: params => {
+          dispatch(getInventoryList(params));
+      },
+      fetchInventoryDependencies: params => {
+          dispatch(getInventoryDependencies(params));
+      },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(InventoryList);
