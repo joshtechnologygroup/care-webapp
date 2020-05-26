@@ -54,5 +54,15 @@
     "Years": "Years",
     "Months": "Months",
     "Submit": "Submit",
-    "Edit": "Edit"
+    "Edit": "Edit",
+    "Contact Number belongs to?": "Contact Number belongs to?",
+    "Municipal Ward": "Municipal Ward",
+    "City": "City",
+    "District": "District",
+    "State": "State",
+    "Pincode": "Pincode",
+    "Native State": "Native State",
+    "Native Country": "Native Country",
+    "Patient natively belongs to some other Indian state?": "Patient natively belongs to some other Indian state?",
+    "Patient natively belongs to a foreign country?": "Patient natively belongs to a foreign country?"
 }

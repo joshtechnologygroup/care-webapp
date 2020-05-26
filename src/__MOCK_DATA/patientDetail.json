@@ -1,0 +1,28 @@
+{
+    "patientDetail": {
+        "personal": {
+            "firstName": "John",
+            "lastName": "Doe",
+            "image": null,
+            "imageSrc": null,
+            "idICMR": "Cx42153799",
+            "idGovt": "4245 67778 2828 2524",
+            "gender": "Male",
+            "ageMonths": 3,
+            "ageYears": 22,
+            "clusterGroup": "A"
+        },
+        "contact": {
+            "number": "9876543210",
+            "numberBelongsTo": 1,
+            "address": "Hno: 15, Street 3, Industrial Area",
+            "municipalWard": "Kalimpong",
+            "city": "Kolkata",
+            "district": "Kalimpong",
+            "state": 2,
+            "pincode": "665144",
+            "nativeState": 3,
+            "nativeCountry": 2
+        }
+    }
+}

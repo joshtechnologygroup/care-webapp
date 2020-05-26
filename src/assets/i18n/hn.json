@@ -54,5 +54,15 @@
     "Years": "साल",
     "Months": "महीने",
     "Submit": "प्रस्तुत",
-    "Edit": "संपादित करें"
+    "Edit": "संपादित करें",
+    "Contact Number belongs to?": "संपर्क नंबर किसका है?",
+    "Municipal Ward": "नगर निगम का वार्ड",
+    "City": "शहर",
+    "District": "जिला",
+    "State": "राज्य",
+    "Pincode": "पिन कोड",
+    "Native State": "मूल राज्य",
+    "Native Country": "मातृभूमि",
+    "Patient natively belongs to some other Indian state?": "रोगी मूल रूप से किसी अन्य भारतीय राज्य का है?",
+    "Patient natively belongs to a foreign country?": "रोगी मूल रूप से एक विदेशी देश से संबंधित है?"
 }

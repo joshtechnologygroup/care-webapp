@@ -9,13 +9,13 @@ const useStyles = makeStyles(theme =>
             marginBottom: theme.typography.pxToRem(16),
             '& .MuiFormLabel-root': {
                 fontSize: '1.4em',
-
             },
             '& .MuiInputLabel-shrink': {
                 fontSize: '1.864em',
             },
             '& .MuiInputBase-input': {
                 fontSize: '1.6em',
+                lineHeight: 1,
             }
         }
     })

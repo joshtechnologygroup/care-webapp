@@ -12,6 +12,11 @@ import { EditOutlined, PhoneOutlined, RoomOutlined, HomeOutlined } from '@materi
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
 
+// IMORTING MOCKCHOICES
+import { countryChoices } from 'Mockdata/countryChoices.json';
+import { stateChoices } from 'Mockdata/stateChoices.json';
+import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
+
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
@@ -56,7 +61,13 @@ export default function ContactDetail(props) {
                             {i18n.t('Phone number')}
                         </Typography>
                         <Typography variant="h6">
-                            {profile.number} ({profile.numberBelongsTo})
+                            {profile.number} (
+                                {
+                                    relationshipChoices.map(choice => {
+                                        return choice.id === profile.numberBelongsTo ? (choice.name) : ''
+                                    })
+                                    
+                                })
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={(profile.nativeState || profile.nativeCountry) ? 6 : 9} className="pt-0">
@@ -71,7 +82,11 @@ export default function ContactDetail(props) {
                             {profile.district}, {profile.city}
                         </Typography>
                         <Typography variant="h6">
-                            {profile.state}-{profile.pincode}
+                            {
+                                stateChoices.map(choice => {
+                                    return choice.id === profile.state ? (choice.name) : ''
+                                })
+                            } - {profile.pincode}
                         </Typography>
                     </Grid>
                         {
@@ -82,7 +97,16 @@ export default function ContactDetail(props) {
                                     {i18n.t('Native Place')}
                                 </Typography>
                                 <Typography variant="h6">
-                                    {profile.nativeState}{profile.nativeCountry}
+                                {
+                                    stateChoices.map(choice => {
+                                        return choice.id === profile.nativeState ? (choice.name) : ''
+                                    })
+                                }
+                                {
+                                    countryChoices.map(choice => {
+                                        return choice.id === profile.nativeCountry ? (choice.name) : ''
+                                    })
+                                }
                                 </Typography>
                             </Grid>
                         }

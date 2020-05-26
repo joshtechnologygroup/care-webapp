@@ -1,0 +1,32 @@
+{
+  "countryChoices": [
+    {
+        "id": 1,
+        "name": "India"
+    },
+    {
+        "id": 2,
+        "name": "United States"
+    },
+    {
+        "id": 3,
+        "name": "South Korea"
+    },
+    {
+        "id": 4,
+        "name": "Japan"
+    },
+    {
+        "id": 5,
+        "name": "Nepal"
+    },
+    {
+        "id": 6,
+        "name": "Sri Lanka"
+    },
+    {
+        "id": 7,
+        "name": "Mauritius"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import i18n from "i18next";
 
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
+import ContactDetailForm from 'Components/Forms/ContactDetail';
 
 class AddPatient extends Component {
     constructor(props) {
@@ -23,7 +24,14 @@ class AddPatient extends Component {
             <div>
                 <h2 className="page-header header-container">{i18n.t('Add Patient')}</h2>
                 <div className="page-container">
-                    <PersonalDetailForm profile={profile.personal} handleSubmit={ (data) => this.onSubmit(data, formList[0]) } /> :
+                    <PersonalDetailForm
+                        profile={profile.personal}
+                        handleSubmit={ (data) => this.onSubmit(data, formList[0]) }
+                    />
+                    <ContactDetailForm
+                        profile={profile.contact}
+                        handleSubmit={ (data) => this.onSubmit(data, formList[1]) }
+                    />
                 </div>
             </div>
         );
