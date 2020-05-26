@@ -44,11 +44,11 @@ export const InventoryForm = (props) => {
         <CustomModal open={open} onClose={onClose} title={i18n.t('Inventory')}>
              <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Formik
-                        render={
+                    <Formik>
+                        {
                             props => <Form data={data} {...props} handleChange={handleChange} />
                         }
-                    />
+                    </Formik>
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl component="fieldset" error={true}>

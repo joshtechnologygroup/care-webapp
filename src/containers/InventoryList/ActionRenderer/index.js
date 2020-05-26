@@ -6,7 +6,6 @@ import InventoryForm from 'Containers/InventoryForm';
 
 export const ActionRenderer = (item) => {
   const { data } = item;
-  console.log('-----', data);
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
