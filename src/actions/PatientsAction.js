@@ -9,7 +9,7 @@ import {
     GET_PATIENT_LIST
 } from 'Reducers/Types'
 
-const getPatientList = (url,) => async (dispatch) => {
+const getPatientList = (url) => async (dispatch) => {
     const [ 
         status, 
         patient_list, 
