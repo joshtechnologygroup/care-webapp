@@ -56,7 +56,7 @@ export function NavigationPanel(props) {
               {i18n.t('Transfer')}
             </Link>
           </li>
-          <li className={`${getActivatedRoute('/patients') ? 'active' : ''}`}>
+          <li className={getActivatedRoute('/patients') ? 'active' : ''}>
             <Link to={'/patients'} className="nav-link">
               <People />
               {i18n.t('Patients')}
