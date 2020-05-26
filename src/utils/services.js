@@ -2,6 +2,7 @@ import { GET, APPLICATION_JSON } from "Src/constants";
 import * as CookieService from 'Services/CookieService';
 
 async function makeApiCall(base_url, method = GET, body = {}, headers = {}, params = {} ) {
+    console.log(base_url)
     const url = new URL(base_url);
     let options = {
         method: method,
