@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 
@@ -15,10 +15,13 @@ export function PatientsList( props ) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [ page, setPage ] = useState(1);
 
-  const handlePage = async ( next_page ) => {
-    const response = await props.getPatientList(next_page);
-    if(response)
-      setPage(next_page);
+  useEffect(() => {
+      handleApiCall();
+      //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ page ]);
+
+  const handleApiCall = async () => {
+      await props.getPatientList(1);
   }
 
   return (
@@ -37,12 +40,12 @@ export function PatientsList( props ) {
         </Grid>
         <Grid item xs={12} sm={4} >
           <PaginationController
-            resultsShown={1}  
+            resultsShown={page}  
             totalResults={props.count}
-            onFirst={() => handlePage(1)}
-            onPrevious={() => handlePage(page-1) }
-            onNext={() => handlePage(page+1)}
-            onLast={() => handlePage(props.count)}
+            onFirst={() => setPage(1)}
+            onPrevious={() => setPage(page-1) }
+            onNext={() => setPage(page+1)}
+            onLast={() => setPage(props.count)}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>
