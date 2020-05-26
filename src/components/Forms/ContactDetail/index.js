@@ -14,10 +14,9 @@ export default function ContactDetailForm(props) {
     city: Yup.string("Please enter City").required('Please enter City'),
     district: Yup.string("Please enter district").required('Please enter district'),
     state: Yup.string("Please enter state").required('Please enter state'),
-    pincode: Yup.number("Please enter pincode").required('Please enter pincode') //.test('len', 'Invalid Pincode', val => {console.log(val); return val.length === 6}),
+    pincode: Yup.number("Please enter pincode").required('Please enter pincode') //.test('len', 'Invalid Pincode', val =>  val.length === 6),
   });
   const submit= (data) => {
-    console.log(data);
     props.handleSubmit(data);
   };
   return (

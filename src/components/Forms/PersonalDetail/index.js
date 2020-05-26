@@ -18,7 +18,6 @@ export default function PersonalDetailForm(props) {
     clusterGroup: Yup.string("Please enter Cluster group").required('Cluster group is required'),
   });
   const submit= (data) => {
-    console.log(data);
     props.handleSubmit(data);
   };
   return (

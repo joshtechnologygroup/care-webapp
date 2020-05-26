@@ -41,14 +41,12 @@ export default function Form(props) {
   } = props;
 
   const change = (name, e) => {
-    console.log(e);
     handleChange(e);
     setFieldTouched(e.target.name, true, false);
   };
   const setProfileImage = (file, image) => {
     setFieldValue('image', file);
     setFieldValue('imageSrc', image);
-    console.log(image)
   };
   return (
   <form onSubmit={handleSubmit}>

@@ -47,14 +47,12 @@ export default function Form(props) {
   } = props;
 
   const change = (name, e) => {
-    console.log(e);
     handleChange(e);
     setFieldTouched(e.target.name, true, false);
   };
   // var nativeStateExist = false;
   // var nativeCountryExist = false;
   const setNativePlace = (event) => {
-    console.log(event, event.target.name, event.target.checked)
     if (event.target.checked) {
       if (event.target.name === 'nativeStateExist') {
         setFieldValue('nativeCountry', undefined);

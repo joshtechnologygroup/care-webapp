@@ -31,7 +31,6 @@ class PatientDetail extends Component {
         [key]: value
       }
     });
-    console.log(this.state)
   }
   onSubmit = (data, key) => {
     console.log("submit", key, data);

@@ -10,7 +10,6 @@ export default function ProfileImageInput(props) {
 
   const change = (img) => {
     if (img) {
-      console.log(img)
       let reader = new FileReader();
       reader.readAsDataURL(img);
       reader.onloadend = () => {
