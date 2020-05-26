@@ -9,6 +9,21 @@ export const ReportType = [
     },
 ];
 
+export const FacilityStatus = [
+    {
+        title: 'Pending',
+        value: 'pending',
+    },
+    {
+        title: 'Accepted',
+        value: 'accepted',
+    },
+    {
+        title: 'Rejected',
+        value: 'rejected',
+    },
+];
+
 export const Juridiction = [
     {
         title: 'PMC',

@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Header from 'Containers/Header';
+import { useTranslation } from "react-i18next";
 
 import InventoryList from 'Containers/InventoryList';
 import InventoryForm from 'Containers/InventoryForm';
@@ -17,6 +18,8 @@ export const Inventory = () => {
     const handleClose = () => {
         setOpen(false);
     }
+
+    const { i18n } = useTranslation();
 
     return (
         <Grid
@@ -34,7 +37,7 @@ export const Inventory = () => {
                             onClick={handleClick}
                             startIcon={<ListAlt />}
                         >
-                            ADD NEW INVENTORY
+                            {i18n.t('ADD NEW INVENTORY')}
                     </Button>
                     </div>
                 </Header>

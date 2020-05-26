@@ -24,9 +24,9 @@ export function PatientsList( props ) {
   }, [ ]);
 
   const handleApiCall = async ( url, next_page ) => {
-    const response = await props.getPatientList(url, next_page);
+    const response = await props.getPatientList( url );
     if(!response)
-      setPage(next_page)
+      setPage( next_page );
   }
 
   return (

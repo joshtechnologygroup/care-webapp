@@ -5,16 +5,27 @@ import {
 import { useTranslation } from "react-i18next";
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom';
-import { Dashboard, SettingsOutlined, InsertDriveFile, People, ExitToApp, SyncAlt, LocationCity, AccountCircle, ListAlt } from '@material-ui/icons';
+import {
+  Dashboard,
+  // SettingsOutlined,
+  // InsertDriveFile,
+  People,
+  ExitToApp,
+  SyncAlt,
+  LocationCity,
+  AccountCircle,
+  ListAlt } from '@material-ui/icons';
 import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
 import { logout } from 'Actions/AuthAction';
+import { setData, getData } from 'Utils/local-storage';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 export function NavigationPanel(props) {
   const { i18n } = useTranslation();
   function changeLang(e) {
+    setData("lang", e.target.value || 'en');
     i18n.changeLanguage(e.target.value || 'en');
   };
   function getActivatedRoute(path) {
@@ -146,7 +157,7 @@ export function NavigationPanel(props) {
           </li>
         </ul>
         <div className="lang-wrap">
-          <select onChange={changeLang} defaultValue={'en'}>
+          <select onChange={changeLang} defaultValue={getData("lang") || "en"}>
             <option value="en">English</option>
             <option value="hn">Hindi</option>
           </select>

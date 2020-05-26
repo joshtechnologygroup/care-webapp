@@ -36,6 +36,7 @@ export default function Form(props) {
         console.log('data in edit mode', data);
         handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
     }, []);
+
     return (
         <form>
             <Grid item container spacing={2}>

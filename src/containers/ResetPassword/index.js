@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ function ResetPassword(props){
     error_message: ''
   });
   const [success, setSuccess] = useState('');
-
+  const { t } = props;
   const handleSubmit = async () => {
     const { user_id, token } = props;
     if(!initial_password | !confirm_password | initial_password !== confirm_password){
@@ -46,10 +46,10 @@ function ResetPassword(props){
         ( status_code === HttpStatus.OK ) ?
             success = SUCCESS_TEMPLATE :
             error_message = ERROR
-        setSuccess(i18n.t(success));
+        setSuccess(t(success));
         setErrors({
           ...errors,
-          error_message: i18n.t(error_message),
+          error_message: t(error_message),
         });
     }
   }
@@ -57,14 +57,14 @@ function ResetPassword(props){
   return (
     <div className="login__content">
       <Typography variant="h5" className="mt-24">
-        {i18n.t('Create a new Password')}
+        {t('Create a new Password')}
       </Typography>
       <TextField
         type="password"
         name="initial_password"
         variant="outlined"
         className="form-field"
-        placeholder={i18n.t('Password')}
+        placeholder={t('Password')}
         onChange={e => setInitialPassword(e.target.value)}
         value={initial_password}
         error={errors.initial_password}
@@ -75,7 +75,7 @@ function ResetPassword(props){
         name="confirm_password"
         variant="outlined"
         className="form-field"
-        placeholder={i18n.t('Confirm Password')}
+        placeholder={t('Confirm Password')}
         onChange={e => setConfirmPassword(e.target.value)}
         value={confirm_password}
         error={errors.confirm_password}
@@ -88,13 +88,13 @@ function ResetPassword(props){
         className="btn"
         onClick={() => handleSubmit()}
       >
-        {i18n.t('CHANGE PASSWORD')
+        {t('CHANGE PASSWORD')
       }</Button>
       <Link
         to={'/login'}
         className="text--link"
       >
-        {i18n.t('Go back to Login page')}
+        {t('Go back to Login page')}
       </Link>
 
       {
@@ -116,4 +116,4 @@ ResetPassword.propTypes = {
   reset_password: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { reset_password })(ResetPassword);
+export default connect(mapStateToProps, { reset_password })(withTranslation()(ResetPassword));
