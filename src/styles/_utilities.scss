@@ -28,13 +28,19 @@
 .pb-0 {
   padding-bottom: 0 !important;
 }
+.py-8 {
+  padding: 8px !important;
+}
 
+// Alignment
 .text-right {
   text-align: right !important;
 }
 .text-center {
   text-align: center !important;
 }
+
+// Flex
 .d-flex {
   display: flex;
 }

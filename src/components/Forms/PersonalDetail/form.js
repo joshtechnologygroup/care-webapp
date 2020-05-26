@@ -156,7 +156,7 @@ export default function Form(props) {
                     variant="contained"
                     color="primary"
                     disableElevation
-                    size="medium"
+                    className="btn py-8"
                   >
                     {i18n.t('Submit')}
                   </Button>
