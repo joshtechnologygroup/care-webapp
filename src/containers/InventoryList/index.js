@@ -53,7 +53,7 @@ export function InventoryList(props) {
         <Grid item xs={12} sm={4}>
 
           <PaginationController
-            resultsShown={props.inventoryList.length}
+            resultsShown={1}
             totalResults={props.count}
             onFirst={() => {
               setOffset(0);
