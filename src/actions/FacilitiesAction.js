@@ -2,7 +2,6 @@ import * as Routes from 'Src/routes';
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 import * as HttpStatus from 'http-status-codes'
-import moment from 'moment';
 import * as CommonService from "Src/utils/services";
 import { GET, MAPPING_INVENTORY_ATTRIBUTES, UPDATED_AT } from "Src/constants";;
 
