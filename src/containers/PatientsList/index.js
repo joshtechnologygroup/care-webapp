@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 
+import Sort from 'Components/Sort';
+import PaginationController from 'Components/PaginationController';
+import { patients } from 'Mockdata/patients_list.json';
 import { CONFIG } from './config';
 
-import { patients } from 'Mockdata/patients_list.json';
-import PaginationController from 'Components/PaginationController';
-
 export function PatientsList(props) {
-
+  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   return (
     <React.Fragment>
       <Grid
         container
         direction="row"
-        justify="flex-end"
-        alignItems="flex-start"
+        justify="space-between"
+        alignItems="center"
       >
-        <PaginationController
-          resultsShown={10}
-          totalResults={56}
-          onFirst={() => { console.log('on First Page') }}
-          onPrevious={() => { console.log('on Previous Page') }}
-          onNext={() => { console.log('on Next Page') }}
-          onLast={() => { console.log('on Last Page') }}
-          onShowList={() => { console.log('on Show List') }}
-        />
+        <Grid item xs={12} sm={3} >
+          <Sort
+            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            options={CONFIG.columnDefs}
+            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+        </Grid>
+        <Grid item xs={12} sm={4} >
+          <PaginationController
+            resultsShown={10}
+            totalResults={56}
+            onFirst={() => { console.log('on First Page') }}
+            onPrevious={() => { console.log('on Previous Page') }}
+            onNext={() => { console.log('on Next Page') }}
+            onLast={() => { console.log('on Last Page') }}
+            onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+          />
+        </Grid>
       </Grid>
       <TableComponent
         modules={CONFIG.modules}
@@ -41,6 +49,8 @@ export function PatientsList(props) {
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
         rowData={patients}
+        showColumnsPanel={showColumnsPanel}
+        onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
     </React.Fragment>
   );

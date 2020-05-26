@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
+import { withTranslation } from 'react-i18next';
 
 class Dashboard extends Component {
-    render() {
-        return (
-            <div>
-                <h2>{i18n.t('Dashboard')}</h2>
-            </div>
-        );
-    }
+  render() {
+    const { t } = this.props;
+    return (
+      <div>
+        <h2>{t('Dashboard')}</h2>
+      </div>
+    );
+  }
 }
 
-export default Dashboard;
+export default withTranslation()(Dashboard);

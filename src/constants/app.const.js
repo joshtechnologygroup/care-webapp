@@ -4,8 +4,23 @@ export const ReportType = [
         value: 'patient',
     },
     {
-        title: 'Fecility',
-        value: 'fecility',
+        title: 'Facility',
+        value: 'facility',
+    },
+];
+
+export const FacilityStatus = [
+    {
+        title: 'Pending',
+        value: 'pending',
+    },
+    {
+        title: 'Accepted',
+        value: 'accepted',
+    },
+    {
+        title: 'Rejected',
+        value: 'rejected',
     },
 ];
 
@@ -32,9 +47,9 @@ export const GRID_CONFIG = {
     rowHeight: 40,
     headerHeight: 40,
     editable: false,
-    sortable: true,
+    sortable: false,
     resizable: true,
-    filter: true,
+    filter: false,
     flex: 1,
     suppressContextMenu: true,
     minWidth: 90,

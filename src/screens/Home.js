@@ -13,8 +13,10 @@ import Patients from 'Screens/Patients';
 import PatientDetail from 'Screens/PatientDetail';
 import AddPatient from 'Screens/AddPatient';
 import Transfer from 'Screens/Transfer';
-import Fecilities from 'Screens/Fecilities';
+import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
+import Inventory from 'Screens/Inventory';
+import Beds from 'Screens/Facilities/Beds';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
@@ -23,7 +25,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import logo from 'Assets/images/logo.svg';
 
 function Home() {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (isOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -52,7 +54,8 @@ function Home() {
                     <Switch>
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
-                        <Route path={`/fecilities`} component={Fecilities} />
+                        <Route path={`/facilities/beds`} component={Beds} />
+                        <Route path={`/facilities`} component={Facilities} />
                         <Route exact path={`/patients`} component={Patients} />
                         <Route path={`/patients/add`} component={AddPatient} />
                         <Route path={`/patients/:patientId`} component={PatientDetail} />
@@ -60,6 +63,7 @@ function Home() {
                         <Route path={`/reports`} component={Reports} />
                         <Route path={`/settings`} component={Settings} />
                         <Route path={`/profile`} component={Profile} />
+                        <Route path={`/inventory`} component={Inventory} />
                         <Route path={`/error/:errorCode`}>
                             <ErrorPage text="Oops! Error occured." />
                         </Route>

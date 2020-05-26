@@ -18,6 +18,8 @@ In the project directory, you can run:
 
 Install all dependencies required for development.
 
+Also install Redux Extention for parallelly viewing the changes in redux state.<br />
+Open [https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en](Redux DevTools) to download it in the browser.
 
 ### `npm start`
 

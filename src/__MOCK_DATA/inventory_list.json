@@ -1,0 +1,32 @@
+{
+  "inventory": [
+    {
+      "facilityName": "Facility Name",
+      "type": "Type",
+      "requiredNo": "500",
+      "currentNo": "100",
+      "updatedAt": "1590145200"
+    },
+    {
+      "facilityName": "Facility Name",
+      "type": "Type",
+      "requiredNo": "500",
+      "currentNo": "100",
+      "updatedAt": "1590145200"
+    },
+    {
+      "facilityName": "Facility Name",
+      "type": "Type",
+     "requiredNo": "500",
+      "currentNo": "100",
+      "updatedAt": "1590145200"
+    },
+    {
+      "facilityName": "Facility Name",
+      "type": "Type",
+      "requiredNo": "500",
+      "currentNo": "100",
+      "updatedAt": "1590145200"
+    }
+  ]
+}

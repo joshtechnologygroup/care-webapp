@@ -40,9 +40,9 @@ export function AuthUIContainer(props) {
           <img src={logo} alt={i18n.t('Covid Control')} />
         </div>
         <h1 className="heading--xl">
-          <span>{i18n.t('Manage.')}</span>
-          <span>{i18n.t('Control.')}</span>
-          <span>{i18n.t('Save.')}</span>
+          <span>{i18n.t('Login_Manage')}</span>
+          <span>{i18n.t('Login_Control')}</span>
+          <span>{i18n.t('Login_Save')}</span>
         </h1>
       </Grid>
     </Grid>
