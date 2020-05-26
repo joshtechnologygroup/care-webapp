@@ -28,7 +28,6 @@ export default function Filters({ onSeeMore, options }) {
         </Grid>
         <Grid item xs={8} md={9}>
           <Grid container direction="row" spacing={2} alignItems="center">
-            {console.log('ss')}
             {
               filterOptions.map((option) => {
                 if (option.cellRendererParams) {
