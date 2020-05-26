@@ -10,13 +10,13 @@ export const CONFIG = {
     { headerName: "Name", field: "name", minWidth: 150 },
     { headerName: "Address", field: "address", minWidth: 120 },
     { headerName: "district", field: "district", minWidth: 100 },
-    { headerName: "Facility Type", field: "facility_type", minWidth: 90, cellRendererParams: { isSortable: true, filterType: 'date' } },
+    { headerName: "Facility Type", field: "facility_type", minWidth: 90, cellRendererParams: { isSortable: true, filterType: 'date', filterPriority: true } },
     {
       headerName: "Facility Ownership Type",
       field: "owned_by",
       minWidth: 140,
     },
-    { headerName: "Total #", field: "total_patient", minWidth: 130, cellRendererParams: { isSortable: true, filterType: 'number' } },
+    { headerName: "Total #", field: "total_patient", minWidth: 130, cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true } },
     {
       headerName: "Positive Patient #",
       field: "positive_patient",

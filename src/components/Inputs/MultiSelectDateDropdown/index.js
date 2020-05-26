@@ -81,6 +81,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName }) {
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Grid container justify="space-around">
                 <KeyboardDatePicker
+                  fullWidth
                   disableToolbar
                   variant="inline"
                   format="MM/dd/yyyy"
@@ -102,6 +103,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName }) {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
+                    fullWidth
                     disableToolbar
                     variant="inline"
                     format="MM/dd/yyyy"

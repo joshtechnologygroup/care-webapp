@@ -125,7 +125,7 @@ export function FacilitiesList(props) {
             onSeeMore={() => { setShowOverlay(!showOverlay) }} />
         </Grid>
       </Grid>
-      <div className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
+      <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
       <div className="container-padding">
         <Grid
           className="sort-pagination"

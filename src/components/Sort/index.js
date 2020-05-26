@@ -12,13 +12,13 @@ export default function Sort({ onSelect, options, onToggleSort }) {
   return (
     <div className="sort">
       <Grid container direction="row" spacing={1} alignItems="center">
-        <Grid item xs={2}>
+        <Grid item xs={2} md={3}>
           <div className="sort__heading">{i18n.t('sortText')}</div>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={8} md={8}>
           <Dropdown onSelect={onSelect} options={options} />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2} md={1}>
           <SortToggler onToggleSort={onToggleSort} />
         </Grid>
       </Grid>

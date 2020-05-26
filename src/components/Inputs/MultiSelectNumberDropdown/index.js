@@ -74,6 +74,7 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName }) {
           </MenuItem>
           <MenuItem value="" onClick={handleOpen}>
             <Input
+              fullWidth
               value={fromValue}
               onChange={(e) => setFromValue(e.currentTarget.value)}
               onKeyDown={handleKeyDown}
@@ -83,6 +84,7 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName }) {
           {subDropdownValue === 'Range' ?
             <MenuItem value="" onClick={handleOpen}>
               <Input
+                fullWidth
                 name="to"
                 value={toValue}
                 onChange={(e) => setToValue(e.currentTarget.value)}
