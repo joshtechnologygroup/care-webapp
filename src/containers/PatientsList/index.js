@@ -8,6 +8,7 @@ import { getPatientList } from 'Actions/PatientsAction';
 import Sort from 'Components/Sort';
 import PaginationController from 'Components/PaginationController';
 import { PATIENT_LIST_URL } from 'Src/routes';
+import { PAGINATION_LIMIT } from 'Src/constants'
 // import { patients } from 'Mockdata/patients_list.json';
 
 import PropTypes from 'prop-types';
@@ -18,13 +19,14 @@ export function PatientsList( props ) {
   const [ page, setPage ] = useState(0);
 
   useEffect(() => {
-      handleApiCall(page);
+      handleApiCall(StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), 0);
       //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ page ]);
+  }, [ ]);
 
-  const handleApiCall = async ( next_page ) => {
-    const url = StringUtils.formatVarString(PATIENT_LIST_URL, [ next_page ]);
-    props.getPatientList(url, next_page);
+  const handleApiCall = async ( url, next_page ) => {
+    const response = await props.getPatientList(url, next_page);
+    if(!response)
+      setPage(next_page)
   }
 
   return (
@@ -44,11 +46,11 @@ export function PatientsList( props ) {
         <Grid item xs={12} sm={4} >
           <PaginationController
             resultsShown={page}  
-            totalResults={props.count}
-            onFirst={() => setPage( 0 )}
-            onPrevious={() => setPage( page-1 ) }
-            onNext={() => { if( page<= props.count-1 ) setPage( page+1 )}}
-            onLast={() => setPage( props.count-1 )}
+            totalResults={props.count-1}
+            onFirst={() => handleApiCall( PATIENT_LIST_URL, 0 )}
+            onPrevious={() => handleApiCall( props.prev, page-1 ) }
+            onNext={() => { handleApiCall( props.next, page+1 )}}
+            onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (props.count-1) ]), props.count-1 )}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>

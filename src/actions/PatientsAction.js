@@ -57,6 +57,7 @@ const getPatientList = (url) => async (dispatch) => {
             type: GET_PATIENT_LIST,
             data: results
         });
+        return results.patients.length === 0
     }
 };
 
