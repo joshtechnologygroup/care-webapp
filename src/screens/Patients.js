@@ -7,26 +7,26 @@ import PatientsList from 'Containers/PatientsList';
 import { Search } from 'Components/Inputs';
 
 class Patients extends Component {
-	render() {
-		return (
-			<Grid
-				container
-				direction="column"
-				className="outer-container"
-			>
-				<div className="primary-bg-light">
-					<Header>
-						<div className="header-container__search-container">
-							<Search searchPlaceholder={i18n.t('search.placeholder.patients')} />
-						</div>
-					</Header>
-					<div className="table-container">
-						<PatientsList />
-					</div>
-				</div>
-			</Grid>
-		);
-	}
+  render() {
+    return (
+      <Grid
+        container
+        direction="column"
+        className="outer-container"
+      >
+        <div className="primary-bg-light">
+          <Header>
+            <div className="header-container__search-container">
+              <Search searchPlaceholder={i18n.t('search.placeholder.patients')} />
+            </div>
+          </Header>
+          <div className="main-container">
+            <PatientsList />
+          </div>
+        </div>
+      </Grid>
+    );
+  }
 }
 
 export default Patients;
