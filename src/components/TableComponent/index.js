@@ -6,11 +6,11 @@ import GridColumns from './GridColumns';
 import './TableComponent.scss';
 
 class TableComponent extends Component {
+  state = {
+    api: null
+  }
   constructor (props) {
     super(props);
-    this.state = {
-      api: null,
-    };
 
     this.onGridReady = this.onGridReady.bind(this);
     this.onChange = this.onChange.bind(this);

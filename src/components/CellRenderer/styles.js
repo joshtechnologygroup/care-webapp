@@ -15,6 +15,9 @@ const styles = theme => ({
   mainIcon: {
     fontSize: theme.typography.pxToRem(38),
   },
+  formControl: {
+    minWidth: 85,
+  },
 });
 
 export default styles;
