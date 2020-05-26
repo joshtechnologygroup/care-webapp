@@ -63,3 +63,12 @@
 .lang-wrap {
   float: right;
 }
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-icon {
+  display: flex;
+  margin: 3px;
+}

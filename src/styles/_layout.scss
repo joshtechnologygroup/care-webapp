@@ -11,6 +11,10 @@
     padding: 2rem 3rem;
     height: 100vh;
     overflow: auto;
+    background-color: rgba($black,.04);
+    @include for-phone-only {
+        padding: 2rem 1.5rem;
+    }
 }
 
 .full-height {
@@ -43,9 +47,11 @@
 }
 
 .page-header {
-    padding: 2rem 3rem;
-    text-align: right;
+    padding: 1.6rem 3rem;
     background: $white;
+    @include for-phone-only {
+        padding: 1.6rem 1.5rem;
+    }
 }
 
 .primary-bg-light {

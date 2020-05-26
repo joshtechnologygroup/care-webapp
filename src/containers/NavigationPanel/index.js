@@ -5,7 +5,7 @@ import {
 import { useTranslation } from "react-i18next";
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from 'react-router-dom'
-import { Dashboard, SettingsOutlined, InsertDriveFile, People, ExitToApp, SyncAlt, LocationCity, AccountCircle } from '@material-ui/icons';
+import { Dashboard, SettingsOutlined, InsertDriveFile, People, ExitToApp, SyncAlt, LocationCity, AccountCircle, Add } from '@material-ui/icons';
 import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
 import { logout } from 'Actions/AuthAction';
@@ -45,10 +45,13 @@ export function NavigationPanel(props) {
               {i18n.t('Facilities')}
             </Link>
           </li>
-          <li className={getActivatedRoute('/patients') ? 'active' : ''}>
+          <li className={`nav-item + ${getActivatedRoute('/patients') ? 'active' : ''}`}>
             <Link to={'/patients'} className="nav-link">
               <People />
               {i18n.t('Patients')}
+            </Link>
+            <Link className="nav-icon" to={'/patients/add'}>
+              <Add color="primary" />
             </Link>
           </li>
           <li className={getActivatedRoute('/transfer') ? 'active' : ''}>

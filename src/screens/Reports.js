@@ -24,7 +24,7 @@ export const Reports = () => {
             className="outer-container"
         >
             <div className="primary-bg-light">
-                <div className="page-header header-container">
+                <div className="page-header header-container text-right">
                     <Button
                         variant="contained"
                         color="primary"

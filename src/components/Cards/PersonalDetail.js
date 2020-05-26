@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import {
+    Grid,
+    Card,
+    CardContent,
+    Typography,
+    IconButton,
+    makeStyles,
+    createStyles,
+    Tooltip,
+} from '@material-ui/core';
 import { EditOutlined } from '@material-ui/icons';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import patientFemale from 'Assets/images/patient-male.svg';
-import patientMale from 'Assets/images/patient-female.svg';
+import patientMale from 'Assets/images/patient-male.svg';
+import patientFemale from 'Assets/images/patient-female.svg';
 import { PropTypes } from 'prop-types';
 
 const useStyles = makeStyles(theme =>
@@ -55,7 +58,7 @@ export default function PersonalDetail(props) {
                 <Grid container spacing={4}>
                     <Grid item className="p-0">
                         <div className={`${classes.image} flex-center`}>
-                            <img className={`${classes.img} + ${profile.image ? '' : classes.imgNull}`} src={profile.image ? profile.image : profile.gender === 'male' ? patientMale: patientFemale} alt={profile.firstName} />
+                            <img className={`${classes.img} + ${profile.imageSrc ? '' : classes.imgNull}`} src={profile.imageSrc ? profile.imageSrc : profile.gender === 'Male' ? patientMale: patientFemale} alt={profile.firstName} />
                         </div>
                     </Grid>
                     <Grid item>
@@ -63,7 +66,7 @@ export default function PersonalDetail(props) {
                             {profile.firstName} {profile.lastName}
                         </Typography>
                         <Typography variant="h6" color="textSecondary">
-                            {i18n.t(profile.gender)}, {profile.Age.years ? profile.Age.years + ' ' + i18n.t('years'): '' } {profile.Age.months? profile.Age.months + ' ' + i18n.t('months'): '' }
+                            {i18n.t(profile.gender)}, {profile.ageYears ? profile.ageYears + ' ' + i18n.t('years'): '' } {profile.ageMonths? profile.ageMonths + ' ' + i18n.t('months'): '' }
                         </Typography>
                         <Typography variant="h6" color="textSecondary">
                             {i18n.t('Govt. ID')}: {profile.idGovt}
@@ -77,9 +80,11 @@ export default function PersonalDetail(props) {
                     </Grid>
                 </Grid>
             </CardContent>
-            <IconButton className={classes.action} onClick={handleEdit}>
-                <EditOutlined fontSize="large"/>
-            </IconButton>
+            <Tooltip title={i18n.t('Edit')}>
+                <IconButton className={classes.action} onClick={handleEdit}>
+                    <EditOutlined fontSize="large"/>
+                </IconButton>
+            </Tooltip>
         </Card>
     );
 }

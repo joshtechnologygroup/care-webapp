@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
+import {
+    Grid,
+    Card,
+    CardHeader,
+    CardContent,
+    IconButton,
+    Typography,
+} from '@material-ui/core';
 import { EditOutlined, PhoneOutlined, RoomOutlined, HomeOutlined } from '@material-ui/icons';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import { PropTypes } from 'prop-types';
 
 const useStyles = makeStyles(theme =>
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme =>
     })
 );
 
-export default function PatientContactDetail(props) {
+export default function ContactDetail(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
 
@@ -40,7 +41,6 @@ export default function PatientContactDetail(props) {
     return (
         <Card className={classes.root} elevation={4}>
             <CardHeader
-                className="pb-0"
                 title={i18n.t('Contact Details')}
                 action={
                     <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={handleEdit}>
@@ -50,7 +50,7 @@ export default function PatientContactDetail(props) {
             />
             <CardContent>
                 <Grid container spacing={4}>
-                    <Grid item md={3}>
+                    <Grid item xs={12} sm={3} className="pt-0">
                         <Typography variant="h6" color="primary" className="d-flex">
                             <PhoneOutlined className={classes.icon} />
                             {i18n.t('Phone number')}
@@ -59,7 +59,7 @@ export default function PatientContactDetail(props) {
                             {profile.number} ({profile.numberBelongsTo})
                         </Typography>
                     </Grid>
-                    <Grid item md={(profile.nativeState || profile.nativeCountry) ? 6 : 9}>
+                    <Grid item xs={12} sm={(profile.nativeState || profile.nativeCountry) ? 6 : 9} className="pt-0">
                         <Typography variant="h6" color="primary" className="d-flex">
                             <RoomOutlined className={classes.icon} />
                             {i18n.t('Address')}
@@ -76,7 +76,7 @@ export default function PatientContactDetail(props) {
                     </Grid>
                         {
                             (profile.nativeState || profile.nativeCountry) &&
-                            <Grid item md={3}>
+                            <Grid item xs={12} sm={3} className="pt-0">
                                 <Typography variant="h6" color="primary" className="d-flex">
                                     <HomeOutlined className={classes.icon} />
                                     {i18n.t('Native Place')}
@@ -92,11 +92,11 @@ export default function PatientContactDetail(props) {
     );
 }
 
-PatientContactDetail.propTypes = {
+ContactDetail.propTypes = {
     profile: PropTypes.object.isRequired,
     handleEdit: PropTypes.func
 }
 
-PatientContactDetail.defaultProps = {
+ContactDetail.defaultProps = {
     profile: {}
 }

@@ -46,7 +46,13 @@
     "Patient Detail": "रोगी का विवरण",
     "Contact Details": "संपर्क विवरण",
     "Address": "पता",
-    "Phone number": "Phone number",
+    "Phone number": "फ़ोन नंबर",
     "Native Place": "पैतृक स्थान",
-    "Click to change photo": "फोटो बदलने के लिए क्लिक करें"
+    "Click to change photo": "फोटो बदलने के लिए क्लिक करें",
+    "First Name": "पहला नाम",
+    "Last Name": "उपनाम",
+    "Years": "साल",
+    "Months": "महीने",
+    "Submit": "प्रस्तुत",
+    "Edit": "संपादित करें"
 }
