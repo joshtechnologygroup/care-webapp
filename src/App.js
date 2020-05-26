@@ -17,7 +17,7 @@ function App() {
         <Route path="/forgot-password" component={ForgotPasswordPage} />
         <Route path="/contact" component={ContactPage} />
         <Route path="/reset-password/:user_id/:token" component={ResetPasswordPage} />
-        <ProtectedRoute path="/" component={Home} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   );

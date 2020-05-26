@@ -22,7 +22,7 @@ export default function Dropdown({ onSelect, options }) {
             <em>None</em>
           </MenuItem>
           {
-            options.map((option) => option['isSortable'] === true ?
+            options.map((option) => option.cellRendererParams && option.cellRendererParams['isSortable'] === true ?
               <MenuItem key={option['field']} value={option['field']}>
                 {option['headerName']}
               </MenuItem> :

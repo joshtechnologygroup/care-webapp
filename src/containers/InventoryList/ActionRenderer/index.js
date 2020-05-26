@@ -6,7 +6,6 @@ import InventoryForm from 'Containers/InventoryForm';
 
 export const ActionRenderer = (item) => {
   const { data } = item;
-  console.log('-----', data);
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -20,7 +19,7 @@ export const ActionRenderer = (item) => {
     <AgProvider>
       <div className="ag-cell-icon-wrap">
         <IconButton aria-label="delete" onClick={handleClick}>
-          <EditIcon fontSize="large" color="primary" />
+          <EditIcon color="primary" />
         </IconButton>
       </div>
       <InventoryForm data={data} open={open} onClose={handleClose} />

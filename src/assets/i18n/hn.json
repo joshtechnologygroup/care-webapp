@@ -14,9 +14,9 @@
   "Select Juridiction": "Juridiction चुनें",
   "Select Date or Range": "दिनांक या श्रेणी का चयन करें",
   "Download": "डाउनलोड",
-  "Manage.": "प्रबंधन करें।",
-  "Control.": "नियंत्रण करें।",
-  "Save.": "सहेजें।",
+  "Login_Manage": "प्रबंधन करें।",
+  "Login_Control": "नियंत्रण करें।",
+  "Login_Save": "सहेजें।",
   "Welcome!": "स्वागत है!",
   "LOG IN": "लॉग इन करें",
   "Forgot Password?": "पासवर्ड भूल गए?",
@@ -24,7 +24,7 @@
   "Forgot your password": "अपना कूट शब्द भूल गए",
   "Email": "ईमेल",
   "Password": "कुंजिका",
-  "Enter your email address to reset your password. You may need to check your spam folder in your email.": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल पता दर्ज करें। आपको अपने ईमेल में अपने स्पैम फोल्डर को जांचना होगा।",
+  "enter_email_text": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल पता दर्ज करें। आपको अपने ईमेल में अपने स्पैम फोल्डर को जांचना होगा।",
   "Still having a problem. Need Help.": "फिर भी समस्या हो रही है। मदद की ज़रूरत है।",
   "Go back to Login page": "लॉगइन पेज पर वापस जाएं",
   "Invalid email or password": "अमान्य ईमेल या पासवर्ड",
@@ -45,5 +45,7 @@
   "Wards / Beds": "वार्ड / बेड",
   "Doctor / Attendant": "डॉक्टर / परिचारक",
   "Manage Users": "उपयोगकर्ताओं को प्रबंधित करें",
-  "Facility Details": "सुविधा विवरण"
+  "Facility Details": "सुविधा विवरण",
+  "ADD NEW INVENTORY": "जोड़ें नई इन्वेंटरी",
+  "Inventory": "इन्वेंटरी"
 }

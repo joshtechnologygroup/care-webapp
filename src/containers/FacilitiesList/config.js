@@ -16,12 +16,12 @@ export const CONFIG = {
       field: "owned_by",
       minWidth: 140,
     },
-    { headerName: "Total #", field: "total_patient", minWidth: 130, isSortable: true },
+    { headerName: "Total #", field: "total_patient", minWidth: 130, cellRendererParams: { isSortable: true } },
     {
       headerName: "Positive Patient #",
       field: "positive_patient",
       minWidth: 120,
-      isSortable: true
+      cellRendererParams: { isSortable: true }
     },
     {
       headerName: "Negative Patient #",

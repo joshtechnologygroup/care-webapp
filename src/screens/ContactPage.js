@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 import { LocalPhoneOutlined } from '@material-ui/icons'
 import { Link } from 'react-router-dom';
 import AuthUIContainer from 'Containers/AuthUIContainer';
@@ -7,8 +7,9 @@ import AuthUIContainer from 'Containers/AuthUIContainer';
 class ContactPage extends Component {
 
   render() {
+    const { t } = this.props;
     return (
-      <AuthUIContainer head={i18n.t('Still having a problem?')}>
+      <AuthUIContainer head={t('Still having a problem?')}>
         <h1 className="contact-heading mt-24">
           <LocalPhoneOutlined
             color="primary"
@@ -25,11 +26,11 @@ class ContactPage extends Component {
           to={'/login'}
           className="text--link"
         >
-          {i18n.t('Go back to Login page')}
+          {t('Go back to Login page')}
         </Link>
       </AuthUIContainer>
     );
   }
 }
 
-export default ContactPage;
+export default withTranslation()(ContactPage);

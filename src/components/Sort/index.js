@@ -9,11 +9,11 @@ export default function Sort({ onSelect, options, onToggleSort  }) {
 
   return (
     <div className="sort">
-      <Grid container direction="row" spacing={2} alignItems="center">
-        <Grid item xs={3}>
+      <Grid container direction="row" spacing={1} alignItems="center">
+        <Grid item xs={2}>
           <div className="sort__heading">SORT</div>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={8}>
           <Dropdown onSelect={onSelect} options={options} />
         </Grid>
         <Grid item xs={2}>

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { CONFIG } from './config';
 import { facilityBeds } from 'Mockdata/facility_beds_list.json';
 import PaginationController from 'Components/PaginationController';
+import Sort from 'Components/Sort';
 
 export function BedsList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
@@ -12,18 +13,27 @@ export function BedsList(props) {
       <Grid
         container
         direction="row"
-        justify="flex-end"
-        alignItems="flex-start"
+        justify="space-between"
+        alignItems="center"
       >
-        <PaginationController
-          resultsShown={10}
-          totalResults={56}
-          onFirst={() => { console.log('on First Page') }}
-          onPrevious={() => { console.log('on Previous Page') }}
-          onNext={() => { console.log('on Next Page') }}
-          onLast={() => { console.log('on Last Page') }}
-          onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
-        />
+        <Grid item xs={12} sm={3} >
+          <Sort
+            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            options={CONFIG.columnDefs}
+            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+        </Grid>
+        <Grid item xs={12} sm={4} >
+
+          <PaginationController
+            resultsShown={10}
+            totalResults={56}
+            onFirst={() => { console.log('on First Page') }}
+            onPrevious={() => { console.log('on Previous Page') }}
+            onNext={() => { console.log('on Next Page') }}
+            onLast={() => { console.log('on Last Page') }}
+            onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+          />
+        </Grid>
       </Grid>
       <TableComponent
         modules={CONFIG.modules}

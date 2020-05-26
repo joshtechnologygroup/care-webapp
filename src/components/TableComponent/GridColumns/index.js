@@ -40,7 +40,7 @@ export function GridColumns(props) {
                 {
                     columnDefs && columnDefs.map(item => {
                     return (<FormControlLabel
-                                key={item.field} control={<Checkbox checked={state[item.field] === undefined ? true : state[item.field]} onChange={handleChange} value={item.field} name={item.field} color="primary" />}
+                            key={`${item.field}${item.headerName}`} control={<Checkbox checked={state[item.field] === undefined ? true : state[item.field]} onChange={handleChange} value={item.field} name={item.field} color="primary" />}
                                 label={item.headerName}
                             />)
                     })

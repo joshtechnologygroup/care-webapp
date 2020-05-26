@@ -1,5 +1,6 @@
 import React from 'react'
-import { ArrowUpward, ArrowDownward, Dehaze } from '@material-ui/icons';
+import { ArrowUpward, ArrowDownward, Sort } from '@material-ui/icons';
+import IconButton from '@material-ui/core/IconButton';
 
 export default function SortToggler({ onToggleSort }) {
   const toggleValues = ['none', 'asec', 'desc'];
@@ -7,7 +8,7 @@ export default function SortToggler({ onToggleSort }) {
 
   const getIcon = () => {
     switch (value) {
-      case toggleValues[0]: return <Dehaze fontSize="small" color="primary" />
+      case toggleValues[0]: return <Sort fontSize="small" color="primary" />
       case toggleValues[1]: return <ArrowUpward fontSize="small" color="primary" />
       case toggleValues[2]: return <ArrowDownward fontSize="small" color="primary" />
       default: return;
@@ -20,8 +21,8 @@ export default function SortToggler({ onToggleSort }) {
     onToggleSort(toggleValues[nextIndex]);
   }
   return (
-    <div onClick={handleChange}>
+    <IconButton aria-label="delete" onClick={handleChange}>
       {getIcon()}
-    </div>
+    </IconButton>
   )
 }
