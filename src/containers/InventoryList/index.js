@@ -10,9 +10,8 @@ import { getInventoryList, getInventoryDependencies } from 'Actions/FacilitiesAc
 import _ from "underscore";
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
-  const [ offset, setOffset ] = useState(0);
-  const [hasMore, setHasMore] = useState(false);
-  const [hasPrev, setHasPrev] = useState(false);
+  const [offset, setOffset] = useState(0);
+
   const {
     fetchInventoryList,
     fetchInventoryDependencies,
@@ -51,27 +50,8 @@ export function InventoryList(props) {
             return inventory;
         });
     }
-    console.log(inventoryList)
     return inventoryList;
-};
-useEffect(() => {
-  if (!_.isEmpty(inventoryList)) {
-      setHasPrev(offset - inventoryList.length >= 0 ? true : false);
-      setHasMore(offset + inventoryList.length < count ? true : false);
-  }
-}, [inventoryList, offset, count]);
-
-const fetchMoreInventory = () => {
-  if (hasMore) {
-      setOffset(offset + inventoryList.length);
-  }
-};
-
-const fetchPrevInventory = () => {
-  if (hasPrev) {
-      setOffset(offset - inventoryList.length);
-  }
-};
+  };
 
   useEffect(() => {
       if (!inventoryTypesList || !facilityList) {
@@ -86,18 +66,18 @@ const fetchPrevInventory = () => {
       });
     }, [queryParams, offset, fetchInventoryList]);
   
-  // const fetchMoreInventory = () => {
-  //     const lastPage = Math.floor((props.count - 1) / itemsPerPage) * itemsPerPage;
-  //     if (offset + props.inventoryList.length <= lastPage) {
-  //         setOffset(offset + props.inventoryList.length);
-  //     }
-  // };
+  const fetchMoreInventory = () => {
+      const lastPage = Math.floor((count - 1) / itemsPerPage) * itemsPerPage;
+      if (offset + inventoryList.length <= lastPage) {
+          setOffset(offset + inventoryList.length);
+      }
+  };
 
-  // const fetchPrevInventory = () => {
-  //     if (offset - props.inventoryList.length >= 0) {
-  //         setOffset(offset - InventoryList.length);
-  //     }
-  // };
+  const fetchPrevInventory = () => {
+      if (offset - itemsPerPage >= 0) {
+          setOffset(offset - itemsPerPage);
+      }
+  };
 
   return (
     <React.Fragment>
@@ -116,7 +96,11 @@ const fetchPrevInventory = () => {
         <Grid item xs={12} sm={4}>
 
           <PaginationController
-            resultsShown={1}
+          resultsShown={`${
+            inventoryList === []
+                ? itemsPerPage
+                : inventoryList.length
+            }`}
             totalResults={count}
             onFirst={() => {
               setOffset(0);
@@ -124,7 +108,7 @@ const fetchPrevInventory = () => {
             onPrevious={() => fetchPrevInventory()}
             onNext={() => fetchMoreInventory()}
             onLast={() => {
-                setOffset(Math.floor((props.count - 1) / itemsPerPage) * itemsPerPage);
+                setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
             }}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
