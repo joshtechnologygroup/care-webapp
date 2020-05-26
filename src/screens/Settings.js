@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
+import { withTranslation } from 'react-i18next';
 
 class Settings extends Component {
     render() {
+        const { t } = this.props;
         return (
             <div>
-                <h2>{i18n.t('Settings')}</h2>
+                <h2>{t('Settings')}</h2>
             </div>
         );
     }
 }
 
-export default Settings;
+export default withTranslation()(Settings);
