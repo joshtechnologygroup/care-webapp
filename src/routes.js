@@ -14,7 +14,7 @@ export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/'
 export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type/'
 
 // Patients
-export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
+export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/?limit=1&offset={0}'
 export const CLINICAL_STATUS_LIST_URL = SERVER + API_V1 + 'patients/clinical-status/'
 export const CLUSTER_GROUP_LIST_URL = SERVER + API_V1 + 'patients/patient-groups/'
 export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/'

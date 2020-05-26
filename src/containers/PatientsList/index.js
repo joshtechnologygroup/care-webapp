@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
+import * as StringUtils from 'Src/utils/stringformatting';
 
 import { CONFIG } from './config';
 import { getPatientList } from 'Actions/PatientsAction';
 import Sort from 'Components/Sort';
 import PaginationController from 'Components/PaginationController';
+import { PATIENT_LIST_URL } from 'Src/routes';
 // import { patients } from 'Mockdata/patients_list.json';
 
 import PropTypes from 'prop-types';
@@ -13,15 +15,16 @@ import { connect } from 'react-redux';
 
 export function PatientsList( props ) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
-  const [ page, setPage ] = useState(1);
+  const [ page, setPage ] = useState(0);
 
   useEffect(() => {
-      handleApiCall();
+      handleApiCall(page);
       //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ page ]);
 
-  const handleApiCall = async () => {
-      await props.getPatientList(1);
+  const handleApiCall = async ( next_page ) => {
+    const url = StringUtils.formatVarString(PATIENT_LIST_URL, [ next_page ]);
+    props.getPatientList(url, next_page);
   }
 
   return (
@@ -42,10 +45,10 @@ export function PatientsList( props ) {
           <PaginationController
             resultsShown={page}  
             totalResults={props.count}
-            onFirst={() => setPage(1)}
-            onPrevious={() => setPage(page-1) }
-            onNext={() => setPage(page+1)}
-            onLast={() => setPage(props.count)}
+            onFirst={() => setPage( 0 )}
+            onPrevious={() => setPage( page-1 ) }
+            onNext={() => { if( page<= props.count-1 ) setPage( page+1 )}}
+            onLast={() => setPage( props.count-1 )}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>
@@ -74,10 +77,15 @@ export function PatientsList( props ) {
 const mapStateToProps = (state) => ({
   patients: state.patients.patients,
   count: state.patients.count,
+  next: state.patients.next,
+  prev: state.patients.prev,
 });
 
 PatientsList.propTypes = {
   patients: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
+  next: PropTypes.string.isRequired,
+  prev: PropTypes.string.isRequired,
   getPatientList: PropTypes.func.isRequired,
 };
 

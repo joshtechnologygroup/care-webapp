@@ -9,7 +9,7 @@ import {
     GET_PATIENT_LIST
 } from 'Reducers/Types'
 
-const getPatientList = (page) => async (dispatch) => {
+const getPatientList = (url,) => async (dispatch) => {
     const [ 
         status, 
         patient_list, 
@@ -17,9 +17,9 @@ const getPatientList = (page) => async (dispatch) => {
         district_list, 
         cluster_group_list, 
         covid_status_list 
-    ] = await getPatientListService(page);
+    ] = await getPatientListService(url);
     if(status){
-        let results = { patients: [], count: patient_list.count }
+        let results = { patients: [], count: patient_list.count, next: patient_list.next, prev: patient_list.previous};
         patient_list.results.forEach(( patient, index ) => {
             let row = {};
             Object.keys(MAPPING_PATIENTS_ATTRIBUTES).forEach((attr) => {
