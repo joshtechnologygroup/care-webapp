@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -57,10 +57,10 @@ class ForgotPassword extends Component {
           success = StringUtils.formatVarString(this.SUCCESS_TEMPLATE, [email]):
           form = StringUtils.formatVarString(this.FORM_TEMPLATE, [])
       this.setState({
-          success: i18n.t(success),
+          success: this.props.t(success),
           errors: {
               ...errors,
-              form: i18n.t(form),
+              form: this.props.t(form),
           },
       });
     }
@@ -68,17 +68,18 @@ class ForgotPassword extends Component {
 
   render() {
     const { email, errors, success } = this.state;
+    const { t } = this.props;
     return (
       <div className="login__content">
         <Typography variant="h5" className="mt-24">
-          {i18n.t('Enter your email address to reset your password. You may need to check your spam folder in your email.')}
+          {t('enter_email_text')}
         </Typography>
         <TextField
           type="email"
           name="email"
           variant="outlined"
           className="form-field"
-          placeholder={i18n.t('Email')}
+          placeholder={t('Email')}
           onChange={this.handleChange}
           value={email}
           error={errors.email}
@@ -90,19 +91,19 @@ class ForgotPassword extends Component {
           className="btn"
           onClick={this.handleSubmit}
         >
-          {i18n.t('SUBMIT')
+          {t('SUBMIT')
         }</Button>
         <Link
           to={'/login'}
           className="text--link"
         >
-          {i18n.t('Go back to Login page')}
+          {t('Go back to Login page')}
         </Link>
         {/* <Link
           to={'/contact'}
           className="text--link mt-10"
         >
-          {i18n.t('Still having a problem. Need Help.')}
+          {t('Still having a problem. Need Help.')}
         </Link> */}
         {
           errors.form &&
@@ -124,4 +125,4 @@ ForgotPassword.propTypes = {
     forgot_password: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { forgot_password })(ForgotPassword);
+export default connect(mapStateToProps, { forgot_password })(withTranslation()(ForgotPassword));

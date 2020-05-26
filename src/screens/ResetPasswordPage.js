@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import i18n from "i18next";
+import { withTranslation } from 'react-i18next';
 import AuthUIContainer from "Containers/AuthUIContainer";
 import ResetPassword from "Containers/ResetPassword";
 import ErrorPage from "Screens/ErrorPage";
@@ -27,13 +27,13 @@ function ResetPasswordPage(props) {
     setIsValid(status === HttpStatus.OK);
     setIsLoading(false);
   };
-
+  const { t } = props;
   if (isLoading) {
     return <p>Loading...</p>; // TODO: add a loader
   } else {
     const heading = isValid ? "Reset your password" : "";
     return (
-      <AuthUIContainer subhead={i18n.t(heading)}>
+      <AuthUIContainer subhead={t(heading)}>
         {isValid && <ResetPassword user_id={user_id} token={token} />}
         {!isValid && <ErrorPage title={404} text="Page Not Found!" />}
       </AuthUIContainer>
@@ -47,4 +47,4 @@ ResetPasswordPage.propTypes = {
   reset_password: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { reset_password })(ResetPasswordPage);
+export default connect(mapStateToProps, { reset_password })(withTranslation()(ResetPasswordPage));

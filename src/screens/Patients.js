@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import i18n from "i18next";
+import { withTranslation } from 'react-i18next';
 import { Grid } from '@material-ui/core';
 
 import Header from 'Containers/Header';
@@ -8,6 +8,7 @@ import { Search } from 'Components/Inputs';
 
 class Patients extends Component {
 	render() {
+		const { t } = this.props;
 		return (
 			<Grid
 				container
@@ -17,7 +18,7 @@ class Patients extends Component {
 				<div className="primary-bg-light">
 					<Header>
 						<div className="header-container__search-container">
-							<Search searchPlaceholder={i18n.t('search.placeholder.patients')} />
+							<Search searchPlaceholder={t('search.placeholder.patients')} />
 						</div>
 					</Header>
 					<div className="table-container">
@@ -29,4 +30,4 @@ class Patients extends Component {
 	}
 }
 
-export default Patients;
+export default withTranslation()(Patients);
