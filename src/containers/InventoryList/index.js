@@ -1,13 +1,41 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
 import Sort from 'Components/Sort';
 import { CONFIG } from './config';
-import { inventory } from 'Mockdata/inventory_list.json';
 import PaginationController from 'Components/PaginationController';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getInventoryList } from 'Actions/FacilitiesAction';
 
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+  const [ offset, setOffset ] = useState(0);
+  const itemsPerPage = 4
+
+  const handleOffset = async (offset) => {
+      const response = await props.getInventoryList(offset);
+      if(response)
+      setOffset(offset);
+  }
+  
+  const fetchMoreInventory = () => {
+      const lastPage = Math.floor((props.count - 1) / itemsPerPage) * itemsPerPage;
+      if (offset + props.inventoryList.length <= lastPage) {
+          setOffset(offset + props.inventoryList.length);
+      }
+  };
+
+  const fetchPrevInventory = () => {
+      if (offset - props.inventoryList.length >= 0) {
+          setOffset(offset - InventoryList.length);
+      }
+  };
+
+  useEffect(() => {
+    handleOffset(offset)
+  }, [offset]);
+
   return (
     <React.Fragment>
       <Grid
@@ -25,12 +53,17 @@ export function InventoryList(props) {
         <Grid item xs={12} sm={4}>
 
           <PaginationController
-            resultsShown={10}
-            totalResults={56}
-            onFirst={() => { console.log('on First Page') }}
-            onPrevious={() => { console.log('on Previous Page') }}
-            onNext={() => { console.log('on Next Page') }}
-            onLast={() => { console.log('on Last Page') }}
+            resultsShown={props.inventoryList.length}
+            totalResults={props.count}
+            onFirst={() => {
+              setOffset(0);
+          }}
+            onFirst={() => { handleOffset(0) }}
+            onPrevious={() => fetchPrevInventory()}
+            onNext={() => fetchMoreInventory()}
+            onLast={() => {
+                setOffset(Math.floor((props.count - 1) / itemsPerPage) * itemsPerPage);
+            }}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>
@@ -48,7 +81,7 @@ export function InventoryList(props) {
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
-        rowData={inventory}
+        rowData={props.inventoryList}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
@@ -56,4 +89,15 @@ export function InventoryList(props) {
   );
 }
 
-export default InventoryList;
+
+const mapStateToProps = (state) => ({
+  inventoryList:state.inventory.inventory,
+  count:state.inventory.count
+});
+
+InventoryList.propTypes = {
+  inventoryList: PropTypes.array.isRequired,
+  getInventoryList: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { getInventoryList })(InventoryList);
