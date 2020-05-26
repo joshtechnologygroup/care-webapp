@@ -8,7 +8,7 @@ class LoginPage extends Component {
     const { t } = this.props;
     return (
       <AuthUIContainer head={t('Welcome!')} subhead={t('LOG IN')}>
-        <Login {...this.props}/>
+        <Login {...this.props} />
       </AuthUIContainer>
     );
   }

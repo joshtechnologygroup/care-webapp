@@ -5,6 +5,7 @@
 
   &__heading {
     color: $black-light;
+    margin-top: 0.8rem;
   }
 
   .MuiButton-contained {
@@ -17,5 +18,9 @@
     &:hover {
       background-color: $white;
     }
+  }
+
+  .MuiButton-root {
+    padding: 5px;
   }
 }

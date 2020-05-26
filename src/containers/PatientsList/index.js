@@ -18,7 +18,9 @@ export function PatientsList(props) {
         alignItems="center"
         className={`container-padding ${showOverlay ? "filter-container-overlay" : 'filter-container'}`}>
         <Grid item xs={12} sm={12} >
-          <Filters onSeeMore={() => { setShowOverlay(!showOverlay) }} />
+          <Filters
+            options={CONFIG.columnDefs}
+            onSeeMore={() => { setShowOverlay(!showOverlay) }} />
         </Grid>
       </Grid>
       <div className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>

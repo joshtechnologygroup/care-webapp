@@ -47,5 +47,12 @@
   "Manage Users": "Manage Users",
   "Facility Details": "Facility Details",
   "ADD NEW INVENTORY": "ADD NEW INVENTORY",
-  "Inventory": "Inventory"
+  "Inventory": "Inventory",
+  "filterText": "FILTERS",
+  "sortText": "SORT",
+  "navFirst": "First",
+  "navLast": "Last",
+  "moreText": "more",
+  "lessText": "less",
+  "of": "of"
 }
