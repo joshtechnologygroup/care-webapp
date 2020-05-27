@@ -28,6 +28,7 @@ export function FacilitiesList(props) {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
+    const [ordering, setOrdering] = useState("None");
 
     const updateFacilityListWithNames = (
         facilityList,
@@ -98,6 +99,27 @@ export function FacilitiesList(props) {
         });
     }, [queryParams, offset, fetchFacilityList]);
 
+    const sortByValue = (val) => {
+        setOrdering(val)
+        fetchFacilityList({
+          ...queryParams,
+          offset: offset,
+          ordering:val
+      });
+      };
+    
+      const TogglesortByValue = (toggleVal) => {
+        let order = ordering
+        if(toggleVal === 'desc'){
+          order = `-${ordering}`
+        }
+        fetchFacilityList({
+          ...queryParams,
+          offset: offset,
+          ordering:order
+      });
+      };
+
     return (
         <React.Fragment>
             <Grid
@@ -108,9 +130,9 @@ export function FacilitiesList(props) {
             >
               <Grid item xs={12} sm={3} >
                 <Sort
-                  onSelect={(val) => console.log(`Sort By ${val} using API`)}
+                  onSelect={(val) => sortByValue(val)}
                   options={CONFIG.columnDefs}
-                  onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+                  onToggleSort={(toggleVal => TogglesortByValue(toggleVal))} />
               </Grid>
               <Grid item xs={12} sm={4} >
                 <PaginationController
