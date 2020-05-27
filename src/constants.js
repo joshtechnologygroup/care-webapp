@@ -13,4 +13,4 @@ export const CLINICAL_STATUS_UPDATED_AT = 'clinical_status_updated_at'
 export const PORTEA_CALLED_AT = 'portea_called_at'
 export const ORDERING_KEY = 'ordering';
 
-export const PAGINATION_LIMIT = 5
+export const PAGINATION_LIMIT = 1
