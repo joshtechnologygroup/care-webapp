@@ -54,7 +54,7 @@
   "Inventory": "Inventory",
   "Personal Details": "Personal Details",
   "ICMR ID": "ICMR ID",
-  "Govt. ID": "Govt. ID",
+  "Govt ID": "Govt. ID",
   "Age": "Age",
   "Gender": "Gender",
   "Cluster group": "Cluster group",
@@ -91,5 +91,6 @@
   "navLast": "Last",
   "moreText": "more",
   "lessText": "less",
-  "of": "of"
+  "of": "of",
+  "Save": "Save"
 }

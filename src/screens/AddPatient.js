@@ -4,6 +4,9 @@ import i18n from "i18next";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 
+import Header from 'Containers/Header';
+import { Button } from '@material-ui/core';
+
 class AddPatient extends Component {
   constructor(props) {
     super(props);
@@ -18,11 +21,26 @@ class AddPatient extends Component {
       }
     }
   }
+
+  handleSubmit = () => {
+    console.log("Submit")
+  };
   render() {
     const { formList, profile } = this.state;
     return (
-      <div>
-        <h2 className="page-header header-container">{i18n.t('Add Patient')}</h2>
+      <>
+        <Header>
+          <h2>{i18n.t('Add Patient')}</h2>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className="btn py-5 ml-auto"
+            onClick={this.handleSubmit}
+          >
+            {i18n.t('Save')}
+          </Button>
+        </Header>
         <div className="page-container">
           <PersonalDetailForm
             profile={profile.personal}
@@ -33,7 +51,7 @@ class AddPatient extends Component {
             handleSubmit={ (data) => this.onSubmit(data, formList[1]) }
           />
         </div>
-      </div>
+      </>
     );
   }
 }

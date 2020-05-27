@@ -18,7 +18,7 @@ i18n
     },
     lng: getData("lang"),
     fallbackLng: "en",
-    keySeparator: false,
+    // keySeparator: false,
     interpolation: {
       escapeValue: false
     }
