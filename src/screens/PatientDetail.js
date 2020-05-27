@@ -5,6 +5,7 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
+import MedicationDetail from 'Components/Cards/MedicationDetail';
 
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
@@ -16,10 +17,12 @@ class PatientDetail extends Component {
       formList: [
         'personal',
         'contact',
+        'medication',
       ],
       isEditing: {
         personal: false,
-        contact: false
+        contact: false,
+        medication: false,
       },
       profile: patientDetail
     }
@@ -49,36 +52,36 @@ class PatientDetail extends Component {
   render() {
     const { formList, isEditing, profile } = this.state;
     return (
-      <div>
+      <>
         <h2 className="page-header header-container">{i18n.t('Patient Detail')}</h2>
         <div className="page-container">
           {
             isEditing[formList[0]] ? 
             <PersonalDetailForm
-              profile={profile.personal}
+              profile={profile[formList[0]]}
               handleSubmit={ (data) => this.onSubmit(data, formList[0]) }
               editMode={true}
             /> :
             <PersonalDetail
-              profile={profile.personal}
+              profile={profile[formList[0]]}
               handleEdit={ () => this.setEditable(formList[0], true) }
             />
           }
           {
             isEditing[formList[1]] ?
             <ContactDetailForm
-              profile={profile.contact}
+              profile={profile[formList[1]]}
               handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
               editMode={true}
-            />:
+            /> :
             <ContactDetail
-              profile={profile.contact}
+              profile={profile[formList[1]]}
               handleEdit={ () => this.setEditable(formList[1], true) }
             />
           }
           <Timeline />
         </div>
-      </div>
+      </>
     );
   }
 }

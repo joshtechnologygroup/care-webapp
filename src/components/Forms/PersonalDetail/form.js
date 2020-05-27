@@ -128,7 +128,7 @@ export default function Form(props) {
               <Grid item xs={6} sm={4}>
                 <TextField
                   name="idGovt"
-                  label={i18n.t('Govt. ID')}
+                  label={i18n.t('Govt ID')}
                   value={idGovt}
                   onChange={change.bind(null, 'idGovt')}
                   helperText={touched.idGovt ? errors.idGovt : ""}
@@ -156,9 +156,9 @@ export default function Form(props) {
                     variant="contained"
                     color="primary"
                     disableElevation
-                    className="btn py-8"
+                    className="btn py-5"
                   >
-                    {i18n.t('Submit')}
+                    {i18n.t('Save')}
                   </Button>
                 </Grid>
               }

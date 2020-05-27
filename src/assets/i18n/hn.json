@@ -54,7 +54,7 @@
   "Inventory": "इन्वेंटरी",
   "Personal Details": "व्यक्तिगत विवरण",
   "ICMR ID": "आईसीएमआर आईडी",
-  "Govt. ID": "सरकारी पहचान",
+  "Govt ID": "सरकारी पहचान",
   "Age": "आयु",
   "Gender": "लिंग",
   "Cluster group": "क्लस्टर समूह",
@@ -91,5 +91,6 @@
   "navLast": "अंतिम",
   "moreText": "अधिक",
   "lessText": "कम",
-  "of": "से"
+  "of": "से",
+  "Save": "सेव करें"
 }
