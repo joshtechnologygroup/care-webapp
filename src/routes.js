@@ -12,3 +12,7 @@ export const FACILITY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/facility-typ
 // commons
 export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/'
 export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type/'
+
+//Patient Transfers
+export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/'
+export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/'

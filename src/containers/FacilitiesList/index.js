@@ -89,7 +89,7 @@ export function FacilitiesList(props) {
         if (!facilityTypesList || !districtsList || !ownershipTypesList) {
             fetchFacilityDependencies();
         }
-    });
+    }, []);
 
     useEffect(() => {
         fetchFacilityList({

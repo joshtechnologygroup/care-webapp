@@ -1,14 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
+import { connect } from "react-redux";
+import { PropTypes } from 'prop-types';
+import _ from 'underscore';
 
 import TableComponent from 'Components/TableComponent';
-import { patients_transfers } from 'Mockdata/patients_transfer_list.json';
+import { getTransferList } from "Actions/TransferAction";
 import PaginationController from 'Components/PaginationController';
 import { CONFIG } from './config';
 import Sort from 'Components/Sort';
+import { TRANSFER_STATUS_CHOICES } from 'Constants/app.const';
 
 export function TransfersList(props) {
-  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+    const {
+        fetchTransferList,
+        transferList,
+        queryParams,
+        count,
+    } = props;
+    const itemsPerPage = 4;
+
+    const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(false);
+    const [hasPrev, setHasPrev] = useState(false);
+    const [sortOption, setSortOption] = useState(null);
+    const [sortOrder, setSortOrder] = useState(null);
+
+    // Handle has more.
+    useEffect(() => {
+        if (!_.isEmpty(transferList)) {
+            setHasPrev(offset - transferList.length >= 0 ? true : false);
+            setHasMore(offset + transferList.length < count ? true : false);
+        }
+    }, [transferList, offset, count]);
+
+    useEffect(() => {
+        
+    }, [sortOption, sortOrder])
+
+    useEffect(() => {
+        if (!_.isEmpty(transferList)) {
+            transferList.map(transfer => {
+                transfer.status = TRANSFER_STATUS_CHOICES[transfer.status];
+                return transfer;
+            });
+        }
+    }, [transferList]);
+
+    const fetchMoreTransfers = () => {
+        if (hasMore) {
+            setOffset(offset + transferList.length);
+        }
+    };
+
+    const fetchPrevTransfers = () => {
+        if (hasPrev) {
+            setOffset(offset - transferList.length);
+        }
+    };
+
+    useEffect(() => {
+        fetchTransferList({
+            ...queryParams,
+            offset: offset,
+        });
+    }, [queryParams, offset, fetchTransferList]);
+
   return (
     <React.Fragment>
       <Grid
@@ -19,19 +77,23 @@ export function TransfersList(props) {
       >
         <Grid item xs={12} sm={3} >
           <Sort
-            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            onSelect={(val) => setSortOption(val)}
             options={CONFIG.columnDefs}
-            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+            onToggleSort={(toggleVal => setSortOrder(toggleVal))} />
         </Grid>
         <Grid item xs={12} sm={4} >
 
           <PaginationController
             resultsShown={10}
             totalResults={56}
-            onFirst={() => { console.log('on First Page') }}
-            onPrevious={() => { console.log('on Previous Page') }}
-            onNext={() => { console.log('on Next Page') }}
-            onLast={() => { console.log('on Last Page') }}
+            onFirst={() => {
+                setOffset(0);
+            }}
+            onPrevious={() => fetchMoreTransfers()}
+            onNext={() => fetchPrevTransfers()}
+            onLast={() => {
+                setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
+            }}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>
@@ -48,7 +110,7 @@ export function TransfersList(props) {
         pivotPanelShow={CONFIG.pivotPanelShow}
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
-        rowData={patients_transfers}
+        rowData={transferList}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
@@ -56,4 +118,33 @@ export function TransfersList(props) {
   );
 }
 
-export default TransfersList;
+TransfersList.propTypes = {
+    transferList: PropTypes.arrayOf(PropTypes.object),
+    queryParams: PropTypes.object,
+    count: PropTypes.number,
+};
+
+TransfersList.defaultProps = {
+    transferList: [],
+    fetchTransferList: () => {},
+    queryParams: {},
+    count: 0,
+};
+
+const mapStateToProps = state => {
+    const { transfers } = state;
+    return {
+        transferList: transfers.results,
+        count: transfers.count,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchTransferList: params => {
+            dispatch(getTransferList(params));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TransfersList);
