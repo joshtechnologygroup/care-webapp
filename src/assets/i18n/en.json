@@ -84,5 +84,12 @@
   "Native State": "Native State",
   "Native Country": "Native Country",
   "Patient natively belongs to some other Indian state?": "Patient natively belongs to some other Indian state?",
-  "Patient natively belongs to a foreign country?": "Patient natively belongs to a foreign country?"
+  "Patient natively belongs to a foreign country?": "Patient natively belongs to a foreign country?",
+  "filterText": "FILTERS",
+  "sortText": "SORT",
+  "navFirst": "First",
+  "navLast": "Last",
+  "moreText": "more",
+  "lessText": "less",
+  "of": "of"
 }

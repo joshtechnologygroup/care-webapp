@@ -21,7 +21,7 @@ class Facilities extends Component {
               <Search searchPlaceholder={t('search.placeholder.facilities')} />
             </div>
           </Header>
-          <div className="table-container">
+          <div className="main-container">
             <FacilitiesList />
           </div>
         </div>
