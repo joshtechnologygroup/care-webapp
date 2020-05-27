@@ -28,11 +28,8 @@ export function FacilitiesList(props) {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
-<<<<<<< HEAD
     const [ordering, setOrdering] = useState("None");
-=======
     const [showOverlay, setShowOverlay] = useState(false);
->>>>>>> f75ec1b34ca2727e560e1459418faa2e6a4116d8
 
     const updateFacilityListWithNames = (
         facilityList,
