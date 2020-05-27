@@ -18,7 +18,8 @@ import { connect } from 'react-redux';
 export function PatientsList( props ) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [ page, setPage ] = useState(0);
-  const [ patients, setPatients ] = useState([])
+  const [ patients, setPatients ] = useState([]);
+  const [ totalPages, setTotalPages ] = useState(0)
 
   // getting all the denpendencies related to patient list
   useEffect(() => {
@@ -52,6 +53,7 @@ export function PatientsList( props ) {
           }
         }));
       })
+      setTotalPages(Math.floor(props.count/PAGINATION_LIMIT) - 1)
       setPatients(update_patients);
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,11 +88,11 @@ export function PatientsList( props ) {
         <Grid item xs={12} sm={4} >
           <PaginationController
             resultsShown={page || 0}
-            totalResults={props.count-1 || 0}
+            totalResults={totalPages || 0}
             onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) , 0 )}
             onNext={() => { if( props.next ) handleApiCall( props.next, page+1 )}}
             onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1 )} }
-            onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (props.count-1) ]), props.count-1 )}
+            onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * totalPages ]), totalPages )}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>
