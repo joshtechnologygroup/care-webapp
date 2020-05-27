@@ -45,6 +45,7 @@ export function PatientsList( props ) {
       })
       setPatients(update_patients);
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ props.patients ]); // if the list changes then again set all the foreign keys
 
 
@@ -55,7 +56,7 @@ export function PatientsList( props ) {
   }, [ ]);
 
   const handleApiCall = async ( url, next_page ) => {
-    const response = await props.getPatientList( url );
+    props.getPatientList( url );
     setPage( next_page );
   }
 
