@@ -12,5 +12,15 @@ export const APPLICATION_JSON = 'application/json';
 export const CLINICAL_STATUS_UPDATED_AT = 'clinical_status_updated_at'
 export const PORTEA_CALLED_AT = 'portea_called_at'
 export const ORDERING_KEY = 'ordering';
+export const MAPPING_INVENTORY_ATTRIBUTES = {
+    'facility':'facilityName',
+    'facility_id':'facility_id',
+    'item':'type',
+    'required_quantity':'requiredNo',
+    'current_quantity':'currentNo',
+    'created_by':'createdBy',
+    'updated_at':'updatedAt',
+}
+export const UPDATED_AT='updated_at'
 
 export const PAGINATION_LIMIT = 5
