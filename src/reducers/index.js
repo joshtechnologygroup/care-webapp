@@ -1,14 +1,21 @@
 import { combineReducers } from "redux";
-import UserReducer from "Reducers/UserReducer";
-import { facilities, facilityTypes } from "Reducers/FacilityReducer";
+import { user } from "Reducers/UserReducer";
+import { facilities, facilityTypes, facilityInventoryList, InventoryTypeList } from "Reducers/FacilityReducer";
+import { patients, clinicalStatus, clusterGroup, covidStatus } from "Reducers/PatientReducer";
 import { ownershipTypes, districts } from "Reducers/MiscReducer";
 import { transfers } from "Reducers/TransferReducer";
 
 export default combineReducers({
-    User: UserReducer,
+    user: user,
     facilities: facilities,
+    inventory:facilityInventoryList,
+    inventoryTypes:InventoryTypeList,
+    facilityTypes: facilityTypes,
     ownershipTypes: ownershipTypes,
     districts: districts,
-    facilityTypes: facilityTypes,
     transfers: transfers,
+    patients,
+    clinicalStatus,
+    clusterGroup,
+    covidStatus
 });

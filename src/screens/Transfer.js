@@ -14,7 +14,7 @@ class Transfer extends Component {
       >
         <div className="primary-bg-light">
           <Header>
-            <div className="button-container">
+            <div className="ml-auto">
               <Button
                 variant="contained"
                 color="primary"
@@ -25,7 +25,7 @@ class Transfer extends Component {
                     </Button>
             </div>
           </Header>
-          <div className="table-container">
+          <div className="main-container">
             <TransfersList />
           </div>
         </div>

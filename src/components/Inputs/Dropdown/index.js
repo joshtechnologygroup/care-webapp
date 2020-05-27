@@ -19,7 +19,7 @@ export default function Dropdown({ onSelect, options }) {
           inputProps={{ 'aria-label': 'Without label' }}
         >
           <MenuItem value="">
-            <em>None</em>
+            None
           </MenuItem>
           {
             options.map((option) => option.cellRendererParams && option.cellRendererParams['isSortable'] === true ?

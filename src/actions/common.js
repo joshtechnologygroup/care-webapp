@@ -14,7 +14,6 @@ const dispatchAction = (actionType, response) => async (dispatch) => {
     }
 }
 
-
 const dispatchDependentActions = (argumentsList, actionTypeList) => async (dispatch) => {
     const responseList = await Promise.all(argumentsList.map((argument, index) => { 
         return CommonService.makeAuthorizedApiCall(...argument);

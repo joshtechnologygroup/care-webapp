@@ -26,7 +26,7 @@ export const Reports = () => {
     >
       <div className="primary-bg-light">
         <Header>
-          <div className="button-container">
+          <div className="ml-auto">
             <Button
               variant="contained"
               color="primary"
@@ -38,7 +38,7 @@ export const Reports = () => {
                     </Button>
           </div>
         </Header>
-        <div className="table-container">
+        <div className="main-container">
           <ReportsList />
         </div>
         <GenerateReports open={open} onClose={handleClose} />

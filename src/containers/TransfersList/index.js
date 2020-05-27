@@ -10,6 +10,7 @@ import PaginationController from 'Components/PaginationController';
 import { CONFIG } from './config';
 import Sort from 'Components/Sort';
 import { TRANSFER_STATUS_CHOICES } from 'Constants/app.const';
+import Filters from 'Components/Filters';
 
 export function TransfersList(props) {
     const {
@@ -21,6 +22,7 @@ export function TransfersList(props) {
     const itemsPerPage = 4;
 
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+    const [showOverlay, setShowOverlay] = useState(false);
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
@@ -69,10 +71,8 @@ export function TransfersList(props) {
 
   return (
     <React.Fragment>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
+      <Grid container
+        direction
         alignItems="center"
       >
         <Grid item xs={12} sm={3} >

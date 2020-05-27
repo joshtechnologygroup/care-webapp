@@ -29,7 +29,7 @@ export const Inventory = () => {
         >
             <div className="primary-bg-light">
                 <Header>
-                    <div className="button-container">
+                    <div className="ml-auto">
                         <Button
                             variant="contained"
                             color="primary"
