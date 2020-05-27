@@ -16,35 +16,36 @@ import { connect } from 'react-redux';
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
-    const [state, setState] = useState({});
+    const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
-    const { open, data, onClose } = props;
+    const { open, data, onClose, userId, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
    
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
    
     const createInventory = () => {
-        let initial = state
-        const facility = props.facilityList.find(      
-            facility => facility.name === state.name.label
+        let initial = inventoryData
+        const facility = facilityList.find(      
+            facility => facility.name === inventoryData.name.label
         )
         if(facility){
             initial['facility'] = facility.id
             delete initial.name;
         }
-        const inventory = props.inventoryTypesList.find(      
-            inventory => inventory.name === state.type.label
+        const inventory = inventoryTypesList.find(      
+            inventory => inventory.name === inventoryData.type.label
         )
         if(inventory){
             initial['item'] = inventory.id
             delete initial.type;
         }
-        setState({state:initial});
-        if(isAddAnother === false){
-            props.createOrUpdateInventory(state, data.id)
+        initial['created_by'] = userId
+        setInventoryData({inventoryData:initial});
+        if(isAddAnother === false && data){
+            createOrUpdateInventory(initial, data.id)
         } else {
-            props.createOrUpdateInventory(state)
+            createOrUpdateInventory(initial)
         }
         if(!isAddAnother) {
             onClose();
@@ -53,9 +54,9 @@ export const InventoryForm = (props) => {
    
     const handleChange = (name, e) => {
         if(typeof name === 'object') {
-            setState(name);
+            setInventoryData(name);
         } else {
-            setState({...state, [name]: e});
+            setInventoryData({...inventoryData, [name]: e});
         }
     }
 
@@ -67,22 +68,27 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={data} {...props} handleChange={handleChange} />
+                            props => <Form data={inventoryData} {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
                 <Grid item xs={12}>
+                    { data &&
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This Inventory already exists!</FormHelperText>
+                        <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
+                        <FormHelperText className={classes.error}>click on addAnother button to create new inventory...</FormHelperText>
                     </FormControl>
+                    }
                 </Grid>
                 <Grid item xs={12}>
+                    { data &&
                      <FormControlLabel
                         value="end"
                         control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
                         label="Add Another"
                         labelPlacement="end"
                     />
+                    }
                     <Button
                         className={classes.button}
                         variant="contained"
@@ -100,6 +106,7 @@ export const InventoryForm = (props) => {
 
 
 const mapStateToProps = (state) => ({
+    userId:state.user.id,
     inventoryList:state.inventory.results,
     inventoryTypesList: state.inventoryTypes.results,
     facilityList: state.facilities.results,
@@ -107,6 +114,7 @@ const mapStateToProps = (state) => ({
   });
   
   InventoryForm.propTypes = {
+    user: PropTypes.number.isRequired,
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
     facilityList: PropTypes.array.isRequired,
