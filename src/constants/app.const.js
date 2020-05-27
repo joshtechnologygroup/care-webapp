@@ -59,3 +59,18 @@ export const GRID_CONFIG = {
 export const regex = {
   email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
 }
+
+export const genderChoices = [
+    {
+        title: 'Male',
+        value: 'Male',
+    },
+    {
+        title: 'Female',
+        value: 'Female',
+    },
+    {
+        title: 'Other gender',
+        value: 'Other',
+    },
+];
