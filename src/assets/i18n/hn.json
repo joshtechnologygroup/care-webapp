@@ -47,5 +47,12 @@
   "Manage Users": "उपयोगकर्ताओं को प्रबंधित करें",
   "Facility Details": "सुविधा विवरण",
   "ADD NEW INVENTORY": "जोड़ें नई इन्वेंटरी",
-  "Inventory": "इन्वेंटरी"
+  "Inventory": "इन्वेंटरी",
+  "filterText": "फिल्टर",
+  "sortText": "सॉर्ट",
+  "navFirst": "प्रथम",
+  "navLast": "अंतिम",
+  "moreText": "अधिक",
+  "lessText": "कम",
+  "of": "से"
 }

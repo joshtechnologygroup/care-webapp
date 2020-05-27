@@ -21,7 +21,7 @@ class Patients extends Component {
 							<Search searchPlaceholder={t('search.placeholder.patients')} />
 						</div>
 					</Header>
-					<div className="table-container">
+					<div className="main-container">
 						<PatientsList />
 					</div>
 				</div>

@@ -25,7 +25,7 @@ class Transfer extends Component {
                     </Button>
             </div>
           </Header>
-          <div className="table-container">
+          <div className="main-container">
             <TransfersList />
           </div>
         </div>

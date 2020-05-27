@@ -38,7 +38,7 @@ export const Reports = () => {
                     </Button>
           </div>
         </Header>
-        <div className="table-container">
+        <div className="main-container">
           <ReportsList />
         </div>
         <GenerateReports open={open} onClose={handleClose} />
