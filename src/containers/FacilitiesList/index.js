@@ -30,6 +30,7 @@ export function FacilitiesList(props) {
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
+    const [ordering, setOrdering] = useState("None");
 
     const updateFacilityListWithNames = (
         facilityList,
@@ -91,7 +92,7 @@ export function FacilitiesList(props) {
         if (!facilityTypesList || !districtsList || !ownershipTypesList) {
             fetchFacilityDependencies();
         }
-    });
+    }, []);
 
     useEffect(() => {
         fetchFacilityList({
@@ -99,6 +100,27 @@ export function FacilitiesList(props) {
             offset: offset,
         });
     }, [queryParams, offset, fetchFacilityList]);
+
+    const sortByValue = (val) => {
+        setOrdering(val)
+        fetchFacilityList({
+          ...queryParams,
+          offset: offset,
+          ordering:val
+      });
+      };
+    
+      const TogglesortByValue = (toggleVal) => {
+        let order = ordering
+        if(toggleVal === 'desc'){
+          order = `-${ordering}`
+        }
+        fetchFacilityList({
+          ...queryParams,
+          offset: offset,
+          ordering:order
+      });
+      };
 
     return (
         <React.Fragment>
@@ -111,6 +133,27 @@ export function FacilitiesList(props) {
                   options={CONFIG.columnDefs}
                   onSeeMore={() => { setShowOverlay(!showOverlay) }} />
               </Grid>
+              <Grid item xs={12} sm={3} >
+                <Sort
+                    onSelect={(val) => sortByValue(val)}
+                    options={CONFIG.columnDefs}
+                    onToggleSort={(toggleVal => TogglesortByValue(toggleVal))} />
+                </Grid>
+                <Grid item xs={12} sm={4} >
+                <PaginationController
+                    resultsShown={10}
+                    totalResults={56}
+                    onFirst={() => {
+                        setOffset(0);
+                    }}
+                    onPrevious={() => fetchPrevFacilities()}
+                    onNext={() => fetchMoreFacilites()}
+                    onLast={() => {
+                        setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
+                    }}
+                    onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+                />
+                </Grid>
             </Grid>
             <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
             <div className="container-padding">
