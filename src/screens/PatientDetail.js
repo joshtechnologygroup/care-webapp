@@ -5,7 +5,7 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
-import MedicationDetail from 'Components/Cards/MedicationDetail';
+// import MedicationDetail from 'Components/Cards/MedicationDetail';
 
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
