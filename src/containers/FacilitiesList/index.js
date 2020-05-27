@@ -10,6 +10,7 @@ import { CONFIG } from "./config";
 import { getFacilitiesList, getFacilityDependencies } from "Actions/FacilitiesAction";
 import PaginationController from 'Components/PaginationController';
 import Sort from 'Components/Sort';
+import Filters from "Components/Filters";
 
 export function FacilitiesList(props) {
     const {
@@ -28,6 +29,7 @@ export function FacilitiesList(props) {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
+    const [showOverlay, setShowOverlay] = useState(false);
 
     const updateFacilityListWithNames = (
         facilityList,
@@ -100,56 +102,70 @@ export function FacilitiesList(props) {
 
     return (
         <React.Fragment>
-            <Grid
-              container
-              direction="row"
-              justify="space-between"
+            <Grid container
+              direction
               alignItems="center"
-            >
-              <Grid item xs={12} sm={3} >
-                <Sort
-                  onSelect={(val) => console.log(`Sort By ${val} using API`)}
+              className={`container-padding ${showOverlay ? "filter-container-overlay" : 'filter-container'}`}>
+              <Grid item xs={12} sm={12} >
+                <Filters
                   options={CONFIG.columnDefs}
-                  onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
-              </Grid>
-              <Grid item xs={12} sm={4} >
-                <PaginationController
-                    resultsShown={10}
-                    totalResults={56}
-                    onFirst={() => {
-                        setOffset(0);
-                    }}
-                    onPrevious={() => fetchPrevFacilities()}
-                    onNext={() => fetchMoreFacilites()}
-                    onLast={() => {
-                        setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
-                    }}
-                    onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
-                />
+                  onSeeMore={() => { setShowOverlay(!showOverlay) }} />
               </Grid>
             </Grid>
-            <TableComponent
-                modules={CONFIG.modules}
-                columnDefs={CONFIG.columnDefs}
-                rowHeight={CONFIG.rowHeight}
-                headerHeight={CONFIG.headerHeight}
-                autoGroupColumnDef={CONFIG.autoGroupColumnDef}
-                defaultColDef={CONFIG.defaultColDef}
-                rowSelection={CONFIG.rowSelection}
-                rowGroupPanelShow={CONFIG.rowGroupPanelShow}
-                pivotPanelShow={CONFIG.pivotPanelShow}
-                frameworkComponents={CONFIG.frameworkComponents}
-                cellStyle={CONFIG.cellStyle}
-                pagination={CONFIG.pagination}
-                rowData={updateFacilityListWithNames(
-                    facilityList,
-                    districtsList,
-                    facilityTypesList,
-                    ownershipTypesList
-                )}
-                showColumnsPanel={showColumnsPanel}
-                onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
-            />
+            <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
+            <div className="container-padding">
+              <Grid
+                className="sort-pagination"
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+              >
+                <Grid item xs={12} sm={4} >
+                  <Sort
+                    onSelect={(val) => console.log(`Sort By ${val} using API`)}
+                    options={CONFIG.columnDefs}
+                    onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+                </Grid>
+                <Grid item xs={12} sm={5} >
+                  <PaginationController
+                      resultsShown={10}
+                      totalResults={56}
+                      onFirst={() => {
+                          setOffset(0);
+                      }}
+                      onPrevious={() => fetchPrevFacilities()}
+                      onNext={() => fetchMoreFacilites()}
+                      onLast={() => {
+                          setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
+                      }}
+                      onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+                  />
+                </Grid>
+              </Grid>
+              <TableComponent
+                  modules={CONFIG.modules}
+                  columnDefs={CONFIG.columnDefs}
+                  rowHeight={CONFIG.rowHeight}
+                  headerHeight={CONFIG.headerHeight}
+                  autoGroupColumnDef={CONFIG.autoGroupColumnDef}
+                  defaultColDef={CONFIG.defaultColDef}
+                  rowSelection={CONFIG.rowSelection}
+                  rowGroupPanelShow={CONFIG.rowGroupPanelShow}
+                  pivotPanelShow={CONFIG.pivotPanelShow}
+                  frameworkComponents={CONFIG.frameworkComponents}
+                  cellStyle={CONFIG.cellStyle}
+                  pagination={CONFIG.pagination}
+                  rowData={updateFacilityListWithNames(
+                      facilityList,
+                      districtsList,
+                      facilityTypesList,
+                      ownershipTypesList
+                  )}
+                  showColumnsPanel={showColumnsPanel}
+                  onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
+              />
+            </div>
         </React.Fragment>
     );
 }

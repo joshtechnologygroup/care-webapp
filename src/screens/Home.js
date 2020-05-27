@@ -10,6 +10,8 @@ import Hidden from '@material-ui/core/Hidden';
 
 import Dashboard from 'Screens/Dashboard';
 import Patients from 'Screens/Patients';
+import PatientDetail from 'Screens/PatientDetail';
+import AddPatient from 'Screens/AddPatient';
 import Transfer from 'Screens/Transfer';
 import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
@@ -48,13 +50,15 @@ function Home() {
                         <NavigationPanel />
                     </Hidden>
                 </Grid>
-                <Grid item xs={12} md={10}>
+                <Grid item xs={12} md={10} className="full-heigh-container">
                     <Switch>
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
                         <Route path={`/facilities/beds`} component={Beds} />
                         <Route path={`/facilities`} component={Facilities} />
-                        <Route path={`/patients`} component={Patients} />
+                        <Route exact path={`/patients`} component={Patients} />
+                        <Route path={`/patients/add`} component={AddPatient} />
+                        <Route path={`/patients/:patientId`} component={PatientDetail} />
                         <Route path={`/transfer`} component={Transfer} />
                         <Route path={`/reports`} component={Reports} />
                         <Route path={`/settings`} component={Settings} />

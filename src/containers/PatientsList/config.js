@@ -7,6 +7,7 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
+<<<<<<< HEAD
     { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true } },
     { headerName: 'Govt. ID', field: 'govt_id', cellRendererParams: { isSortable: true } },
     { headerName: 'Facility ID', field: 'facility', minWidth: 100, cellRendererParams: { isSortable: true } },
@@ -27,7 +28,7 @@ export const CONFIG = {
     { headerName: 'Facility Name', field: 'facility_name', minWidth: 120 },
     { headerName: 'Facility District', field: 'facility_district', minWidth: 120 },
     { headerName: 'Facility Type', field: 'facility_type', minWidth: 120 },
-    { headerName: 'Facility Ownership Type', field: 'ownership_type', minWidth: 170, },
+    { headerName: 'Facility Ownership Type', field: 'ownership_type', minWidth: 170, }
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
