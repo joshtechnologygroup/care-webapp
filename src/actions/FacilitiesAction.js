@@ -3,7 +3,8 @@ import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 import * as HttpStatus from 'http-status-codes'
 import * as CommonService from "Src/utils/services";
-import { GET, MAPPING_INVENTORY_ATTRIBUTES, UPDATED_AT } from "Src/constants";;
+import * as facilityService from "Src/services/facilityService";
+import { GET, POST, PUT, UPDATED_AT } from "Src/constants";;
 
 const getFacilitiesList = (params) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(Routes.FACILITY_LIST_URL, GET, {}, params)
@@ -36,5 +37,18 @@ const getInventoryDependencies = (params) => async (dispatch) => {
     ));
 };
 
-export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies }
+const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
+    const body =  JSON.stringify({state})
+    let url = Routes.CREATE_INVENTORY_URL
+    var method = POST
+    if(id !== 0){
+        method = PUT
+        url += `${id}/`
+    }
+    const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, body, {})
+    if(inventory_response.status === HttpStatus.OK){
+        const inventory = await inventory_response.json();
+    }
+};
 
+export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory }

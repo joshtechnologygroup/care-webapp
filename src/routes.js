@@ -16,3 +16,4 @@ export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type
 
 //inventories
 export const INVENTORY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/inventory-items'
+export const CREATE_INVENTORY_URL = SERVER + API_V1 + 'facilities/inventories/'

@@ -11,6 +11,7 @@ import _ from "underscore";
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [offset, setOffset] = useState(0);
+  const [ordering, setOrdering] = useState("None0")
 
   const {
     fetchInventoryList,
@@ -79,6 +80,33 @@ export function InventoryList(props) {
       }
   };
 
+  const sortByValue = (val) => {
+    if(val ==='facility' || val === 'item'){
+      val += '__name'
+      setOrdering(val);
+    }
+    else{
+    setOrdering(val)
+    }
+    fetchInventoryList({
+      ...queryParams,
+      offset: offset,
+      ordering:val
+  });
+  };
+
+  const TogglesortByValue = (toggleVal) => {
+    let order = ordering
+    if(toggleVal === 'desc'){
+      order = `-${ordering}`
+    }
+    fetchInventoryList({
+      ...queryParams,
+      offset: offset,
+      ordering:order
+  });
+  };
+
   return (
     <React.Fragment>
       <Grid
@@ -89,9 +117,9 @@ export function InventoryList(props) {
       >
         <Grid item xs={12} sm={3} >
           <Sort
-            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            onSelect={(val) => sortByValue(val)}
             options={CONFIG.columnDefs}
-            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+            onToggleSort={(toggleVal => TogglesortByValue(toggleVal))} />
         </Grid>
         <Grid item xs={12} sm={4}>
 

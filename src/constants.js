@@ -11,6 +11,7 @@ export const APPLICATION_JSON = 'application/json';
 export const ORDERING_KEY = 'ordering';
 export const MAPPING_INVENTORY_ATTRIBUTES = {
     'facility':'facilityName',
+    'facility_id':'facility_id',
     'item':'type',
     'required_quantity':'requiredNo',
     'current_quantity':'currentNo',
