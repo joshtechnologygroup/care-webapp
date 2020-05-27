@@ -3,7 +3,6 @@ import i18n from "i18next";
 import BasicDetail from 'Containers/Facilities/BasicDetail';
 import BasicDetailsForm from 'Containers/Facilities/BasicDetailsForm';
 import InchargeContactDetail from 'Containers/Facilities/InchargeContactDetail';
-// import InchargeContactForm from 'Containers/Facilities/InchargeContactForm';
 
 // Importing mock data: Please remove upon integration
 import { facilityDetails } from 'Mockdata/facilityDetails.json';
