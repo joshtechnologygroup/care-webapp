@@ -82,20 +82,7 @@ export function PatientsList( props ) {
         <Grid item xs={12} sm={12} >
           <Filters
             options={CONFIG.columnDefs}
-
-            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))}
             onSeeMore={() => { setShowOverlay(!showOverlay) }} />
-        </Grid>
-        <Grid item xs={12} sm={4} >
-          <PaginationController
-            resultsShown={page || 0}
-            totalResults={totalPages || 0}
-            onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) , 0 )}
-            onNext={() => { if( props.next ) handleApiCall( props.next, page+1 )}}
-            onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1 )} }
-            onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * totalPages ]), totalPages )}
-            onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
-          />
         </Grid>
       </Grid>
       <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
@@ -115,12 +102,12 @@ export function PatientsList( props ) {
           </Grid>
           <Grid item xs={12} sm={5} >
             <PaginationController
-              resultsShown={10}
-              totalResults={56}
-              onFirst={() => { console.log('on First Page') }}
-              onPrevious={() => { console.log('on Previous Page') }}
-              onNext={() => { console.log('on Next Page') }}
-              onLast={() => { console.log('on Last Page') }}
+              resultsShown={page || 0}
+              totalResults={totalPages || 0}
+              onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) , 0 )}
+              onNext={() => { if( props.next ) handleApiCall( props.next, page+1 )}}
+              onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1 )} }
+              onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * totalPages ]), totalPages )}
               onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
             />
           </Grid>
