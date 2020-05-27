@@ -6,7 +6,7 @@ const initialState = {};
 
 const middleware = [thunk];
 
-let args = [ applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() ]
+let args = [ applyMiddleware(...middleware),  ]
 if(process.env.NODE_ENV !== 'development'){
     args.pop()
 }

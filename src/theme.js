@@ -26,5 +26,12 @@ export const theme = createMuiTheme({
   status: {
     danger: 'orange',
   },
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '1.2em',
+      }
+    }
+  }
 });
 export default theme;

@@ -3,12 +3,11 @@
 .header-container {
   display: flex;
   align-items: center;
-  min-height: 7rem;
+  min-height: 5.4rem;
   background: $white;
   box-shadow: 1px 0 10px 0 rgba(0, 0, 0, 0.1);
-
+  padding: 0 3rem;
   &__search-container {
-    padding: 0 3rem;
     max-width: 600px;
   }
 }

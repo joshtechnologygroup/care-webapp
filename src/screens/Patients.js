@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withTranslation } from 'react-i18next';
 import { Grid } from '@material-ui/core';
-
 import Header from 'Containers/Header';
 import PatientsList from 'Containers/PatientsList';
 import { Search } from 'Components/Inputs';
+
 
 class Patients extends Component {
 	render() {
@@ -21,7 +21,7 @@ class Patients extends Component {
 							<Search searchPlaceholder={t('search.placeholder.patients')} />
 						</div>
 					</Header>
-					<div className="table-container">
+					<div className="main-container">
 						<PatientsList />
 					</div>
 				</div>
