@@ -3,6 +3,7 @@ import i18n from "i18next";
 import PersonalDetail from 'Components/Cards/PersonalDetail';
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetail from 'Components/Cards/ContactDetail';
+import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 
 // Importing mock data: Please remove upon integration
@@ -75,6 +76,7 @@ class PatientDetail extends Component {
               handleEdit={ () => this.setEditable(formList[1], true) }
             />
           }
+          <Timeline />
         </div>
       </div>
     );

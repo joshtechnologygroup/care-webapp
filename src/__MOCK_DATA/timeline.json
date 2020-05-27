@@ -1,0 +1,89 @@
+{
+  "timeline": [
+    {
+        "id": 1,
+        "title": "Admitted date & Time",
+        "type": "admission",
+        "risk": "normal",
+        "date": "1590145200",
+        "description": "This patient is in critical condition. Immediate action required."
+    },
+    {
+        "id": 2,
+        "title": "Details updated",
+        "type": "detail",
+        "risk": "normal",
+        "date": "1590145200"
+    },
+    {
+        "id": 3,
+        "title": "Basic health check date",
+        "type": "basic_test",
+        "risk": "mild",
+        "date": "1590145200"
+    },
+    {
+        "id": 4,
+        "title": "Non-Covid medical status updated",
+        "type": "non_covid_status",
+        "risk": "serious",
+        "date": "1590145200"
+    },
+    {
+        "id": 5,
+        "title": "Covid Symptoms with time",
+        "type": "covid_status",
+        "risk": "critical",
+        "date": "1590145200"
+    },
+    {
+        "id": 6,
+        "title": "Sample collected for test",
+        "type": "blood_test",
+        "risk": "normal",
+        "date": "1590145200"
+    },
+    {
+        "id": 7,
+        "title": "Sample result updated",
+        "type": "blood_test_report",
+        "risk": "positive",
+        "date": "1590145200"
+    },
+    {
+        "id": 8,
+        "title": "Portea called at date",
+        "type": "portea_check",
+        "risk": "serious",
+        "date": "1590145200"
+    },
+    {
+        "id": 9,
+        "title": "Portea feedback",
+        "type": "portea_feedback",
+        "risk": "critical",
+        "date": "1590145200"
+    },
+    {
+        "id": 10,
+        "title": "Discharged from a facility",
+        "type": "discharged",
+        "risk": "mild",
+        "date": "1590145200"
+    },
+    {
+        "id": 11,
+        "title": "Trasfered to another facility",
+        "type": "transfered",
+        "risk": "serious",
+        "date": "1590145200"
+    },
+    {
+        "id": 12,
+        "title": "Dead",
+        "type": "dead",
+        "risk": "critical",
+        "date": "1590145200"
+    }
+  ]
+}
