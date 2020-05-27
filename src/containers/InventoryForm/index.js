@@ -43,9 +43,8 @@ export const InventoryForm = (props) => {
         setState({state:initial});
         if(isAddAnother === false){
             props.createOrUpdateInventory(state, data.id)
-        }
-        else{
-        props.createOrUpdateInventory(state)
+        } else {
+            props.createOrUpdateInventory(state)
         }
         if(!isAddAnother) {
             onClose();

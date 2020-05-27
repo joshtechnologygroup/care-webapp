@@ -86,10 +86,6 @@ export function Form(props) {
     );
 }
 
-// Form.propTypes = {
-//     profile: PropTypes.object.isRequired,
-//     handleEdit: PropTypes.func
-// }
 
 Form.defaultProps = {
     profile: {}

@@ -84,9 +84,8 @@ export function InventoryList(props) {
     if(val ==='facility' || val === 'item'){
       val += '__name'
       setOrdering(val);
-    }
-    else{
-    setOrdering(val)
+    } else {
+      setOrdering(val)
     }
     fetchInventoryList({
       ...queryParams,
