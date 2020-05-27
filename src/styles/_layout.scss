@@ -105,6 +105,11 @@
   position: relative;
 }
 
+.full-heigh-container {
+  height: 100vh;
+  overflow: auto;
+}
+
 .overlay {
   position: fixed;
   display: none;
@@ -118,6 +123,7 @@
     display: block;
   }
 }
+
 .table-container {
   padding: 1rem 3rem;
 }

@@ -50,7 +50,7 @@ function Home() {
                         <NavigationPanel />
                     </Hidden>
                 </Grid>
-                <Grid item xs={12} md={10}>
+                <Grid item xs={12} md={10} className="full-heigh-container">
                     <Switch>
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
