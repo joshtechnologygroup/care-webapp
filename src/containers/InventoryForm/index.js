@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
-    const [state, setState] = useState({});
+    const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
     const { open, data, onClose, userId, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
    
@@ -25,25 +25,25 @@ export const InventoryForm = (props) => {
     }
    
     const createInventory = () => {
-        let initial = state
+        let initial = inventoryData
         const facility = facilityList.find(      
-            facility => facility.name === state.name.label
+            facility => facility.name === inventoryData.name.label
         )
         if(facility){
             initial['facility'] = facility.id
             delete initial.name;
         }
         const inventory = inventoryTypesList.find(      
-            inventory => inventory.name === state.type.label
+            inventory => inventory.name === inventoryData.type.label
         )
         if(inventory){
             initial['item'] = inventory.id
             delete initial.type;
         }
         initial['created_by'] = userId
-        setState({state:initial});
+        setInventoryData({inventoryData:initial});
         if(isAddAnother === false && data){
-            createOrUpdateInventory(initial,data.id)
+            createOrUpdateInventory(initial, data.id)
         } else {
             createOrUpdateInventory(initial)
         }
@@ -54,9 +54,9 @@ export const InventoryForm = (props) => {
    
     const handleChange = (name, e) => {
         if(typeof name === 'object') {
-            setState(name);
+            setInventoryData(name);
         } else {
-            setState({...state, [name]: e});
+            setInventoryData({...inventoryData, [name]: e});
         }
     }
 
@@ -68,13 +68,13 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={state} {...props} handleChange={handleChange} />
+                            props => <Form data={inventoryData} {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
                 <Grid item xs={12}>
                     { data &&
-                    <FormControl component="fieldset" error={false}>
+                    <FormControl component="fieldset" error={true}>
                         <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
                         <FormHelperText className={classes.error}>click on addAnother button to create new inventory...</FormHelperText>
                     </FormControl>
