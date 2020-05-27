@@ -22,7 +22,7 @@ export const CONFIG = {
     { headerName: 'COVID-19 Status', field: 'covid_status', minWidth: 135, },
     { headerName: 'Clinical Status', field: 'clinical_status', minWidth: 120 },
     { headerName: 'Clinical Status updated At', field: 'clinical_status_updated_at', minWidth: 180 },
-    { headerName: 'Portea called At', field: 'portea_called_at', minWidth: 140 },
+    { headerName: 'Portea called At', field: 'portea_called_at', minWidth: 150 },
     { headerName: 'Portea Able to contact Patient/Relative', field: 'portea_able_to_connect', minWidth: 250 },
     { headerName: 'Facility Name', field: 'facility_name', minWidth: 120 },
     { headerName: 'Facility District', field: 'facility_district', minWidth: 120 },

@@ -4,11 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import * as StringUtils from 'Src/utils/stringformatting';
 
 import { CONFIG } from './config';
+import moment from "moment";
 import { getPatientList, getsPatientDependencies } from 'Actions/PatientsAction';
 import Sort from 'Components/Sort';
 import PaginationController from 'Components/PaginationController';
 import { PATIENT_LIST_URL } from 'Src/routes';
-import { PAGINATION_LIMIT } from 'Src/constants'
+import { PAGINATION_LIMIT, CLINICAL_STATUS_UPDATED_AT, PORTEA_CALLED_AT } from 'Src/constants'
 // import { patients } from 'Mockdata/patients_list.json';
 
 import PropTypes from 'prop-types';
@@ -36,6 +37,14 @@ export function PatientsList( props ) {
         'covid_status': covid_status_list
       }
       let update_patients = Object.assign([], props.patients);
+
+      update_patients.forEach((attr) => {
+        let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
+        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).fromNow();
+        date = new Date(attr[PORTEA_CALLED_AT])
+        attr[PORTEA_CALLED_AT] = date.toDateString();
+      });
+
       Object.keys(joinById).forEach((id) => {
         update_patients.forEach(patient => joinById[id].forEach(value => {
           if(value.id === patient[id]){
