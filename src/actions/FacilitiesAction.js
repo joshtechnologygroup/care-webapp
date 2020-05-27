@@ -38,7 +38,7 @@ const getInventoryDependencies = (params) => async (dispatch) => {
 };
 
 const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
-    const body =  JSON.stringify({state})
+    const body = JSON.stringify(state);
     let url = Routes.CREATE_INVENTORY_URL
     var method = POST
     if(id !== 0){

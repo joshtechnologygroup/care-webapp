@@ -18,7 +18,7 @@ export const InventoryForm = (props) => {
     const classes = useStyles();
     const [state, setState] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
-    const { open, data, onClose } = props;
+    const { open, data, onClose, userId, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
    
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
@@ -26,25 +26,26 @@ export const InventoryForm = (props) => {
    
     const createInventory = () => {
         let initial = state
-        const facility = props.facilityList.find(      
+        const facility = facilityList.find(      
             facility => facility.name === state.name.label
         )
         if(facility){
             initial['facility'] = facility.id
             delete initial.name;
         }
-        const inventory = props.inventoryTypesList.find(      
+        const inventory = inventoryTypesList.find(      
             inventory => inventory.name === state.type.label
         )
         if(inventory){
             initial['item'] = inventory.id
             delete initial.type;
         }
+        initial['created_by'] = userId
         setState({state:initial});
-        if(isAddAnother === false){
-            props.createOrUpdateInventory(state, data.id)
+        if(isAddAnother === false && data){
+            createOrUpdateInventory(initial,data.id)
         } else {
-            props.createOrUpdateInventory(state)
+            createOrUpdateInventory(initial)
         }
         if(!isAddAnother) {
             onClose();
@@ -67,22 +68,27 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={data} {...props} handleChange={handleChange} />
+                            props => <Form data={state} {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
                 <Grid item xs={12}>
-                    <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This Inventory already exists!</FormHelperText>
+                    { data &&
+                    <FormControl component="fieldset" error={false}>
+                        <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
+                        <FormHelperText className={classes.error}>click on addAnother button to create new inventory...</FormHelperText>
                     </FormControl>
+                    }
                 </Grid>
                 <Grid item xs={12}>
+                    { data &&
                      <FormControlLabel
                         value="end"
                         control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
                         label="Add Another"
                         labelPlacement="end"
                     />
+                    }
                     <Button
                         className={classes.button}
                         variant="contained"
@@ -100,6 +106,7 @@ export const InventoryForm = (props) => {
 
 
 const mapStateToProps = (state) => ({
+    userId:state.user.id,
     inventoryList:state.inventory.results,
     inventoryTypesList: state.inventoryTypes.results,
     facilityList: state.facilities.results,
@@ -107,6 +114,7 @@ const mapStateToProps = (state) => ({
   });
   
   InventoryForm.propTypes = {
+    user: PropTypes.number.isRequired,
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
     facilityList: PropTypes.array.isRequired,

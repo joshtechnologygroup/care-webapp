@@ -14,7 +14,10 @@ if(process.env.NODE_ENV !== 'development'){
 const store = createStore(
     rootReducer,
     initialState,
-    compose(...args)
+    compose(
+        applyMiddleware(...middleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
 );
 
 export default store;
