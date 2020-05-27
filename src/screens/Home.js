@@ -11,6 +11,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Dashboard from 'Screens/Dashboard';
 import Patients from 'Screens/Patients';
 import PatientDetail from 'Screens/PatientDetail';
+import FacilityDetails from 'Screens/FacilityDetails';
 import AddPatient from 'Screens/AddPatient';
 import Transfer from 'Screens/Transfer';
 import Facilities from 'Screens/Facilities';
@@ -55,6 +56,7 @@ function Home() {
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
                         <Route path={`/facilities/beds`} component={Beds} />
+                        <Route path={`/facilities/:facilityId`} component={FacilityDetails} />
                         <Route path={`/facilities`} component={Facilities} />
                         <Route exact path={`/patients`} component={Patients} />
                         <Route path={`/patients/add`} component={AddPatient} />
