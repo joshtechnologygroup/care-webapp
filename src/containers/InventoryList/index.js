@@ -11,7 +11,7 @@ import _ from "underscore";
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [ordering, setOrdering] = useState("None0")
+  const [ordering, setOrdering] = useState("None")
 
   const {
     fetchInventoryList,
@@ -22,7 +22,7 @@ export function InventoryList(props) {
     facilityList,
     count,
   } = props;
-  const itemsPerPage = 2
+  const itemsPerPage = 4
 
   const updateInventoryListWithNames = (
     facilityList,
