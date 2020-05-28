@@ -5,7 +5,6 @@ import TableComponent from "Components/TableComponent";
 import Grid from "@material-ui/core/Grid";
 import { PropTypes } from "prop-types";
 import _ from "underscore";
-
 import { CONFIG } from "./config";
 import { getFacilitiesList, getFacilityDependencies } from "Actions/FacilitiesAction";
 import PaginationController from 'Components/PaginationController';

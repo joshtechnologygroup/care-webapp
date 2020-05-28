@@ -10,6 +10,9 @@ import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import Form from './form';
 import useStyles from './styles';
+import { createOrUpdateInventory } from 'Actions/FacilitiesAction';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
@@ -18,19 +21,39 @@ export const InventoryForm = (props) => {
     const { open, data, onClose } = props;
    
     const addAnother = (event) => {
-        console.log('addAnother--', event);
         setIsAddAnother(event.target.checked)
     }
    
     const createInventory = () => {
-        console.log('createInventory--', state);
+        let initial = state
+        const facility = props.facilityList.find(      
+            facility => facility.name === state.name.label
+        )
+        if(facility){
+            initial['facility'] = facility.id
+            delete initial.name;
+        }
+        const inventory = props.inventoryTypesList.find(      
+            inventory => inventory.name === state.type.label
+        )
+        if(inventory){
+            initial['item'] = inventory.id
+            delete initial.type;
+        }
+        initial['created_by'] = 1
+        setState({state:initial});
+        if(isAddAnother === false){
+            props.createOrUpdateInventory(initial, data.id)
+        }
+        else{
+        props.createOrUpdateInventory(initial)
+        }
         if(!isAddAnother) {
             onClose();
         }
     }
    
     const handleChange = (name, e) => {
-        console.log('handleChange--', name, e);
         if(typeof name === 'object') {
             setState(name);
         } else {
@@ -52,7 +75,7 @@ export const InventoryForm = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This Enventory already exists!</FormHelperText>
+                        <FormHelperText className={classes.error}>This Inventory already exists!</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item xs={12}>
@@ -77,4 +100,20 @@ export const InventoryForm = (props) => {
     );
 }
 
-export default InventoryForm;
+
+const mapStateToProps = (state) => ({
+    inventoryList:state.inventory.results,
+    inventoryTypesList: state.inventoryTypes.results,
+    facilityList: state.facilities.results,
+    count:state.inventory.count,
+    user:state.user.id
+  });
+  
+  InventoryForm.propTypes = {
+    inventoryList: PropTypes.array.isRequired,
+    inventoryTypesList: PropTypes.array.isRequired,
+    facilityList: PropTypes.array.isRequired,
+    createOrUpdateInventory: PropTypes.func.isRequired,
+};
+  
+  export default connect(mapStateToProps, {createOrUpdateInventory })(InventoryForm);

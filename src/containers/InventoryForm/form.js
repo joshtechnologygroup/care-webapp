@@ -8,22 +8,28 @@ import {
 import { PropTypes } from 'prop-types';
 import Select from 'react-select'
 import useStyles from './styles';
-
-export default function Form(props) {
+import { connect } from 'react-redux';
+export function Form(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
     const {data, handleChange} = props;
-    const facilityName = [
-        { value: 'facility-1', label: 'Facility One' },
-        { value: 'facility-2', label: 'Facility Two' },
-        { value: 'facility-3', label: 'Facility Three' }
-    ];
 
-    const facilityType = [
-        { value: 'facility-type-1', label: 'Facility Type One' },
-        { value: 'facility-type-2', label: 'Facility Type Two' },
-        { value: 'facility-type-3', label: 'Facility Type Three' }
-    ];
+    let facilityName = []; 
+    let facilityType = [];
+
+    props.facilityList.forEach((facility, index) => 
+    facilityName.push({
+            'value': `facility-${index}`,
+            'label': facility.name
+        })
+    );
+
+    props.inventoryTypesList.forEach((inventoryType, index) => 
+    facilityType.push({
+            'value': `facility-type-${index}`,
+            'label': inventoryType.name
+        })
+    );
 
     const change = (name, e) => {
         handleChange(name, e);
@@ -59,20 +65,20 @@ export default function Form(props) {
                 </Grid>
                 <Grid item sm={6} xs={12}>
                     <TextField 
-                        name="requiredNo"
+                        name="required_quantity"
                         type="number"
                         label={i18n.t('Required Number')}
                         fullWidth
-                        onChange={changeText.bind(null, "requiredNo")}
+                        onChange={changeText.bind(null, "required_quantity")}
                     />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                     <TextField 
-                        name="currentNo"
+                        name="current_quantity"
                         type="number"
                         label={i18n.t('Current Number')}
                         fullWidth
-                        onChange={changeText.bind(null, "currentNo")}
+                        onChange={changeText.bind(null, "current_quantity")}
                     />
                 </Grid>
             </Grid>
@@ -80,11 +86,28 @@ export default function Form(props) {
     );
 }
 
-Form.propTypes = {
-    profile: PropTypes.object.isRequired,
-    handleEdit: PropTypes.func
-}
+// Form.propTypes = {
+//     profile: PropTypes.object.isRequired,
+//     handleEdit: PropTypes.func
+// }
 
 Form.defaultProps = {
     profile: {}
 }
+
+const mapStateToProps = (state) => ({
+    inventoryList:state.inventory.results,
+    inventoryTypesList: state.inventoryTypes.results,
+    facilityList: state.facilities.results,
+    count:state.inventory.count
+  });
+  
+Form.propTypes = {
+    profile: PropTypes.object.isRequired,
+    inventoryList: PropTypes.array.isRequired,
+    inventoryTypesList: PropTypes.array.isRequired,
+    facilityList: PropTypes.array.isRequired,
+    handleEdit: PropTypes.func.isRequired
+};
+  
+  export default connect(mapStateToProps, null)(Form);
