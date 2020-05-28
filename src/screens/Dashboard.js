@@ -6,7 +6,7 @@ class Dashboard extends Component {
     const { t } = this.props;
     return (
       <div>
-        <h2>{t('Dashboard')}</h2>
+        <h2>{t('Coming Soon...')}</h2>
       </div>
     );
   }
