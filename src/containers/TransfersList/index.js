@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import { PropTypes } from 'prop-types';
 import _ from 'underscore';
+import moment from "moment";
 
 import TableComponent from 'Components/TableComponent';
 import { getTransferList } from "Actions/TransferAction";
@@ -38,7 +39,7 @@ export function TransfersList(props) {
         }
     }, [transferList, offset, count]);
 
-    const updateTransferStatus = (
+    const updateTransferList = (
         transferList
     ) => {
         
@@ -49,6 +50,8 @@ export function TransfersList(props) {
             transferList.map(transferObj => {
                 const updatedObj = { ...transferObj };
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
+                updatedObj.status_updated_at = moment.utc(transferObj.status_updated_at, 'MM/DD/YYYY hh:mm A').local().format('MM/DD/YYYY hh:mm A')
+                updatedObj.requested_at = moment.utc(transferObj.requested_at, 'MM/DD/YYYY hh:mm A').local().format('MM/DD/YYYY hh:mm A')
                 updatedTransferList.push(updatedObj);
                 return updatedObj;
             });
@@ -147,7 +150,7 @@ export function TransfersList(props) {
         pivotPanelShow={CONFIG.pivotPanelShow}
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
-        rowData={updateTransferStatus(transferList)}
+        rowData={updateTransferList(transferList)}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />

@@ -7,18 +7,18 @@ import { GRID_CONFIG } from 'Constants/app.const';
 export const CONFIG = {
   columnDefs: [
     { headerName: 'ICMR ID', field: 'patient.icmr_id', cellRendererParams: { isSortable: true } },
-    { headerName: 'Govt. ID', field: 'patient.govt_id' },
-    { headerName: 'Patient Name', field: 'patientName', minWidth: 120 },
-    { headerName: 'Gender', field: 'patient.gender' },
-    { headerName: 'Age(Years)', field: 'patient.years', minWidth: 100 },
-    { headerName: 'Age(Months)', field: 'patient.months', minWidth: 110 },
-    { headerName: 'Contact Mobile No.', field: 'patient.phone_number', minWidth: 140 },
+    { headerName: 'Govt. ID', field: 'patient.govt_id', cellRendererParams: { isSortable: true } },
+    { headerName: 'Patient Name', field: 'patientName', minWidth: 120, cellRendererParams: { isSortable: true } },
+    { headerName: 'Gender', field: 'patient.gender', cellRendererParams: { isSortable: true } },
+    { headerName: 'Age(Years)', field: 'patient.years', minWidth: 100, cellRendererParams: { isSortable: true } },
+    { headerName: 'Age(Months)', field: 'patient.months', minWidth: 110, cellRendererParams: { isSortable: true } },
+    { headerName: 'Contact Mobile No.', field: 'patient.phone_number', minWidth: 140, cellRendererParams: { isSortable: true } },
     {
       headerName: 'From Facility', children: [
         { headerName: 'Facility ID', field: 'from_facility.facility_code', minWidth: 100 },
         { headerName: 'Facility Name', field: 'from_facility.name', minWidth: 120 },
         { headerName: 'Requested At', field: 'requested_at', minWidth: 120 },
-      ]
+      ],
     },
     {
       headerName: 'To Facility', children: [
