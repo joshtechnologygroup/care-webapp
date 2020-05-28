@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
+import { GET } from "Src/constants";
+import * as ReducerTypes from 'Reducers/Types';
 import * as StringUtils from 'Src/utils/stringformatting';
 
 import { CONFIG } from './config';
+import * as Routes from 'Src/routes';
 import moment from 'moment';
 import { getPatientList, getsPatientDependencies } from 'Actions/PatientsAction';
 import Sort from 'Components/Sort';
@@ -14,11 +17,13 @@ import {
   PAGINATION_LIMIT,
   CLINICAL_STATUS_UPDATED_AT,
   PORTEA_CALLED_AT,
-  INITIAL_PAGE
+  INITIAL_PAGE,
+  MAPPING_PROPS
 } from 'Src/constants'
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 
 export function PatientsList( props ) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
@@ -32,14 +37,51 @@ export function PatientsList( props ) {
 
   // getting all the denpendencies related to patient list
   useEffect(() => {
-    if (!props.districts_list || !props.clinical_status_list || !props.cluster_group_list || !props.covid_status_list)
-      props.getsPatientDependencies();
+    let required_data = [[], []]
+
+    const required = {
+      'districts_list': [Routes.DISTRICT_LIST_URL, ReducerTypes.GET_DISTRICT_LIST],
+      'clinical_status_list': [Routes.CLINICAL_STATUS_LIST_URL, ReducerTypes.GET_CLINICAL_STATUS_LIST],
+      'cluster_group_list': [Routes.CLUSTER_GROUP_LIST_URL, ReducerTypes.GET_CLUSTER_GROUP_LIST],
+      'covid_status_list': [Routes.COVID_STATUS_LIST_URL, ReducerTypes.GET_COVID_STATUS_LIST],
+      'facilities':[Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST],
+      'ownership_types':[Routes.OWNERSHIP_TYPE_LIST_URL, ReducerTypes.GET_OWNERSHIP_TYPE_LIST],
+      'facility_types': [Routes.FACILITY_TYPE_LIST_URL, ReducerTypes.GET_FACILITY_TYPE_LIST]
+
+    }
+
+    Object.keys(required).forEach((list) => {
+      if(!props[list]){
+        required_data[0].push([required[list][0], GET, {}, selectedParams])
+        required_data[1].push(required[list][1])
+      }
+    })
+
+    props.getsPatientDependencies(required_data);
   });
 
   // setting all the foreign key to there corresponding values
   useEffect(() => {
-    const { districts_list, clinical_status_list, cluster_group_list, covid_status_list, patients } = props
-    if( districts_list && clinical_status_list && cluster_group_list && covid_status_list && patients ){
+    const {
+      districts_list,
+      clinical_status_list,
+      cluster_group_list,
+      covid_status_list,
+      patients,
+      facilities,
+      ownership_types,
+      facility_types
+    } = props
+    if(
+        districts_list &&
+        clinical_status_list &&
+        cluster_group_list &&
+        covid_status_list &&
+        patients &&
+        facilities &&
+        ownership_types &&
+        facility_types
+    ){
       const joinById = {
         'clinical_status': clinical_status_list,
         'district': districts_list,
@@ -57,16 +99,76 @@ export function PatientsList( props ) {
 
       Object.keys(joinById).forEach((id) => {
         update_patients.forEach(patient => joinById[id].forEach(value => {
+          MAPPING_PROPS[value.name] = value.id;
           if(value.id === patient[id]){
             patient[id] = value.name
           }
         }));
       })
+
+      const update_list = {
+        'updated_clinical_status_list': [],
+        'updated_district_list': [],
+        'updated_facility_list':[],
+        'updated_cluster_group_list':[],
+        'updated_covid_status_list':[],
+        'updated_ownership_types_list': [],
+        'updated_facility_types_list': []
+      }
+      console.log(ownership_types);
+      const props_list = {
+        'updated_clinical_status_list': clinical_status_list,
+        'updated_district_list': districts_list,
+        'updated_facility_list': facilities,
+        'updated_cluster_group_list': cluster_group_list,
+        'updated_covid_status_list': covid_status_list,
+        'updated_ownership_types_list': ownership_types,
+        'updated_facility_types_list': facility_types
+      }
+      Object.keys(update_list).forEach((list_name) => {
+        props_list[list_name].forEach((element)=>{
+          console.log(element.name);
+          update_list[list_name].push(element.name);
+        })
+      })
+
+      CONFIG.columnDefs.forEach((col) => {
+        if(col.field === 'facility_district' || col.field === 'district'){
+          col.cellRendererParams.options = update_list['updated_district_list']
+        }
+        if(col.field === 'facility_name'){
+          col.cellRendererParams.options = update_list['updated_facility_list']
+        }
+        if(col.field === 'cluster_group'){
+          col.cellRendererParams.options = update_list['updated_cluster_group_list']
+        }
+        if(col.field === 'covid_status'){
+          col.cellRendererParams.options = update_list['updated_covid_status_list']
+        }
+        if(col.field === 'clinical_status'){
+          col.cellRendererParams.options = update_list['updated_clinical_status_list']
+        }
+        if(col.field === 'ownership_type'){
+          col.cellRendererParams.options = update_list['updated_ownership_types_list']
+        }
+        if(col.field === 'facility_type'){
+          col.cellRendererParams.options = update_list['updated_facility_types_list']
+        }
+      })
+
+
       setTotalPages(Math.ceil(props.count/PAGINATION_LIMIT))
       setPatients(update_patients);
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.patients]); // if the list changes then again set all the foreign keys
+  }, [
+    props.districts_list,
+    props.clinical_status_list,
+    props.cluster_group_list,
+    props.covid_status_list,
+    props.patients,
+    props.facilities
+  ]); // if the list changes then again set all the foreign keys
 
 
   // when the component loads bring the patients list
@@ -81,12 +183,17 @@ export function PatientsList( props ) {
       Object.keys(params).map(param => {
         params[param] = '-' + params[param]
       })
-    } else if(ordering === 'none') {
-      params = {}
     }
     props.getPatientList( url, params );
     setPage(next_page);
     setCurrentUrl(url);
+  }
+
+  const handleBooleanCallBack = (field, val) => {
+    val = val.map(val => MAPPING_PROPS[val])
+    const update_select_params = { ...selectedParams }
+    update_select_params[field] = val
+    setSelectedParams({...update_select_params});
   }
 
   return (
@@ -98,7 +205,8 @@ export function PatientsList( props ) {
         <Grid item xs={12} sm={12} >
           <Filters
             options={CONFIG.columnDefs}
-            onSeeMore={() => { setShowOverlay(!showOverlay) }} />
+            onSeeMore={() => { setShowOverlay(!showOverlay) }}
+            handleBooleanCallBack={(field, val) => handleBooleanCallBack(field, val)}/>
         </Grid>
       </Grid>
       <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
@@ -155,6 +263,9 @@ export function PatientsList( props ) {
 }
 
 const mapStateToProps = (state) => ({
+  facility_types: state.facilityTypes.results,
+  ownership_types: state.ownershipTypes.results,
+  facilities: state.facilities.results,
   patients: state.patients.results,
   count: state.patients.count,
   next: state.patients.next,
@@ -166,6 +277,9 @@ const mapStateToProps = (state) => ({
 });
 
 PatientsList.propTypes = {
+  facility_types: PropTypes.array.isRequired,
+  ownership_types: PropTypes.array.isRequired,
+  facilities: PropTypes.array.isRequired,
   patients: PropTypes.array.isRequired,
   count: PropTypes.number.isRequired,
   next: PropTypes.string.isRequired,
