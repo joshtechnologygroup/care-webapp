@@ -126,7 +126,9 @@ export function InventoryList(props) {
         <Grid item xs={12} sm={4}>
 
           <PaginationController
-          resultsShown={page}
+            resultsShown={`${
+              count === 0 ? 0 : page
+              }`}
             totalResults={Math.ceil((count - 1) / itemsPerPage)}
             onFirst={() => {
               setOffset(0);

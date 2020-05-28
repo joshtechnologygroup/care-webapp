@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -13,19 +13,30 @@ import useStyles from './styles';
 import { createOrUpdateInventory } from 'Actions/FacilitiesAction';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'underscore'
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
     const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
-    const { open, data, onClose, userId, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
-   
+    const [error, setError] = useState(false)
+    const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
+    
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
-   
+    useEffect(() => {
+        if(!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)){
+                    setError(true)
+         }
+         else{
+            setError(false)
+         }
+      }, [facilityList, inventoryTypesList]);
+      
     const createInventory = () => {
         let initial = inventoryData
+        if(facilityList && !_.isEmpty(props.facilityList) && inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
         const facility = facilityList.find(      
             facility => facility.name === inventoryData.name.label
         )
@@ -46,6 +57,7 @@ export const InventoryForm = (props) => {
         } else {
             createOrUpdateInventory(initial)
         }
+    }
         if(!isAddAnother) {
             onClose();
         }
@@ -72,6 +84,12 @@ export const InventoryForm = (props) => {
                     </Formik>
                 </Grid>
                 <Grid item xs={12}>
+                    {
+                    error === true && 
+                    <FormControl component="fieldset" error={true}>
+                        <FormHelperText className={classes.error}>Facility Name and Facility Type not exists...</FormHelperText>
+                    </FormControl>
+                    }
                     { data &&
                     <FormControl component="fieldset" error={true}>
                         <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
@@ -94,6 +112,7 @@ export const InventoryForm = (props) => {
                         color="primary"
                         size="medium"
                         onClick={createInventory}
+                        disabled={error}
                     >
                         {i18n.t('Ok')}
                     </Button>
@@ -105,7 +124,6 @@ export const InventoryForm = (props) => {
 
 
 const mapStateToProps = (state) => ({
-    userId:state.user.id,
     inventoryList:state.inventory.results,
     inventoryTypesList: state.inventoryTypes.results,
     facilityList: state.facilities.results,
@@ -113,7 +131,6 @@ const mapStateToProps = (state) => ({
   });
   
   InventoryForm.propTypes = {
-    user: PropTypes.number.isRequired,
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
     facilityList: PropTypes.array.isRequired,
