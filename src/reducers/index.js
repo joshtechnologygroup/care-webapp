@@ -8,9 +8,9 @@ import { transfers } from "Reducers/TransferReducer";
 export default combineReducers({
     user: user,
     facilities: facilities,
-    facilityTypes: facilityTypes,
     inventory:facilityInventoryList,
     inventoryTypes:InventoryTypeList,
+    facilityTypes: facilityTypes,
     ownershipTypes: ownershipTypes,
     districts: districts,
     patients,

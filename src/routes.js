@@ -14,6 +14,10 @@ export const FACILITY_INVENTORY_LIST_URL = SERVER + API_V1 + 'facilities/invento
 export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/'
 export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type/'
 
+//inventories
+export const INVENTORY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/inventory-items'
+export const CREATE_INVENTORY_URL = SERVER + API_V1 + 'facilities/inventories/'
+
 // Patients
 export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/?limit={0}&offset={1}'
 export const CLINICAL_STATUS_LIST_URL = SERVER + API_V1 + 'patients/clinical-status/'
@@ -23,7 +27,3 @@ export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/'
 //Patient Transfers
 export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/'
 export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/'
-
-//inventories
-export const INVENTORY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/inventory-items'
-export const CREATE_INVENTORY_URL = SERVER + API_V1 + 'facilities/inventories/'

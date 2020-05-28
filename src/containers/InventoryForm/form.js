@@ -14,8 +14,8 @@ export function Form(props) {
     const { i18n } = useTranslation();
     const {data, handleChange} = props;
 
-    let facilityName = []; 
-    let facilityType = [];
+    const facilityName = []; 
+    const facilityType = [];
 
     props.facilityList.forEach((facility, index) => 
     facilityName.push({
@@ -39,7 +39,6 @@ export function Form(props) {
     };
 
     useEffect(() => {
-        console.log('data in edit mode', data);
         handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
     }, []);
 
@@ -86,10 +85,6 @@ export function Form(props) {
     );
 }
 
-// Form.propTypes = {
-//     profile: PropTypes.object.isRequired,
-//     handleEdit: PropTypes.func
-// }
 
 Form.defaultProps = {
     profile: {}
