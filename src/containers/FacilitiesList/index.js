@@ -80,20 +80,20 @@ export function FacilitiesList(props) {
     // Handle has more.
     useEffect(() => {
         if (!_.isEmpty(facilityList)) {
-            setHasPrev(offset - facilityList.length >= 0 ? true : false);
-            setHasMore(offset + facilityList.length < count ? true : false);
+            setHasPrev(offset - itemsPerPage >= 0 ? true : false);
+            setHasMore(offset + itemsPerPage < count ? true : false);
         }
     }, [facilityList, offset, count]);
 
     const fetchMoreFacilites = () => {
         if (hasMore) {
-            setOffset(offset + facilityList.length);
+            setOffset(offset + itemsPerPage);
         }
     };
 
     const fetchPrevFacilities = () => {
         if (hasPrev) {
-            setOffset(offset - facilityList.length);
+            setOffset(offset - itemsPerPage);
         }
     };
 
@@ -168,8 +168,8 @@ export function FacilitiesList(props) {
                     </Grid>
                     <Grid item xs={12} sm={5}>
                         <PaginationController
-                            resultsShown={10}
-                            totalResults={56}
+                            resultsShown={Math.ceil((offset + facilityList.length) / itemsPerPage)}
+                            totalResults={Math.ceil((count) / itemsPerPage)}
                             onFirst={() => {
                                 setOffset(0);
                             }}

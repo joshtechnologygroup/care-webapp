@@ -26,71 +26,108 @@ export function TransfersList(props) {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
-    const [sortOption, setSortOption] = useState(null);
-    const [sortOrder, setSortOrder] = useState(null);
+    const [ordering, setOrdering] = useState(null);
+    const [sortType, setSortType] = useState(null);
+    const [orderingParam, setOrderingParam] = useState(null);
 
     // Handle has more.
     useEffect(() => {
         if (!_.isEmpty(transferList)) {
-            setHasPrev(offset - transferList.length >= 0 ? true : false);
-            setHasMore(offset + transferList.length < count ? true : false);
+            setHasPrev(offset - itemsPerPage >= 0 ? true : false);
+            setHasMore(offset + itemsPerPage < count ? true : false);
         }
     }, [transferList, offset, count]);
 
-    useEffect(() => {
+    const updateTransferStatus = (
+        transferList
+    ) => {
         
-    }, [sortOption, sortOrder])
-
-    useEffect(() => {
-        if (!_.isEmpty(transferList)) {
-            transferList.map(transfer => {
-                transfer.status = TRANSFER_STATUS_CHOICES[transfer.status];
-                return transfer;
+        if (
+            !_.isEmpty(transferList)
+        ) {
+            const updatedTransferList = [];
+            transferList.map(transferObj => {
+                const updatedObj = { ...transferObj };
+                updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
+                updatedTransferList.push(updatedObj);
+                return updatedObj;
             });
+            return updatedTransferList;;
         }
-    }, [transferList]);
+        return transferList;
+    };
 
     const fetchMoreTransfers = () => {
         if (hasMore) {
-            setOffset(offset + transferList.length);
+            setOffset(offset + itemsPerPage);
         }
     };
 
     const fetchPrevTransfers = () => {
         if (hasPrev) {
-            setOffset(offset - transferList.length);
+            setOffset(offset - itemsPerPage);
         }
     };
 
     useEffect(() => {
-        fetchTransferList({
+        if (ordering && sortType !== "none") {
+            setOrderingParam(sortType === "asec" ? ordering : `-${ordering}`);
+        } else {
+            setOrderingParam(null);
+        }
+    }, [ordering, sortType]);
+
+    useEffect(() => {
+        const options = {
             ...queryParams,
-            offset: offset,
-        });
-    }, [queryParams, offset, fetchTransferList]);
+            offset: offset
+        };
+        if (orderingParam) {
+            options.ordering = orderingParam
+        }
+        fetchTransferList(options);
+    }, [queryParams, offset, fetchTransferList, orderingParam]);
+
+    const sortByValue = val => {
+        setOrdering(val);
+    };
 
   return (
     <React.Fragment>
-      <Grid container
-        direction
+    <Grid container
+      direction
+      alignItems="center"
+      className={`container-padding ${showOverlay ? "filter-container-overlay" : 'filter-container'}`}>
+      <Grid item xs={12} sm={12} >
+        <Filters
+          options={CONFIG.columnDefs}
+          onSeeMore={() => { setShowOverlay(!showOverlay) }} />
+      </Grid>
+    </Grid>
+    <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
+    <div className="container-padding">
+      <Grid
+        className="sort-pagination"
+        container
+        direction="row"
+        justify="space-between"
         alignItems="center"
       >
-        <Grid item xs={12} sm={3} >
-          <Sort
-            onSelect={(val) => setSortOption(val)}
-            options={CONFIG.columnDefs}
-            onToggleSort={(toggleVal => setSortOrder(toggleVal))} />
-        </Grid>
         <Grid item xs={12} sm={4} >
-
+          <Sort
+            onSelect={val => sortByValue(val)}
+            options={CONFIG.columnDefs}
+            onToggleSort={toggleVal => setSortType(toggleVal)} />
+        </Grid>
+        <Grid item xs={12} sm={5} >
           <PaginationController
-            resultsShown={10}
-            totalResults={56}
+            resultsShown={Math.ceil((offset + transferList.length) / itemsPerPage)}
+            totalResults={Math.ceil((count) / itemsPerPage)}
             onFirst={() => {
                 setOffset(0);
             }}
-            onPrevious={() => fetchMoreTransfers()}
-            onNext={() => fetchPrevTransfers()}
+            onPrevious={() => fetchPrevTransfers()}
+            onNext={() => fetchMoreTransfers()}
             onLast={() => {
                 setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
             }}
@@ -110,11 +147,12 @@ export function TransfersList(props) {
         pivotPanelShow={CONFIG.pivotPanelShow}
         frameworkComponents={CONFIG.frameworkComponents}
         cellStyle={CONFIG.cellStyle}
-        rowData={transferList}
+        rowData={updateTransferStatus(transferList)}
         showColumnsPanel={showColumnsPanel}
         onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
       />
-    </React.Fragment>
+    </div>
+  </React.Fragment>
   );
 }
 
