@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -13,39 +13,51 @@ import useStyles from './styles';
 import { createOrUpdateInventory } from 'Actions/FacilitiesAction';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'underscore'
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
-    const [state, setState] = useState({});
+    const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
-    const { open, data, onClose } = props;
-   
+    const [error, setError] = useState(false)
+    const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
+    
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
-   
+    useEffect(() => {
+        if(!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)){
+                    setError(true)
+         }
+         else{
+            setError(false)
+         }
+      }, [facilityList, inventoryTypesList]);
+      
     const createInventory = () => {
-        let initial = state
-        const facility = props.facilityList.find(      
-            facility => facility.name === state.name.label
+        let initial = inventoryData
+        if(facilityList && !_.isEmpty(props.facilityList) && inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
+        const facility = facilityList.find(      
+            facility => facility.name === inventoryData.name.label
         )
         if(facility){
             initial['facility'] = facility.id
             delete initial.name;
         }
-        const inventory = props.inventoryTypesList.find(      
-            inventory => inventory.name === state.type.label
+        const inventory = inventoryTypesList.find(      
+            inventory => inventory.name === inventoryData.type.label
         )
         if(inventory){
             initial['item'] = inventory.id
             delete initial.type;
         }
-        setState({state:initial});
-        if(isAddAnother === false){
-            props.createOrUpdateInventory(state, data.id)
+        setInventoryData({inventoryData:initial});
+        if(isAddAnother === false && data){
+            createOrUpdateInventory(initial, data.id)
         } else {
-            props.createOrUpdateInventory(state)
+            createOrUpdateInventory(initial)
         }
+    }
         if(!isAddAnother) {
             onClose();
         }
@@ -53,9 +65,9 @@ export const InventoryForm = (props) => {
    
     const handleChange = (name, e) => {
         if(typeof name === 'object') {
-            setState(name);
+            setInventoryData(name);
         } else {
-            setState({...state, [name]: e});
+            setInventoryData({...inventoryData, [name]: e});
         }
     }
 
@@ -67,28 +79,40 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={data} {...props} handleChange={handleChange} />
+                            props => <Form data={inventoryData} {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
                 <Grid item xs={12}>
+                    {
+                    error === true && 
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This Inventory already exists!</FormHelperText>
+                        <FormHelperText className={classes.error}>Facility Name and Facility Type not exists...</FormHelperText>
                     </FormControl>
+                    }
+                    { data &&
+                    <FormControl component="fieldset" error={true}>
+                        <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
+                        <FormHelperText className={classes.error}>click on addAnother button to create new inventory...</FormHelperText>
+                    </FormControl>
+                    }
                 </Grid>
                 <Grid item xs={12}>
+                    { data &&
                      <FormControlLabel
                         value="end"
                         control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
                         label="Add Another"
                         labelPlacement="end"
                     />
+                    }
                     <Button
                         className={classes.button}
                         variant="contained"
                         color="primary"
                         size="medium"
                         onClick={createInventory}
+                        disabled={error}
                     >
                         {i18n.t('Ok')}
                     </Button>
