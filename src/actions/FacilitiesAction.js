@@ -4,7 +4,7 @@ import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 import * as HttpStatus from 'http-status-codes'
 import * as CommonService from "Src/utils/services";
 import * as facilityService from "Src/services/facilityService";
-import { GET, POST, PUT, UPDATED_AT } from "Src/constants";;
+import { GET, POST, PUT } from "Src/constants";;
 
 const getFacilitiesList = (params) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(Routes.FACILITY_LIST_URL, GET, {}, params)
