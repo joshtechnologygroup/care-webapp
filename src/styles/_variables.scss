@@ -1,32 +1,65 @@
+//COLORS
+
 $blue-primary:      #007aff;
 $blue-primary-bg:   #f5faff;
 $blue-primary-bg-dark: #c3e1ff;
 $blue-medium:       #006FAC;
 $blue-dark:         #004A82;
+$alice-blue:        #f5faff;
 
 $yellow:            #FFEB2A;
+$yellow-paper-border:#ffec00;
+$yellow-paper-fill: #fff9a9;
+
+$grey:              #94979B;
 $grey-light:        #E3E4E5;
 $grey-dark:         #C9CCCC;
 $grey-dark-font:    #909295;
-
+$grey-dot:          #c7c7cc;
 $black-light:       #424243;
-$black-dark:        #333;
+$black-dark:        #333333;
 $black:             #000000;
 $white:             #ffffff;
+
 $red:               #ff2b1f;
-$alice-blue:        #f5faff;
+$red-paper-border:  #ff2b1f;
+$red-paper-fill:    #ffc9c6;
+
 $green:             #4cd964;
 $green-tint:        #edfbef;
+$green-paper-border:#4cd964;
+$green-paper-fill:  #b9ffc5;
+
+$orange: #FF9500;
+
+$cell-border-color: #DBDFE9;
+$row-bg-dark: #FAFAFA;
+
+// FIELDS
 
 $shadow: 0.1rem 0.2rem 0.3rem 0.4rem rgba($black, 0.03);
+$search-shadow: 0 2px 10px 0 rgba($black, 0.03);
 $paper-shadow: 1px 0 10px 0 rgba($black, 0.1);;
 $input-shadow: 0 1px 5px 0 rgba($black, 0.15);
 
-$hero-img: "../../img/hero.png";
+// FONTS
 
-$primary-font: "Proxima Nova Thin";
-$primary-font-bold: "Proxima Nova Regular";
+$primary-font: "Lato";
+$font: 'Lato',
+sans-serif;
+$font-weight-normal: normal;
+$font-weight-bold: bold;
 
 // Breakpoints
+
 $mob-min: 48em;
 $tablet-landscape: 960px;
+
+
+// Timeline Status
+$timeline_critical: #ff4746;
+$timeline_mild: #ff9f46;
+$timeline_normal: #3eac2d;
+$timeline_status: #0155d6;
+$timeline_init: #bcbcbc;
+$timeline_gray: #898a89;

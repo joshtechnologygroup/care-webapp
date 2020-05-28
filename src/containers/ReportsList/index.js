@@ -1,48 +1,73 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import TableComponent from 'Components/TableComponent';
-
-
+import Grid from '@material-ui/core/Grid';
 import { CONFIG } from './config';
-import './ReportsList.scss';
+import { reports } from 'Mockdata/reports_list.json';
+import PaginationController from 'Components/PaginationController';
+import Sort from 'Components/Sort';
+import Filters from 'Components/Filters';
 
 export function ReportsList(props) {
-  const [data, setData] = useState([]);
-
-  function onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
-    const httpRequest = new XMLHttpRequest();
-    const updateData = data => {
-      setData(data);
-    };
-
-    httpRequest.open(
-      'GET',
-      'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinnersSmall.json'
-    );
-    httpRequest.send();
-    httpRequest.onreadystatechange = () => {
-      if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        updateData(JSON.parse(httpRequest.responseText));
-      }
-    };
-  };
+  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   return (
-    <div>
+    <React.Fragment>
+      <Grid container
+        direction
+        alignItems="center"
+        className={`container-padding ${showOverlay ? "filter-container-overlay" : 'filter-container'}`}>
+        <Grid item xs={12} sm={12} >
+          <Filters
+            options={CONFIG.columnDefs}
+            onSeeMore={() => { setShowOverlay(!showOverlay) }} />
+        </Grid>
+      </Grid>
+      <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
+      <div className="container-padding">
+        <Grid
+          className="sort-pagination"
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+        >
+          <Grid item xs={12} sm={4} >
+            <Sort
+              onSelect={(val) => console.log(`Sort By ${val} using API`)}
+              options={CONFIG.columnDefs}
+              onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+          </Grid>
+          <Grid item xs={12} sm={5} >
+            <PaginationController
+              resultsShown={10}
+              totalResults={56}
+              onFirst={() => { console.log('on First Page') }}
+              onPrevious={() => { console.log('on Previous Page') }}
+              onNext={() => { console.log('on Next Page') }}
+              onLast={() => { console.log('on Last Page') }}
+              onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+            />
+          </Grid>
+        </Grid>
         <TableComponent
           modules={CONFIG.modules}
           columnDefs={CONFIG.columnDefs}
+          rowHeight={CONFIG.rowHeight}
+          headerHeight={CONFIG.headerHeight}
           autoGroupColumnDef={CONFIG.autoGroupColumnDef}
           defaultColDef={CONFIG.defaultColDef}
           rowSelection={CONFIG.rowSelection}
           rowGroupPanelShow={CONFIG.rowGroupPanelShow}
           pivotPanelShow={CONFIG.pivotPanelShow}
-          onGridReady={onGridReady}
-          rowData={data}
           frameworkComponents={CONFIG.frameworkComponents}
+          cellStyle={CONFIG.cellStyle}
+          pagination={CONFIG.pagination}
+          rowData={reports}
+          showColumnsPanel={showColumnsPanel}
+          onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
         />
-    </div>
+      </div>
+    </React.Fragment>
   );
 }
 

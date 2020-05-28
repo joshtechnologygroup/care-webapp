@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { regex } from 'Constants/app.const';
 import { Typography } from '@material-ui/core';
+import { login } from 'Actions/AuthAction';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Login extends Component {
   constructor (props) {
@@ -41,7 +44,7 @@ class Login extends Component {
     });
   }
 
-  handleSubmit () {
+  async handleSubmit () {
     let emailError =false,
         passwordError = false;
     if (!this.state.email) {
@@ -59,18 +62,26 @@ class Login extends Component {
         }
       });
     }
-    else {
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          form: i18n.t('Invalid email or password')
+    else {    
+        const { email, password, errors } = { ...this.state };
+        const { login, history } = { ...this.props }
+        const response = await login(email, password);
+        if(response.status){
+            history.push('/')
+        } else {
+            this.setState({
+                errors: {
+                    ...errors,
+                    form: this.props.t(response.error_message)
+                }
+            });
         }
-      });
     }
   }
 
   render() {
     const { email, password, errors } = this.state;
+    const { t } = this.props;
     return (
       <div className="login__content">
         {
@@ -84,7 +95,7 @@ class Login extends Component {
           name="email"
           variant="outlined"
           className="form-field"
-          placeholder={i18n.t('Email')}
+          placeholder={t('Email')}
           onChange={this.handleChange}
           value={email} 
           error={errors.email}
@@ -94,7 +105,7 @@ class Login extends Component {
           name="password"
           variant="outlined"
           className="form-field"
-          placeholder={i18n.t('Password')}
+          placeholder={t('Password')}
           onChange={this.handleChange}
           value={password}
           error={errors.password}
@@ -108,7 +119,7 @@ class Login extends Component {
           onClick={this.handleSubmit}
           disabled={errors.email || errors.password}
         >
-          {i18n.t('LOG IN')}
+          {t('LOG IN')}
         </Button>
         <Link
           to={'/forgot-password'}
@@ -116,11 +127,19 @@ class Login extends Component {
           underline="hover"
           className="text--link"
         >
-          {i18n.t('Forgot Password?')}
+          {t('Forgot Password?')}
         </Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+});
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+
+export default connect(mapStateToProps, { login })(withTranslation()(Login));

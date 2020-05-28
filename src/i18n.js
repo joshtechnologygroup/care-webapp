@@ -3,6 +3,7 @@ import i18n from 'i18next';
 import { initReactI18next } from "react-i18next";
 import enLang from 'Assets/i18n/en.json';
 import hnLang from 'Assets/i18n/hn.json';
+import { getData } from 'Utils/local-storage';
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -15,9 +16,9 @@ i18n
          translation: hnLang
       }
     },
-    lng: "en",
+    lng: getData("lang"),
     fallbackLng: "en",
-
+    // keySeparator: false,
     interpolation: {
       escapeValue: false
     }

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 import AuthUIContainer from 'Containers/AuthUIContainer';
 import Login from 'Containers/Login';
 
 class LoginPage extends Component {
   render() {
+    const { t } = this.props;
     return (
-      <AuthUIContainer head={i18n.t('Welcome!')} subhead={i18n.t('LOG IN')}>
-        <Login />
+      <AuthUIContainer head={t('Welcome!')} subhead={t('LOG IN')}>
+        <Login {...this.props} />
       </AuthUIContainer>
     );
   }
 }
 
-export default LoginPage;
+export default withTranslation()(LoginPage);

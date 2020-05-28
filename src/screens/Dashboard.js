@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import i18n from "i18next";
+import { useTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -26,11 +26,13 @@ const useStyles = makeStyles({
   },
 });
 
-export const Dashboard = () => {
+export const Dashboard = (props) => {
     const classes = useStyles();
+    const { t } = useTranslation();
+
     return (
         <div className="page-container">
-            <h2>{i18n.t('Dashboard')}</h2>
+            <h2>{t('Dashboard')}</h2>
             <Grid container justify="center" spacing="4" className="container-wrap">
                 <Grid item xs={5}>
                     <Card className={classes.root}>

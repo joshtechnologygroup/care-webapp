@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import i18n from 'i18next';
+import { withTranslation } from 'react-i18next';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { regex } from 'Constants/app.const';
+import { forgot_password } from 'Actions/AuthAction';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as HttpStatus from 'http-status-codes'
+import * as StringUtils from 'Src/utils/stringformatting';
 
 class ForgotPassword extends Component {
+  SUCCESS_TEMPLATE = 'If an account exists for {0}, an e-mail will be sent with further instructions.';
+  FORM_TEMPLATE = 'This email is not registered with us.';
   constructor (props) {
     super(props);
     this.state = {
@@ -32,7 +39,7 @@ class ForgotPassword extends Component {
     });
   }
 
-  handleSubmit () {
+  async handleSubmit () {
     if (!this.state.email) {
       this.setState({
         errors: {
@@ -42,29 +49,37 @@ class ForgotPassword extends Component {
       });
     }
     else {
+      let [ success, form ] = [ '', '' ];
+      const { errors, email } = this.state
+      const status_code = await this.props.forgot_password(email);
+      
+      ( status_code === HttpStatus.OK ) ?
+          success = StringUtils.formatVarString(this.SUCCESS_TEMPLATE, [email]):
+          form = StringUtils.formatVarString(this.FORM_TEMPLATE, [])
       this.setState({
-        errors: {
-          ...this.state.errors,
-          form: i18n.t('This email is not registered with us.')
-        },
-        success: i18n.t(' If an account exists for {{EMAIL}}, an e-mail will be sent with further instructions.', {EMAIL: this.state.email})
+          success: this.props.t(success),
+          errors: {
+              ...errors,
+              form: this.props.t(form),
+          },
       });
     }
   }
 
   render() {
     const { email, errors, success } = this.state;
+    const { t } = this.props;
     return (
       <div className="login__content">
         <Typography variant="h5" className="mt-24">
-          {i18n.t('Enter your email address to reset your password. You may need to check your spam folder in your email.')}
+          {t('enter_email_text')}
         </Typography>
         <TextField
           type="email"
           name="email"
           variant="outlined"
           className="form-field"
-          placeholder={i18n.t('Email')}
+          placeholder={t('Email')}
           onChange={this.handleChange}
           value={email}
           error={errors.email}
@@ -76,20 +91,20 @@ class ForgotPassword extends Component {
           className="btn"
           onClick={this.handleSubmit}
         >
-          {i18n.t('SUBMIT')
+          {t('SUBMIT')
         }</Button>
         <Link
           to={'/login'}
           className="text--link"
         >
-          {i18n.t('Go back to Login page')}
+          {t('Go back to Login page')}
         </Link>
-        <Link
+        {/* <Link
           to={'/contact'}
           className="text--link mt-10"
         >
-          {i18n.t('Still having a problem. Need Help.')}
-        </Link>
+          {t('Still having a problem. Need Help.')}
+        </Link> */}
         {
           errors.form &&
           <p className="success-box">{errors.form}</p>
@@ -103,4 +118,11 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+const mapStateToProps = (state) => ({
+});
+
+ForgotPassword.propTypes = {
+    forgot_password: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { forgot_password })(withTranslation()(ForgotPassword));

@@ -1,0 +1,40 @@
+{
+  "facilityBeds": [
+    {
+      "facilityName": "Some Name",
+      "reportType": "Room type",
+      "bedType": "Bed type",
+      "beds": "100",
+      "cooupiedBeds": "50",
+      "availableBeds": "50",
+      "updatedAt": "1590278400"
+    },
+    {
+      "facilityName": "Some Name",
+      "reportType": "Room type",
+      "bedType": "Bed type",
+      "beds": "100",
+      "cooupiedBeds": "50",
+      "availableBeds": "50",
+      "updatedAt": "1590278400"
+    },
+    {
+      "facilityName": "Some Name",
+      "reportType": "Room type",
+      "bedType": "Bed type",
+      "beds": "100",
+      "cooupiedBeds": "50",
+      "availableBeds": "50",
+      "updatedAt": "1590145200"
+    },
+    {
+      "facilityName": "Some Name",
+      "reportType": "Room type",
+      "bedType": "Bed type",
+      "beds": "100",
+      "cooupiedBeds": "50",
+      "availableBeds": "50",
+      "updatedAt": "1590145200"
+    }
+  ]
+}

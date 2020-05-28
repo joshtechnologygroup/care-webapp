@@ -10,9 +10,14 @@ import Hidden from '@material-ui/core/Hidden';
 
 import Dashboard from 'Screens/Dashboard';
 import Patients from 'Screens/Patients';
+import PatientDetail from 'Screens/PatientDetail';
+import FacilityDetails from 'Screens/FacilityDetails';
+import AddPatient from 'Screens/AddPatient';
 import Transfer from 'Screens/Transfer';
-import Fecilities from 'Screens/Fecilities';
+import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
+import Inventory from 'Screens/Inventory';
+import Beds from 'Screens/Facilities/Beds';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
 import ErrorPage from 'Screens/ErrorPage';
@@ -21,7 +26,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import logo from 'Assets/images/logo.svg';
 
 function Home() {
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (isOpen) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -41,21 +46,26 @@ function Home() {
                 </div>
             </Hidden>
             <Grid container className="container-wrap">
-                <Grid item md={2}>
+                <Grid item md={2} className="container-wrap__navigation">
                     <Hidden smDown>
                         <NavigationPanel />
                     </Hidden>
                 </Grid>
-                <Grid item xs={12} md={10}>
+                <Grid item xs={12} md={10} className="full-heigh-container">
                     <Switch>
                         <Route exact path={`/`} component={Patients} />
                         <Route path={`/dashboard`} component={Dashboard} />
-                        <Route path={`/fecilities`} component={Fecilities} />
-                        <Route path={`/patients`} component={Patients} />
+                        <Route path={`/facilities/beds`} component={Beds} />
+                        <Route path={`/facilities/:facilityId`} component={FacilityDetails} />
+                        <Route path={`/facilities`} component={Facilities} />
+                        <Route exact path={`/patients`} component={Patients} />
+                        <Route path={`/patients/add`} component={AddPatient} />
+                        <Route path={`/patients/:patientId`} component={PatientDetail} />
                         <Route path={`/transfer`} component={Transfer} />
                         <Route path={`/reports`} component={Reports} />
                         <Route path={`/settings`} component={Settings} />
                         <Route path={`/profile`} component={Profile} />
+                        <Route path={`/inventory`} component={Inventory} />
                         <Route path={`/error/:errorCode`}>
                             <ErrorPage text="Oops! Error occured." />
                         </Route>

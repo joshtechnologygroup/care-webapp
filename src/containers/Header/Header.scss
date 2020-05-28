@@ -1,0 +1,13 @@
+@import '../../styles/import';
+
+.header-container {
+  display: flex;
+  align-items: center;
+  min-height: 5.4rem;
+  background: $white;
+  box-shadow: 1px 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 0 3rem;
+  &__search-container {
+    max-width: 600px;
+  }
+}

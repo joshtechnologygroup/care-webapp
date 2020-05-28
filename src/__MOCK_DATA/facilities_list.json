@@ -1,0 +1,59 @@
+{
+  "facilities": [
+    {
+      "facility_code": 1234,
+      "name": "PDEA Ayurveda Ab",
+      "address": "Carol Bagh Delhi",
+      "district": "District A",
+      "facility_type": "PMC",
+      "owned_by": "ABC",
+      "total_patient": 200,
+      "positive_patient": 140,
+      "negative_patient": 20
+    },
+    {
+      "facility_code": 1234,
+      "name": "PDEA Ayurveda Ab",
+      "address": "Carol Bagh Delhi",
+      "district": "District A",
+      "facility_type": "PMC",
+      "owned_by": "ABC",
+      "total_patient": 200,
+      "positive_patient": 140,
+      "negative_patient": 20
+    },
+    {
+      "facility_code": 1234,
+      "name": "PDEA Ayurveda Ab",
+      "address": "Carol Bagh Delhi",
+      "district": "District A",
+      "facility_type": "PMC",
+      "owned_by": "ABC",
+      "total_patient": 200,
+      "positive_patient": 140,
+      "negative_patient": 20
+    },
+    {
+      "facility_code": 1234,
+      "name": "PDEA Ayurveda Ab",
+      "address": "Carol Bagh Delhi",
+      "district": "District A",
+      "facility_type": "PMC",
+      "owned_by": "ABC",
+      "total_patient": 200,
+      "positive_patient": 140,
+      "negative_patient": 20
+    },
+    {
+      "facility_code": 1234,
+      "name": "PDEA Ayurveda Ab",
+      "address": "Carol Bagh Delhi",
+      "district": "District A",
+      "facility_type": "PMC",
+      "owned_by": "ABC",
+      "total_patient": 200,
+      "positive_patient": 140,
+      "negative_patient": 20
+    }
+  ]
+}
