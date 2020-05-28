@@ -10,7 +10,12 @@ import Sort from 'Components/Sort';
 import Filters from 'Components/Filters';
 import PaginationController from 'Components/PaginationController';
 import { PATIENT_LIST_URL } from 'Src/routes';
-import { PAGINATION_LIMIT, CLINICAL_STATUS_UPDATED_AT, PORTEA_CALLED_AT } from 'Src/constants'
+import {
+  PAGINATION_LIMIT,
+  CLINICAL_STATUS_UPDATED_AT,
+  PORTEA_CALLED_AT,
+  INITIAL_PAGE
+} from 'Src/constants'
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,9 +23,12 @@ import { connect } from 'react-redux';
 export function PatientsList( props ) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [ page, setPage ] = useState(1);
+  const [ page, setPage ] = useState(INITIAL_PAGE);
   const [ patients, setPatients ] = useState(null);
-  const [ totalPages, setTotalPages ] = useState(1)
+  const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
+  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]));
+  const [ selectedParams, setSelectedParams ] = useState({});
+  const [ ordering, setOrdering ] = useState('none');
 
   // getting all the denpendencies related to patient list
   useEffect(() => {
@@ -63,13 +71,22 @@ export function PatientsList( props ) {
 
   // when the component loads bring the patients list
   useEffect(() => {
-      handleApiCall(StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), 1);
+      handleApiCall(currentUrl, page);
       //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+  }, [ selectedParams, ordering ]);
 
   const handleApiCall = async (url, next_page) => {
-    props.getPatientList( url );
+    let params = Object.assign({}, selectedParams);
+    if(ordering === 'desc') {
+      Object.keys(params).map(param => {
+        params[param] = '-' + params[param]
+      })
+    } else if(ordering === 'none') {
+      params = {}
+    }
+    props.getPatientList( url, params );
     setPage(next_page);
+    setCurrentUrl(url);
   }
 
   return (
@@ -95,18 +112,22 @@ export function PatientsList( props ) {
         >
           <Grid item xs={12} sm={4} >
             <Sort
-              onSelect={(val) => console.log(`Sort By ${val} using API`)}
+              onSelect={val =>   setSelectedParams({ 'ordering' : val })}
               options={CONFIG.columnDefs}
-              onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+              onToggleSort={toggleVal => setOrdering(toggleVal)} />
           </Grid>
           <Grid item xs={12} sm={5} >
             <PaginationController
               resultsShown={page}
               totalResults={totalPages}
-              onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) , 1 )}
-              onNext={() => { if( props.next ) handleApiCall( props.next, page+1 ) }}
-              onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1 ) } }
-              onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1) ]), totalPages )}
+              onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) ,
+                INITIAL_PAGE
+              )}
+              onNext={() => { if( props.next ) handleApiCall( props.next, page+1, )}}
+              onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1, ) } }
+              onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1) ]),
+                totalPages
+              )}
               onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
             />
           </Grid>

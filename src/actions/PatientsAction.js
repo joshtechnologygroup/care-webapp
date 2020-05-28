@@ -5,8 +5,8 @@ import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 
 
-const getPatientList = (url) => async (dispatch) => {
-    const response = await CommonService.makeAuthorizedApiCall(url, GET, {})
+const getPatientList = (url, params = {}) => async (dispatch) => {
+    const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  params)
     dispatch(dispatchAction(ReducerTypes.GET_PATIENT_LIST, response));
 };
 
