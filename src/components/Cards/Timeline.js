@@ -1,13 +1,19 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import { timeline } from 'Mockdata/timeline.json';
 import moment from 'moment';
 import './Timeline.scss';
 
 export default function Timeline() {
+  const { i18n } = useTranslation();
   return (
     <Card elevation={4}>
+        <CardHeader
+            title={i18n.t('Patient Timeline')}
+        />
         <Grid
             container
             direction="column-reverse"

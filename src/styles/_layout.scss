@@ -1,7 +1,9 @@
 .container-wrap {
   min-height: 100vh;
   background: #fff;
-
+  @include for-below-tablet {
+    min-height: calc(100vh - 41px);
+  }
   &__navigation {
     z-index: 1;
   }
@@ -103,6 +105,9 @@
 .full-heigh-container {
   height: 100vh;
   overflow: auto;
+  @include for-below-tablet {
+    height: calc(100vh - 41px);
+  }
 }
 
 .overlay {

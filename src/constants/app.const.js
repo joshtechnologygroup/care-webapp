@@ -62,14 +62,20 @@ export const regex = {
 
 export const genderChoices = [
     {
+        id: 1,
+        name: 'Male',
         title: 'Male',
         value: 'Male',
     },
     {
+        id: 2,
+        name: 'Female',
         title: 'Female',
         value: 'Female',
     },
     {
+        id: 3,
+        name: 'Other gender',
         title: 'Other gender',
         value: 'Other',
     },
