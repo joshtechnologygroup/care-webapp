@@ -40,7 +40,6 @@ export const InventoryForm = (props) => {
             initial['item'] = inventory.id
             delete initial.type;
         }
-        initial['created_by'] = userId
         setInventoryData({inventoryData:initial});
         if(isAddAnother === false && data){
             createOrUpdateInventory(initial, data.id)
