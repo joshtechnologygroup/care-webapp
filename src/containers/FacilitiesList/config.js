@@ -6,15 +6,16 @@ import { GRID_CONFIG } from "Constants/app.const";
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: "Facility Code", field: "facility_code", minWidth: 110 },
-    { headerName: "Name", field: "name", minWidth: 150 },
-    { headerName: "Address", field: "address", minWidth: 120 },
-    { headerName: "district", field: "district", minWidth: 100 },
+    { headerName: "Facility Code", field: "facility_code", minWidth: 110, cellRendererParams: { isSortable: true } },
+    { headerName: "Name", field: "name", minWidth: 150, cellRendererParams: { isSortable: true } },
+    { headerName: "Address", field: "address", minWidth: 120, cellRendererParams: { isSortable: true } },
+    { headerName: "District", field: "district", minWidth: 100, cellRendererParams: { isSortable: true } },
     { headerName: "Facility Type", field: "facility_type", minWidth: 90, cellRendererParams: { isSortable: true, filterType: 'date', filterPriority: true } },
     {
       headerName: "Facility Ownership Type",
       field: "owned_by",
       minWidth: 140,
+      cellRendererParams: { isSortable: true }
     },
     { headerName: "Total #", field: "total_patient", minWidth: 130, cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true } },
     {
@@ -27,6 +28,7 @@ export const CONFIG = {
       headerName: "Negative Patient #",
       field: "negative_patient",
       minWidth: 140,
+      cellRendererParams: { isSortable: true }
     },
   ],
   defaultColDef: {

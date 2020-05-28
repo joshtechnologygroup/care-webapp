@@ -34,29 +34,29 @@ export function InventoryList(props) {
         inventoryList
     ) => {
         if (!_.isEmpty(inventoryTypesList) && !_.isEmpty(facilityList)) {
-            const newList = [];
+            const mappedInventoryList = [];
 
             inventoryList.map(inventory => {
-                const temp = { ...inventory };
+                const mappedInventory = { ...inventory };
                 const date = new Date(inventory.updated_at);
-                temp.updated_at = moment(date);
+                mappedInventory.updated_at = moment(date);
                 const inventoryType = inventoryTypesList.find(
                     inventoryType => inventoryType.id === inventory.item
                 );
                 if (inventoryType) {
-                    temp.item = inventoryType.name;
+                    mappedInventory.item = inventoryType.name;
                 }
                 const facilityListType = facilityList.find(
                     facilityListType =>
                         facilityListType.id === inventory.facility
                 );
                 if (facilityListType) {
-                    temp.facility = facilityListType.name;
+                    mappedInventory.facility = facilityListType.name;
                 }
-                newList.push(temp);
-                return temp;
+                mappedInventoryList.push(mappedInventory);
+                return mappedInventory;
             });
-            return newList;
+            return mappedInventoryList;
         }
         return inventoryList;
     };
