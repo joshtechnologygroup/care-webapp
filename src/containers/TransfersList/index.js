@@ -11,7 +11,7 @@ import PaginationController from 'Components/PaginationController';
 import { CONFIG } from './config';
 import Sort from 'Components/Sort';
 import Filters from 'Components/Filters';
-import { TRANSFER_STATUS_CHOICES } from 'Constants/app.const';
+import { TRANSFER_STATUS_CHOICES, GENDER_CHOICES } from 'Constants/app.const';
 
 export function TransfersList(props) {
     const {
@@ -52,6 +52,7 @@ export function TransfersList(props) {
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
                 updatedObj.status_updated_at = moment.utc(transferObj.status_updated_at, 'MM/DD/YYYY hh:mm A').local().format('MM/DD/YYYY hh:mm A')
                 updatedObj.requested_at = moment.utc(transferObj.requested_at, 'MM/DD/YYYY hh:mm A').local().format('MM/DD/YYYY hh:mm A')
+                updatedObj.gender = GENDER_CHOICES[transferObj.gender]
                 updatedTransferList.push(updatedObj);
                 return updatedObj;
             });
