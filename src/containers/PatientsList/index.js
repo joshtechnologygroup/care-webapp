@@ -180,7 +180,7 @@ export function PatientsList( props ) {
   const handleApiCall = async (url, next_page) => {
     let params = Object.assign({}, selectedParams);
     if(ordering === 'desc') {
-      Object.keys(params).map(param => {
+      Object.keys(params).forEach(param => {
         params[param] = '-' + params[param]
       })
     }
