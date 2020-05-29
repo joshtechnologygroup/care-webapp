@@ -10,23 +10,26 @@ const defaultMapping = [
     {
     id: 3,
     name: 'Others',
+    },
+    {
+        id: 1,
+        name: 'Yes',
+    },
+    {
+        id: 2,
+        name: 'No',
     }
 ]
 
-export const mappingProps = (params, ...list) => {
+export const mappingProps = (params, list=defaultMapping) => {
     const update_params = Object.assign({}, params);
-    list.push(defaultMapping);
+    let universal_mapping = {}
+    list.forEach((key) => {
+        universal_mapping[key.name] = key.id
+    })
     Object.keys(update_params).forEach((paramKey) => {
-        update_params[paramKey].forEach((param, index) => {
-            update_params[paramKey] = new Array(update_params[paramKey])
-            list.forEach((redux_list)=>{
-                redux_list.forEach((row)=>{
-                    if(row.name === param){
-                        update_params[paramKey][index] =  row.id
-                    }
-                })
-            })
-        })
+        update_params[paramKey] = new Array(...update_params[paramKey])
+        update_params[paramKey].forEach((arg, index) => update_params[paramKey][index] = universal_mapping[arg])
     })
     return update_params;
 }

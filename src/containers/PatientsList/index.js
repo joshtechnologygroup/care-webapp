@@ -13,7 +13,6 @@ import { getPatientList, getsPatientDependencies } from 'Actions/PatientsAction'
 import Sort from 'Components/Sort';
 import Filters from 'Components/Filters';
 import PaginationController from 'Components/PaginationController';
-import { PATIENT_LIST_URL } from 'Src/routes';
 
 import {
   PAGINATION_LIMIT,
@@ -33,7 +32,7 @@ export function PatientsList( props ) {
   const [ page, setPage ] = useState(INITIAL_PAGE);
   const [ patients, setPatients ] = useState(null);
   const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
-  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]));
+  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString( Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]));
   const [ selectedParams, setSelectedParams ] = useState({});
   const [ ordering, setOrdering ] = useState('none');
 
@@ -173,7 +172,7 @@ export function PatientsList( props ) {
 
   // when the component loads bring the patients list
   useEffect(() => {
-      handleApiCall(currentUrl, page);
+      handleApiCall(Routes.PATIENT_LIST_URL, INITIAL_PAGE);
       //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ selectedParams, ordering ]);
 
@@ -190,7 +189,6 @@ export function PatientsList( props ) {
   }
 
   const handleBooleanCallBack = (val) => {
-    let update_select_params = { ...selectedParams, ...val }
     const {
       districts_list,
       clinical_status_list,
@@ -201,33 +199,59 @@ export function PatientsList( props ) {
       ownership_types,
       facility_types
     } = props
-    update_select_params =  mappingProps(update_select_params,
-        districts_list,
-        clinical_status_list,
-        cluster_group_list,
-        covid_status_list,
-        patients,
-        facilities,
-        ownership_types,
-        facility_types
+    const mapping_id_list = {
+      'district': districts_list,
+      'cluster_group': cluster_group_list,
+      'covid_status': covid_status_list,
+      'clinical_status': clinical_status_list,
+      'facility_name': facilities,
+      'facility_district': districts_list,
+      'facility_type': facility_types,
+      'ownership_type': ownership_types
+    }
+    let update_select_params = { ...selectedParams }
+    val =  mappingProps(val,
+        mapping_id_list[Object.keys(val)[0]]
     );
-    setSelectedParams({...update_select_params});
+    setSelectedParams({...update_select_params, ...val});
   }
 
   const handleNumberCallBack = (val) => {
     let update_select_params = { ...selectedParams }
+    delete update_select_params[val.field + '_min']
+    delete update_select_params[val.field + '_max']
     if(val.type === 'Equals To'){
-      update_select_params[val.field] = val.fromValue
-    } else if(val.type === 'Less To'){
-      update_select_params[val.field + '_min'] = val.fromValue
+      update_select_params[val.field + '_min'] = [val.fromValue]
+      update_select_params[val.field + '_max'] = [val.fromValue]
+    } else if(val.type === 'Less Than'){
+      update_select_params[val.field + '_max'] = [val.fromValue]
     } else if(val.type === 'Greater Than'){
-      update_select_params[val.field + '_max'] = val.fromValue
+      update_select_params[val.field + '_min'] = [val.fromValue]
     } else if(val.type === 'Range'){
-      update_select_params[val.field + '_min'] = val.fromValue
-      update_select_params[val.field + '_max'] = val.toValue
+      update_select_params[val.field + '_min'] = [val.fromValue]
+      update_select_params[val.field + '_max'] = [val.toValue]
     }
     setSelectedParams({ ...update_select_params});
   }
+
+  const handleDateCallBack = (val) => {
+    let update_select_params = { ...selectedParams }
+    delete update_select_params[val.field + '_after']
+    delete update_select_params[val.field + '_before']
+    if(val.type === 'Equals To'){
+      update_select_params[val.field + '_after'] = [val.fromValue]
+      update_select_params[val.field + '_before'] = [val.fromValue]
+    } else if(val.type === 'Less To'){
+      update_select_params[val.field + '_after'] = [val.fromValue]
+    } else if(val.type === 'Greater Than'){
+      update_select_params[val.field + '_before'] = [val.fromValue]
+    } else if(val.type === 'Range'){
+      update_select_params[val.field + '_after'] = [val.fromValue]
+      update_select_params[val.field + '_before'] = [val.toValue]
+    }
+    setSelectedParams({ ...update_select_params});
+  }
+
 
   return (
     <React.Fragment>
@@ -240,7 +264,8 @@ export function PatientsList( props ) {
             options={CONFIG.columnDefs}
             onSeeMore={() => { setShowOverlay(!showOverlay) }}
             handleBooleanCallBack={(val) => handleBooleanCallBack(val)}
-            handleNumberCallBack={(field, val) => handleNumberCallBack(field, val)}/>
+            handleNumberCallBack={(val) => handleNumberCallBack(val)}
+            handleDateCallBack={val => handleDateCallBack(val)}/>
         </Grid>
       </Grid>
       <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
@@ -262,12 +287,12 @@ export function PatientsList( props ) {
             <PaginationController
               resultsShown={page}
               totalResults={totalPages}
-              onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) ,
+              onFirst={() => handleApiCall( StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) ,
                 INITIAL_PAGE
               )}
               onNext={() => { if( props.next ) handleApiCall( props.next, page+1, )}}
               onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1, ) } }
-              onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1) ]),
+              onLast={() => handleApiCall( StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1) ]),
                 totalPages
               )}
               onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}

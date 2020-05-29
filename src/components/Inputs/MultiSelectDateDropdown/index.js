@@ -8,8 +8,9 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { Grid } from "@material-ui/core";
+import moment from "moment";
 
-export default function MultiSelectDateDropdown({ onSelect, fieldName }) {
+export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) {
   const [renderValue, setRenderValue] = React.useState("");
   const [subDropdownValue, setSubDropDownValue] = React.useState("Equals To");
   const [fromValue, setFromValue] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -23,11 +24,17 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName }) {
     if (e.which === 13) {
       // Enter key pressed
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
+      let value_return = {
+        field: field,
+        type: subDropdownValue,
+        fromValue: moment(new Date(fromValue)).format('YYYY-MM-DD'),
+        toValue: moment(new Date(toValue)).format('YYYY-MM-DD')
+      }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
       }
       setRenderValue(value);
-      onSelect(value);
+      onSelect(value_return);
       handleClose();
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase

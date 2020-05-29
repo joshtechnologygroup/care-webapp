@@ -25,15 +25,11 @@ export const CONFIG = {
     },
     {
       headerName: 'Status',
-      field: 'status',
+      field: 'patient_status',
       cellRendererParams: {
         filterType: 'boolean',
         options: [
             'Home Isolation',
-            // 'Admitted',
-            // 'Transfer Requested/ Incoming Transfer',
-            // 'Transferred',
-            // 'Discharged',
             'Recovered',
             'Dead',
             'Facility Status'
