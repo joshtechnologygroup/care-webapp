@@ -81,7 +81,7 @@ export function InventoryList(props) {
     };
 
     const fetchPrevInventory = () => {
-        if (offset - itemsPerPage >= 0) {
+        if (offset > 0) {
             setOffset(offset - itemsPerPage);
         }
     };
