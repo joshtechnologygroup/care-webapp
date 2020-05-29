@@ -16,6 +16,7 @@ import { EditOutlined, Add } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
+import NullState from 'Components/NullState';
 
 // IMPORTING MOCK CHOICES
 import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';
@@ -83,8 +84,11 @@ export default function FacilityDetails(props) {
       <CardHeader
         title={i18n.t('Facility Details')}
         action={
-          <IconButton variant="contained" className={classes.action} aria-label="add"
-            >
+          <IconButton
+            variant="contained"
+            className={classes.action}
+            aria-label="add"
+          >
             <Add fontSize="large" label="Add" />
           </IconButton>
         }
@@ -137,6 +141,10 @@ export default function FacilityDetails(props) {
                 </Fab>
               </Grid>
             )}
+            {
+              !profile.length &&
+              <NullState msg={i18n.t('null_messages.facility')} />
+            }
           </Grid>
         </Grid>
       </CardContent>

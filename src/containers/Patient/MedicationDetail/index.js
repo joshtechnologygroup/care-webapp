@@ -16,6 +16,7 @@ import { EditOutlined, MailOutline, PhoneOutlined, Add } from '@material-ui/icon
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { PropTypes } from 'prop-types';
 import CreateUpdateDoctor from './CreateUpdateDoctor';
+import NullState from 'Components/NullState';
 import Styles from './styles';
 
 export default function MedicationDetail(props) {
@@ -137,6 +138,11 @@ export default function MedicationDetail(props) {
           </Grid>
         </Grid>
       </CardContent>
+      {
+        !profile.attendant.length &&
+        <NullState msg={i18n.t('null_messages.doctor')} />
+      }
+
       <CreateUpdateDoctor editMode={doctorEditMode} details={selectedRow} open={open} onClose={handleClose} />
     </Card>
   );

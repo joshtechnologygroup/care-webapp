@@ -106,15 +106,9 @@ class PatientDetail extends Component {
               handleEdit={ () => this.setEditable(formList[2], true) }
             />
           }
-          {
-            isEditing[formList[3]] ?
-            <h2>I'm being edited</h2>
-            :
-            <FacilityDetails
-              profile={profile[formList[3]]}
-              handleEdit={ () => this.setEditable(formList[3], true) }
-            />
-          }
+          <FacilityDetails
+            profile={profile[formList[3]]}
+          />
           {
             isEditing[formList[4]] ?
             <h2>I'm being edited</h2>
