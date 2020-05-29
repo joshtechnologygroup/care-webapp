@@ -122,5 +122,8 @@
   "Add Doctor/Attendant": "Add Doctor/Attendant",
   "Name of doctor/attendant": "Name of doctor/attendant",
   "Edit Portie Details": "Edit Portie Details",
-  "Add Portie Details": "Add Portie Details"
+  "Add Portie Details": "Add Portie Details",
+  "null_messages": {
+    "doctor": "No data exist. Please add doctor/attendant using the plus button."
+  }
 }

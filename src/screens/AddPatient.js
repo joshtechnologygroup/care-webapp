@@ -3,6 +3,7 @@ import i18n from "i18next";
 
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
+import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
 
 import Header from 'Containers/Header';
 import { Button } from '@material-ui/core';
@@ -14,10 +15,18 @@ class AddPatient extends Component {
       formList: [
         'personal',
         'contact',
+        'medication',
       ],
       profile: {
         personal: {},
-        contact:  {}
+        contact:  {},
+        medication: {
+          clinicalStatus: '',
+          covidStatus: '',
+          symptoms: [],
+          nonCovidDiseases: [],
+          attendant: [],
+        }
       }
     }
   }
@@ -49,6 +58,10 @@ class AddPatient extends Component {
           <ContactDetailForm
             profile={profile.contact}
             handleSubmit={ (data) => this.onSubmit(data, formList[1]) }
+          />
+          <MedicationDetailForm
+            profile={profile[formList[2]]}
+            handleSubmit={ (data) => {this.onSubmit(data, formList[2])} }
           />
         </div>
       </>

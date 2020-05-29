@@ -19,6 +19,7 @@ import { MultiSelectChipsInput, SingleSelectChipsInput } from 'Components/Inputs
 import CreateUpdateDoctor from '../CreateUpdateDoctor';
 import useStyles from '../styles';
 import { PropTypes } from 'prop-types';
+import NullState from 'Components/NullState';
 
 // IMPORTING MOCK CHOICES
 import { symptomChoices } from 'Mockdata/symptomChoices.json';
@@ -78,6 +79,7 @@ export default function Form(props) {
       <CardHeader
         title={i18n.t('Contact Details')}
         action={
+          editMode && 
           <Button
             fullWidth
             type="submit"
@@ -136,7 +138,7 @@ export default function Form(props) {
             />
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className="mt-10">
           <Typography variant="h5" color="primary" className="align-items-center">
             {i18n.t('Doctor / Attendant')}
             <IconButton
@@ -149,7 +151,7 @@ export default function Form(props) {
             </IconButton>
           </Typography>
           {
-            attendant.map((val, index) =>
+            attendant.length > 0 && attendant.map((val, index) =>
             <Grid container spacing={4} key={index} className={`mt-0 ${classes.doctor} ${belowTablet ? 'py-20' : '' }`}>
               <Grid xs={10} sm={'auto'} item className={belowTablet ? 'py-0' : classes.dateWrap }>
                 <Chip variant="outlined" className={classes.date} label={moment.unix(val.date).format("DD-MMM-YYYY")} />
@@ -176,6 +178,10 @@ export default function Form(props) {
               </Fab>
             </Grid>
           )}
+          {
+            !attendant.length &&
+            <NullState msg={i18n.t('null_messages.doctor')}></NullState>
+          }
         </Grid>
       </CardContent>
       <CreateUpdateDoctor editMode={doctorEditMode} details={selectedRow} open={open} onClose={handleClose} />
