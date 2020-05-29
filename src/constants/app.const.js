@@ -56,6 +56,12 @@ export const GRID_CONFIG = {
   pagination: false,
 }
 
+export const TRANSFER_STATUS_CHOICES = {
+    1: 'Pending', 
+    2: 'Accepted', 
+    3: 'Rejected'
+}
+
 export const regex = {
   email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
 }
@@ -74,3 +80,10 @@ export const genderChoices = [
         value: 'Other',
     },
 ];
+
+
+export const GENDER_CHOICES = {
+    1: 'Male', 
+    2: 'Female', 
+    3: 'Non Binary'
+}

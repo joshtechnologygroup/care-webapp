@@ -8,7 +8,7 @@ async function makeApiCall(base_url, method = GET, body = {}, headers = {}, para
         headers: headers,
     }
     if(method !== GET){
-      options.body = body
+      options.body = JSON.stringify(body);
     }
     Object.keys(params).forEach((key) => {
         const paramValue = params[key]

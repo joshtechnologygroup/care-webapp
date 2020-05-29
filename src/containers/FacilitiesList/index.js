@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useEffect } from "react";
 import TableComponent from "Components/TableComponent";
@@ -6,9 +6,12 @@ import Grid from "@material-ui/core/Grid";
 import { PropTypes } from "prop-types";
 import _ from "underscore";
 import { CONFIG } from "./config";
-import { getFacilitiesList, getFacilityDependencies } from "Actions/FacilitiesAction";
-import PaginationController from 'Components/PaginationController';
-import Sort from 'Components/Sort';
+import {
+    getFacilitiesList,
+    getFacilityDependencies,
+} from "Actions/FacilitiesAction";
+import PaginationController from "Components/PaginationController";
+import Sort from "Components/Sort";
 import Filters from "Components/Filters";
 
 export function FacilitiesList(props) {
@@ -29,6 +32,9 @@ export function FacilitiesList(props) {
     const [hasMore, setHasMore] = useState(false);
     const [hasPrev, setHasPrev] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
+    const [ordering, setOrdering] = useState(null);
+    const [sortType, setSortType] = useState(null);
+    const [orderingParam, setOrderingParam] = useState(null);
 
     const updateFacilityListWithNames = (
         facilityList,
@@ -36,32 +42,36 @@ export function FacilitiesList(props) {
         facilityTypesList,
         ownershipTypesList
     ) => {
+        
         if (
             !_.isEmpty(districtsList) &&
             !_.isEmpty(ownershipTypesList) &&
             !_.isEmpty(facilityTypesList)
         ) {
-            facilityList.map(facility => {
+            const mappedFacilityList = [];
+            facilityList.forEach(facility => {
+                const mappedFacility = { ...facility };
                 const district = districtsList.find(
                     district => district.id === facility.district
                 );
                 if (district) {
-                    facility.district = district.name;
+                    mappedFacility.district = district.name;
                 }
                 const ownershipType = ownershipTypesList.find(
                     ownershipType => ownershipType.id === facility.owned_by
                 );
                 if (ownershipType) {
-                    facility.owned_by = ownershipType.name;
+                    mappedFacility.owned_by = ownershipType.name;
                 }
                 const facilityType = facilityTypesList.find(
                     facilityType => facilityType.id === facility.facility_type
                 );
                 if (facilityType) {
-                    facility.facility_type = facilityType.name;
+                    mappedFacility.facility_type = facilityType.name;
                 }
-                return facility;
+                mappedFacilityList.push(mappedFacility);
             });
+            return mappedFacilityList;
         }
         return facilityList;
     };
@@ -69,20 +79,20 @@ export function FacilitiesList(props) {
     // Handle has more.
     useEffect(() => {
         if (!_.isEmpty(facilityList)) {
-            setHasPrev(offset - facilityList.length >= 0 ? true : false);
-            setHasMore(offset + facilityList.length < count ? true : false);
+            setHasPrev(offset > 0 ? true : false);
+            setHasMore(offset + itemsPerPage < count ? true : false);
         }
     }, [facilityList, offset, count]);
 
     const fetchMoreFacilites = () => {
         if (hasMore) {
-            setOffset(offset + facilityList.length);
+            setOffset(offset + itemsPerPage);
         }
     };
 
     const fetchPrevFacilities = () => {
         if (hasPrev) {
-            setOffset(offset - facilityList.length);
+            setOffset(offset - itemsPerPage);
         }
     };
 
@@ -90,80 +100,116 @@ export function FacilitiesList(props) {
         if (!facilityTypesList || !districtsList || !ownershipTypesList) {
             fetchFacilityDependencies();
         }
-    });
+    }, []);
 
     useEffect(() => {
-        fetchFacilityList({
+        if (ordering && sortType !== "none") {
+            setOrderingParam(sortType === "asec" ? ordering : `-${ordering}`);
+        } else {
+            setOrderingParam(null);
+        }
+    }, [ordering, sortType]);
+
+    useEffect(() => {
+        const options = {
             ...queryParams,
-            offset: offset,
-        });
-    }, [queryParams, offset, fetchFacilityList]);
+            offset: offset
+        };
+        if (orderingParam) {
+            options.ordering = orderingParam
+        }
+        fetchFacilityList(options);
+    }, [queryParams, offset, fetchFacilityList, orderingParam]);
+
+    const sortByValue = val => {
+        setOrdering(val);
+    };
 
     return (
         <React.Fragment>
-            <Grid container
-              direction
-              alignItems="center"
-              className={`container-padding ${showOverlay ? "filter-container-overlay" : 'filter-container'}`}>
-              <Grid item xs={12} sm={12} >
-                <Filters
-                  options={CONFIG.columnDefs}
-                  onSeeMore={() => { setShowOverlay(!showOverlay) }} />
-              </Grid>
-            </Grid>
-            <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
-            <div className="container-padding">
-              <Grid
-                className="sort-pagination"
+            <Grid
                 container
-                direction="row"
-                justify="space-between"
+                direction
                 alignItems="center"
-              >
-                <Grid item xs={12} sm={4} >
-                  <Sort
-                    onSelect={(val) => console.log(`Sort By ${val} using API`)}
-                    options={CONFIG.columnDefs}
-                    onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+                className={`container-padding ${
+                    showOverlay
+                        ? "filter-container-overlay"
+                        : "filter-container"
+                }`}
+            >
+                <Grid item xs={12} sm={12}>
+                    <Filters
+                        options={CONFIG.columnDefs}
+                        onSeeMore={() => {
+                            setShowOverlay(!showOverlay);
+                        }}
+                    />
                 </Grid>
-                <Grid item xs={12} sm={5} >
-                  <PaginationController
-                      resultsShown={10}
-                      totalResults={56}
-                      onFirst={() => {
-                          setOffset(0);
-                      }}
-                      onPrevious={() => fetchPrevFacilities()}
-                      onNext={() => fetchMoreFacilites()}
-                      onLast={() => {
-                          setOffset(Math.floor((count - 1) / itemsPerPage) * itemsPerPage);
-                      }}
-                      onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
-                  />
+            </Grid>
+            <div
+                onClick={() => setShowOverlay(!showOverlay)}
+                className={showOverlay ? "overlay overlay-show" : "overlay"}
+            ></div>
+            <div className="container-padding">
+                <Grid
+                    className="sort-pagination"
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                >
+                    <Grid item xs={12} sm={4}>
+                        <Sort
+                            onSelect={val => sortByValue(val)}
+                            options={CONFIG.columnDefs}
+                            onToggleSort={toggleVal => setSortType(toggleVal)}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                        <PaginationController
+                            resultsShown={Math.ceil((offset + facilityList.length) / itemsPerPage)}
+                            totalResults={Math.ceil((count) / itemsPerPage)}
+                            onFirst={() => {
+                                setOffset(0);
+                            }}
+                            onPrevious={() => fetchPrevFacilities()}
+                            onNext={() => fetchMoreFacilites()}
+                            onLast={() => {
+                                setOffset(
+                                    Math.floor((count - 1) / itemsPerPage) *
+                                        itemsPerPage
+                                );
+                            }}
+                            onShowList={() => {
+                                setShowColumnsPanel(!showColumnsPanel);
+                            }}
+                        />
+                    </Grid>
                 </Grid>
-              </Grid>
-              <TableComponent
-                  modules={CONFIG.modules}
-                  columnDefs={CONFIG.columnDefs}
-                  rowHeight={CONFIG.rowHeight}
-                  headerHeight={CONFIG.headerHeight}
-                  autoGroupColumnDef={CONFIG.autoGroupColumnDef}
-                  defaultColDef={CONFIG.defaultColDef}
-                  rowSelection={CONFIG.rowSelection}
-                  rowGroupPanelShow={CONFIG.rowGroupPanelShow}
-                  pivotPanelShow={CONFIG.pivotPanelShow}
-                  frameworkComponents={CONFIG.frameworkComponents}
-                  cellStyle={CONFIG.cellStyle}
-                  pagination={CONFIG.pagination}
-                  rowData={updateFacilityListWithNames(
-                      facilityList,
-                      districtsList,
-                      facilityTypesList,
-                      ownershipTypesList
-                  )}
-                  showColumnsPanel={showColumnsPanel}
-                  onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
-              />
+                <TableComponent
+                    modules={CONFIG.modules}
+                    columnDefs={CONFIG.columnDefs}
+                    rowHeight={CONFIG.rowHeight}
+                    headerHeight={CONFIG.headerHeight}
+                    autoGroupColumnDef={CONFIG.autoGroupColumnDef}
+                    defaultColDef={CONFIG.defaultColDef}
+                    rowSelection={CONFIG.rowSelection}
+                    rowGroupPanelShow={CONFIG.rowGroupPanelShow}
+                    pivotPanelShow={CONFIG.pivotPanelShow}
+                    frameworkComponents={CONFIG.frameworkComponents}
+                    cellStyle={CONFIG.cellStyle}
+                    pagination={CONFIG.pagination}
+                    rowData={updateFacilityListWithNames(
+                        facilityList,
+                        districtsList,
+                        facilityTypesList,
+                        ownershipTypesList
+                    )}
+                    showColumnsPanel={showColumnsPanel}
+                    onCloseColumnsPanel={() => {
+                        setShowColumnsPanel(false);
+                    }}
+                />
             </div>
         </React.Fragment>
     );
