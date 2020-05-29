@@ -115,5 +115,12 @@
   "Discharged on": "Discharged on",
   "Facility ID": "Facility ID",
   "Facility type": "Facility type",
-  "Facility Address": "Facility Address"
+  "Facility Address": "Facility Address",
+  "Name of Attendant/Doctor": "Name of Attendant/Doctor",
+  "Clinical Status": "Clinical Status",
+  "Edit Doctor/Attendant": "Edit Doctor/Attendant",
+  "Add Doctor/Attendant": "Add Doctor/Attendant",
+  "Name of doctor/attendant": "Name of doctor/attendant",
+  "Edit Portie Details": "Edit Portie Details",
+  "Add Portie Details": "Add Portie Details"
 }

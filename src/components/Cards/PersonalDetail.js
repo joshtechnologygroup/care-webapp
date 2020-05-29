@@ -50,7 +50,7 @@ export default function PersonalDetail(props) {
     <Card elevation={4}>
       <CardContent>
         <Grid container spacing={4}>
-          <Grid item className="p-0">
+          <Grid item xs={12} sm={`auto`} className="p-0">
             <div className={`${classes.image} flex-center`}>
               <img className={`${classes.img} + ${profile.imageSrc ? '' : classes.imgNull}`} src={profile.imageSrc ? profile.imageSrc : profile.gender === 'Male' ? patientMale: patientFemale} alt={profile.firstName} />
             </div>

@@ -83,7 +83,8 @@ export default function FacilityDetails(props) {
       <CardHeader
         title={i18n.t('Facility Details')}
         action={
-          <IconButton variant="contained" className={classes.action} aria-label="add" onClick={handleEdit}>
+          <IconButton variant="contained" className={classes.action} aria-label="add"
+            >
             <Add fontSize="large" label="Add" />
           </IconButton>
         }

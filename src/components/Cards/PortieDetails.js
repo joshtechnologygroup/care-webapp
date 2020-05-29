@@ -18,6 +18,7 @@ import { PropTypes } from 'prop-types';
 
 // Importing mock data
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
+import CreateUpdatePortieDetails from '../../containers/Patient/createUpdatePortieDetails';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -76,12 +77,34 @@ export default function PortieDetails(props) {
 
   const { profile, handleEdit } = props;
   console.log(profile)
+  const [open, setOpen] = React.useState(false);
+  const [doctorEditMode, setdoctorEditMode] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState({date: '', name: '', email: '', phone:''});
+  const editRow = (row) => {
+    if (row) {
+      setSelectedRow(row);
+      setdoctorEditMode(true);
+    }
+    else {
+      setSelectedRow({date: '', name: '', email: '', phone:''});
+      setdoctorEditMode(false);
+    }
+    setOpen(true);
+  };
+  // Handle modal close
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
     <Card elevation={4}>
       <CardHeader
         title={i18n.t('Portie Details')}
         action={
-          <IconButton variant="contained" className={classes.action} aria-label="settings">
+          <IconButton variant="contained" className={classes.action} aria-label="settings"
+            onClick={editRow}
+          >
             <Add fontSize="large"/>
           </IconButton>
         }
@@ -148,6 +171,7 @@ export default function PortieDetails(props) {
           </Grid>
         </Grid>
       </CardContent>
+      <CreateUpdatePortieDetails details={selectedRow} open={open} onClose={handleClose} />
     </Card>
   );
 }

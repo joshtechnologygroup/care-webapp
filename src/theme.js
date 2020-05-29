@@ -54,6 +54,10 @@ export const theme = createMuiTheme({
           background: '#3eac2d',
           color: '#ffffff',
         },
+        '&.selected': {
+          color: '#ffffff',
+          background: '#007aff',
+        },
       },
       label: {
         fontSize: '1.4em',

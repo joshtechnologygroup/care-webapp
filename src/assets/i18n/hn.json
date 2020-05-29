@@ -115,5 +115,12 @@
   "Discharged on": "छुट्टी दी गयी",
   "Facility ID": "सुविधा आईडी",
   "Facility type": "सुविधा प्रकार",
-  "Facility Address": "सुविधा का पता"
+  "Facility Address": "सुविधा का पता",
+  "Name of Attendant/Doctor": "अटेंडेंट / डॉक्टर का नाम",
+  "Clinical Status": "क्लिनिकल स्थिति",
+  "Edit Doctor/Attendant": "डॉक्टर / परिचारक संपादित करें",
+  "Add Doctor/Attendant": "डॉक्टर / परिचारक जोड़ें",
+  "Name of doctor/attendant": "डॉक्टर / परिचारक का नाम",
+  "Edit Portie Details": "पोर्टी विवरण संपादित करें",
+  "Add Portie Details": "पोर्टी विवरण जोड़ें"
 }

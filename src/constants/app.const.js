@@ -80,3 +80,17 @@ export const genderChoices = [
         value: 'Other',
     },
 ];
+
+
+export const booleanStatuses = {
+  positiveNegative: [
+    {
+      id: 1,
+      name: 'Positive'
+    },
+    {
+      id: 2,
+      name: 'Negative'
+    }
+  ]
+}

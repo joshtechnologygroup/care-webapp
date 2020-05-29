@@ -22,6 +22,7 @@ import { PropTypes } from 'prop-types';
 // Importing mock data
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 import { genderChoices } from 'Constants/app.const';
+import { CreateUpdateFamilyDetail } from 'Containers/Patient/createUpdateFamilyDetails';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -42,12 +43,23 @@ const useStyles = makeStyles(theme =>
     tableRow: {
       transition: 'background .4s',
       background: theme.palette.gray.tint,
-      borderTop: '.5rem #fff solid',
+      borderBottom: '.5rem #fff solid',
       '&:hover': {
         background: theme.palette.gray.lighter,
         '& .MuiFab-root': {
           transform: 'translateX(0)',
         }
+      },
+    },
+    placeholderRow: {
+      '& .MuiTableCell-root': {
+        padding: '2px 2px 3px !important',
+      }
+    },
+    smallCell: {
+      width: '180px',
+      '& .MuiFormControl-root': {
+        width: 'calc(50% - 3px)'
       },
     },
   })
@@ -72,14 +84,29 @@ export default function FamilyDetails(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
 
-  const { profile, handleEdit } = props;
+  const { profile } = props;
   console.log(profile)
+
+  const [selectedRow, setSelectedRow] = React.useState({name: '', gender: '', phone:'', ageYears: '', ageMonths: ''});
+  const [open, setOpen] = React.useState(false);
+  const editMember = (index, val) => {
+    setOpen(index);
+    setSelectedRow(val)
+  }
+  const saveData = (data) => {
+    if (open === 'new') {
+      profile[profile.length] = data;
+    } else {
+      profile[open] = data;
+    }
+    setOpen(false);
+  };
   return (
     <Card elevation={4}>
       <CardHeader
         title={i18n.t('Family Details')}
         action={
-          <IconButton variant="contained" className={classes.action} aria-label="settings">
+          <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={() => editMember('new', {name: '', gender: '', phone:'', ageYears: '', ageMonths: ''})}>
             <Add fontSize="large"/>
           </IconButton>
         }
@@ -101,39 +128,52 @@ export default function FamilyDetails(props) {
               </TableHead>
               <TableBody>
                 {
-                  profile.map((val, index) => 
-                    <TableRow className={classes.tableRow} key={index}>
-                      <StyledTableCell>
-                        <Typography color="primary" variant="h5" >{val.name}</Typography>
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {
-                          relationshipChoices.map(choice => {
-                              return choice.id === val.relation ? (choice.name) : ''
-                          })
-                        }
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {
-                          genderChoices.map(choice => {
-                              return choice.id === val.gender ? (choice.name) : ''
-                          })
-                        }
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {val.ageYears} {i18n.t('years')} {val.ageMonths ? `${val.ageMonths} ${i18n.t('months')}` : ''}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {val.phone}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Fab size="small" color="primary" aria-label="edit" className={classes.edit}>
-                          <EditOutlined />
-                        </Fab>
-                      </StyledTableCell>
-                    </TableRow>
-                  )
+                  open === 'new' &&
+                  <CreateUpdateFamilyDetail handleSubmit={(data) => saveData(data)} details={selectedRow} />
                 }
+              {
+                profile.map((val, index) =>
+                  open === index ?
+                  <CreateUpdateFamilyDetail handleSubmit={(data) => saveData(data)} key={index} details={selectedRow} />
+                   :
+                  <TableRow className={classes.tableRow} key={index}>
+                    <StyledTableCell>
+                      <Typography color="primary" variant="h5" >{val.name}</Typography>
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {
+                        relationshipChoices.map(choice => {
+                            return choice.id === val.relation ? (choice.name) : ''
+                        })
+                      }
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {
+                        genderChoices.map(choice => {
+                            return choice.id === val.gender ? (choice.name) : ''
+                        })
+                      }
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {val.ageYears} {i18n.t('years')} {val.ageMonths ? `${val.ageMonths} ${i18n.t('months')}` : ''}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {val.phone}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Fab
+                        size="small"
+                        color="primary"
+                        aria-label="edit"
+                        className={classes.edit}
+                        onClick={() => editMember(index, val)}
+                      >
+                        <EditOutlined />
+                      </Fab>
+                    </StyledTableCell>
+                  </TableRow>
+                )
+              }
               </TableBody>
             </Table>
             </TableContainer>

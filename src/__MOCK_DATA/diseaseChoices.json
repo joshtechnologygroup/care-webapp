@@ -1,0 +1,32 @@
+{
+  "diseaseChoices": [
+    {
+      "id": 1,
+      "name": "Dizzyness"
+    },
+    {
+      "id": 2,
+      "name": "Hyponatremia"
+    },
+    {
+      "id": 3,
+      "name": "Overhydration"
+    },
+    {
+      "id": 4,
+      "name": "Thirst"
+    },
+    {
+      "id": 5,
+      "name": "psychogenic polydipsia"
+    },
+    {
+      "id": 6,
+      "name": "Allergy"
+    },
+    {
+      "id": 8,
+      "name": "Sore throat"
+    }
+  ]
+}
