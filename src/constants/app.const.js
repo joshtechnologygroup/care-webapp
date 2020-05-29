@@ -80,3 +80,10 @@ export const genderChoices = [
         value: 'Other',
     },
 ];
+
+
+export const GENDER_CHOICES = {
+    1: 'Male', 
+    2: 'Female', 
+    3: 'Non Binary'
+}
