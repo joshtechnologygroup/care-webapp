@@ -29,10 +29,10 @@ const login = (email, password) => async (dispatch) => {
     const headers = {
         'Content-Type': APPLICATION_JSON,
     };
-    const body =  JSON.stringify({
+    const body =  {
         email: email,
         password: password,
-    })
+    }
     const response = await CommonServiceUtils.makeApiCall(LOGIN_URL, POST, body, headers)
     const data = await response.json();
     if (response.status === HttpStatus.OK) {
@@ -51,9 +51,9 @@ const forgot_password = (email) => async (dispatch) => {
     const headers = {
         'Content-Type': APPLICATION_JSON
     };
-    const body = JSON.stringify({
+    const body = {
         email: email
-    })
+    }
     const response = await CommonServiceUtils.makeApiCall(PASSWORD_FORGOT_URL, POST, body, headers);
     return response.status
 }

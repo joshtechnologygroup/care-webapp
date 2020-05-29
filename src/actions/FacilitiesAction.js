@@ -38,14 +38,13 @@ const getInventoryDependencies = (params) => async (dispatch) => {
 };
 
 const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
-    const body = JSON.stringify(state);
     let url = Routes.CREATE_INVENTORY_URL
     var method = POST
     if(id !== 0){
         method = PUT
         url += `${id}/`
     }
-    const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, body, {})
+    const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
     if(inventory_response.status === HttpStatus.OK){
         const inventory = await inventory_response.json();
     }

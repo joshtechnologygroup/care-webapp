@@ -22,5 +22,4 @@ export const MAPPING_INVENTORY_ATTRIBUTES = {
     'updated_at':'updatedAt',
 }
 export const UPDATED_AT='updated_at'
-
 export const PAGINATION_LIMIT = 5
