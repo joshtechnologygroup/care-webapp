@@ -16,6 +16,7 @@ export function InventoryList(props) {
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
     const [offset, setOffset] = useState(0);
     const [ordering, setOrdering] = useState("None");
+    const [page, setPage] = useState(1);
 
     const {
         fetchInventoryList,
@@ -76,12 +77,14 @@ export function InventoryList(props) {
     const fetchMoreInventory = () => {
         const lastPage = Math.floor((count - 1) / itemsPerPage) * itemsPerPage;
         if (offset + inventoryList.length <= lastPage) {
+            setPage(page + 1);
             setOffset(offset + inventoryList.length);
         }
     };
 
     const fetchPrevInventory = () => {
         if (offset > 0) {
+            setPage(page - 1);
             setOffset(offset - itemsPerPage);
         }
     };
@@ -129,14 +132,11 @@ export function InventoryList(props) {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                     <PaginationController
-                        resultsShown={`${
-                            inventoryList === []
-                                ? itemsPerPage
-                                : inventoryList.length
-                        }`}
-                        totalResults={count}
+                        resultsShown={`${count === 0 ? 0 : page}`}
+                        totalResults={Math.ceil((count - 1) / itemsPerPage)}
                         onFirst={() => {
                             setOffset(0);
+                            setPage(1);
                         }}
                         onPrevious={() => fetchPrevInventory()}
                         onNext={() => fetchMoreInventory()}
@@ -145,6 +145,7 @@ export function InventoryList(props) {
                                 Math.floor((count - 1) / itemsPerPage) *
                                     itemsPerPage
                             );
+                            setPage(Math.ceil((count - 1) / itemsPerPage));
                         }}
                         onShowList={() => {
                             setShowColumnsPanel(!showColumnsPanel);

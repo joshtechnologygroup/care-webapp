@@ -53,7 +53,7 @@ function Home() {
                 </Grid>
                 <Grid item xs={12} md={10} className="full-heigh-container">
                     <Switch>
-                        <Route exact path={`/`} component={Patients} />
+                        <Route exact path={`/`} component={Dashboard} />
                         <Route path={`/dashboard`} component={Dashboard} />
                         <Route path={`/facilities/beds`} component={Beds} />
                         <Route path={`/facilities/:facilityId`} component={FacilityDetails} />
