@@ -5,6 +5,7 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
 import FacilityDetails  from 'Components/Cards/FacilityDetails';
+import LabTestDetail from 'Components/Cards/LabTestDetail';
 
 import Header from 'Containers/Header';
 import { Button } from '@material-ui/core';
@@ -18,6 +19,7 @@ class AddPatient extends Component {
         'contact',
         'medication',
         'facility',
+        'labTests',
       ],
       profile: {
         personal: {},
@@ -30,6 +32,7 @@ class AddPatient extends Component {
           attendant: [],
         },
         facility: [],
+        labTests: [],
       }
     }
   }
@@ -68,6 +71,9 @@ class AddPatient extends Component {
           />
           <FacilityDetails
             profile={profile[formList[3]]}
+          />
+          <LabTestDetail
+            profile={profile[formList[4]]}
           />
         </div>
       </>

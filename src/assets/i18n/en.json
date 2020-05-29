@@ -125,6 +125,7 @@
   "Add Portie Details": "Add Portie Details",
   "null_messages": {
     "doctor": "No data exist. Please add doctor/attendant using the plus button.",
-    "facility": "No data exist. Please add facility using the plus button."
+    "facility": "No data exist. Please add facility using the plus button.",
+    "labtest": "No data exist. Please add lab test details using the plus button."
   }
 }
