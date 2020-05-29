@@ -34,7 +34,7 @@ export function TransfersList(props) {
     // Handle has more.
     useEffect(() => {
         if (!_.isEmpty(transferList)) {
-            setHasPrev(offset - itemsPerPage >= 0 ? true : false);
+            setHasPrev(offset > 0 ? true : false);
             setHasMore(offset + itemsPerPage < count ? true : false);
         }
     }, [transferList, offset, count]);
@@ -47,7 +47,7 @@ export function TransfersList(props) {
             !_.isEmpty(transferList)
         ) {
             const updatedTransferList = [];
-            transferList.map(transferObj => {
+            transferList.forEach(transferObj => {
                 const updatedObj = { ...transferObj };
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
                 updatedObj.status_updated_at = moment.utc(transferObj.status_updated_at, 'MM/DD/YYYY hh:mm A').local().format('MM/DD/YYYY hh:mm A')

@@ -36,7 +36,7 @@ export function InventoryList(props) {
         if (!_.isEmpty(inventoryTypesList) && !_.isEmpty(facilityList)) {
             const mappedInventoryList = [];
 
-            inventoryList.map(inventory => {
+            inventoryList.forEach(inventory => {
                 const mappedInventory = { ...inventory };
                 const date = new Date(inventory.updated_at);
                 mappedInventory.updated_at = moment(date);
@@ -54,7 +54,6 @@ export function InventoryList(props) {
                     mappedInventory.facility = facilityListType.name;
                 }
                 mappedInventoryList.push(mappedInventory);
-                return mappedInventory;
             });
             return mappedInventoryList;
         }

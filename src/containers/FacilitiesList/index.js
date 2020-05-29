@@ -49,7 +49,7 @@ export function FacilitiesList(props) {
             !_.isEmpty(facilityTypesList)
         ) {
             const mappedFacilityList = [];
-            facilityList.map(facility => {
+            facilityList.forEach(facility => {
                 const mappedFacility = { ...facility };
                 const district = districtsList.find(
                     district => district.id === facility.district
@@ -70,7 +70,6 @@ export function FacilitiesList(props) {
                     mappedFacility.facility_type = facilityType.name;
                 }
                 mappedFacilityList.push(mappedFacility);
-                return mappedFacility;;
             });
             return mappedFacilityList;
         }
@@ -80,7 +79,7 @@ export function FacilitiesList(props) {
     // Handle has more.
     useEffect(() => {
         if (!_.isEmpty(facilityList)) {
-            setHasPrev(offset - itemsPerPage >= 0 ? true : false);
+            setHasPrev(offset > 0 ? true : false);
             setHasMore(offset + itemsPerPage < count ? true : false);
         }
     }, [facilityList, offset, count]);
