@@ -13,6 +13,7 @@ import {
 import PaginationController from "Components/PaginationController";
 import Sort from "Components/Sort";
 import Filters from "Components/Filters";
+import { mapProps } from "Src/utils/mapping-functions";
 
 export function FacilitiesList(props) {
     const {
@@ -35,6 +36,7 @@ export function FacilitiesList(props) {
     const [ordering, setOrdering] = useState(null);
     const [sortType, setSortType] = useState(null);
     const [orderingParam, setOrderingParam] = useState(null);
+    const [selectedParams, setSelectedParams] = useState({});
 
     const updateFacilityListWithNames = (
         facilityList,
@@ -42,7 +44,6 @@ export function FacilitiesList(props) {
         facilityTypesList,
         ownershipTypesList
     ) => {
-        
         if (
             !_.isEmpty(districtsList) &&
             !_.isEmpty(ownershipTypesList) &&
@@ -113,17 +114,58 @@ export function FacilitiesList(props) {
     useEffect(() => {
         const options = {
             ...queryParams,
-            offset: offset
+            ...selectedParams,
+            offset: offset,
         };
         if (orderingParam) {
-            options.ordering = orderingParam
+            options.ordering = orderingParam;
         }
         fetchFacilityList(options);
-    }, [queryParams, offset, fetchFacilityList, orderingParam]);
+    }, [queryParams, offset, fetchFacilityList, orderingParam, selectedParams]);
 
     const sortByValue = val => {
         setOrdering(val);
     };
+
+    const handleBooleanCallBack = val => {
+        let updateSelectedParams = {
+            ...selectedParams,
+            ...val,
+        };
+
+        // make sure to match param dict key and required list key are same
+        const requiredLists = {
+            district: districtsList,
+        };
+        setSelectedParams({ ...mapProps(updateSelectedParams, requiredLists) });
+    };
+
+    const handleNumberCallBack = val => {
+        let update_select_params = { ...selectedParams };
+        Object.keys(update_select_params).forEach(key => {
+            if (key.includes(val.field)) delete update_select_params[key];
+        })
+        if(val.fromValue !== '' && val.toValue !== '') {
+            if (val.type === "Equals To") {
+                update_select_params[val.field] = val.fromValue;
+            } else if (val.type === "Less Than") {
+                update_select_params[val.field + "__lt"] = val.fromValue;
+            } else if (val.type === "Greater Than") {
+                update_select_params[val.field + "__gt"] = val.fromValue;
+            } else if (val.type === "Range") {
+                update_select_params[val.field + "__range"] = `${val.fromValue},${val.toValue}`;
+            }
+        }
+        setSelectedParams({ ...update_select_params });
+    };
+
+    useEffect(() => {
+        if (districtsList) {
+            CONFIG.columnDefs[3].cellRendererParams.options = districtsList.map(
+                district => district.name
+            );
+        }
+    }, [districtsList, ownershipTypesList, facilityTypesList]);
 
     return (
         <React.Fragment>
@@ -143,6 +185,12 @@ export function FacilitiesList(props) {
                         onSeeMore={() => {
                             setShowOverlay(!showOverlay);
                         }}
+                        handleBooleanCallBack={val =>
+                            handleBooleanCallBack(val)
+                        }
+                        handleNumberCallBack={(field, val) =>
+                            handleNumberCallBack(field, val)
+                        }
                     />
                 </Grid>
             </Grid>
@@ -167,8 +215,10 @@ export function FacilitiesList(props) {
                     </Grid>
                     <Grid item xs={12} sm={5}>
                         <PaginationController
-                            resultsShown={Math.ceil((offset + facilityList.length) / itemsPerPage)}
-                            totalResults={Math.ceil((count) / itemsPerPage)}
+                            resultsShown={Math.ceil(
+                                (offset + facilityList.length) / itemsPerPage
+                            )}
+                            totalResults={Math.ceil(count / itemsPerPage)}
                             onFirst={() => {
                                 setOffset(0);
                             }}
