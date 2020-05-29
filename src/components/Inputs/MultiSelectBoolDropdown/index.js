@@ -1,11 +1,13 @@
 import React from 'react'
 import { FormControl, Select, Input, MenuItem, Checkbox, ListItemText } from '@material-ui/core'
 
-export default function MultiSelectBoolDropdown({ fieldName, options, onSelect }) {
+export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, paramName }) {
   const [value, setValue] = React.useState([]);
   const handleChange = (event) => {
     setValue(event.target.value);
-    onSelect(event.target.value);
+    let value_return = {}
+    value_return[paramName] = event.target.value
+    onSelect(value_return);
   };
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;

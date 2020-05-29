@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { GET } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import * as StringUtils from 'Src/utils/stringformatting';
+import { mappingProps } from 'Src/utils/mapping-functions';
 
 import { CONFIG } from './config';
 import * as Routes from 'Src/routes';
@@ -13,6 +14,7 @@ import Sort from 'Components/Sort';
 import Filters from 'Components/Filters';
 import PaginationController from 'Components/PaginationController';
 import { PATIENT_LIST_URL } from 'Src/routes';
+
 import {
   PAGINATION_LIMIT,
   CLINICAL_STATUS_UPDATED_AT,
@@ -115,7 +117,6 @@ export function PatientsList( props ) {
         'updated_ownership_types_list': [],
         'updated_facility_types_list': []
       }
-      console.log(ownership_types);
       const props_list = {
         'updated_clinical_status_list': clinical_status_list,
         'updated_district_list': districts_list,
@@ -127,7 +128,6 @@ export function PatientsList( props ) {
       }
       Object.keys(update_list).forEach((list_name) => {
         props_list[list_name].forEach((element)=>{
-          console.log(element.name);
           update_list[list_name].push(element.name);
         })
       })
@@ -189,11 +189,44 @@ export function PatientsList( props ) {
     setCurrentUrl(url);
   }
 
-  const handleBooleanCallBack = (field, val) => {
-    val = val.map(val => MAPPING_PROPS[val])
-    const update_select_params = { ...selectedParams }
-    update_select_params[field] = val
+  const handleBooleanCallBack = (val) => {
+    let update_select_params = { ...selectedParams, ...val }
+    const {
+      districts_list,
+      clinical_status_list,
+      cluster_group_list,
+      covid_status_list,
+      patients,
+      facilities,
+      ownership_types,
+      facility_types
+    } = props
+    update_select_params =  mappingProps(update_select_params,
+        districts_list,
+        clinical_status_list,
+        cluster_group_list,
+        covid_status_list,
+        patients,
+        facilities,
+        ownership_types,
+        facility_types
+    );
     setSelectedParams({...update_select_params});
+  }
+
+  const handleNumberCallBack = (val) => {
+    let update_select_params = { ...selectedParams }
+    if(val.type === 'Equals To'){
+      update_select_params[val.field] = val.fromValue
+    } else if(val.type === 'Less To'){
+      update_select_params[val.field + '_min'] = val.fromValue
+    } else if(val.type === 'Greater Than'){
+      update_select_params[val.field + '_max'] = val.fromValue
+    } else if(val.type === 'Range'){
+      update_select_params[val.field + '_min'] = val.fromValue
+      update_select_params[val.field + '_max'] = val.toValue
+    }
+    setSelectedParams({ ...update_select_params});
   }
 
   return (
@@ -206,7 +239,8 @@ export function PatientsList( props ) {
           <Filters
             options={CONFIG.columnDefs}
             onSeeMore={() => { setShowOverlay(!showOverlay) }}
-            handleBooleanCallBack={(field, val) => handleBooleanCallBack(field, val)}/>
+            handleBooleanCallBack={(val) => handleBooleanCallBack(val)}
+            handleNumberCallBack={(field, val) => handleNumberCallBack(field, val)}/>
         </Grid>
       </Grid>
       <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
@@ -220,7 +254,7 @@ export function PatientsList( props ) {
         >
           <Grid item xs={12} sm={4} >
             <Sort
-              onSelect={val =>   setSelectedParams({ 'ordering' : val })}
+              onSelect={val =>   setSelectedParams({ 'ordering' : [ val ] })}
               options={CONFIG.columnDefs}
               onToggleSort={toggleVal => setOrdering(toggleVal)} />
           </Grid>

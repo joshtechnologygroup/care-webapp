@@ -4,7 +4,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { Input } from "@material-ui/core";
 
-export default function MultiSelectNumberDropdown({ onSelect, fieldName }) {
+export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }) {
   const [renderValue, setRenderValue] = React.useState("");
   const [subDropdownValue, setSubDropDownValue] = React.useState("Equals To");
   const [fromValue, setFromValue] = React.useState("");
@@ -18,11 +18,18 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName }) {
     if (e.which === 13) {
       // Enter key pressed
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
+      console.log()
+      let value_return = {
+        field: field,
+        type: subDropdownValue,
+        fromValue: fromValue
+      }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
+        value_return.toValue = toValue
       }
       setRenderValue(value);
-      onSelect(value);
+      onSelect(value_return);
       handleClose();
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase
