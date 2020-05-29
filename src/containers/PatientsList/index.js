@@ -32,7 +32,6 @@ export function PatientsList( props ) {
   const [ page, setPage ] = useState(INITIAL_PAGE);
   const [ patients, setPatients ] = useState(null);
   const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
-  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString( Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]));
   const [ selectedParams, setSelectedParams ] = useState({});
   const [ ordering, setOrdering ] = useState('none');
 
@@ -185,16 +184,15 @@ export function PatientsList( props ) {
     }
     props.getPatientList( url, params );
     setPage(next_page);
-    setCurrentUrl(url);
   }
 
   const handleBooleanCallBack = (val) => {
+    console.log(val);
     const {
       districts_list,
       clinical_status_list,
       cluster_group_list,
       covid_status_list,
-      patients,
       facilities,
       ownership_types,
       facility_types
