@@ -30,31 +30,3 @@ export const mappingProps = (params, ...list) => {
     })
     return update_params;
 }
-
-
-const getDictNameToId = (list) => {
-    const listMap = {}
-    list.forEach(item => {
-        listMap[item.name] = item.id;
-    })
-    return listMap;
-}
-
-const mapNameToId = (nameToIdDict, nameList) => {
-    return nameList.map(name => nameToIdDict[name])
-}
-
-export const mapProps = (params, requiredLists) => {
-    const updateParams = Object.assign({}, params);
-    Object.keys(requiredLists).forEach(function(listKey) {
-        Object.keys(updateParams).forEach(function(paramKey) {
-            if(paramKey === listKey) {
-                updateParams[paramKey] = mapNameToId(
-                    getDictNameToId(requiredLists[listKey]), updateParams[paramKey]
-                )
-            }
-        });
-    });
-    return updateParams;
-}
-

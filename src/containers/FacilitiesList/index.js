@@ -13,7 +13,7 @@ import {
 import PaginationController from "Components/PaginationController";
 import Sort from "Components/Sort";
 import Filters from "Components/Filters";
-import { mapProps } from "Src/utils/mapping-functions";
+import { multiSelectBooleanFilterCallback, multiSelectNumberFilterCallback } from "Src/utils/listFilter";
 
 export function FacilitiesList(props) {
     const {
@@ -128,35 +128,17 @@ export function FacilitiesList(props) {
     };
 
     const handleBooleanCallBack = val => {
-        let updateSelectedParams = {
-            ...selectedParams,
-            ...val,
-        };
-
         // make sure to match param dict key and required list key are same
         const requiredLists = {
             district: districtsList,
         };
-        setSelectedParams({ ...mapProps(updateSelectedParams, requiredLists) });
-    };
-
-    const handleNumberCallBack = val => {
-        let update_select_params = { ...selectedParams };
-        Object.keys(update_select_params).forEach(key => {
-            if (key.includes(val.field)) delete update_select_params[key];
-        })
-        if(val.fromValue !== '' && val.toValue !== '') {
-            if (val.type === "Equals To") {
-                update_select_params[val.field] = val.fromValue;
-            } else if (val.type === "Less Than") {
-                update_select_params[val.field + "__lt"] = val.fromValue;
-            } else if (val.type === "Greater Than") {
-                update_select_params[val.field + "__gt"] = val.fromValue;
-            } else if (val.type === "Range") {
-                update_select_params[val.field + "__range"] = `${val.fromValue},${val.toValue}`;
-            }
-        }
-        setSelectedParams({ ...update_select_params });
+        
+        multiSelectBooleanFilterCallback(
+            selectedParams,
+            setSelectedParams,
+            requiredLists,
+            val
+        );
     };
 
     useEffect(() => {
@@ -165,7 +147,7 @@ export function FacilitiesList(props) {
                 district => district.name
             );
         }
-    }, [districtsList, ownershipTypesList, facilityTypesList]);
+    }, [districtsList]);
 
     return (
         <React.Fragment>
@@ -189,7 +171,7 @@ export function FacilitiesList(props) {
                             handleBooleanCallBack(val)
                         }
                         handleNumberCallBack={(field, val) =>
-                            handleNumberCallBack(field, val)
+                            multiSelectNumberFilterCallback(selectedParams, setSelectedParams, field, val)
                         }
                     />
                 </Grid>
