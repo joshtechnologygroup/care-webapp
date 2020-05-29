@@ -18,6 +18,7 @@ import {
 import { EditOutlined, Add } from '@material-ui/icons';
 import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
+import NullState from 'Components/NullState';
 
 // Importing mock data
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
@@ -114,69 +115,76 @@ export default function FamilyDetails(props) {
       <CardContent>
         <Grid container spacing={5}>
           <Grid item xs={12}>
-          <TableContainer>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>{i18n.t('Name')}</StyledTableCell>
-                  <StyledTableCell>{i18n.t('Relationship')} #</StyledTableCell>
-                  <StyledTableCell>{i18n.t('Gender')}</StyledTableCell>
-                  <StyledTableCell>{i18n.t('Age')}</StyledTableCell>
-                  <StyledTableCell>{i18n.t('Phone')}</StyledTableCell>
-                  <StyledTableCell></StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {
-                  open === 'new' &&
-                  <CreateUpdateFamilyDetail handleSubmit={(data) => saveData(data)} details={selectedRow} />
-                }
-              {
-                profile.map((val, index) =>
-                  open === index ?
-                  <CreateUpdateFamilyDetail handleSubmit={(data) => saveData(data)} key={index} details={selectedRow} />
-                   :
-                  <TableRow className={classes.tableRow} key={index}>
-                    <StyledTableCell>
-                      <Typography color="primary" variant="h5" >{val.name}</Typography>
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {
-                        relationshipChoices.map(choice => {
-                            return choice.id === val.relation ? (choice.name) : ''
-                        })
-                      }
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {
-                        genderChoices.map(choice => {
-                            return choice.id === val.gender ? (choice.name) : ''
-                        })
-                      }
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {val.ageYears} {i18n.t('years')} {val.ageMonths ? `${val.ageMonths} ${i18n.t('months')}` : ''}
-                    </StyledTableCell>
-                    <StyledTableCell>
-                      {val.phone}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      <Fab
-                        size="small"
-                        color="primary"
-                        aria-label="edit"
-                        className={classes.edit}
-                        onClick={() => editMember(index, val)}
-                      >
-                        <EditOutlined />
-                      </Fab>
-                    </StyledTableCell>
-                  </TableRow>
-                )
-              }
-              </TableBody>
-            </Table>
-            </TableContainer>
+            {
+              profile.length > 0 &&
+              <TableContainer>
+                <Table className={classes.table}>
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>{i18n.t('Name')}</StyledTableCell>
+                      <StyledTableCell>{i18n.t('Relationship')} #</StyledTableCell>
+                      <StyledTableCell>{i18n.t('Gender')}</StyledTableCell>
+                      <StyledTableCell>{i18n.t('Age')}</StyledTableCell>
+                      <StyledTableCell>{i18n.t('Phone')}</StyledTableCell>
+                      <StyledTableCell></StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {
+                      open === 'new' &&
+                      <CreateUpdateFamilyDetail handleSubmit={(data) => saveData(data)} details={selectedRow} />
+                    }
+                    {
+                      profile.map((val, index) =>
+                        open === index ?
+                        <CreateUpdateFamilyDetail handleSubmit={(data) => saveData(data)} key={index} details={selectedRow} />
+                        :
+                        <TableRow className={classes.tableRow} key={index}>
+                          <StyledTableCell>
+                            <Typography color="primary" variant="h5" >{val.name}</Typography>
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {
+                              relationshipChoices.map(choice => {
+                                  return choice.id === val.relation ? (choice.name) : ''
+                              })
+                            }
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {
+                              genderChoices.map(choice => {
+                                  return choice.id === val.gender ? (choice.name) : ''
+                              })
+                            }
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {val.ageYears} {i18n.t('years')} {val.ageMonths ? `${val.ageMonths} ${i18n.t('months')}` : ''}
+                          </StyledTableCell>
+                          <StyledTableCell>
+                            {val.phone}
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <Fab
+                              size="small"
+                              color="primary"
+                              aria-label="edit"
+                              className={classes.edit}
+                              onClick={() => editMember(index, val)}
+                            >
+                              <EditOutlined />
+                            </Fab>
+                          </StyledTableCell>
+                        </TableRow>
+                      )
+                    }
+                  </TableBody>
+                </Table>
+                </TableContainer>
+            }
+            {
+              !profile.length &&
+              <NullState msg={i18n.t('null_messages.family')} />
+            }
           </Grid>
         </Grid>
       </CardContent>

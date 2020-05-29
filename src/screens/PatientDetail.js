@@ -112,24 +112,12 @@ class PatientDetail extends Component {
           <LabTestDetail
             profile={profile[formList[4]]}
           />
-          {
-            isEditing[formList[5]] ?
-            <h2>I'm being edited</h2>
-            :
-            <PortieDetails
-              profile={profile[formList[5]]}
-              handleEdit={ () => this.setEditable(formList[5], true) }
-            />
-          }
-          {
-            isEditing[formList[6]] ?
-            <h2>I'm being edited</h2>
-            :
-            <FamilyDetails
-              profile={profile[formList[6]]}
-              handleEdit={ () => this.setEditable(formList[6], true) }
-            />
-          }
+          <PortieDetails
+            profile={profile[formList[5]]}
+          />
+          <FamilyDetails
+            profile={profile[formList[6]]}
+          />
         </div>
       </>
     );

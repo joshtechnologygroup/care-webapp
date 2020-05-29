@@ -15,6 +15,7 @@ import { useTheme } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
+import NullState from 'Components/NullState';
 
 // Importing mock data
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
@@ -168,6 +169,10 @@ export default function PortieDetails(props) {
                 </Fab> */}
               </Grid>
             )}
+            {
+              !profile.length &&
+              <NullState msg={i18n.t('null_messages.portie')} />
+            }
           </Grid>
         </Grid>
       </CardContent>
