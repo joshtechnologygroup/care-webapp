@@ -1,11 +1,4 @@
 import React, {useState} from 'react';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
-import CustomModal from 'Components/CustomModal';
 import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import * as Yup from 'yup';

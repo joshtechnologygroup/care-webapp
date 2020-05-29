@@ -98,12 +98,12 @@ export default function Form(props) {
               </Grid>
               <Grid item xs={12}>
                 <TextField 
-                  name="patientContact"
+                  name="patientRelationContact"
                   type="number"
-                  defaultValue={patientContact}
+                  defaultValue={patientRelationContact}
                   label={i18n.t('Patient contact number')}
                   fullWidth
-                  onChange={changeText.bind(null, "patientContact")}
+                  onChange={changeText.bind(null, "patientRelationContact")}
                   variant="outlined"
                 />
               </Grid>

@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import useStyles from './styles';
+
 // Importing mock data
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 import { genderChoices } from 'Constants/app.const';

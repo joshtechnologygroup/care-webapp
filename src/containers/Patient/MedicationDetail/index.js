@@ -140,7 +140,7 @@ export default function MedicationDetail(props) {
       </CardContent>
       {
         !profile.attendant.length &&
-        <NullState msg={i18n.t('null_messages.doctor')} />
+        <NullState message={i18n.t('null_messages.doctor')} />
       }
 
       <CreateUpdateDoctor editMode={doctorEditMode} details={selectedRow} open={open} onClose={handleClose} />

@@ -41,11 +41,7 @@ export default function Form(props) {
       nonCovidDiseases,
       attendant,
     },
-    errors,
-    touched,
     handleSubmit,
-    handleChange,
-    setFieldTouched,
     setFieldValue,
     editMode
   } = props;
@@ -180,7 +176,7 @@ export default function Form(props) {
           )}
           {
             !attendant.length &&
-            <NullState msg={i18n.t('null_messages.doctor')}></NullState>
+            <NullState message={i18n.t('null_messages.doctor')}></NullState>
           }
         </Grid>
       </CardContent>

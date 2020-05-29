@@ -78,7 +78,7 @@ export default function FacilityDetails(props) {
   const { i18n } = useTranslation();
   const belowTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { profile, handleEdit } = props;
+  const { profile } = props;
   return (
     <Card elevation={4}>
       <CardHeader
@@ -143,7 +143,7 @@ export default function FacilityDetails(props) {
             )}
             {
               !profile.length &&
-              <NullState msg={i18n.t('null_messages.facility')} />
+              <NullState message={i18n.t('null_messages.facility')} />
             }
           </Grid>
         </Grid>

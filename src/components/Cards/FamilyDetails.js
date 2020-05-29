@@ -86,7 +86,6 @@ export default function FamilyDetails(props) {
   const { i18n } = useTranslation();
 
   const { profile } = props;
-  console.log(profile)
 
   const [selectedRow, setSelectedRow] = React.useState({name: '', gender: '', phone:'', ageYears: '', ageMonths: ''});
   const [open, setOpen] = React.useState(false);
@@ -183,7 +182,7 @@ export default function FamilyDetails(props) {
             }
             {
               !profile.length &&
-              <NullState msg={i18n.t('null_messages.family')} />
+              <NullState message={i18n.t('null_messages.family')} />
             }
           </Grid>
         </Grid>

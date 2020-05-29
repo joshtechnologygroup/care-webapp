@@ -134,7 +134,7 @@ export default function LabTestDetail(props) {
             }
             {
               !profile.length &&
-              <NullState msg={i18n.t('null_messages.labtest')} />
+              <NullState message={i18n.t('null_messages.labtest')} />
             }
           </Grid>
         </Grid>

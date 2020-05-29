@@ -76,8 +76,7 @@ export default function PortieDetails(props) {
   const { i18n } = useTranslation();
   const belowTablet = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { profile, handleEdit } = props;
-  console.log(profile)
+  const { profile } = props;
   const [open, setOpen] = React.useState(false);
   const [doctorEditMode, setdoctorEditMode] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState({date: '', name: '', email: '', phone:''});
@@ -171,7 +170,7 @@ export default function PortieDetails(props) {
             )}
             {
               !profile.length &&
-              <NullState msg={i18n.t('null_messages.portie')} />
+              <NullState message={i18n.t('null_messages.portie')} />
             }
           </Grid>
         </Grid>
@@ -183,7 +182,6 @@ export default function PortieDetails(props) {
 
 PortieDetails.propTypes = {
   profile: PropTypes.array.isRequired,
-  handleEdit: PropTypes.func
 }
 
 PortieDetails.defaultProps = {
