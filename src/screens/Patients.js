@@ -5,13 +5,13 @@ import Header from 'Containers/Header';
 import PatientsList from 'Containers/PatientsList';
 import { Search } from 'Components/Inputs';
 import Button from "@material-ui/core/Button";
-import {ListAlt} from "@material-ui/icons";
+import { ListAlt } from "@material-ui/icons";
 
 
 class Patients extends Component {
 
 	handleClick = () => {
-		console.log(this.props.history.push('/patients/add'))
+		this.props.history.push('/patients/add')
 	}
 
 	render() {

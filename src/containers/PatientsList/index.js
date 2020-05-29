@@ -19,7 +19,6 @@ import {
   CLINICAL_STATUS_UPDATED_AT,
   PORTEA_CALLED_AT,
   INITIAL_PAGE,
-  MAPPING_PROPS
 } from 'Src/constants'
 
 import PropTypes from 'prop-types';
@@ -27,8 +26,8 @@ import { connect } from 'react-redux';
 
 
 export function PatientsList( props ) {
-  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [ showColumnsPanel, setShowColumnsPanel ] = useState(false);
+  const [ showOverlay, setShowOverlay ] = useState(false);
   const [ page, setPage ] = useState(INITIAL_PAGE);
   const [ patients, setPatients ] = useState(null);
   const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
@@ -52,7 +51,7 @@ export function PatientsList( props ) {
 
     Object.keys(required).forEach((list) => {
       if(!props[list]){
-        required_data[0].push([required[list][0], GET, {}, selectedParams])
+        required_data[0].push([ required[list][0], GET, {}, selectedParams ])
         required_data[1].push(required[list][1])
       }
     })
@@ -99,7 +98,6 @@ export function PatientsList( props ) {
 
       Object.keys(joinById).forEach((id) => {
         update_patients.forEach(patient => joinById[id].forEach(value => {
-          MAPPING_PROPS[value.name] = value.id;
           if(value.id === patient[id]){
             patient[id] = value.name
           }
@@ -211,7 +209,7 @@ export function PatientsList( props ) {
     val =  mappingProps(val,
         mapping_id_list[Object.keys(val)[0]]
     );
-    setSelectedParams({...update_select_params, ...val});
+    setSelectedParams({ ...update_select_params, ...val });
   }
 
   const handleNumberCallBack = (val) => {
@@ -229,7 +227,7 @@ export function PatientsList( props ) {
       update_select_params[val.field + '_min'] = [val.fromValue]
       update_select_params[val.field + '_max'] = [val.toValue]
     }
-    setSelectedParams({ ...update_select_params});
+    setSelectedParams({ ...update_select_params });
   }
 
   const handleDateCallBack = (val) => {
@@ -247,7 +245,7 @@ export function PatientsList( props ) {
       update_select_params[val.field + '_after'] = [val.fromValue]
       update_select_params[val.field + '_before'] = [val.toValue]
     }
-    setSelectedParams({ ...update_select_params});
+    setSelectedParams({ ...update_select_params });
   }
 
 
@@ -260,9 +258,9 @@ export function PatientsList( props ) {
         <Grid item xs={12} sm={12} >
           <Filters
             options={CONFIG.columnDefs}
-            onSeeMore={() => { setShowOverlay(!showOverlay) }}
-            handleBooleanCallBack={(val) => handleBooleanCallBack(val)}
-            handleNumberCallBack={(val) => handleNumberCallBack(val)}
+            onSeeMore={() => setShowOverlay(!showOverlay)}
+            handleBooleanCallBack={val => handleBooleanCallBack(val)}
+            handleNumberCallBack={val => handleNumberCallBack(val)}
             handleDateCallBack={val => handleDateCallBack(val)}/>
         </Grid>
       </Grid>

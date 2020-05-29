@@ -7,7 +7,7 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true } },
+    { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true }, hide: true },
     { headerName: 'Govt. ID', field: 'govt_id', cellRendererParams: { isSortable: true } },
     { headerName: 'Facility ID', field: 'facility', minWidth: 100, cellRendererParams: { isSortable: true } },
     { headerName: 'Patient Name', field: 'name', minWidth: 120 },
@@ -21,7 +21,8 @@ export const CONFIG = {
       headerName: 'Cluster Group',
       field: 'cluster_group',
       minWidth: 120,
-      cellRendererParams: { filterType: 'boolean', options: [ ] }
+      cellRendererParams: { filterType: 'boolean', options: [ ] },
+      hide: true
     },
     {
       headerName: 'Status',
@@ -60,21 +61,23 @@ export const CONFIG = {
     }},
     { headerName: 'Clinical Status updated At', field: 'clinical_status_updated_at', minWidth: 180, cellRendererParams: {
       filterType: 'date'
-    }},
+    },
+    hide: true
+    },
     { headerName: 'Portea called At', field: 'portea_called_at', minWidth: 150, cellRendererParams: {
         filterType: 'date'
-    }},
+    }, hide: true},
     { headerName: 'Portea Able to contact Patient/Relative', field: 'portea_able_to_connect', minWidth: 250, cellRendererParams: {
       filterType: 'boolean'
-    }},
+    }, hide: true},
     { headerName: 'Facility Name', field: 'facility_name', minWidth: 120, cellRendererParams: {
       filterType: 'boolean',
       options: []
-    }},
+    }, hide: true},
     { headerName: 'Facility District', field: 'facility_district', minWidth: 120, cellRendererParams: {
       filterType: 'boolean',
       options: []
-    }},
+    }, hide: true},
     { headerName: 'Facility Type', field: 'facility_type', minWidth: 120, cellRendererParams: {
       filterType: 'boolean',
       options: [
@@ -82,15 +85,15 @@ export const CONFIG = {
         'CHC',
         'CCC'
       ]
-    }},
+    }, hide: true},
     { headerName: 'Facility Ownership Type', field: 'ownership_type', minWidth: 170, cellRendererParams: {
       filterType: 'boolean',
       options: [
         'Central Govt',
-        'State Govt',
+        'State Go vt',
         'Private'
       ]
-    }}
+    }, hide: true}
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
