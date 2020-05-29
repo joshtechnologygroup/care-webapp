@@ -89,6 +89,12 @@ export function NavigationPanel(props) {
               {/*</li>*/}
             {/*</ul>*/}
           </li>
+          <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
+            <Link to={'/inventory'} className="nav-link">
+              <ListAlt />
+              {i18n.t('Inventory')}
+            </Link>
+          </li>
           <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
             <Link to={'/facilities'} className="nav-link">
               <LocationCity />
@@ -116,12 +122,6 @@ export function NavigationPanel(props) {
                 </Link>
               </li>
             </ul>
-          </li>
-          <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
-            <Link to={'/inventory'} className="nav-link">
-              <ListAlt />
-              {i18n.t('Inventory')}
-            </Link>
           </li>
         </ul>
       </div>

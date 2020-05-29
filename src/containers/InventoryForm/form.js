@@ -9,6 +9,7 @@ import { PropTypes } from 'prop-types';
 import Select from 'react-select'
 import useStyles from './styles';
 import { connect } from 'react-redux';
+import _ from 'underscore'
 export function Form(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
@@ -16,20 +17,23 @@ export function Form(props) {
 
     const facilityName = []; 
     const facilityType = [];
-
+    if(props.facilityList && !_.isEmpty(props.facilityList)){
     props.facilityList.forEach((facility, index) => 
     facilityName.push({
             'value': `facility-${index}`,
             'label': facility.name
         })
     );
+    }
 
+    if(props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
     props.inventoryTypesList.forEach((inventoryType, index) => 
     facilityType.push({
             'value': `facility-type-${index}`,
             'label': inventoryType.name
         })
     );
+    }
 
     const change = (name, e) => {
         handleChange(name, e);
@@ -39,7 +43,9 @@ export function Form(props) {
     };
 
     useEffect(() => {
-        handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
+        if(props.facilityList && !_.isEmpty(props.facilityList) && props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
+         handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
+        }
     }, []);
 
     return (
