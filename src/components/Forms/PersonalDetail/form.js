@@ -18,7 +18,9 @@ import useStyles from './styles';
 import ButtonToggle from 'Components/ButtonToggle';
 import { genderChoices } from 'Constants/app.const';
 import ProfileImageInput from '../../profileImageInput';
-import { TOTAL_PERSONEL_DETAILS_FIELDS, MAPPING_PROPS } from 'Src/constants';
+import { GENDER_LIST_MAPPING } from 'Constants/app.const.js';
+import { TOTAL_PERSONEL_DETAILS_FIELDS } from 'Src/constants';
+
 export default function Form(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
@@ -96,7 +98,7 @@ export default function Form(props) {
   };
 
   const setProfileFields = (name, value) =>{
-    const genderId = MAPPING_PROPS[value]
+    const genderId = GENDER_LIST_MAPPING[value]
     saveProfile(name, genderId)
     setFieldTouched(name, true, false);
     if(value){
