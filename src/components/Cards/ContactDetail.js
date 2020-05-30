@@ -19,16 +19,10 @@ import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 
 const useStyles = makeStyles(theme =>
   createStyles({
-    root: {
-      borderRadius: '0',
-      boxShadow: '0.2rem 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.07)',
-      position: 'relative',
-      marginBottom: '16px'
-    },
     action: {
       position: 'absolute',
-      right: 0,
-      top: 0
+      right: '.2em',
+      top: '.2em',
     },
     icon: {
       fontSize: '2.2rem',
@@ -44,7 +38,7 @@ export default function ContactDetail(props) {
 
   const { profile, handleEdit } = props;
   return (
-    <Card className={classes.root} elevation={4}>
+    <Card elevation={4}>
       <CardHeader
         title={i18n.t('Contact Details')}
         action={
@@ -55,7 +49,7 @@ export default function ContactDetail(props) {
       />
       <CardContent>
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={3} className="pt-0">
+          <Grid item xs={12} sm={3} className="pb-0">
             <Typography variant="h6" color="primary" className="d-flex">
               <PhoneOutlined className={classes.icon} />
               {i18n.t('Phone number')}
@@ -70,7 +64,7 @@ export default function ContactDetail(props) {
                 })
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={(profile.nativeState || profile.nativeCountry) ? 6 : 9} className="pt-0">
+          <Grid item xs={12} sm={(profile.nativeState || profile.nativeCountry) ? 6 : 9} className="pb-0">
             <Typography variant="h6" color="primary" className="d-flex">
               <RoomOutlined className={classes.icon} />
               {i18n.t('Address')}
@@ -91,7 +85,7 @@ export default function ContactDetail(props) {
           </Grid>
             {
               (profile.nativeState || profile.nativeCountry) &&
-              <Grid item xs={12} sm={3} className="pt-0">
+              <Grid item xs={12} sm={3} className="pb-0">
                 <Typography variant="h6" color="primary" className="d-flex">
                   <HomeOutlined className={classes.icon} />
                   {i18n.t('Native Place')}
