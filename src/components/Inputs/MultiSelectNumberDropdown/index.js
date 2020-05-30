@@ -18,18 +18,17 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
     if (e.which === 13) {
       // Enter key pressed
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
-      console.log()
-      let value_return = {
+      let selectedValue = {
         field: field,
         type: subDropdownValue,
         fromValue: fromValue
       }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
-        value_return.toValue = toValue
+        selectedValue.toValue = toValue
       }
       setRenderValue(value);
-      onSelect(value_return);
+      onSelect(selectedValue);
       handleClose();
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase

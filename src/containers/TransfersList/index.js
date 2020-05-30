@@ -11,8 +11,15 @@ import PaginationController from "Components/PaginationController";
 import { CONFIG } from "./config";
 import Sort from "Components/Sort";
 import Filters from "Components/Filters";
-import { multiSelectBooleanFilterCallback, multiSelectNumberFilterCallback } from "Src/utils/listFilter";
-import { TRANSFER_STATUS_CHOICES, GENDER_CHOICES, GENDER_LIST_MAPPING } from "Constants/app.const";
+import {
+    multiSelectBooleanFilterCallback,
+    multiSelectNumberFilterCallback,
+} from "Src/utils/listFilter";
+import {
+    TRANSFER_STATUS_CHOICES,
+    GENDER_CHOICES,
+    GENDER_LIST_MAPPING,
+} from "Constants/app.const";
 
 export function TransfersList(props) {
     const { fetchTransferList, transferList, queryParams, count } = props;
@@ -106,15 +113,16 @@ export function TransfersList(props) {
     const handleBooleanCallBack = val => {
         // make sure to match param dict key and required list key are same
         const requiredLists = {
-            'gender': GENDER_LIST_MAPPING,
+            gender: GENDER_LIST_MAPPING,
         };
-        
-        multiSelectBooleanFilterCallback(
-            selectedParams,
-            setSelectedParams,
-            requiredLists,
-            val
-        );
+
+        setSelectedParams({
+            ...multiSelectBooleanFilterCallback(
+                selectedParams,
+                requiredLists,
+                val
+            ),
+        });
     };
 
     return (
@@ -139,7 +147,13 @@ export function TransfersList(props) {
                             handleBooleanCallBack(val)
                         }
                         handleNumberCallBack={(field, val) =>
-                            multiSelectNumberFilterCallback(selectedParams, setSelectedParams, field, val)
+                            setSelectedParams({
+                                ...multiSelectNumberFilterCallback(
+                                    selectedParams,
+                                    field,
+                                    val
+                                ),
+                            })
                         }
                     />
                 </Grid>
