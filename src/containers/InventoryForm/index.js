@@ -21,10 +21,12 @@ export const InventoryForm = (props) => {
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
     const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
-    
+    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: ''})
+
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
+    
     useEffect(() => {
         if(!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)){
                     setError(true)
@@ -69,6 +71,19 @@ export const InventoryForm = (props) => {
         } else {
             setInventoryData({...inventoryData, [name]: e});
         }
+        switch (name) {
+            case 'required_quantity':
+              errors.required_quantity = e ? false : true;
+              break;
+            case 'current_quantity':
+              errors.current_quantity = e ? false : true;
+              break;
+            default: break;
+          }
+          setErrors(prevState =>({
+              ...prevState,
+             ...errors
+          }))
     }
 
     const { i18n } = useTranslation();
@@ -79,7 +94,7 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={inventoryData} {...props} handleChange={handleChange} />
+                            props => <Form data={inventoryData}  {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
@@ -87,18 +102,12 @@ export const InventoryForm = (props) => {
                     {
                     error === true && 
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>Facility Name and Facility Type not exists...</FormHelperText>
-                    </FormControl>
-                    }
-                    { data &&
-                    <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
-                        <FormHelperText className={classes.error}>click on addAnother button to create new inventory...</FormHelperText>
+                        <FormHelperText className={classes.error}>Facility Name and Inventory Type not exists...</FormHelperText>
                     </FormControl>
                     }
                 </Grid>
                 <Grid item xs={12}>
-                    { data &&
+                    { !data &&
                      <FormControlLabel
                         value="end"
                         control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
@@ -112,7 +121,7 @@ export const InventoryForm = (props) => {
                         color="primary"
                         size="medium"
                         onClick={createInventory}
-                        disabled={error}
+                        disabled={errors.required_quantity || errors.current_quantity}
                     >
                         {i18n.t('Ok')}
                     </Button>

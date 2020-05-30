@@ -18,7 +18,6 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
     if (e.which === 13) {
       // Enter key pressed
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
-      console.log()
       let value_return = {
         field: field,
         type: subDropdownValue,

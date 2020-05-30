@@ -129,6 +129,7 @@ export function FacilitiesList(props) {
 
     const handleBooleanCallBack = val => {
         // make sure to match param dict key and required list key are same
+        console.log(val)
         const requiredLists = {
             district: districtsList,
         };
