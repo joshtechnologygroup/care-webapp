@@ -6,7 +6,7 @@ import { MultiSelectBoolDropdown, MultiSelectNumberDropdown, MultiSelectDateDrop
 
 import './Filters.scss';
 
-export default function Filters({ onSeeMore, options }) {
+export default function Filters({ onSeeMore, options, handleBooleanCallBack, handleNumberCallBack }) {
   const { i18n } = useTranslation();
   let countFilter = 0;
   const [showMore, setShowMore] = React.useState(false);
@@ -36,16 +36,18 @@ export default function Filters({ onSeeMore, options }) {
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectBoolDropdown
-                          onSelect={(val) => console.log(`Filter ${val}`)}
-                          options={['Yes', 'No']} // can pass dynamically yes,No True false
-                          fieldName={option['headerName']} />
+                          onSelect={(val) => handleBooleanCallBack(val)}
+                          options={option.cellRendererParams.options || ['Yes','No']} // can pass dynamically yes,No True false
+                          fieldName={option['headerName']}
+                          paramName={option['field']}/>
                       </Grid>);
                     case 'number':
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectNumberDropdown
-                          onSelect={(val) => console.log(`Filter ${val}`)}
+                          onSelect={(val) => handleNumberCallBack(val)}
                           fieldName={option['headerName']}
+                          field={option['field']}
                         />
                       </Grid>);
                     case 'date':

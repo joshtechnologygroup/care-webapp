@@ -22,4 +22,13 @@ export const MAPPING_INVENTORY_ATTRIBUTES = {
     'updated_at':'updatedAt',
 }
 export const UPDATED_AT='updated_at'
-export const PAGINATION_LIMIT = 5
+
+export const PAGINATION_LIMIT = 5;
+export const INITIAL_PAGE = 1;
+
+
+export const MAPPING_PROPS = {
+    'Male' : 1,
+    'Female': 2,
+    'Others': 3
+}
