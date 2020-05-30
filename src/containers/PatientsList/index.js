@@ -91,9 +91,9 @@ export function PatientsList( props ) {
 
       update_patients.forEach((attr) => {
         let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
-        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).fromNow();
+        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format('DD-MM-YYYY h:mm a');
         date = new Date(attr[PORTEA_CALLED_AT])
-        attr[PORTEA_CALLED_AT] = date.toDateString();
+        attr[PORTEA_CALLED_AT] = moment(date).format('DD-MM-YYYY h:mm a');;
       });
 
       Object.keys(joinById).forEach((id) => {
@@ -327,7 +327,7 @@ const mapStateToProps = (state) => ({
   districts_list: state.districts.results,
   clinical_status_list: state.clinicalStatus.results,
   cluster_group_list: state.clusterGroup.results,
-  covid_status_list: state.clinicalStatus.results
+  covid_status_list: state.covidStatus.results
 });
 
 PatientsList.propTypes = {

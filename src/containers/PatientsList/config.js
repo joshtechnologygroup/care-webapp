@@ -39,12 +39,7 @@ export const CONFIG = {
     },
     { headerName: 'COVID-19 Status', field: 'covid_status', minWidth: 135, cellRendererParams: {
       filterType: 'boolean',
-      options: [
-        'Postive',
-        'Negative',
-        'Result awaited',
-        'Not Tested Yet'
-      ]
+      options: []
     }},
     { headerName: 'Clinical Status', field: 'clinical_status', minWidth: 120, cellRendererParams: {
       filterType: 'boolean',
