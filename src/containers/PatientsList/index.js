@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
-import { GET } from "Src/constants";
+import { GET, DATE_FORMAT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import * as StringUtils from 'Src/utils/stringformatting';
-import { mappingProps } from 'Src/utils/mapping-functions';
 import { GENDER_LIST_MAPPING, STATUS_LIST_MAPPING } from 'Constants/app.const.js';
 import {
   multiSelectBooleanFilterCallback
@@ -94,9 +93,9 @@ export function PatientsList( props ) {
 
       update_patients.forEach((attr) => {
         let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
-        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format('DD-MM-YYYY h:mm a');
+        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
         date = new Date(attr[PORTEA_CALLED_AT])
-        attr[PORTEA_CALLED_AT] = moment(date).format('DD-MM-YYYY h:mm a');;
+        attr[PORTEA_CALLED_AT] = moment(date).format(DATE_FORMAT);;
       });
 
       Object.keys(joinById).forEach((id) => {

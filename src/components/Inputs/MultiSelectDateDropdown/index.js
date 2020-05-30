@@ -9,6 +9,7 @@ import {
 } from '@material-ui/pickers';
 import { Grid } from "@material-ui/core";
 import moment from "moment";
+import { DATE_FORMAT } from 'Src/constants'
 
 export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) {
   const [renderValue, setRenderValue] = React.useState("");
@@ -26,16 +27,10 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) 
       let DateCallbackValue = {
         field: field,
         type: subDropdownValue,
-        fromValue: moment(new Date(fromValue)).format('YYYY-MM-DD'),
-        toValue: moment(new Date(toValue)).format('YYYY-MM-DD')
+        fromValue: moment(new Date(fromValue)).format(DATE_FORMAT),
+        toValue: moment(new Date(toValue)).format(DATE_FORMAT)
       }
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
-      let selected_value = {
-        field: field,
-        type: subDropdownValue,
-        fromValue: moment(new Date(fromValue)).format('YYYY-MM-DD'),
-        toValue: moment(new Date(toValue)).format('YYYY-MM-DD')
-      }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
       }

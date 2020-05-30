@@ -36,7 +36,6 @@ export const multiSelectBooleanFilterCallback = (
         ...selectedParams,
         ...mapProps(val, requiredLists),
     };
-    console.log(val, {...updateSelectedParams})
     return updateSelectedParams
 };
 
