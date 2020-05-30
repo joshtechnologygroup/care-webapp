@@ -18,14 +18,15 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
     if (e.which === 13) {
       // Enter key pressed
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
+
       let selectedValue = {
         field: field,
         type: subDropdownValue,
-        fromValue: fromValue
+        fromValue: fromValue,
+        toValue: toValue
       }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
-        selectedValue.toValue = toValue
       }
       setRenderValue(value);
       onSelect(selectedValue);
