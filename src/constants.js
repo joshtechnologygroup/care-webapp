@@ -32,3 +32,9 @@ export const MAPPING_PROPS = {
     'Female': 2,
     'Others': 3
 }
+
+export const TOTAL_PROFILE_FIELDS = 17;
+export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
+export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
+
+export const DATE_FORMAT = "MM/DD/YYYY hh:mm A";

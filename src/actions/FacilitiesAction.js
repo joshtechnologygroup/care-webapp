@@ -1,7 +1,6 @@
 import * as Routes from 'Src/routes';
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
-import * as HttpStatus from 'http-status-codes'
 import * as CommonService from "Src/utils/services";
 import * as facilityService from "Src/services/facilityService";
 import { GET, POST, PUT } from "Src/constants";;
@@ -45,7 +44,7 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
         url += `${id}/`
     }
     const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
-    if(inventory_response.status === HttpStatus.OK){
+    if(inventory_response.ok){
         const inventory = await inventory_response.json();
     }
 };

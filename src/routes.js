@@ -27,3 +27,8 @@ export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/'
 //Patient Transfers
 export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/'
 export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/'
+export const CREATE_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
+
+//patient dependencies
+export const PATIENT_STATUS_LIST_URL = SERVER + API_V1 + 'patients/current-status/'
+export const STATE_LIST_URL = SERVER + API_V1 + 'accounts/states/'
