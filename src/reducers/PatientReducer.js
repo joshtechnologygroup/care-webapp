@@ -4,7 +4,8 @@ import {
     GET_CLUSTER_GROUP_LIST,
     GET_COVID_STATUS_LIST,
     GET_PATIENT_STATUS_LIST,
-    GET_STATE_LIST
+    GET_STATE_LIST,
+    SET_CURRENT_PATIENT,
 } from "Reducers/Types";
 
 const initialState = {};
@@ -75,4 +76,14 @@ const states = (state = {}, action) => {
     return state;
 };
 
-export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states };
+const patient = (state = {}, action) => {
+    if (action.type === SET_CURRENT_PATIENT) {
+        return {
+            ...state,
+            ...action.data
+        };
+    }
+    return state;
+};
+
+export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states, patient };
