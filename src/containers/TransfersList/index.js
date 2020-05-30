@@ -11,9 +11,16 @@ import PaginationController from "Components/PaginationController";
 import { CONFIG } from "./config";
 import Sort from "Components/Sort";
 import Filters from "Components/Filters";
-import { multiSelectBooleanFilterCallback, multiSelectNumberFilterCallback } from "Src/utils/listFilter";
-import { TRANSFER_STATUS_CHOICES, GENDER_CHOICES, GENDER_LIST_MAPPING } from "Constants/app.const";
-
+import {
+    multiSelectBooleanFilterCallback,
+    multiSelectNumberFilterCallback,
+} from "Src/utils/listFilter";
+import {
+    TRANSFER_STATUS_CHOICES,
+    GENDER_CHOICES,
+    GENDER_LIST_MAPPING,
+} from "Constants/app.const";
+import { DATE_FORMAT } from 'Src/constants';
 export function TransfersList(props) {
     const { fetchTransferList, transferList, queryParams, count } = props;
     const itemsPerPage = 4;
@@ -43,13 +50,13 @@ export function TransfersList(props) {
                 const updatedObj = { ...transferObj };
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
                 updatedObj.status_updated_at = moment
-                    .utc(transferObj.status_updated_at, "MM/DD/YYYY hh:mm A")
+                    .utc(transferObj.status_updated_at, DATE_FORMAT)
                     .local()
-                    .format("MM/DD/YYYY hh:mm A");
+                    .format(DATE_FORMAT);
                 updatedObj.requested_at = moment
-                    .utc(transferObj.requested_at, "MM/DD/YYYY hh:mm A")
+                    .utc(transferObj.requested_at, DATE_FORMAT)
                     .local()
-                    .format("MM/DD/YYYY hh:mm A");
+                    .format(DATE_FORMAT);
                 updatedObj.gender = GENDER_CHOICES[transferObj.gender];
                 updatedTransferList.push(updatedObj);
                 return updatedObj;
@@ -106,15 +113,16 @@ export function TransfersList(props) {
     const handleBooleanCallBack = val => {
         // make sure to match param dict key and required list key are same
         const requiredLists = {
-            'gender': GENDER_LIST_MAPPING,
+            gender: GENDER_LIST_MAPPING,
         };
-        
-        multiSelectBooleanFilterCallback(
-            selectedParams,
-            setSelectedParams,
-            requiredLists,
-            val
-        );
+
+        setSelectedParams({
+            ...multiSelectBooleanFilterCallback(
+                selectedParams,
+                requiredLists,
+                val
+            ),
+        });
     };
 
     return (
@@ -139,7 +147,13 @@ export function TransfersList(props) {
                             handleBooleanCallBack(val)
                         }
                         handleNumberCallBack={(field, val) =>
-                            multiSelectNumberFilterCallback(selectedParams, setSelectedParams, field, val)
+                            setSelectedParams({
+                                ...multiSelectNumberFilterCallback(
+                                    selectedParams,
+                                    field,
+                                    val
+                                ),
+                            })
                         }
                     />
                 </Grid>

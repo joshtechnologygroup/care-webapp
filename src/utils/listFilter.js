@@ -1,3 +1,5 @@
+import * as Constants from 'Constants/app.const';
+
 const getDictNameToId = list => {
     const listMap = {};
     list.forEach(item => {
@@ -27,7 +29,6 @@ export const mapProps = (params, requiredLists) => {
 
 export const multiSelectBooleanFilterCallback = (
     selectedParams,
-    setSelectedParams,
     requiredLists,
     val
 ) => {
@@ -36,12 +37,11 @@ export const multiSelectBooleanFilterCallback = (
         ...val,
     };
 
-    setSelectedParams({ ...mapProps(updateSelectedParams, requiredLists) });
+     return mapProps(updateSelectedParams, requiredLists);
 };
 
 export const multiSelectNumberFilterCallback = (
     selectedParams,
-    setSelectedParams,
     val
 ) => {
     let update_select_params = { ...selectedParams };
@@ -49,17 +49,17 @@ export const multiSelectNumberFilterCallback = (
         if (key.includes(val.field)) delete update_select_params[key];
     });
     if (val.fromValue !== "" && val.toValue !== "") {
-        if (val.type === "Equals To") {
+        if (val.type === Constants.EQUAL_TO) {
             update_select_params[val.field] = val.fromValue;
-        } else if (val.type === "Less Than") {
+        } else if (val.type === Constants.LESS_THAN) {
             update_select_params[val.field + "__lt"] = val.fromValue;
-        } else if (val.type === "Greater Than") {
+        } else if (val.type === Constants.GREATER_THAN) {
             update_select_params[val.field + "__gt"] = val.fromValue;
-        } else if (val.type === "Range") {
+        } else if (val.type === Constants.RANGE) {
             update_select_params[
                 val.field + "__range"
             ] = `${val.fromValue},${val.toValue}`;
         }
     }
-    setSelectedParams({ ...update_select_params });
+    return update_select_params;
 };

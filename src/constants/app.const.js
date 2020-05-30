@@ -66,6 +66,12 @@ export const regex = {
   email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
 }
 
+// range filter constants
+export const EQUAL_TO = "Equals To";
+export const LESS_THAN = "Less Than";
+export const GREATER_THAN = "Greater Than";
+export const RANGE = "Range"
+
 export const genderChoices = [
     {
         id: 1,

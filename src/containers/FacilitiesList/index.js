@@ -13,7 +13,10 @@ import {
 import PaginationController from "Components/PaginationController";
 import Sort from "Components/Sort";
 import Filters from "Components/Filters";
-import { multiSelectBooleanFilterCallback, multiSelectNumberFilterCallback } from "Src/utils/listFilter";
+import {
+    multiSelectBooleanFilterCallback,
+    multiSelectNumberFilterCallback,
+} from "Src/utils/listFilter";
 
 export function FacilitiesList(props) {
     const {
@@ -132,13 +135,13 @@ export function FacilitiesList(props) {
         const requiredLists = {
             district: districtsList,
         };
-        
-        multiSelectBooleanFilterCallback(
-            selectedParams,
-            setSelectedParams,
-            requiredLists,
-            val
-        );
+        setSelectedParams({
+            ...multiSelectBooleanFilterCallback(
+                selectedParams,
+                requiredLists,
+                val
+            ),
+        });
     };
 
     useEffect(() => {
@@ -171,7 +174,13 @@ export function FacilitiesList(props) {
                             handleBooleanCallBack(val)
                         }
                         handleNumberCallBack={(field, val) =>
-                            multiSelectNumberFilterCallback(selectedParams, setSelectedParams, field, val)
+                            setSelectedParams({
+                                ...multiSelectNumberFilterCallback(
+                                    selectedParams,
+                                    field,
+                                    val
+                                ),
+                            })
                         }
                     />
                 </Grid>
