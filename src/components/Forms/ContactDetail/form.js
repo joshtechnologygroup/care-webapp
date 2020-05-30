@@ -56,22 +56,20 @@ export function Form(props) {
   const setNativePlace = (event) => {
     if (event.target.name === 'nativeStateExist') {
       saveProfile('native_state', event.target.value);
-      setFieldValue('native_country', '');
-      setValues({
-        nativeCountryExist: false,
+      setValues(prevState =>({
+        ...prevState,
         [event.target.name]: event.target.checked
-      });
+    }))
     } else if (event.target.name === 'nativeCountryExist') {
       saveProfile('native_country', event.target.value);
-      setFieldValue('native_state', '');
-      setValues({
-        [event.target.name]: event.target.checked,
-        nativeStateExist: false
-      });
+      setValues(prevState =>({
+        ...prevState,
+        [event.target.name]: event.target.checked
+    }))
     }
   };
   
-  const handlechange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     saveProfile(name, value)
     setFieldTouched(name, true, false);
@@ -107,7 +105,7 @@ export function Form(props) {
               label={i18n.t('Phone number')}
               fullWidth
               value={phone_number}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.phone_number ? errors.phone_number : ""}
               error={touched.phone_number && Boolean(errors.phone_number)}
             />
@@ -119,7 +117,7 @@ export function Form(props) {
               name="phone_number_belongs_to"
               label={i18n.t('Contact Number belongs to?')}
               value={phone_number_belongs_to}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : ""}
               error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to)}
               fullWidth
@@ -138,7 +136,7 @@ export function Form(props) {
               name="address"
               label={i18n.t('Address')}
               value={address}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.address ? errors.address : ""}
               error={touched.address && Boolean(errors.address)}
               fullWidth
@@ -149,7 +147,7 @@ export function Form(props) {
               name="municipalWard"
               label={i18n.t('Municipal Ward')}
               value={municipalWard}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.municipalWard ? errors.municipalWard : ""}
               error={touched.municipalWard && Boolean(errors.municipalWard)}
               fullWidth
@@ -161,7 +159,7 @@ export function Form(props) {
               name="district"
               label={i18n.t('District')}
               value={district}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.district ? errors.district : ""}
               error={touched.district && Boolean(errors.district)}
               fullWidth
@@ -180,7 +178,7 @@ export function Form(props) {
               name="state"
               label={i18n.t('State')}
               value={state}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.state ? errors.state : ""}
               error={touched.state && Boolean(errors.state)}
               fullWidth
@@ -198,7 +196,7 @@ export function Form(props) {
               name="pincode"
               label={i18n.t('Pincode')}
               value={pincode}
-              onChange={handlechange}
+              onChange={handleChange}
               helperText={touched.pincode ? errors.pincode : ""}
               error={touched.pincode && Boolean(errors.pincode)}
               fullWidth
@@ -226,14 +224,20 @@ export function Form(props) {
               Boolean(values.nativeStateExist) &&
               <Grid item xs={12} sm={6}>
               <TextField
-                multiline
+                select
                 name="native_state"
                 label={i18n.t('Native state of patient')}
                 value={native_state}
-                onChange={handlechange}
+                onChange={handleChange}
                 helperText={touched.native_state ? errors.native_state : ""}
-                fullWidth
-            />
+                fullWidth>
+                {states &&
+                    states.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.name}
+                    </MenuItem>))
+                  }
+              </TextField>
               </Grid>
             }
           </Grid>
@@ -263,7 +267,7 @@ export function Form(props) {
                 name="native_country"
                 label={i18n.t('Native country of patient')}
                 value={native_country}
-                onChange={handlechange}
+                onChange={handleChange}
                 helperText={touched.native_country ? errors.address : ""}
                 fullWidth
             />
