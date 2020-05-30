@@ -27,12 +27,6 @@ export const PAGINATION_LIMIT = 5;
 export const INITIAL_PAGE = 1;
 
 
-export const MAPPING_PROPS = {
-    'Male' : 1,
-    'Female': 2,
-    'Others': 3
-}
-
 export const TOTAL_PROFILE_FIELDS = 17;
 export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;

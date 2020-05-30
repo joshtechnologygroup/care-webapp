@@ -109,6 +109,26 @@ export const GENDER_LIST_MAPPING = [
     }
 ]
 
+
+export const STATUS_LIST_MAPPING = [
+  {
+    id: 'home-isolation',
+    name: 'Home Isolation',
+  },
+  {
+    id: 'recovered',
+    name: 'Recovered',
+  },
+  {
+    id: 'dead',
+    name: 'Dead',
+  },
+  {
+    id: 'facility-status',
+    name: 'Facility Status',
+  }
+]
+
 export const GENDER_CHOICES = {
     1: 'Male', 
     2: 'Female', 

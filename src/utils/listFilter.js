@@ -28,16 +28,15 @@ export const mapProps = (params, requiredLists) => {
 };
 
 export const multiSelectBooleanFilterCallback = (
-    selectedParams,
-    requiredLists,
-    val
+  selectedParams,
+  requiredLists,
+  val
 ) => {
-    let updateSelectedParams = {
+    const updateSelectedParams = {
         ...selectedParams,
-        ...val,
+        ...mapProps(val, requiredLists),
     };
-
-     return mapProps(updateSelectedParams, requiredLists);
+    return updateSelectedParams
 };
 
 export const multiSelectNumberFilterCallback = (
@@ -48,7 +47,7 @@ export const multiSelectNumberFilterCallback = (
     Object.keys(update_select_params).forEach(key => {
         if (key.includes(val.field)) delete update_select_params[key];
     });
-    if (val.fromValue !== "" && val.toValue !== "") {
+    if (val.fromValue !== "" || val.toValue !== "") {
         if (val.type === Constants.EQUAL_TO) {
             update_select_params[val.field] = val.fromValue;
         } else if (val.type === Constants.LESS_THAN) {

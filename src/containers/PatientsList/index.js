@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
-import { GET } from "Src/constants";
+import { GET, DATE_FORMAT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import * as StringUtils from 'Src/utils/stringformatting';
-import { mappingProps } from 'Src/utils/mapping-functions';
-
+import { GENDER_LIST_MAPPING, STATUS_LIST_MAPPING } from 'Constants/app.const.js';
+import {
+  multiSelectBooleanFilterCallback
+} from "Src/utils/listFilter";
 import { CONFIG } from './config';
 import * as Routes from 'Src/routes';
 import moment from 'moment';
@@ -13,14 +15,12 @@ import { getPatientList, getsPatientDependencies } from 'Actions/PatientsAction'
 import Sort from 'Components/Sort';
 import Filters from 'Components/Filters';
 import PaginationController from 'Components/PaginationController';
-import { PATIENT_LIST_URL } from 'Src/routes';
 
 import {
   PAGINATION_LIMIT,
   CLINICAL_STATUS_UPDATED_AT,
   PORTEA_CALLED_AT,
   INITIAL_PAGE,
-  MAPPING_PROPS
 } from 'Src/constants'
 
 import PropTypes from 'prop-types';
@@ -28,12 +28,11 @@ import { connect } from 'react-redux';
 
 
 export function PatientsList( props ) {
-  const [showColumnsPanel, setShowColumnsPanel] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [ showColumnsPanel, setShowColumnsPanel ] = useState(false);
+  const [ showOverlay, setShowOverlay ] = useState(false);
   const [ page, setPage ] = useState(INITIAL_PAGE);
   const [ patients, setPatients ] = useState(null);
   const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
-  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]));
   const [ selectedParams, setSelectedParams ] = useState({});
   const [ ordering, setOrdering ] = useState('none');
 
@@ -54,7 +53,7 @@ export function PatientsList( props ) {
 
     Object.keys(required).forEach((list) => {
       if(!props[list]){
-        required_data[0].push([required[list][0], GET, {}, selectedParams])
+        required_data[0].push([ required[list][0], GET, {}, selectedParams ])
         required_data[1].push(required[list][1])
       }
     })
@@ -94,14 +93,13 @@ export function PatientsList( props ) {
 
       update_patients.forEach((attr) => {
         let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
-        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).fromNow();
+        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
         date = new Date(attr[PORTEA_CALLED_AT])
-        attr[PORTEA_CALLED_AT] = date.toDateString();
+        attr[PORTEA_CALLED_AT] = moment(date).format(DATE_FORMAT);;
       });
 
       Object.keys(joinById).forEach((id) => {
         update_patients.forEach(patient => joinById[id].forEach(value => {
-          MAPPING_PROPS[value.name] = value.id;
           if(value.id === patient[id]){
             patient[id] = value.name
           }
@@ -173,7 +171,7 @@ export function PatientsList( props ) {
 
   // when the component loads bring the patients list
   useEffect(() => {
-      handleApiCall(currentUrl, page);
+      handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), INITIAL_PAGE);
       //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ selectedParams, ordering ]);
 
@@ -186,48 +184,73 @@ export function PatientsList( props ) {
     }
     props.getPatientList( url, params );
     setPage(next_page);
-    setCurrentUrl(url);
   }
 
   const handleBooleanCallBack = (val) => {
-    let update_select_params = { ...selectedParams, ...val }
     const {
       districts_list,
       clinical_status_list,
       cluster_group_list,
       covid_status_list,
-      patients,
       facilities,
       ownership_types,
       facility_types
     } = props
-    update_select_params =  mappingProps(update_select_params,
-        districts_list,
-        clinical_status_list,
-        cluster_group_list,
-        covid_status_list,
-        patients,
-        facilities,
-        ownership_types,
-        facility_types
-    );
-    setSelectedParams({...update_select_params});
+    const mapping_id_list = {
+      'district': districts_list,
+      'cluster_group': cluster_group_list,
+      'covid_status': covid_status_list,
+      'clinical_status': clinical_status_list,
+      'facility_name': facilities,
+      'facility_district': districts_list,
+      'facility_type': facility_types,
+      'ownership_type': ownership_types,
+      'gender': GENDER_LIST_MAPPING,
+      'patient_status': STATUS_LIST_MAPPING
+    };
+    let update_select_params = multiSelectBooleanFilterCallback(
+      selectedParams,
+      mapping_id_list,
+      val);
+    setSelectedParams({ ...update_select_params });
   }
 
   const handleNumberCallBack = (val) => {
     let update_select_params = { ...selectedParams }
+    delete update_select_params[val.field + '_min']
+    delete update_select_params[val.field + '_max']
     if(val.type === 'Equals To'){
-      update_select_params[val.field] = val.fromValue
-    } else if(val.type === 'Less To'){
-      update_select_params[val.field + '_min'] = val.fromValue
+      update_select_params[val.field + '_min'] = [val.fromValue]
+      update_select_params[val.field + '_max'] = [val.fromValue]
+    } else if(val.type === 'Less Than'){
+      update_select_params[val.field + '_max'] = [val.fromValue]
     } else if(val.type === 'Greater Than'){
-      update_select_params[val.field + '_max'] = val.fromValue
+      update_select_params[val.field + '_min'] = [val.fromValue]
     } else if(val.type === 'Range'){
-      update_select_params[val.field + '_min'] = val.fromValue
-      update_select_params[val.field + '_max'] = val.toValue
+      update_select_params[val.field + '_min'] = [val.fromValue]
+      update_select_params[val.field + '_max'] = [val.toValue]
     }
-    setSelectedParams({ ...update_select_params});
+    setSelectedParams({ ...update_select_params });
   }
+
+  const handleDateCallBack = (val) => {
+    let update_select_params = { ...selectedParams }
+    delete update_select_params[val.field + '_after']
+    delete update_select_params[val.field + '_before']
+    if(val.type === 'Equals To'){
+      update_select_params[val.field + '_after'] = [val.fromValue]
+      update_select_params[val.field + '_before'] = [val.fromValue]
+    } else if(val.type === 'Less To'){
+      update_select_params[val.field + '_after'] = [val.fromValue]
+    } else if(val.type === 'Greater Than'){
+      update_select_params[val.field + '_before'] = [val.fromValue]
+    } else if(val.type === 'Range'){
+      update_select_params[val.field + '_after'] = [val.fromValue]
+      update_select_params[val.field + '_before'] = [val.toValue]
+    }
+    setSelectedParams({ ...update_select_params });
+  }
+
 
   return (
     <React.Fragment>
@@ -238,9 +261,10 @@ export function PatientsList( props ) {
         <Grid item xs={12} sm={12} >
           <Filters
             options={CONFIG.columnDefs}
-            onSeeMore={() => { setShowOverlay(!showOverlay) }}
-            handleBooleanCallBack={(val) => handleBooleanCallBack(val)}
-            handleNumberCallBack={(field, val) => handleNumberCallBack(field, val)}/>
+            onSeeMore={() => setShowOverlay(!showOverlay)}
+            handleBooleanCallBack={val => handleBooleanCallBack(val)}
+            handleNumberCallBack={val => handleNumberCallBack(val)}
+            handleDateCallBack={val => handleDateCallBack(val)}/>
         </Grid>
       </Grid>
       <div onClick={() => setShowOverlay(!showOverlay)} className={showOverlay ? 'overlay overlay-show' : 'overlay'}></div>
@@ -262,12 +286,12 @@ export function PatientsList( props ) {
             <PaginationController
               resultsShown={page}
               totalResults={totalPages}
-              onFirst={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) ,
+              onFirst={() => handleApiCall( StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]) ,
                 INITIAL_PAGE
               )}
               onNext={() => { if( props.next ) handleApiCall( props.next, page+1, )}}
               onPrevious={() => { if( props.prev ) handleApiCall( props.prev, page-1, ) } }
-              onLast={() => handleApiCall( StringUtils.formatVarString(PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1) ]),
+              onLast={() => handleApiCall( StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1) ]),
                 totalPages
               )}
               onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
@@ -307,7 +331,7 @@ const mapStateToProps = (state) => ({
   districts_list: state.districts.results,
   clinical_status_list: state.clinicalStatus.results,
   cluster_group_list: state.clusterGroup.results,
-  covid_status_list: state.clinicalStatus.results
+  covid_status_list: state.covidStatus.results
 });
 
 PatientsList.propTypes = {
