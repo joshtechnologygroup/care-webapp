@@ -5,7 +5,9 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
-// import MedicationDetail from 'Components/Cards/MedicationDetail';
+import MedicationDetail from 'Components/Cards/MedicationDetail';
+import LabTestDetail from '../components/Cards/LabTestDetail';
+import PortieDetails from '../components/Cards/PortieDetails';
 
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
@@ -18,11 +20,19 @@ class PatientDetail extends Component {
         'personal',
         'contact',
         'medication',
+        'facility',
+        'labTests',
+        'portieDetails',
+        'familyDetails',
       ],
       isEditing: {
         personal: false,
         contact: false,
         medication: false,
+        facility: false,
+        labTests: false,
+        portieDetails: false,
+        familyDetails: false,
       },
       profile: patientDetail
     }
@@ -80,6 +90,48 @@ class PatientDetail extends Component {
             />
           }
           <Timeline />
+          {
+            isEditing[formList[2]] ?
+            // <ContactDetailForm
+            //   profile={profile.contact}
+            //   handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
+            //   editMode={true}
+            // />
+            <h2>I'm being edited</h2>
+            :
+            <MedicationDetail
+              profile={profile[formList[2]]}
+              handleEdit={ () => this.setEditable(formList[2], true) }
+            />
+          }
+          {
+            isEditing[formList[4]] ?
+            // <ContactDetailForm
+            //   profile={profile.contact}
+            //   handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
+            //   editMode={true}
+            // />
+            <h2>I'm being edited</h2>
+            :
+            <LabTestDetail
+              profile={profile[formList[4]]}
+              handleEdit={ () => this.setEditable(formList[4], true) }
+            />
+          }
+          {
+            isEditing[formList[5]] ?
+            // <ContactDetailForm
+            //   profile={profile.contact}
+            //   handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
+            //   editMode={true}
+            // />
+            <h2>I'm being edited</h2>
+            :
+            <PortieDetails
+              profile={profile[formList[5]]}
+              handleEdit={ () => this.setEditable(formList[5], true) }
+            />
+          }
         </div>
       </>
     );

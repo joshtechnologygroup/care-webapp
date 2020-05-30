@@ -18,7 +18,8 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
     if (e.which === 13) {
       // Enter key pressed
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
-      let selected_value = {
+
+      let selectedValue = {
         field: field,
         type: subDropdownValue,
         fromValue: fromValue,
@@ -26,9 +27,10 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
       }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
+        selectedValue.toValue = toValue
       }
       setRenderValue(value);
-      onSelect(selected_value);
+      onSelect(selectedValue);
       handleClose();
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase

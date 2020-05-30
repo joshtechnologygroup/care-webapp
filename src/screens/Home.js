@@ -13,10 +13,16 @@ import Patients from 'Screens/Patients';
 import PatientDetail from 'Screens/PatientDetail';
 import FacilityDetails from 'Screens/FacilityDetails';
 import AddPatient from 'Screens/AddPatient';
+import Hospitals from 'Screens/Patients/Hospitals';
+import Hcc from 'Screens/Patients/Hcc';
+import CareCenters from 'Screens/Patients/CareCenters';
+import PrivateQuarantine from 'Screens/Patients/PrivateQuarantine';
 import Transfer from 'Screens/Transfer';
 import Facilities from 'Screens/Facilities';
 import Profile from 'Screens/Profile';
 import Inventory from 'Screens/Inventory';
+import ManageUsers from 'Screens/Facilities/ManageUsers';
+import DoctorAttendant from 'Screens/Facilities/DoctorAttendant';
 import Beds from 'Screens/Facilities/Beds';
 import Reports from 'Screens/Reports';
 import Settings from 'Screens/Settings';
@@ -56,10 +62,16 @@ function Home() {
                         <Route exact path={`/`} component={Dashboard} />
                         <Route path={`/dashboard`} component={Dashboard} />
                         <Route path={`/facilities/beds`} component={Beds} />
+                        <Route path={`/facilities/doctor-attendant`} component={DoctorAttendant} />
+                        <Route path={`/facilities/manage-users`} component={ManageUsers} />
                         <Route path={`/facilities/:facilityId`} component={FacilityDetails} />
                         <Route path={`/facilities`} component={Facilities} />
                         <Route exact path={`/patients`} component={Patients} />
                         <Route path={`/patients/add`} component={AddPatient} />
+                        <Route path={`/patients/hospitals`} component={Hospitals} />
+                        <Route path={`/patients/hcc`} component={Hcc} />
+                        <Route path={`/patients/care-centers`} component={CareCenters} />
+                        <Route path={`/patients/private-quarantine`} component={PrivateQuarantine} />
                         <Route path={`/patients/:patientId`} component={PatientDetail} />
                         <Route path={`/transfer`} component={Transfer} />
                         <Route path={`/reports`} component={Reports} />

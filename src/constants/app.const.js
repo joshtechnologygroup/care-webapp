@@ -66,21 +66,48 @@ export const regex = {
   email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
 }
 
+// range filter constants
+export const EQUAL_TO = "Equals To";
+export const LESS_THAN = "Less Than";
+export const GREATER_THAN = "Greater Than";
+export const RANGE = "Range"
+
 export const genderChoices = [
     {
+        id: 1,
+        name: 'Male',
         title: 'Male',
         value: 'Male',
     },
     {
+        id: 2,
+        name: 'Female',
         title: 'Female',
         value: 'Female',
     },
     {
+        id: 3,
+        name: 'Other gender',
         title: 'Other gender',
         value: 'Other',
     },
 ];
 
+
+export const GENDER_LIST_MAPPING = [
+    {
+        id: 1,
+        name: 'Male',
+    },
+    {
+        id: 2,
+        name: 'Female',
+    },
+    {
+        id: 3,
+        name: 'Others',
+    }
+]
 
 export const GENDER_CHOICES = {
     1: 'Male', 

@@ -5,9 +5,9 @@ export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, 
   const [value, setValue] = React.useState([]);
   const handleChange = (event) => {
     setValue(event.target.value);
-    let selected_value = {}
-    selected_value[paramName] = event.target.value
-    onSelect(selected_value);
+    let selectedValue = {}
+    selectedValue[paramName] = event.target.value
+    onSelect(selectedValue);
   };
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
