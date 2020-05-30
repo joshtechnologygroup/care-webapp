@@ -8,13 +8,13 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'Facility Name', field: 'facilityName', minWidth: 300, cellRendererParams: { isSortable: true } },
-    { headerName: 'Room Type', field: 'reportType', minWidth: 200, cellRendererParams: { isSortable: true } },
-    { headerName: 'Bed Type', field: 'bedType', minWidth: 150, cellRendererParams: { isSortable: true } },
-    { headerName: 'Beds #', field: 'beds', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
-    { headerName: 'Occupied Beds #', field: 'cooupiedBeds', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
-    { headerName: 'Available Beds #', field: 'availableBeds', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
-    { headerName: 'Updated At', field: 'updatedAt', minWidth: 200, cellRenderer: 'dateRenderer', cellRendererParams: { isSortable: true } },
+    { headerName: 'Facility Name', field: 'facility', minWidth: 300, cellRendererParams: { isSortable: true } },
+    { headerName: 'Room Type', field: 'room_type', minWidth: 200, cellRendererParams: { isSortable: true } },
+    { headerName: 'Bed Type', field: 'bed_type', minWidth: 150, cellRendererParams: { isSortable: true } },
+    { headerName: 'Beds #', field: 'total_bed', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
+    { headerName: 'Occupied Beds #', field: 'occupied_bed', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
+    { headerName: 'Available Beds #', field: 'available_bed', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
+    { headerName: 'Updated At', field: 'updated_at', minWidth: 200, cellRendererParams: { isSortable: true } },
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
