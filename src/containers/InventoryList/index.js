@@ -149,11 +149,21 @@ if (facilityList) {
                             setSelectedParams(val)
                   }
                   handleNumberCallBack={(field, val) =>
-                      multiSelectNumberFilterCallback(selectedParams, setSelectedParams, field, val)
-                  }
+                    setSelectedParams({
+                        ...multiSelectNumberFilterCallback(
+                            selectedParams,
+                            field,
+                            val
+                        ),
+                    })}
                   handleDateCallBack={(field, val) =>
-                    multiSelectNumberFilterCallback(selectedParams, setSelectedParams, field, val)
-                  }
+                    setSelectedParams({
+                        ...multiSelectNumberFilterCallback(
+                            selectedParams,
+                            field,
+                            val
+                        ),
+                    })}
                   />
               </Grid>
             </Grid>
