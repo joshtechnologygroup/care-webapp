@@ -38,6 +38,7 @@ export const InventoryForm = (props) => {
       
     const createInventory = () => {
         let initial = inventoryData
+        console.log(initial)
         if(facilityList && !_.isEmpty(props.facilityList) && inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
         const facility = facilityList.find(      
             facility => facility.name === inventoryData.name.label
@@ -67,7 +68,7 @@ export const InventoryForm = (props) => {
    
     const handleChange = (name, e) => {
         if(typeof name === 'object') {
-            setInventoryData(name);
+            setInventoryData({...inventoryData, ...name});
         } else {
             setInventoryData({...inventoryData, [name]: e});
         }

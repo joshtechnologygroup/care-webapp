@@ -45,7 +45,8 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     }
     const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
     if(inventory_response.ok){
-        const inventory = await inventory_response.json();
+        const data = inventory_response.ok
+        dispatch(dispatchAction(ReducerTypes.INVENTORY_CREATED_SUCCESSFULLY, data));
     }
 };
 

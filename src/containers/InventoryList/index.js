@@ -14,6 +14,7 @@ import { DATE_FORMAT } from 'Src/constants';
 import _ from "underscore";
 import Filters from "Components/Filters";
 import { multiSelectNumberFilterCallback } from "Src/utils/listFilter";
+import { createInventory } from "../../reducers/FacilityReducer";
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -81,6 +82,12 @@ export function InventoryList(props) {
             facility: value
         });
     }, [queryParams, offset, fetchInventoryList, selectedParams, value]);
+
+    useEffect(() => {
+     if(createInventory){
+       sortByValue("updated_at");
+     }
+  }, [createInventory]);
   
   const fetchMoreInventory = () => {
       const lastOffset = Math.floor((count - 1) / itemsPerPage) * itemsPerPage;
@@ -237,12 +244,13 @@ InventoryList.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const { inventory, inventoryTypes, facilities } = state;
+    const { inventory, inventoryTypes, facilities, createInventory } = state;
     return {
         inventoryList: inventory.results,
         count: inventory.count,
         inventoryTypesList: inventoryTypes.results,
         facilityList: facilities.results,
+        createInventory: createInventory.data
     };
 };
 
