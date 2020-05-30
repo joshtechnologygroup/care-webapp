@@ -91,7 +91,7 @@ export function Form(props) {
   return (
   <form >
     <Card className={classes.root} elevation={4}>
-      <CardHeader className="pb-0"
+      <CardHeader
         title={i18n.t('Contact Details')}
       />
       <CardContent>
