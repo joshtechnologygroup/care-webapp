@@ -38,7 +38,8 @@
   "search": {
     "placeholder": {
       "facilities": "Search",
-      "patients": "Search Patient name or ID"
+      "patients": "Search Patient name or ID",
+      "inventory": "Search by facility name"
     }
   },
   "Add Patient": "Add Patient",

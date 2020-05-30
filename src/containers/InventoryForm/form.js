@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 import {
     Grid,
@@ -14,9 +14,11 @@ export function Form(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
     const {data, handleChange} = props;
+    const [errors, setErrors] = useState({ required_quantity: false, current_quantity: false, form: ''})
 
     const facilityName = []; 
     const facilityType = [];
+
     if(props.facilityList && !_.isEmpty(props.facilityList)){
     props.facilityList.forEach((facility, index) => 
     facilityName.push({
@@ -35,10 +37,23 @@ export function Form(props) {
     );
     }
 
-    const change = (name, e) => {
-        handleChange(name, e);
+    const change = (name, value) => {
+        handleChange(name, value);
     };
      const changeText = (name, e) => {
+        switch (name) {
+            case 'required_quantity':
+              errors.required_quantity = e.target.value ? false : true;
+              break;
+            case 'current_quantity':
+              errors.current_quantity = e.target.value ? false : true;
+              break;
+            default: break;
+          }
+          setErrors(prevState =>({
+              ...prevState,
+             ...errors
+          }))
         handleChange(name, e.target.value);
     };
 
@@ -46,7 +61,7 @@ export function Form(props) {
         if(props.facilityList && !_.isEmpty(props.facilityList) && props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
          handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
         }
-    }, []);
+    }, [errors]);
 
     return (
         <form>
@@ -61,7 +76,7 @@ export function Form(props) {
                 </Grid>
 
                 <Grid item sm={6} xs={12}>
-                    <label className={classes.label}>{i18n.t('Facility Type')}</label>
+                    <label className={classes.label}>{i18n.t('Inventory Type')}</label>
                     <Select
                         options={facilityType}
                         defaultValue={facilityType[0]}
@@ -75,6 +90,7 @@ export function Form(props) {
                         label={i18n.t('Required Number')}
                         fullWidth
                         onChange={changeText.bind(null, "required_quantity")}
+                        error={errors.required_quantity}
                     />
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -84,6 +100,7 @@ export function Form(props) {
                         label={i18n.t('Current Number')}
                         fullWidth
                         onChange={changeText.bind(null, "current_quantity")}
+                        error={errors.current_quantity}
                     />
                 </Grid>
             </Grid>

@@ -87,9 +87,9 @@ export const genderChoices = [
     },
     {
         id: 3,
-        name: 'Other gender',
-        title: 'Other gender',
-        value: 'Other',
+        name: 'Others',
+        title: 'Others',
+        value: 'Others',
     },
 ];
 

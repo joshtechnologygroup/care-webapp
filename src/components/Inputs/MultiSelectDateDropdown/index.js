@@ -23,6 +23,12 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) 
   const handleKeyDown = (e) => {
     if (e.which === 13) {
       // Enter key pressed
+      let DateCallbackValue = {
+        field: field,
+        type: subDropdownValue,
+        fromValue: moment(new Date(fromValue)).format('YYYY-MM-DD'),
+        toValue: moment(new Date(toValue)).format('YYYY-MM-DD')
+      }
       let value = `${fieldName}: ${subDropdownValue} ${fromValue}`;
       let selected_value = {
         field: field,
@@ -34,7 +40,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) 
         value = value + ' - ' + toValue;
       }
       setRenderValue(value);
-      onSelect(selected_value);
+      onSelect(DateCallbackValue);
       handleClose();
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase

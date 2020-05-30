@@ -23,7 +23,13 @@ export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/?limit={0}&offset={1
 export const CLINICAL_STATUS_LIST_URL = SERVER + API_V1 + 'patients/clinical-status/'
 export const CLUSTER_GROUP_LIST_URL = SERVER + API_V1 + 'patients/patient-groups/'
 export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/'
+export const GET_PATIENT_URL = SERVER + API_V1 + 'patients/'
 
 //Patient Transfers
 export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/'
 export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/'
+export const CREATE_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
+
+//patient dependencies
+export const PATIENT_STATUS_LIST_URL = SERVER + API_V1 + 'patients/current-status/'
+export const STATE_LIST_URL = SERVER + API_V1 + 'accounts/states/'
