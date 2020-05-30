@@ -27,7 +27,6 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
       }
       if (subDropdownValue === 'Range') {
         value = value + ' - ' + toValue;
-        selectedValue.toValue = toValue
       }
       setRenderValue(value);
       onSelect(selectedValue);
