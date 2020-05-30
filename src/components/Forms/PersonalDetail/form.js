@@ -18,6 +18,7 @@ import useStyles from './styles';
 import ButtonToggle from 'Components/ButtonToggle';
 import { genderChoices } from 'Constants/app.const';
 import ProfileImageInput from '../../profileImageInput';
+import { TOTAL_PERSONEL_DETAILS_FIELDS, MAPPING_PROPS } from 'Src/constants';
 export default function Form(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
@@ -32,7 +33,6 @@ export default function Form(props) {
       month,
       year,
       clinical_status,
-      patient_status,
       covid_status,
       facility,
       home_isolation
@@ -46,7 +46,6 @@ export default function Form(props) {
     saveProfile,
     clinicalStatus,
     covidStatus,
-    currentStatus,
     facilityList,
     clusterGroup,
     handleError,
@@ -60,7 +59,6 @@ export default function Form(props) {
   const setIsolationFacility = (event) => {
     if (event.target.name === 'facilityExists') {
       saveProfile("home_isolation", !event.target.checked)
-      // saveProfile(event.target.name, event.target.checked)
       setFieldValue('homeIsolationExist', '');
       setValues({
         homeIsolationExist: false,
@@ -77,42 +75,35 @@ export default function Form(props) {
     }
   };
   const change = (event) => {
-    saveProfile(event.target.name, event.target.value)
-    setFieldTouched(event.target.name, true, false);
-    if(event.target.value){
+    const { name, value } = event.target;
+    saveProfile(name, value)
+    setFieldTouched(name, true, false);
+    if(value){
       setFieldTouched(event.target.name, false, true);
     }
-    if(Object.keys(touched).length >= 11){
-      let error = false;
-      Object.entries(touched).map(item => {
-          if(item[1] === true || event.target.value === ""){
-            error = true;
-            return;
-          }
+    let error = false;
+    if(value === ""){
+      error = true;
+    } else if(Object.keys(touched).length >= TOTAL_PERSONEL_DETAILS_FIELDS){
+      Object.entries(touched).forEach(([item, itemValue]) => {
+        if(itemValue === true){
+          error = true;
+          return;
+        }
       })
-      handleError(error);
     }
+    handleError(error);
   };
 
   const setProfileFields = (name, value) =>{
-    let gender = 1
-    if(value === "Male")
-    {
-      gender = 1
-    } else if(value === "Female"){
-      gender = 2
-    }
-    else{
-      gender = 3
-    }
-    saveProfile(name, gender)
+    const genderId = MAPPING_PROPS[value]
+    saveProfile(name, genderId)
     setFieldTouched(name, true, false);
     if(value){
       setFieldTouched(name, false, true);
     }
   }
   const setProfileImage = (file, image) => {
-    console.log(file, image)
     setFieldValue('image', file);
     setFieldValue('imageSrc', image);
   };
@@ -142,7 +133,6 @@ export default function Form(props) {
                   error={touched.name && Boolean(errors.name)}
                 />
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <ButtonToggle restrictUnselect={true} defaultSelected={gender} data={genderChoices} onChange={(data) => setProfileFields("gender", data)} />
               </Grid>

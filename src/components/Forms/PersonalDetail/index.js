@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import Form from './form';
 import { PropTypes } from 'prop-types';
@@ -55,23 +55,22 @@ PersonalDetailForm.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const { facilities, covidStatus, clinicalStatus, currentStatus, clusterGroup } = state;
-  return {
-      facilityList: facilities.results,
-      covidStatus:covidStatus.results,
-      clinicalStatus:clinicalStatus.results,
-      currentStatus:currentStatus.results,
-      clusterGroup: clusterGroup.results
-
-  };
+    const { facilities, covidStatus, clinicalStatus, currentStatus, clusterGroup } = state;
+    return {
+        facilityList: facilities.results,
+        covidStatus:covidStatus.results,
+        clinicalStatus:clinicalStatus.results,
+        currentStatus:currentStatus.results,
+        clusterGroup: clusterGroup.results
+    };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    fetchProfileDependencies: params => {
-          dispatch(getProfileDependencies(params));
-      },
-  };
+    return {
+      fetchProfileDependencies: params => {
+            dispatch(getProfileDependencies(params));
+        },
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PersonalDetailForm);

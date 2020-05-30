@@ -14,7 +14,6 @@ export function Inventory(props){
     const [open, setOpen] = React.useState(false);
     const [val, setVal] = React.useState("");
     const handleSearch = (value) =>{
-        console.log('yyyyyyyyyyy')
         setVal(value);
     }
 

@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next";
 import { connect } from 'react-redux';
 import {
@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import useStyles from './styles';
+import { TOTAL_CONTACT_DETAILS_FIELDS } from 'Src/constants';
 
 // IMORTING MOCKDATA
 import { countryChoices } from 'Mockdata/countryChoices.json';
@@ -70,22 +71,25 @@ export function Form(props) {
     }
   };
   
-  const change = (e) => {
-    saveProfile(e.target.name, e.target.value)
-    setFieldTouched(e.target.name, true, false);
-    if(e.target.value){
-      setFieldTouched(e.target.name, false, true);
+  const handlechange = (event) => {
+    const { name, value } = event.target;
+    saveProfile(name, value)
+    setFieldTouched(name, true, false);
+    if(value){
+      setFieldTouched(name, false, true);
     }
-    if(Object.keys(touched).length >= 5){
     let error = false;
-    Object.entries(touched).map(item => {
-        if(item[1] === true || e.target.value === ""){
+    if(value === ""){
+      error = true;
+    } else if(Object.keys(touched).length >= TOTAL_CONTACT_DETAILS_FIELDS){
+      Object.entries(touched).forEach(([item, itemValue]) => {
+        if(itemValue === true){
           error = true;
           return;
         }
-    })
+      })
+    }
     handleError(error);
-  }
   };
 
   return (
@@ -103,7 +107,7 @@ export function Form(props) {
               label={i18n.t('Phone number')}
               fullWidth
               value={phone_number}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.phone_number ? errors.phone_number : ""}
               error={touched.phone_number && Boolean(errors.phone_number)}
             />
@@ -115,7 +119,7 @@ export function Form(props) {
               name="phone_number_belongs_to"
               label={i18n.t('Contact Number belongs to?')}
               value={phone_number_belongs_to}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : ""}
               error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to)}
               fullWidth
@@ -134,7 +138,7 @@ export function Form(props) {
               name="address"
               label={i18n.t('Address')}
               value={address}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.address ? errors.address : ""}
               error={touched.address && Boolean(errors.address)}
               fullWidth
@@ -145,7 +149,7 @@ export function Form(props) {
               name="municipalWard"
               label={i18n.t('Municipal Ward')}
               value={municipalWard}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.municipalWard ? errors.municipalWard : ""}
               error={touched.municipalWard && Boolean(errors.municipalWard)}
               fullWidth
@@ -153,11 +157,11 @@ export function Form(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-            select
+              select
               name="district"
               label={i18n.t('District')}
               value={district}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.district ? errors.district : ""}
               error={touched.district && Boolean(errors.district)}
               fullWidth
@@ -176,7 +180,7 @@ export function Form(props) {
               name="state"
               label={i18n.t('State')}
               value={state}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.state ? errors.state : ""}
               error={touched.state && Boolean(errors.state)}
               fullWidth
@@ -194,7 +198,7 @@ export function Form(props) {
               name="pincode"
               label={i18n.t('Pincode')}
               value={pincode}
-              onChange={change}
+              onChange={handlechange}
               helperText={touched.pincode ? errors.pincode : ""}
               error={touched.pincode && Boolean(errors.pincode)}
               fullWidth
@@ -221,14 +225,14 @@ export function Form(props) {
             {
               Boolean(values.nativeStateExist) &&
               <Grid item xs={12} sm={6}>
-                 <TextField
-              multiline
-              name="native_state"
-              label={i18n.t('Native state of patient')}
-              value={native_state}
-              onChange={change}
-              helperText={touched.native_state ? errors.native_state : ""}
-              fullWidth
+              <TextField
+                multiline
+                name="native_state"
+                label={i18n.t('Native state of patient')}
+                value={native_state}
+                onChange={handlechange}
+                helperText={touched.native_state ? errors.native_state : ""}
+                fullWidth
             />
               </Grid>
             }
@@ -255,13 +259,13 @@ export function Form(props) {
               Boolean(values.nativeCountryExist) &&
               <Grid item xs={12} sm={6}>
                <TextField
-              multiline
-              name="native_country"
-              label={i18n.t('Native country of patient')}
-              value={native_country}
-              onChange={change}
-              helperText={touched.native_country ? errors.address : ""}
-              fullWidth
+                multiline
+                name="native_country"
+                label={i18n.t('Native country of patient')}
+                value={native_country}
+                onChange={handlechange}
+                helperText={touched.native_country ? errors.address : ""}
+                fullWidth
             />
               </Grid>
             }

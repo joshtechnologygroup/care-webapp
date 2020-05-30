@@ -1,4 +1,4 @@
-const defaultMapping = [
+export const defaultMapping = [
     {
     id: 1,
     name: 'Male',

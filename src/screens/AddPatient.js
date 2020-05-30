@@ -9,7 +9,7 @@ import Header from 'Containers/Header';
 import { Button } from '@material-ui/core';
 import { createPatient } from 'Actions/PatientsAction';
 import MuiAlert from "@material-ui/lab/Alert";
-
+import { TOTAL_PROFILE_FIELDS } from 'Src/constants';
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact',])
   const [profile, setProfile] = useState({})
@@ -46,7 +46,7 @@ function AddPatient(props) {
     if(profile['municipalWard']){
       totalFields = totalFields - 1;
     }
-    if((profile['home_isolation'] === false && profile['facility'] === null) || totalFields !== 17){
+    if((profile['home_isolation'] === false && profile['facility'] === null) || totalFields !== TOTAL_PROFILE_FIELDS){
       setOpen(true);
       setFormError(true);
       return;
@@ -55,7 +55,7 @@ function AddPatient(props) {
       setOpen(true);
       return;
     }
-    if(totalFields === 17){
+    if(totalFields === TOTAL_PROFILE_FIELDS){
       const response = await props.createPatient(profile)
     if(response === true){
       setError(true)

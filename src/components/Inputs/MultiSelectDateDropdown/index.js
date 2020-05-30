@@ -22,7 +22,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) 
   const handleKeyDown = (e) => {
     if (e.which === 13) {
       // Enter key pressed
-      let value_return = {
+      let DateCallbackValue = {
         field: field,
         type: subDropdownValue,
         fromValue: fromValue
@@ -32,7 +32,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) 
         value = value + ' - ' + toValue;
       }
       setRenderValue(value);
-      onSelect(value_return);
+      onSelect(DateCallbackValue);
       handleClose();
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase

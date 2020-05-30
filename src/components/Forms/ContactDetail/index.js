@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import Form from './form';
 import { PropTypes } from 'prop-types';
@@ -52,19 +52,19 @@ ContactDetailForm.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const { districts, states } = state;
-  return {
-      districts:districts.results,
-      states:states.results,
-  };
+    const { districts, states } = state;
+    return {
+        districts:districts.results,
+        states:states.results,
+    };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    fetchProfileDependencies: params => {
-          dispatch(getProfileDependencies(params));
-      },
-  };
+    return {
+      fetchProfileDependencies: params => {
+            dispatch(getProfileDependencies(params));
+        },
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactDetailForm);
