@@ -17,7 +17,6 @@ export function PersonalDetailForm(props) {
     govt_id: Yup.number("Please enter Govt. ID").required('Govt ID is required'),
     cluster_group: Yup.string("Please enter Cluster group").required('Cluster group is required'),
     clinical_status: Yup.string("Please enter clinical status").required('Clinical status is required'),
-    patient_status: Yup.string("Please enter patient status").required('patient status is required'),
     covid_status:  Yup.string("Please enter covid status").required('covid status is required'),
   });
 

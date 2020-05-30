@@ -230,30 +230,11 @@ export default function Form(props) {
               }
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              select
-              name="patient_status"
-              label={i18n.t('status of patient')}
-              value={patient_status}
-              onChange={change}
-              helperText={touched.patient_status ? errors.patient_status : ""}
-              error={touched.patient_status && Boolean(errors.patient_status)}
-              fullWidth
-            >
-              { currentStatus &&
-                currentStatus.map((option) => (
-                  <MenuItem key={option.id} value={option.id}>
-                    {option.name}
-                  </MenuItem>))
-                }
-            </TextField>
-          </Grid>
               <Grid item xs={12} sm={4}>
             <TextField
               select
               name="cluster_group"
-              label={i18n.t('cluster group of patient')}
+              label={i18n.t('Cluster group of patient')}
               value={cluster_group}
               onChange={change}
               helperText={touched.cluster_group ? errors.cluster_group : ""}
@@ -268,6 +249,7 @@ export default function Form(props) {
                 }
             </TextField>
           </Grid>
+          <Grid container item xs={12}>
             <Grid item xs={12} sm={6}>
               <FormControlLabel className={classes.checkboxWrap}
                 control={
@@ -280,24 +262,7 @@ export default function Form(props) {
                 }
                 label={
                   <Typography variant="h5">
-                    {i18n.t('facility associated with patient?')}
-                  </Typography>
-                }
-              />
-            </Grid>
-             <Grid item xs={12} sm={6}>
-              <FormControlLabel className={classes.checkboxWrap}
-                control={
-                <Checkbox
-                  checked={values.homeIsolationExist}
-                  onChange={setIsolationFacility}
-                  name="homeIsolationExist"
-                  color="primary"
-                />
-                }
-                label={
-                  <Typography variant="h5">
-                    {i18n.t('Home Isolation?')}
+                    {i18n.t('Patient associated With facility')}
                   </Typography>
                 }
               />
@@ -308,7 +273,7 @@ export default function Form(props) {
                 <TextField
                   select
                   name="facility"
-                  label={i18n.t('facility name')}
+                  label={i18n.t('Facility name')}
                   value={facility}
                   onChange={change}
                   helperText={touched.facility ? errors.facility : ""}
@@ -324,6 +289,24 @@ export default function Form(props) {
                 </TextField>
               </Grid>
             }
+            </Grid>
+             <Grid item xs={12} sm={6}>
+              <FormControlLabel className={classes.checkboxWrap}
+                control={
+                <Checkbox
+                  checked={values.homeIsolationExist}
+                  onChange={setIsolationFacility}
+                  name="homeIsolationExist"
+                  color="primary"
+                />
+                }
+                label={
+                  <Typography variant="h5">
+                    {i18n.t('Home Isolation')}
+                  </Typography>
+                }
+              />
+            </Grid>
               { props.save === true &&
               <Grid item xs={6} sm={4}>
                 <TextField

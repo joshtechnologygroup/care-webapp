@@ -3,7 +3,6 @@ import * as Routes from 'Src/routes';
 import { GET, POST } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
-import * as HttpStatus from 'http-status-codes'
 
 const getPatientList = (url, params = {}) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  params)
@@ -41,17 +40,8 @@ const getProfileDependencies = (params) => async (dispatch) => {
 
 
 const createPatient = (state) => async (dispatch) => {
-    const body = JSON.stringify(state);
-    const create_patient_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_LIST_URL, POST, body, {})
-    console.log(create_patient_response)
-    if(create_patient_response.status === HttpStatus.OK){
-        console.log("aaaaaaaaaaaaa")
-        return { status: create_patient_response.ok };
-    } else {
-        const data = await create_patient_response.json()
-        console.log(data)
-        return { status: create_patient_response.ok  };
-    }
+    const create_patient_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_LIST_URL, POST, state, {})
+    return create_patient_response.ok;
 }
 
 export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient }

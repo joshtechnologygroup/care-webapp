@@ -17,6 +17,8 @@ import { PropTypes } from 'prop-types';
 import useStyles from './styles';
 
 // IMORTING MOCKDATA
+import { countryChoices } from 'Mockdata/countryChoices.json';
+import { stateChoices } from 'Mockdata/stateChoices.json';
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 
 export function Form(props) {
@@ -46,7 +48,28 @@ export function Form(props) {
     states,
     handleError,
   } = props;
-
+  const [values, setValues] = React.useState({
+    nativeCountryExist: Boolean(native_country),
+    nativeStateExist: Boolean(native_state),
+  })
+  const setNativePlace = (event) => {
+    if (event.target.name === 'nativeStateExist') {
+      saveProfile('native_state', event.target.value);
+      setFieldValue('native_country', '');
+      setValues({
+        nativeCountryExist: false,
+        [event.target.name]: event.target.checked
+      });
+    } else if (event.target.name === 'nativeCountryExist') {
+      saveProfile('native_country', event.target.value);
+      setFieldValue('native_state', '');
+      setValues({
+        [event.target.name]: event.target.checked,
+        nativeStateExist: false
+      });
+    }
+  };
+  
   const change = (e) => {
     saveProfile(e.target.name, e.target.value)
     setFieldTouched(e.target.name, true, false);
@@ -168,28 +191,6 @@ export function Form(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              multiline
-              name="native_country"
-              label={i18n.t('native country of patient')}
-              value={native_country}
-              onChange={change}
-              helperText={touched.native_country ? errors.address : ""}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              multiline
-              name="native_state"
-              label={i18n.t('native state of patient')}
-              value={native_state}
-              onChange={change}
-              helperText={touched.native_state ? errors.native_state : ""}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
               name="pincode"
               label={i18n.t('Pincode')}
               value={pincode}
@@ -198,6 +199,72 @@ export function Form(props) {
               error={touched.pincode && Boolean(errors.pincode)}
               fullWidth
             />
+          </Grid>
+          <Grid container item xs={12}>
+            <Grid item xs={12} sm={6}>
+              <FormControlLabel className={classes.checkboxWrap}
+                control={
+                <Checkbox
+                  checked={values.nativeStateExist}
+                  onChange={setNativePlace}
+                  name="nativeStateExist"
+                  color="primary"
+                />
+                }
+                label={
+                  <Typography variant="h5">
+                    {i18n.t('Patient natively belongs to some other Indian state')}
+                  </Typography>
+                }
+              />
+            </Grid>
+            {
+              Boolean(values.nativeStateExist) &&
+              <Grid item xs={12} sm={6}>
+                 <TextField
+              multiline
+              name="native_state"
+              label={i18n.t('Native state of patient')}
+              value={native_state}
+              onChange={change}
+              helperText={touched.native_state ? errors.native_state : ""}
+              fullWidth
+            />
+              </Grid>
+            }
+          </Grid>
+          <Grid container item xs={12}>
+            <Grid item xs={12} sm={6}>
+              <FormControlLabel className={classes.checkboxWrap}
+                control={
+                <Checkbox
+                  checked={values.nativeCountryExist}
+                  onChange={setNativePlace}
+                  name="nativeCountryExist"
+                  color="primary"
+                />
+                }
+                label={
+                  <Typography variant="h5">
+                    {i18n.t('Patient natively belongs to a foreign country')}
+                  </Typography>
+                }
+              />
+            </Grid>
+            {
+              Boolean(values.nativeCountryExist) &&
+              <Grid item xs={12} sm={6}>
+               <TextField
+              multiline
+              name="native_country"
+              label={i18n.t('Native country of patient')}
+              value={native_country}
+              onChange={change}
+              helperText={touched.native_country ? errors.address : ""}
+              fullWidth
+            />
+              </Grid>
+            }
           </Grid>
           {
             editMode && 

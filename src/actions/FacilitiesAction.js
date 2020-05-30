@@ -1,7 +1,6 @@
 import * as Routes from 'Src/routes';
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
-import * as HttpStatus from 'http-status-codes'
 import * as CommonService from "Src/utils/services";
 import * as facilityService from "Src/services/facilityService";
 import { GET, POST, PUT } from "Src/constants";;
