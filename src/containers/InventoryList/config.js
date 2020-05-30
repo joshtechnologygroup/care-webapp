@@ -13,7 +13,7 @@ export const CONFIG = {
     { headerName: 'Type', field: 'item', minWidth: 100, cellRendererParams: { isSortable: true, filterType: 'boolean', options: [] } },
     { headerName: 'Required #', field: 'required_quantity', minWidth: 90, editable: true, cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true  },  onCellValueChanged: (data)=>{console.log('on cell change', data)} },
     { headerName: 'Current #', field: 'current_quantity', minWidth: 90, editable: true, cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true  },  onCellValueChanged: (data)=>{console.log('on cell change', data)} },
-    { headerName: 'Updated At', field: 'updated_at', cellRenderer: 'dateRenderer', cellRendererParams: { isSortable: true, filterType: 'date', filterPriority: true } },
+    { headerName: 'Updated At', field: 'updated_at', cellRendererParams: { isSortable: true, filterType: 'date', filterPriority: true } },
     { headerName: 'Action', field: 'action', cellRenderer: 'actionRenderer' },
   ],
   defaultColDef: {

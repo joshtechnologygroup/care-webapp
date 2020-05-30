@@ -10,6 +10,7 @@ import {
     getInventoryList,
     getInventoryDependencies,
 } from "Actions/FacilitiesAction";
+import { DATE_FORMAT } from 'Src/constants';
 import _ from "underscore";
 import Filters from "Components/Filters";
 import { multiSelectNumberFilterCallback } from "Src/utils/listFilter";
@@ -43,7 +44,9 @@ export function InventoryList(props) {
             inventoryList.forEach(inventory => {
                 const mappedInventory = { ...inventory };
                 const date = new Date(inventory.updated_at);
-                mappedInventory.updated_at = moment(date);
+                mappedInventory.updated_at = moment.utc(date, DATE_FORMAT)
+                .local()
+                .format(DATE_FORMAT);
                 const inventoryType = inventoryTypesList.find(
                     inventoryType => inventoryType.id === inventory.item
                 );
