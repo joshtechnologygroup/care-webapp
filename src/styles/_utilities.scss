@@ -17,6 +17,18 @@
 .ml-auto {
   margin-left: auto !important;
 }
+.ml-5 {
+  margin-left: 5px !important;
+}
+.mr-5 {
+  margin-right: 5px !important;
+}
+.mt-5 {
+  margin-top: 5px !important;
+}
+.mt-4 {
+  margin-top: 4px !important;
+}
 
 // Padding Utilities
 .p-0 {
@@ -28,8 +40,17 @@
 .pb-0 {
   padding-bottom: 0 !important;
 }
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
 .py-5 {
-  padding: 5px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+.py-20 {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 }
 
 // Alignment
@@ -48,6 +69,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.align-items-center {
+  display: flex;
+  align-items: center;
 }
 .bg-gray {
   background: $grey-light;

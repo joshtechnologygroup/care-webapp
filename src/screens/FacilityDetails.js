@@ -48,7 +48,7 @@ class FacilityDetails extends Component {
     const { formList, isEditing, profile } = this.state;
     return (
       <div>
-        <h2 className="page-header header-container">{i18n.t('Facility Detail')}</h2>
+        <h2 className="page-header header-container">{i18n.t('Facility Details')}</h2>
         <div className="page-container">
           {
             isEditing[formList[0]] ? 
