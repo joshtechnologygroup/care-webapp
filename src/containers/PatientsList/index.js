@@ -169,7 +169,7 @@ export function PatientsList( props ) {
 
   // when the component loads bring the patients list
   useEffect(() => {
-      handleApiCall(Routes.PATIENT_LIST_URL, INITIAL_PAGE);
+      handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), INITIAL_PAGE);
       //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ selectedParams, ordering ]);
 
@@ -185,7 +185,6 @@ export function PatientsList( props ) {
   }
 
   const handleBooleanCallBack = (val) => {
-    console.log(val);
     const {
       districts_list,
       clinical_status_list,

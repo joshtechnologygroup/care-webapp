@@ -18,7 +18,23 @@ const defaultMapping = [
     {
         id: 2,
         name: 'No',
-    }
+    },
+    {
+        id: 'home-isolation',
+        name: 'Home Isolation',
+    },
+    {
+        id: 'recovered',
+        name: 'Recovered',
+    },
+    {
+        id: 'dead',
+        name: 'Dead',
+    },
+    {
+        id: 'facility-status',
+        name: 'Facility Status',
+    },
 ]
 
 export const mappingProps = (params, list=defaultMapping) => {
