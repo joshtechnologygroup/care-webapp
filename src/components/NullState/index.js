@@ -10,7 +10,7 @@ const NullState = (props) => {
     <div className={`null-state ${className}`}>
       {
         img && 
-        <img className="null-state" src={img} alt={heading ? heading : message} />
+        <img className="null-state__img" src={img} alt={heading ? heading : message} />
       }
       {
         heading &&

@@ -8,12 +8,15 @@ import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetail from 'Containers/Patient/MedicationDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
 import LabTestDetail from '../components/Cards/LabTestDetail';
-import PortieDetails from '../components/Cards/PortieDetails';
 import FamilyDetails from '../components/Cards/FamilyDetails';
 import FacilityDetails from '../components/Cards/FacilityDetails';
 
+// Final
+import PortieDetails from 'Containers/Patient/PortieDetails';
+
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
 import { fetchPatient } from 'Actions/PatientsAction';
@@ -27,7 +30,7 @@ class PatientDetail extends Component {
         'medication',
         'facility',
         'labTests',
-        'portieDetails',
+        'portie_calling_details',
         'family',
       ],
       isEditing: {
@@ -36,7 +39,7 @@ class PatientDetail extends Component {
         medication: false,
         facility: false,
         labTests: false,
-        portieDetails: false,
+        portie_calling_details: false,
         family: false,
       },
       profile: patientDetail

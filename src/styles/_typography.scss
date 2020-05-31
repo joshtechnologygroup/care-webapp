@@ -30,6 +30,15 @@
         text-decoration: none;
         word-break: break-word;
     }
+    &--gray {
+        color: $grey;
+    }
+    &--error {
+        margin: .2rem 0 0;
+        font-size: 1.2rem;
+        color: $red;
+        font-weight: 400;
+    }
 }
 
 .heading {
@@ -44,6 +53,26 @@
         line-height: 4.4rem;
         margin-bottom: 16px;
         word-break: break-word;
+    }
+    &--md {
+        color: $blue-primary;
+        font-size: 2rem;
+        line-height: 2rem;
+        font-weight: 400;        
+    }
+    &--card {
+        color: $blue-primary;
+        font-size: 2rem;
+        line-height: 2rem;
+        font-weight: 600;
+      }
+    &--sub {
+        color: $grey;
+        font-size: 1.2rem;
+        line-height: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: .4rem;
     }
 }
 

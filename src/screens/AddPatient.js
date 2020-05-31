@@ -6,7 +6,7 @@ import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
 import FacilityDetails  from 'Components/Cards/FacilityDetails';
 import LabTestDetail from 'Components/Cards/LabTestDetail';
-import PortieDetails from 'Components/Cards/PortieDetails';
+import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Components/Cards/FamilyDetails';
 
 import PropTypes from 'prop-types';
@@ -30,7 +30,7 @@ function AddPatient(props) {
     },
     facility: [],
     labTests: [],
-    portieDetails: [],
+    portie_calling_details: [],
     family: [],
   });
   const [error, setError] = useState(null)

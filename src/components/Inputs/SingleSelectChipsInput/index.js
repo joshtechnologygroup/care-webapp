@@ -23,41 +23,53 @@ export default function SingleSelectChipsInput(props) {
     options,
     value,
     onChange,
+    valueKey
   } = props;
 
   const [val, setVal] = useState(value);
 
-  const change = (e) => {
-    setVal(e.target.name);
-    onChange && onChange(e.target.name);
+  const change = (e, option) => {
+    if (typeof option[valueKey] === 'boolean') {
+      setVal(e.target.value === 'true' ? true : false);
+      onChange && onChange(e.target.value === 'true' ? true : false);
+    } else {
+      setVal(e.target.value);
+      onChange && onChange(e.target.value);
+    }
   };
-
   return (
-      options.length && options.map((option, index) =>
-        <Checkbox key={index}
-          name={option.name}
-          className={`mr-5 mt-5 p-0 ${classes.root}`}
-          checked={val === option.name}
-          onChange={change}
-          inputProps={{ 'aria-label': 'primary checkbox' }}
-          checkedIcon={
-            <Chip className="selected" label={option.name} />
-          }
-          icon={
-            <Chip label={option.name} />
-          }
-        />
-      )
+    options.length && options.map((option, index) =>
+      <Checkbox key={index}
+        name={option.name}
+        className={`mr-5 mt-5 p-0 ${classes.root}`}
+        checked={val === (valueKey ? option[valueKey] : option.name)}
+        value={valueKey ? option[valueKey] : option.name}
+        onChange={(e) => change(e, option)}
+        color="default"
+        checkedIcon={
+          <Chip className={option.theme ? option.theme : 'selected'} label={option.name} />
+        }
+        icon={
+          <Chip label={option.name} />
+        }
+      />
+    )
   );
 }
 
 SingleSelectChipsInput.propTypes = {
   options: PropTypes.array.isRequired,
-  value: PropTypes.string,
-  onChange: PropTypes.func
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
+  onChange: PropTypes.func,
+  valueKey: PropTypes.string,
 }
 
 SingleSelectChipsInput.defaultProps = {
   options: [],
-  value: ''
+  value: '',
+  valueKey: '',
 }

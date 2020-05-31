@@ -97,15 +97,28 @@ export const genderChoices = [
 export const booleanStatuses = {
   positiveNegative: [
     {
-      id: 1,
+      value: 1,
       name: 'Positive'
     },
     {
-      id: 2,
+      value: 2,
       name: 'Negative'
     }
   ]
 }
+
+export const reachableStatus = [
+  {
+    value: true,
+    name: 'Contacted',
+    theme: 'success'
+  },
+  {
+    value: false,
+    name: 'Not Reachable',
+    theme: 'danger'
+  }
+]
 
 export const GENDER_LIST_MAPPING = [
     {

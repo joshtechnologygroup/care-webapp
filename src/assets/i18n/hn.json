@@ -38,7 +38,8 @@
   "search": {
     "placeholder": {
       "facilities": "खोज",
-      "patients": "रोगी का नाम या आईडी खोजें"
+      "patients": "रोगी का नाम या आईडी खोजें",
+      "inventory": "सुविधा नाम से खोजें"
     }
   },
   "Add Patient": "रोगी जोड़ें",
@@ -100,13 +101,11 @@
   "Lab Tests": "लैब टेस्ट",
   "Patient Timeline": "रोगी समयरेखा",
   "Portie Details": "पोर्टी विवरण",
-  "Contacted by": "द्वारा संपर्क किया गया",
   "Lab name": "प्रयोगशाला का नाम",
   "Lab code": "लैब कोड",
   "Sample collection date": "नमूना संग्रह की तारीख",
   "Last Updated": "आखरी अपडेट",
   "Status": "स्थिति",
-  "Portie Name and Contact": "पोर्टी का नाम और संपर्क",
   "Patient contact": "रोगी का संपर्क",
   "Patient relation": "रोगी का संबंध",
   "Comments": "टिप्पणियाँ",
@@ -123,6 +122,20 @@
   "Name of doctor/attendant": "डॉक्टर / परिचारक का नाम",
   "Edit Portie Details": "पोर्टी विवरण संपादित करें",
   "Add Portie Details": "पोर्टी विवरण जोड़ें",
+  "Add new": "नया जोड़ें",
+  "Contacted by": "किसने संपर्क किया",
+  "Contacted whom": "किससे संपर्क किया",
+  "Contacted": "संपर्क किया गया",
+  "Not reachable": "पहुँच से बाहर",
+  "Comments/Feedback": "टिप्पणियाँ / प्रतिक्रिया",
+  "Portie contact number": "पोर्टी संपर्क नंबर",
+  "Please enter Portie name": "कृपया पोर्टी नाम दर्ज करें",
+  "Edit Portie details": "पोर्टी विवरण संपादित करें",
+  "Add new Portie details": "नए पोर्टी विवरण जोड़ें",
+  "Contact status": "संपर्क स्थिति",
+  "Date time": "दिनांक और समय",
+  "Portie Name": "पोर्टी का नाम",
+  "Cancel": "रद्द करें",
   "null_messages": {
     "doctor": "कोई डेटा मौजूद नहीं है। कृपया प्लस बटन का उपयोग करके डॉक्टर / परिचारक जोड़ें।",
     "facility": "कोई डेटा मौजूद नहीं है। कृपया प्लस बटन का उपयोग करके सुविधा जोड़ें।",
