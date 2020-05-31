@@ -56,9 +56,21 @@ export const GRID_CONFIG = {
   pagination: false,
 }
 
+export const TRANSFER_STATUS_CHOICES = {
+    1: 'Pending', 
+    2: 'Accepted', 
+    3: 'Rejected'
+}
+
 export const regex = {
   email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
 }
+
+// range filter constants
+export const EQUAL_TO = "Equals To";
+export const LESS_THAN = "Less Than";
+export const GREATER_THAN = "Greater Than";
+export const RANGE = "Range"
 
 export const genderChoices = [
     {
@@ -75,9 +87,9 @@ export const genderChoices = [
     },
     {
         id: 3,
-        name: 'Other gender',
-        title: 'Other gender',
-        value: 'Other',
+        name: 'Others',
+        title: 'Others',
+        value: 'Others',
     },
 ];
 
@@ -93,4 +105,45 @@ export const booleanStatuses = {
       name: 'Negative'
     }
   ]
+}
+
+export const GENDER_LIST_MAPPING = [
+    {
+        id: 1,
+        name: 'Male',
+    },
+    {
+        id: 2,
+        name: 'Female',
+    },
+    {
+        id: 3,
+        name: 'Others',
+    }
+]
+
+
+export const STATUS_LIST_MAPPING = [
+  {
+    id: 'home-isolation',
+    name: 'Home Isolation',
+  },
+  {
+    id: 'recovered',
+    name: 'Recovered',
+  },
+  {
+    id: 'dead',
+    name: 'Dead',
+  },
+  {
+    id: 'facility-status',
+    name: 'Facility Status',
+  }
+]
+
+export const GENDER_CHOICES = {
+    1: 'Male', 
+    2: 'Female', 
+    3: 'Non Binary'
 }

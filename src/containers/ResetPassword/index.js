@@ -38,10 +38,10 @@ function ResetPassword(props){
     }
     else {
         let [ success, error_message ] = [ '', '' ]
-        const body = JSON.stringify({
+        const body = {
           'password_1': initial_password,
           'password_2': confirm_password
-        })
+        }
         const status_code = await props.reset_password(POST, user_id, token, body);
         ( status_code === HttpStatus.OK ) ?
             success = SUCCESS_TEMPLATE :

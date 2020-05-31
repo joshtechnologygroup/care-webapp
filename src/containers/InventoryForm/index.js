@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -21,10 +21,12 @@ export const InventoryForm = (props) => {
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
     const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
-    
+    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: ''})
+
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
+    
     useEffect(() => {
         if(!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)){
                     setError(true)
@@ -33,31 +35,31 @@ export const InventoryForm = (props) => {
             setError(false)
          }
       }, [facilityList, inventoryTypesList]);
-      
+
     const createInventory = () => {
-        let initial = inventoryData
-        if(facilityList && !_.isEmpty(props.facilityList) && inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
-        const facility = facilityList.find(      
-            facility => facility.name === inventoryData.name.label
-        )
-        if(facility){
-            initial['facility'] = facility.id
-            delete initial.name;
-        }
-        const inventory = inventoryTypesList.find(      
-            inventory => inventory.name === inventoryData.type.label
-        )
-        if(inventory){
-            initial['item'] = inventory.id
-            delete initial.type;
-        }
+        let initial = inventoryData;
+        if(!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)){
+        Object.keys(facilityList).forEach((facility, index) =>{
+            if(initial.type.label === facilityList[facility].name){
+               initial['facility'] = facilityList[facility].id
+               return;
+            }
+        });
+        delete initial.name;
+        Object.keys(inventoryTypesList).forEach((inventoryitem, index) =>{
+             if(initial.type.label === inventoryTypesList[inventoryitem].name){
+                initial['item'] = inventoryTypesList[inventoryitem].id
+                return;
+             }
+        });
+        delete initial.type;
         setInventoryData({inventoryData:initial});
         if(isAddAnother === false && data){
             createOrUpdateInventory(initial, data.id)
         } else {
-            createOrUpdateInventory(initial)
+             createOrUpdateInventory(initial)
         }
-    }
+        }
         if(!isAddAnother) {
             onClose();
         }
@@ -65,10 +67,23 @@ export const InventoryForm = (props) => {
    
     const handleChange = (name, e) => {
         if(typeof name === 'object') {
-            setInventoryData(name);
+            setInventoryData({...inventoryData, ...name});
         } else {
             setInventoryData({...inventoryData, [name]: e});
         }
+        switch (name) {
+            case 'required_quantity':
+              errors.required_quantity = e ? false : true;
+              break;
+            case 'current_quantity':
+              errors.current_quantity = e ? false : true;
+              break;
+            default: break;
+          }
+          setErrors(prevState =>({
+              ...prevState,
+             ...errors
+          }))
     }
 
     const { i18n } = useTranslation();
@@ -79,7 +94,7 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={inventoryData} {...props} handleChange={handleChange} />
+                            props => <Form data={inventoryData}  {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
@@ -87,18 +102,12 @@ export const InventoryForm = (props) => {
                     {
                     error === true && 
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>Facility Name and Facility Type not exists...</FormHelperText>
-                    </FormControl>
-                    }
-                    { data &&
-                    <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This Inventory already exists!<br/></FormHelperText>
-                        <FormHelperText className={classes.error}>click on addAnother button to create new inventory...</FormHelperText>
+                        <FormHelperText className={classes.error}>Facility Name and Inventory Type not exists...</FormHelperText>
                     </FormControl>
                     }
                 </Grid>
                 <Grid item xs={12}>
-                    { data &&
+                    { !data &&
                      <FormControlLabel
                         value="end"
                         control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
@@ -112,7 +121,7 @@ export const InventoryForm = (props) => {
                         color="primary"
                         size="medium"
                         onClick={createInventory}
-                        disabled={error}
+                        disabled={errors.required_quantity || errors.current_quantity}
                     >
                         {i18n.t('Ok')}
                     </Button>
@@ -125,8 +134,8 @@ export const InventoryForm = (props) => {
 
 const mapStateToProps = (state) => ({
     inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes.results,
-    facilityList: state.facilities.results,
+    inventoryTypesList: state.inventoryTypes,
+    facilityList: state.shortFacilities,
     count:state.inventory.count
   });
   
@@ -137,4 +146,4 @@ const mapStateToProps = (state) => ({
     createOrUpdateInventory: PropTypes.func.isRequired,
 };
   
-  export default connect(mapStateToProps, {createOrUpdateInventory })(InventoryForm);
+export default connect(mapStateToProps, { createOrUpdateInventory })(InventoryForm);

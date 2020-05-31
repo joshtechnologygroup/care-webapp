@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import Form from './form';
 import { PropTypes } from 'prop-types';
 import * as Yup from 'yup';
-
-export default function ContactDetailForm(props) {
-  const { profile, editMode } = props;
+import { connect } from 'react-redux';
+import { getProfileDependencies } from 'Actions/PatientsAction';
+export function ContactDetailForm(props) {
+  const { profile, editMode, handleSave, saveProfile, handleError, fetchProfileDependencies, districts, states  } = props;
   const validationSchema = Yup.object({
-    number: Yup.number("Please enter contact number").required('Please enter contact number'),
-    numberBelongsTo: Yup.string("Whom does this number blongs to?").required('Whom does this number blongs to?'),
+    phone_number: Yup.number("Please enter contact number").required('Please enter contact number'),
+    phone_number_belongs_to: Yup.string("Whom does this number blongs to?").required('Whom does this number blongs to?'),
     address: Yup.string("Please enter address").required('Please enter address'),
     municipalWard: Yup.string("Please enter municipal ward").required('Please enter municipal ward'),
-    city: Yup.string("Please enter City").required('Please enter City'),
     district: Yup.string("Please enter district").required('Please enter district'),
     state: Yup.string("Please enter state").required('Please enter state'),
     pincode: Yup.number("Please enter pincode").required('Please enter pincode') //.test('len', 'Invalid Pincode', val =>  val.length === 6),
   });
-  const submit= (data) => {
-    props.handleSubmit(data);
+  const submit= () => {
+    handleSave();
   };
+
+  useEffect(() => {
+    if (!districts || !states) {
+      fetchProfileDependencies();
+    }
+  }, [districts, states]);
+
   return (
     <Formik
     initialValues={profile}
@@ -26,7 +33,7 @@ export default function ContactDetailForm(props) {
     onSubmit={submit}
     >
       {
-        props => <Form editMode={editMode} {...props} />
+        props => <Form editMode={editMode} saveProfile={saveProfile} districts={districts} handleError={handleError} states={states} {...props} />
       }
     </Formik>
   );
@@ -34,9 +41,30 @@ export default function ContactDetailForm(props) {
 
 ContactDetailForm.propTypes = {
   profile: PropTypes.object.isRequired,
-  handleEdit: PropTypes.func
 };
 
 ContactDetailForm.defaultProps = {
-  profile: {}
+  profile: {},
+  fetchProfileDependencies: () => {},
+  handleEdit:() => {},
+  queryParams: {},
+  count: 0,
 };
+
+const mapStateToProps = state => {
+    const { districts, states } = state;
+    return {
+        districts:districts.results,
+        states:states.results,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+      fetchProfileDependencies: params => {
+            dispatch(getProfileDependencies(params));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactDetailForm);

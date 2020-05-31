@@ -7,9 +7,15 @@ import { useTranslation } from "react-i18next";
 import InventoryList from 'Containers/InventoryList';
 import InventoryForm from 'Containers/InventoryForm';
 import {ListAlt} from '@material-ui/icons';
+import { Search } from 'Components/Inputs';
 
-export const Inventory = () => {
+export function Inventory(props){
+
     const [open, setOpen] = React.useState(false);
+    const [val, setVal] = React.useState("");
+    const handleSearch = (value) =>{
+        setVal(value);
+    }
 
     const handleClick = () => {
         setOpen(true);
@@ -29,6 +35,9 @@ export const Inventory = () => {
         >
             <div className="primary-bg-light">
                 <Header>
+                <div className="header-container__search-container">
+              <Search searchPlaceholder={i18n.t('search.placeholder.inventory')} handleSearch={handleSearch} />
+            </div>
                     <div className="ml-auto">
                         <Button
                             variant="contained"
@@ -42,7 +51,7 @@ export const Inventory = () => {
                     </div>
                 </Header>
                 <div className="table-container">
-                    <InventoryList />
+                    <InventoryList value={val}/>
                 </div>
                 <InventoryForm open={open} onClose={handleClose} />
             </div>
