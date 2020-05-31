@@ -23,20 +23,30 @@ export function BedsList(props) {
   const [ currentPage, setCurrentPage ] = useState(INITIAL_PAGE);
   const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
   const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
+  const [ ordering, setOrdering ] = useState('none');
 
   const handleApiCall = async () => {
-    let required_data = [[], []];
-
+    const update_params = Object.assign({}, selectedParams);
+    if(ordering === 'desc'){
+      update_params.ordering = '-' + update_params.ordering
+    }
+    let required_data = [
+      [
+        [currentUrl, GET, {}, update_params]
+      ],
+      [
+        ReducerTypes.GET_FACILITY_INFRASTRUCTURE_LIST
+      ]
+    ];
     const required = {
-      'facility_infrastructure': [currentUrl, ReducerTypes.GET_FACILITY_INFRASTRUCTURE_LIST],
-      'facilities':[Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST],
-      'room_type': [Routes.ROOM_TYPES_LIST_URL, ReducerTypes.GET_ROOM_TYPE_LIST],
-      'bed_type': [Routes.BED_TYPES_LIST_URL, ReducerTypes.GET_BED_TYPE_LIST]
+      'facilities':[Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST ],
+      'roomTypeList': [Routes.ROOM_TYPES_LIST_URL, ReducerTypes.GET_ROOM_TYPE_LIST ],
+      'bedTypeList': [Routes.BED_TYPES_LIST_URL, ReducerTypes.GET_BED_TYPE_LIST ]
     };
 
     Object.keys(required).forEach((list) => {
       if(!props[list]){
-        required_data[0].push([ required[list][0], GET, {}, selectedParams ])
+        required_data[0].push([ required[list][0], GET, {}])
         required_data[1].push(required[list][1])
       }
     });
@@ -45,14 +55,14 @@ export function BedsList(props) {
 
   useEffect(() => {
       handleApiCall();
-  }, [ currentUrl ]);
+  }, [ currentUrl, selectedParams, ordering ]);
 
   useEffect(() => {
-    const { facilityInfrastructureList, facilities, roomType, bedTypeList } = props
+    const { facilityInfrastructureList, facilities, roomTypeList, bedTypeList } = props
     if(
       facilityInfrastructureList &&
       facilities &&
-      roomType &&
+      roomTypeList &&
       bedTypeList
     ){
       let update_facilityInfrastructureList = new Array(...props.facilityInfrastructureList);
@@ -62,7 +72,7 @@ export function BedsList(props) {
 
       const list = [
         [facilities, 'facility'],
-        [roomType, 'room_type'],
+        [roomTypeList, 'room_type'],
         [bedTypeList, 'bed_type']
       ];
 
@@ -75,12 +85,9 @@ export function BedsList(props) {
   }, [
     props.facilityInfrastructureList,
     props.facilities,
-    props.roomType
+    props.roomTypeList
   ]);
 
-  const bringPage = async () => {
-
-  }
   return (
     <React.Fragment>
       <Grid
@@ -91,9 +98,9 @@ export function BedsList(props) {
       >
         <Grid item xs={12} sm={3} >
           <Sort
-            onSelect={(val) => console.log(`Sort By ${val} using API`)}
+            onSelect={val => setSelectedParams({...selectedParams, 'ordering': [val]})}
             options={CONFIG.columnDefs}
-            onToggleSort={(toggleVal => console.log(`Sort By ${toggleVal} using API`))} />
+            onToggleSort={toggleVal => setOrdering(toggleVal)} />
         </Grid>
         <Grid item xs={12} sm={4} >
 
@@ -150,7 +157,7 @@ const mapStateToProps = (state) => ({
   prevPage: state.facilityInfrastructure.previous,
   bedTypeList: state.bedType.results,
   facilities: state.facilities.results,
-  roomType: state.roomType.results,
+  roomTypeList: state.roomType.results,
 });
 
 BedsList.propTypes = {
@@ -160,7 +167,7 @@ BedsList.propTypes = {
   prevPage: PropTypes.object.isRequired,
   bedTypeList: PropTypes.array.isRequired,
   facilities: PropTypes.array.isRequired,
-  roomType: PropTypes.array.isRequired,
+  roomTypeList: PropTypes.array.isRequired,
   getsBedsListDependencies: PropTypes.func.isRequired
 };
 

@@ -8,9 +8,9 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'Facility Name', field: 'facility', minWidth: 300, cellRendererParams: { isSortable: true } },
-    { headerName: 'Room Type', field: 'room_type', minWidth: 200, cellRendererParams: { isSortable: true } },
-    { headerName: 'Bed Type', field: 'bed_type', minWidth: 150, cellRendererParams: { isSortable: true } },
+    { headerName: 'Facility Name', field: 'facility', minWidth: 300 },
+    { headerName: 'Room Type', field: 'room_type', minWidth: 200 },
+    { headerName: 'Bed Type', field: 'bed_type', minWidth: 150 },
     { headerName: 'Beds #', field: 'total_bed', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
     { headerName: 'Occupied Beds #', field: 'occupied_bed', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
     { headerName: 'Available Beds #', field: 'available_bed', minWidth: 80, editable: true, cellRendererParams: { isSortable: true } },
