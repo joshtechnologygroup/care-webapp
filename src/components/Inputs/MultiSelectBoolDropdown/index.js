@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormControl, Select, Input, MenuItem, Checkbox, ListItemText } from '@material-ui/core'
 
-export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, paramName }) {
+export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, paramName, reset }) {
   const [value, setValue] = React.useState([]);
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -19,6 +19,13 @@ export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, 
       },
     },
   };
+
+  useEffect(() => {
+      if(reset) {
+          setValue([]);
+      }
+  }, [reset])
+
   return (
     <div className="input-common">
       <FormControl>

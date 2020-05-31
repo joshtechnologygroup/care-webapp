@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -11,7 +11,7 @@ import { Grid } from "@material-ui/core";
 import moment from "moment";
 import { DATE_FORMAT } from 'Src/constants'
 
-export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) {
+export default function MultiSelectDateDropdown({ onSelect, fieldName, field, reset }) {
   const [renderValue, setRenderValue] = React.useState("");
   const [subDropdownValue, setSubDropDownValue] = React.useState("Equals To");
   const [fromValue, setFromValue] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -40,6 +40,13 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field }) 
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase
   };
+
+  useEffect(() => {
+    if(reset) {
+        setFromValue(new Date('2014-08-18T21:11:54'));
+        setToValue(new Date('2014-08-18T21:11:54'));
+    }
+}, [reset])
 
   return (
     <div className="input-common">

@@ -36,6 +36,15 @@ const getInventoryDependencies = (params) => async (dispatch) => {
     ));
 };
 
+const getTransferDependencies = (params) => async (dispatch) => {
+    dispatch(dispatchDependentActions(
+        [
+            [Routes.FACILITY_SHORT_LIST_URL, GET, {}, params],
+        ],
+        [ReducerTypes.GET_SHORT_FACILITY_LIST]
+    ));
+};
+
 const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     let url = Routes.CREATE_INVENTORY_URL
     var method = POST
@@ -50,4 +59,4 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     }
 };
 
-export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory }
+export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies }
