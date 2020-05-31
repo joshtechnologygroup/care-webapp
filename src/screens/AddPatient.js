@@ -119,6 +119,18 @@ function AddPatient(props) {
                   {error === null && <div>Please fill all the fields first!</div>}
                 </Alert>
               </Snackbar>
+              <footer>
+          <h2>{i18n.t('*Required fields')}</h2>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className="btn py-5 ml-auto"
+            onClick={handleSave}
+          >
+            {i18n.t('Save')}
+          </Button>
+        </footer>
       </>
     );
 }

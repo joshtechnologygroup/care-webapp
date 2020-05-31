@@ -14,6 +14,7 @@ import { DATE_FORMAT } from 'Src/constants';
 import _ from "underscore";
 import Filters from "Components/Filters";
 import { multiSelectNumberFilterCallback } from "Src/utils/listFilter";
+import { PAGINATION_LIMIT, INITIAL_PAGE } from 'Src/constants';
 
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
@@ -33,7 +34,7 @@ export function InventoryList(props) {
         value,
         error
     } = props;
-    const itemsPerPage = 5;
+    const itemsPerPage = PAGINATION_LIMIT;
 
     const updateInventoryListWithNames = (
       shortFacilityLists,
@@ -83,11 +84,11 @@ export function InventoryList(props) {
         });
     }, [queryParams, offset, fetchInventoryList, selectedParams, value]);
 
-  //   useEffect(() => {
-  //    if(error === false){
-  //      sortByValue("updated_at");
-  //    }
-  // }, [error]);
+    useEffect(() => {
+     if(error === false){
+       sortByValue("updated_at");
+     }
+  }, [error]);
   
   const fetchMoreInventory = () => {
       const lastOffset = Math.floor((count - 1) / itemsPerPage) * itemsPerPage;
@@ -192,9 +193,9 @@ useEffect(() => {
         <Grid item xs={12} sm={5}>
 
           <PaginationController
-            resultsShown={`${
+            resultsShown={count !== 0 ?`${
               Math.ceil((offset + InventoryList.length) / itemsPerPage)
-              }`}
+              }`: INITIAL_PAGE}
             totalResults={Math.ceil((count) / itemsPerPage)}
             onFirst={() => {
               setOffset(0);

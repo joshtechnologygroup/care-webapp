@@ -134,3 +134,9 @@ export const GENDER_CHOICES = {
     2: 'Female', 
     3: 'Non Binary'
 }
+
+export const GENDER_MAPPING_PROPS = {
+  'Male' : 1,
+  'Female': 2,
+  'Others': 3
+}

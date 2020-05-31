@@ -1,4 +1,4 @@
-import { GET_FACILITY_LIST, GET_FACILITY_TYPE_LIST, GET_FACILITY_INVENTORY_LIST, GET_INVENTORY_TYPE_LIST, INVENTORY_CREATED_SUCCESSFULLY, GET_SHORT_FACILITY_LIST } from "Reducers/Types";
+import { GET_FACILITY_LIST, GET_FACILITY_TYPE_LIST, GET_FACILITY_INVENTORY_LIST, GET_INVENTORY_TYPE_LIST, SET_ERROR_CREATE_INVENTORY, GET_SHORT_FACILITY_LIST } from "Reducers/Types";
 
 const initialState = { error: null};
 
@@ -54,7 +54,7 @@ const shortFacilities = (state = {}, action) => {
 
 
 const createInventory = (state = initialState, action) => {
-    if (action.type === INVENTORY_CREATED_SUCCESSFULLY) {
+    if (action.type === SET_ERROR_CREATE_INVENTORY) {
         return { 
             ...state,
             error:action.error

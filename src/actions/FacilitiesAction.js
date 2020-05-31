@@ -1,4 +1,5 @@
 import * as Routes from 'Src/routes';
+import * as HttpStatus from 'http-status-codes'
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 import * as CommonService from "Src/utils/services";
@@ -46,14 +47,14 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
     if(inventory_response.ok){
         dispatch({
-            type:ReducerTypes.INVENTORY_CREATED_SUCCESSFULLY,
+            type:ReducerTypes.SET_ERROR_CREATE_INVENTORY,
             error:false
         });
     }
-    else{
+    else if(inventory_response.status === HttpStatus.BAD_REQUEST){
         const data = await inventory_response.json()
         dispatch({
-            type:ReducerTypes.INVENTORY_CREATED_SUCCESSFULLY,
+            type:ReducerTypes.SET_ERROR_CREATE_INVENTORY,
             error:data.non_field_errors[0]
         });
     }
