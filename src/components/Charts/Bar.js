@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label
 } from 'recharts';
 
 export default class AppBar extends PureComponent {
@@ -19,11 +19,13 @@ export default class AppBar extends PureComponent {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" stackId="a" fill="#6cb2ff" />
-            <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
+            <Bar dataKey="Mild" fill="#ffee02" />
+            <Bar dataKey="Moderate" fill="#ff9600" />
+            <Bar dataKey="Severe" fill="#ff2807" />
           </BarChart>
         </ResponsiveContainer>
       </div>
     );
   }
 }
+

@@ -21,7 +21,8 @@ export default class BarChart extends PureComponent {
             <YAxis dataKey="name" type="category" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" barSize={20} fill="#6cb2ff" background={{ fill: '#eee' }} />
+            <Bar dataKey="Private" stackId="a" barSize={20} fill="#8554ef" background={{ fill: '#eee' }} />
+            <Bar dataKey="Government" stackId="a" barSize={20} fill="#5751d9" />
           </ComposedChart>
         </ResponsiveContainer>
       </div>

@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import AppPie from 'Components/Charts/Pie';
+import AppDoughnut from 'Components/Charts/Doughnut';
 import HorizontalBar from 'Components/Charts/HorizontalBar';
 import Bar from 'Components/Charts/Bar';
-import { dashabordCharts } from 'Mockdata/dashabordCharts.json';
+import { dashboardCharts } from 'Mockdata/dashboardCharts.json';
 
 const useStyles = makeStyles({
     root: {
@@ -24,21 +24,21 @@ export const DashboardCharts = (props) => {
             <Grid item xs={6}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <AppPie data={dashabordCharts.pieData} />
+                        <AppDoughnut data={dashboardCharts.pieData} />
                     </CardContent>
                 </Card>
             </Grid>
             <Grid item xs={6}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <HorizontalBar data={dashabordCharts.hBarData} />
+                        <HorizontalBar data={dashboardCharts.hBarData} />
                     </CardContent>
                 </Card>
             </Grid>
             <Grid item xs={4}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <HorizontalBar data={dashabordCharts.hBarData} />
+                        <HorizontalBar data={dashboardCharts.hBarData} />
                     </CardContent>
                 </Card>
             </Grid>
@@ -47,12 +47,12 @@ export const DashboardCharts = (props) => {
                     <Grid container>
                         <Grid item xs={6}>
                             <CardContent>
-                                <Bar data={dashabordCharts.barData} />
+                                <Bar data={dashboardCharts.barData} />
                             </CardContent>
                         </Grid>
                         <Grid item xs={6}>
                             <CardContent>
-                                <Bar data={dashabordCharts.barData} />
+                                <Bar data={dashboardCharts.barData} />
                             </CardContent>
                         </Grid>
                     </Grid>
