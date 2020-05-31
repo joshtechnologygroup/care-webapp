@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Grid, Typography, } from '@material-ui/core';
 import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
@@ -16,8 +16,8 @@ export const CreateUpdatePortieDetails = (props) => {
         name: Yup.string().required(i18n.t('Please enter Portie name')),
         portie_phone_number: Yup.number().required(i18n.t('Please enter Portie contact number')).min(10, i18n.t('Please enter a valid contact number')),
         patient_relation: Yup.string().required(i18n.t('Please choose relation of Patient with the person')),
-        // dateTime: Yup.date(),
     });
+
     const submit = (data) => {
         console.log(data);
         handleSubmit(data);

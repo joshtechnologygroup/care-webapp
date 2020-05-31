@@ -13,9 +13,6 @@ import {
 } from '@material-ui/core';
 import { PhoneOutlined, EventOutlined, AccessTime, EditOutlined } from '@material-ui/icons';
 
-// Importing mock data
-import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
-
 const useStyles = makeStyles(theme =>
     createStyles({
         chip: {
