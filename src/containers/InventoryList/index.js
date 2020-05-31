@@ -14,6 +14,7 @@ import { DATE_FORMAT } from 'Src/constants';
 import _ from "underscore";
 import Filters from "Components/Filters";
 import { multiSelectNumberFilterCallback } from "Src/utils/listFilter";
+
 export function InventoryList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -27,18 +28,18 @@ export function InventoryList(props) {
         inventoryList,
         queryParams,
         inventoryTypesList,
-        facilityList,
+        shortFacilityLists,
         count,
         value
     } = props;
-    const itemsPerPage = 4;
+    const itemsPerPage = 5;
 
     const updateInventoryListWithNames = (
-        facilityList,
+      shortFacilityLists,
         inventoryTypesList,
         inventoryList
     ) => {
-        if (!_.isEmpty(inventoryTypesList) && !_.isEmpty(facilityList)) {
+        if (!_.isEmpty(inventoryTypesList) && !_.isEmpty(shortFacilityLists)) {
             const mappedInventoryList = [];
 
             inventoryList.forEach(inventory => {
@@ -47,19 +48,18 @@ export function InventoryList(props) {
                 mappedInventory.updated_at = moment.utc(date, DATE_FORMAT)
                 .local()
                 .format(DATE_FORMAT);
-                const inventoryType = inventoryTypesList.find(
-                    inventoryType => inventoryType.id === inventory.item
-                );
-                if (inventoryType) {
-                    mappedInventory.item = inventoryType.name;
-                }
-                const facilityListType = facilityList.find(
-                    facilityListType =>
-                        facilityListType.id === inventory.facility
-                );
-                if (facilityListType) {
-                    mappedInventory.facility = facilityListType.name;
-                }
+                Object.keys(inventoryTypesList).forEach(inventoryitem =>{
+                  if(inventoryTypesList[inventoryitem].id === inventory.item){
+                    mappedInventory.item = inventoryTypesList[inventoryitem].name;
+                    return;
+                  }
+                })
+                Object.keys(shortFacilityLists).forEach(facilityItem =>{
+                  if(shortFacilityLists[facilityItem].id === inventory.facility){
+                    mappedInventory.facility = shortFacilityLists[facilityItem].name;
+                    return;
+                  }
+                })
                 mappedInventoryList.push(mappedInventory);
             });
             return mappedInventoryList;
@@ -68,10 +68,10 @@ export function InventoryList(props) {
     };
 
     useEffect(() => {
-        if (!inventoryTypesList || !facilityList) {
+        if (_.isEmpty(inventoryTypesList) || _.isEmpty(shortFacilityLists)) {
             fetchInventoryDependencies();
         }
-    });
+    },[]);
 
     useEffect(() => {
         fetchInventoryList({
@@ -81,6 +81,12 @@ export function InventoryList(props) {
             facility: value
         });
     }, [queryParams, offset, fetchInventoryList, selectedParams, value]);
+
+  //   useEffect(() => {
+  //    if(createInventory){
+  //      sortByValue("updated_at");
+  //    }
+  // }, [createInventory]);
   
   const fetchMoreInventory = () => {
       const lastOffset = Math.floor((count - 1) / itemsPerPage) * itemsPerPage;
@@ -122,17 +128,17 @@ export function InventoryList(props) {
   };
 
 useEffect(() => {
-  if (inventoryTypesList) {
-    CONFIG.columnDefs[1].cellRendererParams.options = inventoryTypesList.map(
-        inventoryType => inventoryType.name
-    );
+  if (!_.isEmpty(inventoryTypesList)) {
+    CONFIG.columnDefs[1].cellRendererParams.options =  Object.keys(inventoryTypesList).map(function(item) {
+      return inventoryTypesList[item].name
+    })
 }
-if (facilityList) {
-  CONFIG.columnDefs[0].cellRendererParams.options = facilityList.map(
-      facility => facility.name
-  );
-}
-}, [inventoryTypesList, facilityList]);
+  if (!_.isEmpty(shortFacilityLists)) {
+    CONFIG.columnDefs[0].cellRendererParams.options =  Object.keys(shortFacilityLists).map(function(item) {
+      return shortFacilityLists[item].name
+    })
+  }
+}, [inventoryTypesList, shortFacilityLists]);
 
 
   return (
@@ -215,7 +221,7 @@ if (facilityList) {
         cellStyle={CONFIG.cellStyle}
         pagination={CONFIG.pagination}
         rowData={updateInventoryListWithNames(
-          facilityList,
+          shortFacilityLists,
           inventoryTypesList,
           inventoryList
         )}
@@ -237,12 +243,12 @@ InventoryList.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const { inventory, inventoryTypes, facilities } = state;
+    const { inventory, inventoryTypes, shortFacilities } = state;
     return {
         inventoryList: inventory.results,
         count: inventory.count,
-        inventoryTypesList: inventoryTypes.results,
-        facilityList: facilities.results,
+        inventoryTypesList: inventoryTypes,
+        shortFacilityLists: shortFacilities
     };
 };
 

@@ -29,10 +29,10 @@ const getInventoryList = (params) => async (dispatch) => {
 const getInventoryDependencies = (params) => async (dispatch) => {
     dispatch(dispatchDependentActions(
         [
-            [Routes.FACILITY_LIST_URL, GET, {}, params],
+            [Routes.FACILITY_SHORT_LIST_URL, GET, {}, params],
             [Routes.INVENTORY_TYPE_LIST_URL, GET, {}, params],
         ],
-        [ReducerTypes.GET_FACILITY_LIST, ReducerTypes.GET_INVENTORY_TYPE_LIST]
+        [ReducerTypes.GET_SHORT_FACILITY_LIST, ReducerTypes.GET_INVENTORY_TYPE_LIST]
     ));
 };
 
@@ -45,7 +45,8 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     }
     const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
     if(inventory_response.ok){
-        const inventory = await inventory_response.json();
+        const data = inventory_response.ok
+        dispatch(dispatchAction(ReducerTypes.INVENTORY_CREATED_SUCCESSFULLY, data));
     }
 };
 

@@ -17,25 +17,25 @@ export function Form(props) {
     const [errors, setErrors] = useState({ required_quantity: false, current_quantity: false, form: ''})
 
     const facilityName = []; 
-    const facilityType = [];
+    const inventoryType = [];
 
-    if(props.facilityList && !_.isEmpty(props.facilityList)){
-    props.facilityList.forEach((facility, index) => 
-    facilityName.push({
-            'value': `facility-${index}`,
-            'label': facility.name
-        })
-    );
+    if(!_.isEmpty(props.shortFacilities)){
+        Object.keys(props.shortFacilities).forEach((facility, index) =>{
+            facilityName.push({
+                'value': `facility-type-${index}`,
+                'label': props.shortFacilities[facility].name
+            })
+        }) 
     }
 
-    if(props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
-    props.inventoryTypesList.forEach((inventoryType, index) => 
-    facilityType.push({
-            'value': `facility-type-${index}`,
-            'label': inventoryType.name
-        })
-    );
-    }
+    if(!_.isEmpty(props.inventoryTypesList)){
+        Object.keys(props.inventoryTypesList).forEach((inventoryitem, index) =>{
+            inventoryType.push({
+                'value': `facility-type-${index}`,
+                'label': props.inventoryTypesList[inventoryitem].name
+            })
+          })
+     }
 
     const change = (name, value) => {
         handleChange(name, value);
@@ -59,7 +59,7 @@ export function Form(props) {
 
     useEffect(() => {
         if(props.facilityList && !_.isEmpty(props.facilityList) && props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
-         handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
+         handleChange({"name": facilityName[0], "type": inventoryType[0]}); // Setting initial state
         }
     }, [errors]);
 
@@ -78,8 +78,8 @@ export function Form(props) {
                 <Grid item sm={6} xs={12}>
                     <label className={classes.label}>{i18n.t('Inventory Type')}</label>
                     <Select
-                        options={facilityType}
-                        defaultValue={facilityType[0]}
+                        options={inventoryType}
+                        defaultValue={inventoryType[0]}
                         onChange={change.bind(null, "type")}
                     />
                 </Grid>
@@ -115,8 +115,8 @@ Form.defaultProps = {
 
 const mapStateToProps = (state) => ({
     inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes.results,
-    facilityList: state.facilities.results,
+    inventoryTypesList: state.inventoryTypes,
+    shortFacilities: state.shortFacilities,
     count:state.inventory.count
   });
   
@@ -124,7 +124,7 @@ Form.propTypes = {
     profile: PropTypes.object.isRequired,
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
-    facilityList: PropTypes.array.isRequired,
+    shortFacilities: PropTypes.array.isRequired,
     handleEdit: PropTypes.func.isRequired
 };
   

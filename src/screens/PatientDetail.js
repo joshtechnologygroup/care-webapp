@@ -8,10 +8,11 @@ import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetail from 'Components/Cards/MedicationDetail';
 import LabTestDetail from '../components/Cards/LabTestDetail';
 import PortieDetails from '../components/Cards/PortieDetails';
-
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
-
+import { fetchPatient } from 'Actions/PatientsAction';
 class PatientDetail extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +47,9 @@ class PatientDetail extends Component {
       }
     });
   }
+  componentDidMount(){
+    this.props.fetchPatient(1);
+  }
   onSubmit = (data, key) => {
     console.log("submit", key, data);
     this.setState({
@@ -68,7 +72,7 @@ class PatientDetail extends Component {
           {
             isEditing[formList[0]] ? 
             <PersonalDetailForm
-              profile={profile[formList[0]]}
+              profile={this.props.patient}
               handleSubmit={ (data) => this.onSubmit(data, formList[0]) }
               editMode={true}
             /> :
@@ -138,4 +142,18 @@ class PatientDetail extends Component {
   }
 }
 
-export default PatientDetail;
+
+const mapStateToProps = state => {
+    const { patient } = state;
+    return {
+        patient: patient.results,
+    };
+};
+
+
+PatientDetail.propTypes = {
+  patient: PropTypes.array.isRequired,
+  fetchPatient: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, { fetchPatient })(PatientDetail);
