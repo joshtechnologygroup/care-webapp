@@ -64,7 +64,7 @@ export const CreateUpdateForm = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>This incharge already exists!</FormHelperText>
+                        <FormHelperText className={classes.error}>{i18n.t('This incharge already exists!')}</FormHelperText>
                     </FormControl>
                 </Grid>
                 <Grid item xs={12}>

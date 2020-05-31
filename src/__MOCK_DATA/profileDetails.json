@@ -1,0 +1,18 @@
+{
+    "profileDetails": {
+        "contact": {
+            "name": "Roger Ben",
+            "email": "roger-ben@covid.com",
+            "phone": 9891782404,
+            "role": "District Manager",
+            "districtPreference": [
+                {"id": 121,"label": "Kalimpong","value": "Kalimpong"},
+                {"id": 122,"label": "Matung","value": "matung"}
+            ],
+            "associatedFacilites": [
+                {"id": 221,"label": "Kring Moser","value": "kring-moser"},
+                {"id": 222,"label": "Meru Hold","value": "meru-hold"}
+            ]
+        }
+    }
+}
