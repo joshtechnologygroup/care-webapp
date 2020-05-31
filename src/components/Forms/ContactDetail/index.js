@@ -10,11 +10,10 @@ export function ContactDetailForm(props) {
   const validationSchema = Yup.object({
     phone_number: Yup.number("Please enter contact number").required('Please enter contact number'),
     phone_number_belongs_to: Yup.string("Whom does this number blongs to?").required('Whom does this number blongs to?'),
-    address: Yup.string("Please enter address").required('Please enter address'),
-    municipalWard: Yup.string("Please enter municipal ward").required('Please enter municipal ward'),
-    district: Yup.string("Please enter district").required('Please enter district'),
-    state: Yup.string("Please enter state").required('Please enter state'),
-    pincode: Yup.number("Please enter pincode").required('Please enter pincode') //.test('len', 'Invalid Pincode', val =>  val.length === 6),
+    address: Yup.string("Please enter address"),
+    district: Yup.string("Please enter district"),
+    state: Yup.string("Please enter state"),
+    pincode: Yup.number("Please enter pincode").test('len', 'Invalid Pincode', val => val.length === 6),
   });
   const submit= () => {
     handleSave();

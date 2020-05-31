@@ -24,7 +24,7 @@ export const ActionRenderer = (item) => {
           <EditIcon color="primary" />
         </IconButton>
       </div>
-      <InventoryForm data={data} open={open} onClose={handleClose} />
+      <InventoryForm data={data} index={item.rowIndex} open={open} onClose={handleClose} />
     </AgProvider>
   );
 };

@@ -20,7 +20,7 @@ export const InventoryForm = (props) => {
     const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
-    const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
+    const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList, index } = props;
     const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: ''})
 
     const addAnother = (event) => {
@@ -39,19 +39,21 @@ export const InventoryForm = (props) => {
     const createInventory = () => {
         let initial = inventoryData;
         if(!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)){
+        if(initial && !data){    
         Object.keys(facilityList).forEach((facility, index) =>{
-            if(initial.type.label === facilityList[facility].name){
+            if(initial.name.label === facilityList[facility].name){
                initial['facility'] = facilityList[facility].id
                return;
             }
         });
-        delete initial.name;
         Object.keys(inventoryTypesList).forEach((inventoryitem, index) =>{
              if(initial.type.label === inventoryTypesList[inventoryitem].name){
                 initial['item'] = inventoryTypesList[inventoryitem].id
                 return;
              }
         });
+        }
+        delete initial.name;
         delete initial.type;
         setInventoryData({inventoryData:initial});
         if(isAddAnother === false && data){
@@ -94,7 +96,7 @@ export const InventoryForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={inventoryData}  {...props} handleChange={handleChange} />
+                            props => <Form data={inventoryData} updateData={data}  {...props} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
