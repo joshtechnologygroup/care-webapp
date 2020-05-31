@@ -10,8 +10,8 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'Facility Name', field: 'facility', minWidth: 300, cellRendererParams: { filterType: 'boolean', options: [] } },
-    { headerName: 'Room Type', field: 'room_type', minWidth: 200, cellRendererParams: { filterType: 'boolean', options: [] } },
+    { headerName: 'Facility Name', field: 'facility', minWidth: 200, cellRendererParams: { filterType: 'boolean', options: [] } },
+    { headerName: 'Room Type', field: 'room_type', minWidth: 150, cellRendererParams: { filterType: 'boolean', options: [] } },
     { headerName: 'Bed Type', field: 'bed_type', minWidth: 150, cellRendererParams: { filterType: 'boolean', options: [] } },
     { headerName: 'Beds #', field: 'total_bed', minWidth: 80, editable: true, cellRendererParams: {
       isSortable: true,
@@ -25,10 +25,10 @@ export const CONFIG = {
       isSortable: true,
       filterType: 'number'
     }},
-    { headerName: 'Updated At', field: 'updated_at', minWidth: 200, cellRendererParams: {
+    { headerName: 'Updated At', field: 'updated_at', minWidth: 150, cellRendererParams: {
       isSortable: true
     }},
-    { headerName: 'Action', field: 'action', cellRenderer: 'actionRenderer' }
+    { headerName: '', maxWidth: 50, field: 'action', cellRenderer: 'actionRenderer' }
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
