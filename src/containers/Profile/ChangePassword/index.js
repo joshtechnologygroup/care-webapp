@@ -7,7 +7,6 @@ import {
   ExpansionPanelDetails
 } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { PropTypes } from 'prop-types';
 import Form from './form';
 import './style.scss';
 

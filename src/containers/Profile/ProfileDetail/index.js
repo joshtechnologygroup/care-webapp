@@ -9,12 +9,9 @@ import {
   Typography,
   Chip
 } from '@material-ui/core';
-import { EditOutlined, RoomOutlined } from '@material-ui/icons';
+import { EditOutlined } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
-
-// IMORTING MOCKCHOICES
-import { stateChoices } from 'Mockdata/stateChoices.json';
 
 const useStyles = makeStyles(theme =>
   createStyles({

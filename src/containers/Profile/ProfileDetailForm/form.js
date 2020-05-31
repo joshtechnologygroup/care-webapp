@@ -13,9 +13,6 @@ import Select from 'react-select';
 import { PropTypes } from 'prop-types';
 import useStyles from './styles';
 
-// IMORTING MOCKDATA
-import { stateChoices } from 'Mockdata/stateChoices.json';
-
 export default function Form(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
