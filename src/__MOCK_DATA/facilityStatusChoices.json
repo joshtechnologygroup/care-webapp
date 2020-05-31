@@ -1,0 +1,20 @@
+{
+  "facilityStatusChoices": [
+    {
+        "id": 1,
+        "name": "Home Isolation"
+    },
+    {
+        "id": 2,
+        "name": "Admitted"
+    },
+    {
+        "id": 3,
+        "name": "Transferred to"
+    },
+    {
+        "id": 4,
+        "name": "Discharged"
+    }
+  ]
+}

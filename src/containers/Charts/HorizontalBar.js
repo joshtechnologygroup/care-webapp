@@ -1,84 +1,53 @@
 import React, { PureComponent } from 'react';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  Legend,
 } from 'recharts';
 
 const data = [
   {
-    name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
+    name: 'Page A', uv: 590, pv: 800, amt: 1400,
   },
   {
-    name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
+    name: 'Page B', uv: 868, pv: 967, amt: 1506,
   },
   {
-    name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
+    name: 'Page C', uv: 1397, pv: 1098, amt: 989,
   },
   {
-    name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
+    name: 'Page D', uv: 1480, pv: 1200, amt: 1228,
   },
   {
-    name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
+    name: 'Page E', uv: 1520, pv: 1108, amt: 1100,
   },
   {
-    name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-  },
-  {
-    name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
+    name: 'Page F', uv: 1400, pv: 680, amt: 1700,
   },
 ];
 
-
-const getIntroOfPage = (label) => {
-  if (label === 'Page A') {
-    return "Page A is about men's clothing";
-  } if (label === 'Page B') {
-    return "Page B is about women's dress";
-  } if (label === 'Page C') {
-    return "Page C is about women's bag";
-  } if (label === 'Page D') {
-    return 'Page D is about household goods';
-  } if (label === 'Page E') {
-    return 'Page E is about food';
-  } if (label === 'Page F') {
-    return 'Page F is about baby food';
-  }
-};
-
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active) {
-    return (
-      <div className="custom-tooltip">
-        <p className="label">{`${label} : ${payload[0].value}`}</p>
-        <p className="intro">{getIntroOfPage(label)}</p>
-        <p className="desc">Anything you want can be displayed here.</p>
-      </div>
-    );
-  }
-
-  return null;
-};
-
-export default class AppBar extends PureComponent {
-  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/vxq4ep63/';
+export default class BarChart extends PureComponent {
+  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/shjsn5su/';
 
   render() {
     return (
-      <BarChart
-        width={500}
-        height={300}
-        data={data}
-        layout='vertical'
-        margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis  />
-        <YAxis dataKey="pv" />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="name" barSize={20} fill="#8884d8"  layout='vertical'  />
-      </BarChart>
+      <div style={{ width: '100%', height: 250 }}>
+        <ResponsiveContainer>
+          <ComposedChart
+            layout="vertical"
+            data={data}
+            margin={{
+              top: 20, right: 20, bottom: 20, left: 20,
+            }}
+            >
+            <CartesianGrid stroke="#f5f5f5" />
+            <XAxis type="number" />
+            <YAxis dataKey="name" type="category" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="pv" barSize={20} fill="#6cb2ff" background={{ fill: '#eee' }} />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
     );
   }
 }

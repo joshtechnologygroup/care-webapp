@@ -6,27 +6,27 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'idICMR', cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true } },
-    { headerName: 'Govt. ID', field: 'idGovt', cellRendererParams: { isSortable: true, filterType: 'boolean' } },
-    { headerName: 'Patient Name', field: 'patientName', minWidth: 120, cellRendererParams: { isSortable: true, filterType: 'date', filterPriority: true } },
-    { headerName: 'Gender', field: 'gender' },
-    { headerName: 'Age(Years)', field: 'ageYears', minWidth: 100 },
-    { headerName: 'Age(Months)', field: 'ageMonths', minWidth: 110 },
-    { headerName: 'Contact Mobile No.', field: 'contactNo', minWidth: 140 },
+    { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true, filterType: 'string' } },
+    { headerName: 'Govt. ID', field: 'govt_id', cellRendererParams: { isSortable: true } },
+    { headerName: 'Patient Name', field: 'patient_name', minWidth: 120, cellRendererParams: { isSortable: true, filterType: 'string' } },
+    { headerName: 'Gender', field: 'gender', cellRendererParams: { filterType: 'boolean', options: [] } },
+    { headerName: 'Age(Years)', field: 'year', minWidth: 100, cellRendererParams: { isSortable: true, filterType: 'number' } },
+    { headerName: 'Age(Months)', field: 'month', minWidth: 110, cellRendererParams: { isSortable: true, filterType: 'number' } },
+    { headerName: 'Contact Mobile No.', field: 'phone_number', minWidth: 140, cellRendererParams: { isSortable: true, filterType: 'string' } },
     {
       headerName: 'From Facility', children: [
-        { headerName: 'Facility ID', field: 'idFromFacility', minWidth: 100 },
-        { headerName: 'Facility Name', field: 'nameFromFacility', minWidth: 120 },
-        { headerName: 'Requested At', field: 'reqAtFromFacility', minWidth: 120 },
-      ]
+        { headerName: 'Facility ID', field: 'from_facility_id', minWidth: 100 },
+        { headerName: 'Facility Name', field: 'from_facility_name', minWidth: 120 },
+        { headerName: 'Requested At', field: 'requested_at', minWidth: 120 },
+      ],
     },
     {
       headerName: 'To Facility', children: [
-        { headerName: 'Facility ID', field: 'idToFacility', minWidth: 100 },
-        { headerName: 'Facility Name', field: 'nameToFacility', minWidth: 120 },
-        { headerName: 'Status', field: 'statusToFacility', minWidth: 110, cellRenderer: 'FacilityStatusRenderer' },
-        { headerName: 'Status Updated At', field: 'upAtToFacility', minWidth: 130 },
-        { headerName: 'Comments', field: 'commentsToFacility', minWidth: 140 },
+        { headerName: 'Facility ID', field: 'to_facility_id', minWidth: 100 },
+        { headerName: 'Facility Name', field: 'to_facility_name', minWidth: 120 },
+        { headerName: 'Status', field: 'status', minWidth: 110, cellRenderer: 'FacilityStatusRenderer' },
+        { headerName: 'Status Updated At', field: 'status_updated_at', minWidth: 130 },
+        { headerName: 'Comments', field: 'comments', minWidth: 140 },
       ]
     },
   ],

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Paper,
@@ -6,12 +7,15 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core';
+import _ from 'underscore';
+
 import styles from './styles';
-import { FacilityStatus} from "Constants/app.const"
+import { FacilityStatus, TRANSFER_STATUS_CHOICES } from "Constants/app.const"
+import { updateTransferStatus } from "Actions/TransferAction";
 
 import './CellRenderer.scss';
 
-const FacilityStatusRenderer = ({ value, data }) => {
+const FacilityStatusRenderer = ({ value, data, updateStatus }) => {
   const [statue, setStatus] = useState(FacilityStatus[0].value);
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -25,8 +29,9 @@ const FacilityStatusRenderer = ({ value, data }) => {
   }
 
   const handleChange = (e) => {
-    console.log('row data-----', data);
-    console.log('selected status-----', e.target.value);
+    updateStatus(data.id, {
+        status: _.invert(TRANSFER_STATUS_CHOICES)[e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)]
+    });
     setStatus(e.target.value);
   }
 
@@ -55,4 +60,12 @@ const FacilityStatusRenderer = ({ value, data }) => {
   );
 };
 
-export default FacilityStatusRenderer;
+const mapDispatchToProps = dispatch => {
+    return {
+        updateStatus: (patientTransferId, body) => {
+            dispatch(updateTransferStatus(patientTransferId, body));
+        },
+    };
+};
+
+export default connect(null, mapDispatchToProps)(FacilityStatusRenderer);

@@ -53,7 +53,7 @@ export default function Form(props) {
           <Grid item xs={12} sm={6}>
             <TextField
               name="facilityName"
-              label={i18n.t('Facility facilityName')}
+              label={i18n.t('Facility Name')}
               fullWidth
               value={facilityName}
               onChange={change.bind(null, 'facilityName')}
@@ -156,7 +156,7 @@ export default function Form(props) {
                 variant="contained"
                 color="primary"
                 disableElevation
-                className="btn py-8"
+                className="btn py-5"
               >
                 {i18n.t('Submit')}
               </Button>

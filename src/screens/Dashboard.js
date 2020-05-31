@@ -4,14 +4,16 @@ import { useTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Header from 'Containers/Header';
 
-import DynamicDoughnut from 'Containers/Charts/DynamicDoughnut';
+import AppPie from 'Containers/Charts/Pie';
 import HorizontalBar from 'Containers/Charts/HorizontalBar';
 import Bar from 'Containers/Charts/Bar';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    marginBottom: 0,
   },
   bullet: {
     display: 'inline-block',
@@ -31,48 +33,58 @@ export const Dashboard = (props) => {
     const { t } = useTranslation();
 
     return (
-        <div className="page-container">
-            <h2>{t('Dashboard')}</h2>
-            <Grid container justify="center" spacing="4" className="container-wrap">
-                <Grid item xs={5}>
-                    <Card className={classes.root}>
-                        <CardContent>
-                            <DynamicDoughnut />
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={6}>
-                    <Card className={classes.root}>
-                        <CardContent>
-                            <HorizontalBar />
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={4}>
-                    <Card className={classes.root}>
-                        <CardContent>
-                            <HorizontalBar />
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={8}>
-                    <Card className={classes.root}>
-                        <Grid container>
-                            <Grid item xs={6}>
+        <Grid
+            container
+            direction="column"
+            className="outer-container"
+        >
+            <div className="primary-bg-light">
+                <Header>
+                    <h2>{t('Dashboard')}</h2>
+                </Header>
+                <div className="table-container">
+                    <Grid container justify="center" spacing="3">
+                        <Grid item xs={6}>
+                            <Card className={classes.root}>
                                 <CardContent>
-                                    <Bar />
+                                    <AppPie />
                                 </CardContent>
-                            </Grid>
-                            <Grid item xs={6}>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Card className={classes.root}>
                                 <CardContent>
-                                    <Bar />
+                                    <HorizontalBar />
                                 </CardContent>
-                            </Grid> 
-                        </Grid> 
-                    </Card>
-                </Grid>
-            </Grid>
-        </div>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Card className={classes.root}>
+                                <CardContent>
+                                    <HorizontalBar />
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={8}>
+                            <Card className={classes.root}>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <CardContent>
+                                            <Bar />
+                                        </CardContent>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <CardContent>
+                                            <Bar />
+                                        </CardContent>
+                                    </Grid>
+                                </Grid>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </div>
+            </div>
+        </Grid>
     );
 }
 

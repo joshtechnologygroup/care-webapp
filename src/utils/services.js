@@ -8,9 +8,16 @@ async function makeApiCall(base_url, method = GET, body = {}, headers = {}, para
         headers: headers,
     }
     if(method !== GET){
-      options.body = body
+      options.body = JSON.stringify(body);
     }
-    for (const x in params) url.searchParams.append(x, params[x])
+    Object.keys(params).forEach((key) => {
+        const paramValue = params[key]
+        if(Array.isArray(paramValue)){
+            params[key].forEach((value) => url.searchParams.append(key, value))
+        }
+        else
+            url.searchParams.append(key, paramValue);
+    })
     const response = await fetch(url.href, options);
     return await response;
 }

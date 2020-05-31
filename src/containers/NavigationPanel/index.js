@@ -61,33 +61,39 @@ export function NavigationPanel(props) {
               <People />
               {i18n.t('Patients')}
             </Link>
-            <ul className="navbar-nav sub-nav clearfix">
-              <li className={getActivatedRoute('/patients/add') ? 'active' : ''}>
-                <Link to={'/patients/add'} className="nav-link">
-                  {i18n.t('Add Patient')}
-                </Link>
-              </li>
-              <li className={getActivatedRoute('/patients/hospitals') ? 'active' : ''}>
-                <Link to={'/patients/hospitals'} className="nav-link">
-                  {i18n.t('Hospitals')}
-                </Link>
-              </li>
-              <li className={getActivatedRoute('/patients/hcc') ? 'active' : ''}>
-                <Link to={'/patients/hcc'} className="nav-link">
-                  {i18n.t('HCC')}
-                </Link>
-              </li>
-              <li className={getActivatedRoute('/patients/care-centers') ? 'active' : ''}>
-                <Link to={'/patients/care-centers'} className="nav-link">
-                  {i18n.t('Care Centers')}
-                </Link>
-              </li>
-              <li className={getActivatedRoute('/patients/private-quarantine') ? 'active' : ''}>
-                <Link to={'/patients/private-quarantine'} className="nav-link">
-                  {i18n.t('Private Quarantine')}
-                </Link>
-              </li>
-            </ul>
+            {/*<ul className="navbar-nav sub-nav clearfix">*/}
+              {/*<li className={getActivatedRoute('/patients/add') ? 'active' : ''}>*/}
+              {/*  <Link to={'/patients/add'} className="nav-link">*/}
+              {/*    {i18n.t('Add Patient')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+              {/*<li className={getActivatedRoute('/patients/hospitals') ? 'active' : ''}>*/}
+              {/*  <Link to={'/patients/hospitals'} className="nav-link">*/}
+              {/*    {i18n.t('Hospitals')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+              {/*<li className={getActivatedRoute('/patients/hcc') ? 'active' : ''}>*/}
+              {/*  <Link to={'/patients/hcc'} className="nav-link">*/}
+              {/*    {i18n.t('HCC')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+              {/*<li className={getActivatedRoute('/patients/care-centers') ? 'active' : ''}>*/}
+              {/*  <Link to={'/patients/care-centers'} className="nav-link">*/}
+              {/*    {i18n.t('Care Centers')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+              {/*<li className={getActivatedRoute('/patients/private-quarantine') ? 'active' : ''}>*/}
+              {/*  <Link to={'/patients/private-quarantine'} className="nav-link">*/}
+              {/*    {i18n.t('Private Quarantine')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+            {/*</ul>*/}
+          </li>
+          <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
+            <Link to={'/inventory'} className="nav-link">
+              <ListAlt />
+              {i18n.t('Inventory')}
+            </Link>
           </li>
           <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
             <Link to={'/facilities'} className="nav-link">
@@ -116,12 +122,6 @@ export function NavigationPanel(props) {
                 </Link>
               </li>
             </ul>
-          </li>
-          <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
-            <Link to={'/inventory'} className="nav-link">
-              <ListAlt />
-              {i18n.t('Inventory')}
-            </Link>
           </li>
         </ul>
       </div>

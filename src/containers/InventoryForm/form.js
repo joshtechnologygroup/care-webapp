@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 import {
     Grid,
@@ -9,38 +9,59 @@ import { PropTypes } from 'prop-types';
 import Select from 'react-select'
 import useStyles from './styles';
 import { connect } from 'react-redux';
+import _ from 'underscore'
 export function Form(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
     const {data, handleChange} = props;
+    const [errors, setErrors] = useState({ required_quantity: false, current_quantity: false, form: ''})
 
     const facilityName = []; 
-    const facilityType = [];
+    const inventoryType = [];
 
-    props.facilityList.forEach((facility, index) => 
-    facilityName.push({
-            'value': `facility-${index}`,
-            'label': facility.name
-        })
-    );
+    if(!_.isEmpty(props.shortFacilities)){
+        Object.keys(props.shortFacilities).forEach((facility, index) =>{
+            facilityName.push({
+                'value': `facility-type-${index}`,
+                'label': props.shortFacilities[facility].name
+            })
+        }) 
+    }
 
-    props.inventoryTypesList.forEach((inventoryType, index) => 
-    facilityType.push({
-            'value': `facility-type-${index}`,
-            'label': inventoryType.name
-        })
-    );
+    if(!_.isEmpty(props.inventoryTypesList)){
+        Object.keys(props.inventoryTypesList).forEach((inventoryitem, index) =>{
+            inventoryType.push({
+                'value': `facility-type-${index}`,
+                'label': props.inventoryTypesList[inventoryitem].name
+            })
+          })
+     }
 
-    const change = (name, e) => {
-        handleChange(name, e);
+    const change = (name, value) => {
+        handleChange(name, value);
     };
      const changeText = (name, e) => {
+        switch (name) {
+            case 'required_quantity':
+              errors.required_quantity = e.target.value ? false : true;
+              break;
+            case 'current_quantity':
+              errors.current_quantity = e.target.value ? false : true;
+              break;
+            default: break;
+          }
+          setErrors(prevState =>({
+              ...prevState,
+             ...errors
+          }))
         handleChange(name, e.target.value);
     };
 
     useEffect(() => {
-        handleChange({"name": facilityName[0], "type": facilityType[0]}); // Setting initial state
-    }, []);
+        if(props.facilityList && !_.isEmpty(props.facilityList) && props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
+         handleChange({"name": facilityName[0], "type": inventoryType[0]}); // Setting initial state
+        }
+    }, [errors]);
 
     return (
         <form>
@@ -55,10 +76,10 @@ export function Form(props) {
                 </Grid>
 
                 <Grid item sm={6} xs={12}>
-                    <label className={classes.label}>{i18n.t('Facility Type')}</label>
+                    <label className={classes.label}>{i18n.t('Inventory Type')}</label>
                     <Select
-                        options={facilityType}
-                        defaultValue={facilityType[0]}
+                        options={inventoryType}
+                        defaultValue={inventoryType[0]}
                         onChange={change.bind(null, "type")}
                     />
                 </Grid>
@@ -69,6 +90,7 @@ export function Form(props) {
                         label={i18n.t('Required Number')}
                         fullWidth
                         onChange={changeText.bind(null, "required_quantity")}
+                        error={errors.required_quantity}
                     />
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -78,6 +100,7 @@ export function Form(props) {
                         label={i18n.t('Current Number')}
                         fullWidth
                         onChange={changeText.bind(null, "current_quantity")}
+                        error={errors.current_quantity}
                     />
                 </Grid>
             </Grid>
@@ -92,8 +115,8 @@ Form.defaultProps = {
 
 const mapStateToProps = (state) => ({
     inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes.results,
-    facilityList: state.facilities.results,
+    inventoryTypesList: state.inventoryTypes,
+    shortFacilities: state.shortFacilities,
     count:state.inventory.count
   });
   
@@ -101,7 +124,7 @@ Form.propTypes = {
     profile: PropTypes.object.isRequired,
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
-    facilityList: PropTypes.array.isRequired,
+    shortFacilities: PropTypes.array.isRequired,
     handleEdit: PropTypes.func.isRequired
 };
   

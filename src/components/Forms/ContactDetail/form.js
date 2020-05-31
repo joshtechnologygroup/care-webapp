@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
+import { connect } from 'react-redux';
 import {
   Card,
   Grid,
@@ -14,91 +15,111 @@ import {
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import useStyles from './styles';
+import { TOTAL_CONTACT_DETAILS_FIELDS } from 'Src/constants';
 
 // IMORTING MOCKDATA
 import { countryChoices } from 'Mockdata/countryChoices.json';
 import { stateChoices } from 'Mockdata/stateChoices.json';
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 
-export default function Form(props) {
+export function Form(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
+  
   const {
     values: {
-      number,
-      numberBelongsTo,
+      phone_number,
+      phone_number_belongs_to,
       address,
       municipalWard,
-      city,
       district,
       state,
       pincode,
-      nativeState,
-      nativeCountry,
+      native_state,
+      native_country,
     },
     errors,
     touched,
     handleSubmit,
-    handleChange,
     setFieldValue,
     setFieldTouched,
     editMode,
+    saveProfile,
+    districts,
+    states,
+    handleError,
   } = props;
-  
-  const change = (name, e) => {
-    handleChange(e);
-    setFieldTouched(e.target.name, true, false);
-  };
   const [values, setValues] = React.useState({
-    nativeCountryExist: Boolean(nativeCountry),
-    nativeStateExist: Boolean(nativeState),
+    nativeCountryExist: Boolean(native_country),
+    nativeStateExist: Boolean(native_state),
   })
   const setNativePlace = (event) => {
     if (event.target.name === 'nativeStateExist') {
-      setFieldValue('nativeCountry', '');
-      setValues({
-        nativeCountryExist: false,
+      saveProfile('native_state', event.target.value);
+      setValues(prevState =>({
+        ...prevState,
         [event.target.name]: event.target.checked
-      });
+    }))
     } else if (event.target.name === 'nativeCountryExist') {
-      setFieldValue('nativeState', '');
-      setValues({
-        [event.target.name]: event.target.checked,
-        nativeStateExist: false
-      });
+      saveProfile('native_country', event.target.value);
+      setValues(prevState =>({
+        ...prevState,
+        [event.target.name]: event.target.checked
+    }))
     }
   };
   
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    saveProfile(name, value)
+    setFieldTouched(name, true, false);
+    if(value){
+      setFieldTouched(name, false, true);
+    }
+    let error = false;
+    if(value === ""){
+      error = true;
+    } else if(Object.keys(touched).length >= TOTAL_CONTACT_DETAILS_FIELDS){
+      Object.entries(touched).forEach(([item, itemValue]) => {
+        if(itemValue === true){
+          error = true;
+          return;
+        }
+      })
+    }
+    handleError(error);
+  };
+
   return (
-  <form onSubmit={handleSubmit}>
+  <form >
     <Card className={classes.root} elevation={4}>
-      <CardHeader className="pb-0"
+      <CardHeader
         title={i18n.t('Contact Details')}
       />
       <CardContent>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="number"
+              name="phone_number"
               type="number"
               label={i18n.t('Phone number')}
               fullWidth
-              value={number}
-              onChange={change.bind(null, 'number')}
-              helperText={touched.number ? errors.number : ""}
-              error={touched.number && Boolean(errors.number)}
+              value={phone_number}
+              onChange={handleChange}
+              helperText={touched.phone_number ? errors.phone_number : ""}
+              error={touched.phone_number && Boolean(errors.phone_number)}
             />
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <TextField
               select
-              name="numberBelongsTo"
+              name="phone_number_belongs_to"
               label={i18n.t('Contact Number belongs to?')}
-              value={numberBelongsTo}
-              onChange={change.bind(null, 'numberBelongsTo')}
-              helperText={touched.numberBelongsTo ? errors.numberBelongsTo : ""}
-              error={touched.numberBelongsTo && Boolean(errors.numberBelongsTo)}
+              value={phone_number_belongs_to}
+              onChange={handleChange}
+              helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : ""}
+              error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to)}
               fullWidth
             >
               {
@@ -115,7 +136,7 @@ export default function Form(props) {
               name="address"
               label={i18n.t('Address')}
               value={address}
-              onChange={change.bind(null, 'address')}
+              onChange={handleChange}
               helperText={touched.address ? errors.address : ""}
               error={touched.address && Boolean(errors.address)}
               fullWidth
@@ -126,7 +147,7 @@ export default function Form(props) {
               name="municipalWard"
               label={i18n.t('Municipal Ward')}
               value={municipalWard}
-              onChange={change.bind(null, 'municipalWard')}
+              onChange={handleChange}
               helperText={touched.municipalWard ? errors.municipalWard : ""}
               error={touched.municipalWard && Boolean(errors.municipalWard)}
               fullWidth
@@ -134,25 +155,22 @@ export default function Form(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="city"
-              label={i18n.t('City')}
-              value={city}
-              onChange={change.bind(null, 'city')}
-              helperText={touched.city ? errors.city : ""}
-              error={touched.city && Boolean(errors.city)}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
+              select
               name="district"
               label={i18n.t('District')}
               value={district}
-              onChange={change.bind(null, 'district')}
+              onChange={handleChange}
               helperText={touched.district ? errors.district : ""}
               error={touched.district && Boolean(errors.district)}
               fullWidth
-            />
+            >
+              {districts &&
+                districts.map((option) => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>))
+                }
+              </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -160,13 +178,13 @@ export default function Form(props) {
               name="state"
               label={i18n.t('State')}
               value={state}
-              onChange={change.bind(null, 'state')}
+              onChange={handleChange}
               helperText={touched.state ? errors.state : ""}
               error={touched.state && Boolean(errors.state)}
               fullWidth
             >
-              {
-                stateChoices.map((option) => (
+              {states &&
+                states.map((option) => (
                 <MenuItem key={option.id} value={option.id}>
                   {option.name}
                 </MenuItem>))
@@ -178,7 +196,7 @@ export default function Form(props) {
               name="pincode"
               label={i18n.t('Pincode')}
               value={pincode}
-              onChange={change.bind(null, 'pincode')}
+              onChange={handleChange}
               helperText={touched.pincode ? errors.pincode : ""}
               error={touched.pincode && Boolean(errors.pincode)}
               fullWidth
@@ -197,7 +215,7 @@ export default function Form(props) {
                 }
                 label={
                   <Typography variant="h5">
-                    {i18n.t('Patient natively belongs to some other Indian state?')}
+                    {i18n.t('Patient natively belongs to some other Indian state')}
                   </Typography>
                 }
               />
@@ -205,23 +223,21 @@ export default function Form(props) {
             {
               Boolean(values.nativeStateExist) &&
               <Grid item xs={12} sm={6}>
-                <TextField
-                  select
-                  name="nativeState"
-                  label={i18n.t('Native State')}
-                  value={nativeState}
-                  onChange={change.bind(null, 'nativeState')}
-                  helperText={touched.nativeState ? errors.nativeState : ""}
-                  error={touched.nativeState && Boolean(errors.nativeState)}
-                  fullWidth
-                >
-                  {
-                    stateChoices.map((option) => (
+              <TextField
+                select
+                name="native_state"
+                label={i18n.t('Native state of patient')}
+                value={native_state}
+                onChange={handleChange}
+                helperText={touched.native_state ? errors.native_state : ""}
+                fullWidth>
+                {states &&
+                    states.map((option) => (
                     <MenuItem key={option.id} value={option.id}>
                       {option.name}
                     </MenuItem>))
                   }
-                </TextField>
+              </TextField>
               </Grid>
             }
           </Grid>
@@ -238,7 +254,7 @@ export default function Form(props) {
                 }
                 label={
                   <Typography variant="h5">
-                    {i18n.t('Patient natively belongs to a foreign country?')}
+                    {i18n.t('Patient natively belongs to a foreign country')}
                   </Typography>
                 }
               />
@@ -246,23 +262,15 @@ export default function Form(props) {
             {
               Boolean(values.nativeCountryExist) &&
               <Grid item xs={12} sm={6}>
-                <TextField
-                  select
-                  name="nativeCountry"
-                  label={i18n.t('Native Country')}
-                  value={nativeCountry}
-                  onChange={change.bind(null, 'nativeCountry')}
-                  helperText={touched.nativeCountry ? errors.nativeCountry : ""}
-                  error={touched.nativeCountry && Boolean(errors.nativeCountry)}
-                  fullWidth
-                >
-                  {
-                    countryChoices.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.name}
-                    </MenuItem>))
-                  }
-                </TextField>
+               <TextField
+                multiline
+                name="native_country"
+                label={i18n.t('Native country of patient')}
+                value={native_country}
+                onChange={handleChange}
+                helperText={touched.native_country ? errors.address : ""}
+                fullWidth
+            />
               </Grid>
             }
           </Grid>
@@ -272,6 +280,7 @@ export default function Form(props) {
               <Button
                 fullWidth
                 type="submit"
+                onclick={handleSubmit}
                 variant="contained"
                 color="primary"
                 disableElevation
@@ -289,11 +298,16 @@ export default function Form(props) {
   );
 }
 
-Form.propTypes = {
-  profile: PropTypes.object.isRequired,
-  handleEdit: PropTypes.func
-}
 
 Form.defaultProps = {
   profile: {}
 }
+
+Form.propTypes = {
+  profile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+});
+
+export default connect(mapStateToProps, null)(Form);
