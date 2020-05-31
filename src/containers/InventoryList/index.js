@@ -30,7 +30,8 @@ export function InventoryList(props) {
         inventoryTypesList,
         shortFacilityLists,
         count,
-        value
+        value,
+        error
     } = props;
     const itemsPerPage = 5;
 
@@ -83,10 +84,10 @@ export function InventoryList(props) {
     }, [queryParams, offset, fetchInventoryList, selectedParams, value]);
 
   //   useEffect(() => {
-  //    if(createInventory){
+  //    if(error === false){
   //      sortByValue("updated_at");
   //    }
-  // }, [createInventory]);
+  // }, [error]);
   
   const fetchMoreInventory = () => {
       const lastOffset = Math.floor((count - 1) / itemsPerPage) * itemsPerPage;
@@ -111,7 +112,7 @@ export function InventoryList(props) {
         fetchInventoryList({
             ...queryParams,
             offset: offset,
-            ordering: val,
+            ordering: `-${val}`,
         });
     };
 
@@ -240,15 +241,17 @@ InventoryList.defaultProps = {
     queryParams: {},
     count: 0,
     value: "",
+    error:null,
 };
 
 const mapStateToProps = state => {
-    const { inventory, inventoryTypes, shortFacilities } = state;
+    const { inventory, inventoryTypes, shortFacilities, createInventory } = state;
     return {
         inventoryList: inventory.results,
         count: inventory.count,
         inventoryTypesList: inventoryTypes,
-        shortFacilityLists: shortFacilities
+        shortFacilityLists: shortFacilities,
+        error: createInventory.error,
     };
 };
 
