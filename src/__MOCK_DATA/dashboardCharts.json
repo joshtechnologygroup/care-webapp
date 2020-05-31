@@ -44,6 +44,17 @@
             {
                 "name": "3. DCH", "Government": 3, "Private": 5, "amt": 989
             }
+        ],
+        "occupancyStatusData": [
+            {
+                "name": "Mild Capacity", "Capacity": 1130, "Vacancy": 995, "Occupied": 135, "amt": 1130
+            },
+            {
+                "name": "Moderate Capacity", "Capacity": 593, "Vacancy": 541, "Occupied": 52, "amt": 593
+            },
+            {
+                "name": "ICU Capacity", "Capacity": 171, "Vacancy": 145, "Occupied": 22, "amt": 171
+            }
         ]
     }
 }

@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CoivdBeds from './Charts/CoivdBeds';
 import CovidFacilities from './Charts/CovidFacilities';
 import BedsForCases from './Charts/BedsForCases';
+import OccupancyStatus from './Charts/OccupancyStatus';
 import { dashboardCharts } from 'Mockdata/dashboardCharts.json';
 
 const useStyles = makeStyles({
@@ -31,7 +32,7 @@ export const Dashboard = (props) => {
             <Grid item xs={7}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <CovidFacilities title="Occupancy Status" data={dashboardCharts.hBarData} />
+                        <OccupancyStatus title="Occupancy Status" data={dashboardCharts.occupancyStatusData} />
                     </CardContent>
                 </Card>
             </Grid>
