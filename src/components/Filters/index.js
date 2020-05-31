@@ -1,12 +1,12 @@
 import React from 'react';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, TextField } from '@material-ui/core';
 import { useTranslation } from "react-i18next";
 
 import { MultiSelectBoolDropdown, MultiSelectNumberDropdown, MultiSelectDateDropdown } from 'Components/Inputs';
 
 import './Filters.scss';
 
-export default function Filters({ onSeeMore, options, handleBooleanCallBack, handleNumberCallBack, handleDateCallBack }) {
+export default function Filters({ onSeeMore, options, handleBooleanCallBack, handleNumberCallBack, handleDateCallBack, handleStringCallBack, handleApplyFilter }) {
   const { i18n } = useTranslation();
   let countFilter = 0;
   const [showMore, setShowMore] = React.useState(false);
@@ -59,6 +59,19 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                           field={option['field']}
                         />
                       </Grid>);
+                    case 'string':
+                      countFilter += 1;
+                      return (<Grid key={option['field']} item xs={12} sm={3}>
+                        <TextField
+                          className="search-input"
+                          label={`Search ${option['headerName']}`}
+                          name={option['field']}
+                          type="search"
+                          variant="outlined"
+                          size="small"
+                          onChange={(val) => handleStringCallBack(val.target.name, val.target.value)}
+                        />
+                      </Grid>);
                     default: return '';
                   }
                 } else {
@@ -67,8 +80,16 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
               })}
           </Grid>
         </Grid>
-        <Grid item xs={2} md={2}>
-          {(countFilter > 1 && (countFilter > 4 || window.innerWidth < 600)) ? <Button color="primary" onClick={handleSeeMore}>{showMore ? i18n.t('lessText') : i18n.t('moreText')}</Button> : null}
+        <Grid item xs={2} md={2} container direction="row" justify="flex-start"
+          alignItems="flex-start">
+          <Grid md={8}>
+            <Button className="apply_btn" variant="contained" color="primary" onClick={handleApplyFilter}>
+                Apply
+            </Button>
+          </Grid>
+          <Grid md={4}>
+            {(countFilter > 1 && (countFilter > 4 || window.innerWidth < 600)) ? <Button className="more-less_btn" color="primary" onClick={handleSeeMore}>{showMore ? i18n.t('lessText') : i18n.t('moreText')}</Button> : null}
+          </Grid>
         </Grid>
       </Grid>
     </div>

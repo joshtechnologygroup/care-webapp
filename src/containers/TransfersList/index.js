@@ -143,6 +143,12 @@ export function TransfersList(props) {
                         onSeeMore={() => {
                             setShowOverlay(!showOverlay);
                         }}
+                        handleStringCallBack={(field, value) =>
+                        { console.log('------', field, value);}
+                        }
+                        handleApplyFilter={() =>
+                        { console.log('Apply filter clicked--');}
+                        }
                         handleBooleanCallBack={val =>
                             handleBooleanCallBack(val)
                         }
