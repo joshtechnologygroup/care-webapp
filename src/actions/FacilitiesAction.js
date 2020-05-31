@@ -37,25 +37,29 @@ const getInventoryDependencies = (params) => async (dispatch) => {
     ));
 };
 
+/**
+ * Creating or Updating the Inventory 
+ * @param {object} state: Body of inventory object
+ * @param {number} id: id of current inventory object clicked
+ */
 const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
-    let url = Routes.CREATE_INVENTORY_URL
-    var method = POST
-    if(id !== 0){
-        method = PUT
-        url += `${id}/`
+    let url = Routes.CREATE_INVENTORY_URL;
+    let method = POST;
+    if(id !== 0) {
+        method = PUT;
+        url += `${id}/`;
     }
     const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
-    if(inventory_response.ok){
+    if(inventory_response.ok) {
         dispatch({
-            type:ReducerTypes.SET_ERROR_CREATE_INVENTORY,
-            error:false
+            type: ReducerTypes.SET_ERROR_CREATE_INVENTORY,
+            error: false
         });
-    }
-    else if(inventory_response.status === HttpStatus.BAD_REQUEST){
-        const data = await inventory_response.json()
+    } else if (inventory_response.status === HttpStatus.BAD_REQUEST) {
+        const data = await inventory_response.json();
         dispatch({
-            type:ReducerTypes.SET_ERROR_CREATE_INVENTORY,
-            error:data.non_field_errors[0]
+            type: ReducerTypes.SET_ERROR_CREATE_INVENTORY,
+            error: data.non_field_errors[0]
         });
     }
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import i18n from "i18next";
-import Snackbar from "@material-ui/core/Snackbar";
+import {Grid, Snackbar} from "@material-ui/core";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import PropTypes from 'prop-types';
@@ -103,7 +103,20 @@ function AddPatient(props) {
             handleSave={handleSave}
             handleError={handleError}
           />
+          <Grid container justify="space-between">
+          <h2>{i18n.t('*Required fields')}</h2>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className="btn py-5 ml-auto"
+            onClick={handleSave}
+          >
+            {i18n.t('Save')}
+          </Button>
+          </Grid>
         </div>
+        
         <Snackbar
                 open={open}
                 autoHideDuration={5000}
@@ -119,18 +132,6 @@ function AddPatient(props) {
                   {error === null && <div>Please fill all the fields first!</div>}
                 </Alert>
               </Snackbar>
-              <footer>
-          <h2>{i18n.t('*Required fields')}</h2>
-          <Button
-            variant="contained"
-            color="primary"
-            disableElevation
-            className="btn py-5 ml-auto"
-            onClick={handleSave}
-          >
-            {i18n.t('Save')}
-          </Button>
-        </footer>
       </>
     );
 }
