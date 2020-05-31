@@ -35,32 +35,31 @@ export const InventoryForm = (props) => {
             setError(false)
          }
       }, [facilityList, inventoryTypesList]);
-      
+
     const createInventory = () => {
-        let initial = inventoryData
-        console.log(initial)
-        if(facilityList && !_.isEmpty(props.facilityList) && inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
-        const facility = facilityList.find(      
-            facility => facility.name === inventoryData.name.label
-        )
-        if(facility){
-            initial['facility'] = facility.id
-            delete initial.name;
-        }
-        const inventory = inventoryTypesList.find(      
-            inventory => inventory.name === inventoryData.type.label
-        )
-        if(inventory){
-            initial['item'] = inventory.id
-            delete initial.type;
-        }
+        let initial = inventoryData;
+        if(!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)){
+        Object.keys(facilityList).forEach((facility, index) =>{
+            if(initial.type.label === facilityList[facility].name){
+               initial['facility'] = facilityList[facility].id
+               return;
+            }
+        });
+        delete initial.name;
+        Object.keys(inventoryTypesList).forEach((inventoryitem, index) =>{
+             if(initial.type.label === inventoryTypesList[inventoryitem].name){
+                initial['item'] = inventoryTypesList[inventoryitem].id
+                return;
+             }
+        });
+        delete initial.type;
         setInventoryData({inventoryData:initial});
         if(isAddAnother === false && data){
             createOrUpdateInventory(initial, data.id)
         } else {
-            createOrUpdateInventory(initial)
+             createOrUpdateInventory(initial)
         }
-    }
+        }
         if(!isAddAnother) {
             onClose();
         }
@@ -135,8 +134,8 @@ export const InventoryForm = (props) => {
 
 const mapStateToProps = (state) => ({
     inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes.results,
-    facilityList: state.facilities.results,
+    inventoryTypesList: state.inventoryTypes,
+    facilityList: state.shortFacilities,
     count:state.inventory.count
   });
   
@@ -147,4 +146,4 @@ const mapStateToProps = (state) => ({
     createOrUpdateInventory: PropTypes.func.isRequired,
 };
   
-  export default connect(mapStateToProps, {createOrUpdateInventory })(InventoryForm);
+export default connect(mapStateToProps, { createOrUpdateInventory })(InventoryForm);

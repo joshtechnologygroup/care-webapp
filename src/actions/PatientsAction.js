@@ -44,4 +44,17 @@ const createPatient = (state) => async (dispatch) => {
     return create_patient_response.ok;
 }
 
-export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient }
+
+const fetchPatient = id => async (dispatch) => {
+    const fetch_patient_response = await CommonService.makeAuthorizedApiCall(`${Routes.GET_PATIENT_URL}${id}/`, GET, {}, {})
+    if(fetch_patient_response.ok){
+        const data = await fetch_patient_response.json()
+        dispatch({
+            type: ReducerTypes.SET_CURRENT_PATIENT,
+            data: data
+        });
+    }
+}
+
+
+export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient }

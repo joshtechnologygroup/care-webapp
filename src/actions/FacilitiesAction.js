@@ -29,10 +29,10 @@ const getInventoryList = (params) => async (dispatch) => {
 const getInventoryDependencies = (params) => async (dispatch) => {
     dispatch(dispatchDependentActions(
         [
-            [Routes.FACILITY_LIST_URL, GET, {}, params],
+            [Routes.FACILITY_SHORT_LIST_URL, GET, {}, params],
             [Routes.INVENTORY_TYPE_LIST_URL, GET, {}, params],
         ],
-        [ReducerTypes.GET_FACILITY_LIST, ReducerTypes.GET_INVENTORY_TYPE_LIST]
+        [ReducerTypes.GET_SHORT_FACILITY_LIST, ReducerTypes.GET_INVENTORY_TYPE_LIST]
     ));
 };
 
