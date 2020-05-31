@@ -6,29 +6,32 @@ export const PASSWORD_FORGOT_URL = SERVER + API_V1 + 'accounts/forgot-password/'
 export const PASSWORD_RESET_URL = SERVER + API_V1 + 'accounts/password-reset-confirm/{0}/{1}/';
 
 // Facilities
-export const FACILITY_LIST_URL = SERVER + API_V1 + 'facilities/facility'
-export const FACILITY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/facility-type'
-export const FACILITY_INVENTORY_LIST_URL = SERVER + API_V1 + 'facilities/inventories/'
+export const FACILITY_LIST_URL = SERVER + API_V1 + 'facilities/facility';
+export const FACILITY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/facility-type';
+export const FACILITY_INVENTORY_LIST_URL = SERVER + API_V1 + 'facilities/inventories/';
+export const FACILITY_INFRASTRUCTURE_LIST_URL = SERVER + API_V1 + 'facilities/infrastructures/?limit={0}&offset={1}';
+export const ROOM_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/room-type/';
+export const BED_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/bed-type/';
 export const FACILITY_SHORT_LIST_URL = SERVER + API_V1 + 'facilities/facility/short/'
 
 // commons
-export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/'
-export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type/'
+export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/';
+export const OWNERSHIP_TYPE_LIST_URL = SERVER + API_V1 + 'commons/ownership-type/';
 
 //inventories
-export const INVENTORY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/inventory-items'
-export const CREATE_INVENTORY_URL = SERVER + API_V1 + 'facilities/inventories/'
+export const INVENTORY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/inventory-items';
+export const CREATE_INVENTORY_URL = SERVER + API_V1 + 'facilities/inventories/';
 
 // Patients
-export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/?limit={0}&offset={1}'
-export const CLINICAL_STATUS_LIST_URL = SERVER + API_V1 + 'patients/clinical-status/'
-export const CLUSTER_GROUP_LIST_URL = SERVER + API_V1 + 'patients/patient-groups/'
-export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/'
+export const PATIENT_LIST_URL = SERVER + API_V1 + 'patients/?limit={0}&offset={1}';
+export const CLINICAL_STATUS_LIST_URL = SERVER + API_V1 + 'patients/clinical-status/';
+export const CLUSTER_GROUP_LIST_URL = SERVER + API_V1 + 'patients/patient-groups/';
+export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/';
 export const GET_PATIENT_URL = SERVER + API_V1 + 'patients/'
 
 //Patient Transfers
-export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/'
-export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/'
+export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/';
+export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/';
 export const CREATE_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
 
 //patient dependencies
