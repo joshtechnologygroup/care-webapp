@@ -132,7 +132,6 @@ useEffect(() => {
     CONFIG.columnDefs[1].cellRendererParams.options =  Object.keys(inventoryTypesList).map(function(item) {
       return inventoryTypesList[item].name
     })
-    console.log(CONFIG.columnDefs[1].cellRendererParams.options)
 }
   if (!_.isEmpty(shortFacilityLists)) {
     CONFIG.columnDefs[0].cellRendererParams.options =  Object.keys(shortFacilityLists).map(function(item) {

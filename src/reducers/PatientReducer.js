@@ -34,7 +34,6 @@ const clinicalStatus = (state = {}, action) => {
 
 const clusterGroup = (state = {}, action) => {
     if (action.type === GET_CLUSTER_GROUP_LIST) {
-        console.log(action.data)
         return {
             ...state,
             ...action.data
