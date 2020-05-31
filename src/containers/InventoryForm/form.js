@@ -13,12 +13,30 @@ import _ from 'underscore'
 export function Form(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
-    const {data, handleChange} = props;
+    const {data, updateData, handleChange} = props;
     const [errors, setErrors] = useState({ required_quantity: false, current_quantity: false, form: ''})
 
     const facilityName = []; 
     const inventoryType = [];
 
+    if(updateData){
+        facilityName.push({
+            'value': `facility-type-0`,
+            'label': updateData.facility
+        })
+        inventoryType.push({
+            'value': `inventory-name-0`,
+            'label': updateData.item
+        })
+    } else {
+        facilityName.push({
+            'value': `facility-name--`,
+            'label': '---------------'
+        })
+        inventoryType.push({
+            'value': `inventory-name--`,
+            'label': '----------------'
+        })
     if(!_.isEmpty(props.shortFacilities)){
         Object.keys(props.shortFacilities).forEach((facility, index) =>{
             facilityName.push({
@@ -31,12 +49,12 @@ export function Form(props) {
     if(!_.isEmpty(props.inventoryTypesList)){
         Object.keys(props.inventoryTypesList).forEach((inventoryitem, index) =>{
             inventoryType.push({
-                'value': `facility-type-${index}`,
+                'value': `inventory-type-${index}`,
                 'label': props.inventoryTypesList[inventoryitem].name
             })
           })
      }
-
+    }
     const change = (name, value) => {
         handleChange(name, value);
     };
@@ -72,6 +90,7 @@ export function Form(props) {
                         options={facilityName}
                         defaultValue={facilityName[0]}
                         onChange={change.bind(null, "name")}
+                        isDisabled={updateData?true:false}
                     />
                 </Grid>
 
@@ -81,6 +100,7 @@ export function Form(props) {
                         options={inventoryType}
                         defaultValue={inventoryType[0]}
                         onChange={change.bind(null, "type")}
+                        isDisabled={updateData?true:false}
                     />
                 </Grid>
                 <Grid item sm={6} xs={12}>

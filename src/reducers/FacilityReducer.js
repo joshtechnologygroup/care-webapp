@@ -3,6 +3,7 @@ import {
     GET_FACILITY_TYPE_LIST,
     GET_FACILITY_INVENTORY_LIST,
     GET_INVENTORY_TYPE_LIST,
+    SET_ERROR_CREATE_INVENTORY,
     INVENTORY_CREATED_SUCCESSFULLY,
     GET_SHORT_FACILITY_LIST,
     GET_FACILITY_INFRASTRUCTURE_LIST,
@@ -10,7 +11,7 @@ import {
     GET_BED_TYPE_LIST
 } from "Reducers/Types";
 
-const initialState = {};
+const initialState = { error: null};
 
 const facilities = (state = {}, action) => {
     if (action.type === GET_FACILITY_LIST) {
@@ -93,10 +94,10 @@ const bedType = (state = initialState, action) => {
 };
 
 const createInventory = (state = initialState, action) => {
-    if (action.type === INVENTORY_CREATED_SUCCESSFULLY) {
+    if (action.type === SET_ERROR_CREATE_INVENTORY) {
         return { 
             ...state,
-            ...action.data
+            error:action.error
         };
     }
     return state;

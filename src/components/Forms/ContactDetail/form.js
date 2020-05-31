@@ -31,7 +31,6 @@ export function Form(props) {
       phone_number,
       phone_number_belongs_to,
       address,
-      municipalWard,
       district,
       state,
       pincode,
@@ -102,7 +101,8 @@ export function Form(props) {
             <TextField
               name="phone_number"
               type="number"
-              label={i18n.t('Phone number')}
+              label={i18n.t('Contact number')}
+              required
               fullWidth
               value={phone_number}
               onChange={handleChange}
@@ -115,12 +115,13 @@ export function Form(props) {
             <TextField
               select
               name="phone_number_belongs_to"
-              label={i18n.t('Contact Number belongs to?')}
+              label={i18n.t('Contact Number belongs to')}
               value={phone_number_belongs_to}
               onChange={handleChange}
               helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : ""}
               error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to)}
               fullWidth
+              required
             >
               {
                 relationshipChoices.map((option) => (
@@ -139,17 +140,6 @@ export function Form(props) {
               onChange={handleChange}
               helperText={touched.address ? errors.address : ""}
               error={touched.address && Boolean(errors.address)}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              name="municipalWard"
-              label={i18n.t('Municipal Ward')}
-              value={municipalWard}
-              onChange={handleChange}
-              helperText={touched.municipalWard ? errors.municipalWard : ""}
-              error={touched.municipalWard && Boolean(errors.municipalWard)}
               fullWidth
             />
           </Grid>

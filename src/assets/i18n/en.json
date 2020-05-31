@@ -134,5 +134,10 @@
   "Phone Number": "Phone Number",
   "Facility Name": "Facility Name",
   "Select District": "Select District",
-  "Name": "Name"
+  "Name": "Name",
+  "Total Covid Beds": "Total Covid Beds",
+  "Occupancy Status": "Occupancy Status",
+  "Covid Facilities Distribution": "Covid Facilities Distribution",
+  "Beds for Confirmed Cases": "Beds for Confirmed Cases",
+  "Beds for Suspected Cases": "Beds for Suspected Cases"
 }

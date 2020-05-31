@@ -18,7 +18,7 @@ import useStyles from './styles';
 import ButtonToggle from 'Components/ButtonToggle';
 import { genderChoices } from 'Constants/app.const';
 import ProfileImageInput from '../../profileImageInput';
-import { GENDER_LIST_MAPPING } from 'Constants/app.const.js';
+import { GENDER_MAPPING_PROPS } from 'Constants/app.const.js';
 import { TOTAL_PERSONEL_DETAILS_FIELDS } from 'Src/constants';
 
 export default function Form(props) {
@@ -98,7 +98,7 @@ export default function Form(props) {
   };
 
   const setProfileFields = (name, value) =>{
-    const genderId = GENDER_LIST_MAPPING[value]
+    const genderId = GENDER_MAPPING_PROPS[value];
     saveProfile(name, genderId)
     setFieldTouched(name, true, false);
     if(value){
@@ -127,12 +127,13 @@ export default function Form(props) {
               <Grid item xs={12}>
                 <TextField
                   name="name"
-                  label={i18n.t('Name')}
+                  label={i18n.t('Patient name')}
                   fullWidth
                   value={name}
                   onChange={change}
                   helperText={touched.name ? errors.name : ""}
                   error={touched.name && Boolean(errors.name)}
+                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -141,25 +142,29 @@ export default function Form(props) {
               <Grid item xs={6} sm={3}>
                 <TextField
                   name="year"
-                  label={i18n.t('Years')}
+                  defaultValue={1}
+                  label={i18n.t('Age in years')}
                   value={year}
                   onChange={change}
                   helperText={touched.year ? errors.year : ""}
                   error={touched.year && Boolean(errors.year)}
                   fullWidth
                   type="number"
+                  required
                 />
               </Grid>
               <Grid item xs={6} sm={3}>
                 <TextField
                   name="month"
-                  label={i18n.t('Months')}
+                  defaultValue={1}
+                  label={i18n.t('Age in Months')}
                   value={month}
                   onChange={change}
                   helperText={touched.month ? errors.month : ""}
                   error={touched.month && Boolean(errors.month)}
                   fullWidth
                   type="number"
+                  required
                 />
               </Grid>
               <Grid item xs={6} sm={4}>
@@ -182,6 +187,7 @@ export default function Form(props) {
                   helperText={touched.govt_id ? errors.govt_id : ""}
                   error={touched.govt_id && Boolean(errors.govt_id)}
                   fullWidth
+                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -194,6 +200,7 @@ export default function Form(props) {
               helperText={touched.clinical_status ? errors.clinical_status : ""}
               error={touched.clinical_status && Boolean(errors.clinical_status)}
               fullWidth
+              required
             >
               {clinicalStatus &&
                 clinicalStatus.map((option) => (
@@ -213,6 +220,7 @@ export default function Form(props) {
               helperText={touched.covid_status ? errors.covid_status : ""}
               error={touched.covid_status && Boolean(errors.covid_status)}
               fullWidth
+              required
             >
               {covidStatus &&
                 covidStatus.map((option) => (
@@ -271,6 +279,7 @@ export default function Form(props) {
                   helperText={touched.facility ? errors.facility : ""}
                   error={touched.facility && Boolean(errors.facility)}
                   fullWidth
+                  required
                 >
                   { facilityList &&
                     facilityList.map((option) => (
@@ -299,19 +308,6 @@ export default function Form(props) {
                 }
               />
             </Grid>
-              { props.save === true &&
-              <Grid item xs={6} sm={4}>
-                <TextField
-                  name="flag"
-                  label={i18n.t('Cluster group')}
-                  value={cluster_group}
-                  onChange={change}
-                  helperText={touched.clusterGroup ? errors.clusterGroup : ""}
-                  error={touched.clusterGroup && Boolean(errors.clusterGroup)}
-                  fullWidth
-                />
-              </Grid>
-               }
               {
                 editMode && 
                 <Grid item xs={12} sm={3} className="ml-auto">

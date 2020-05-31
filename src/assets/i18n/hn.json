@@ -133,5 +133,10 @@
   "Phone Number": "फ़ोन नंबर",
   "Facility Name": "सुविधा का नाम",
   "Select District": "जिले का चयन करें",
-  "Name": "नाम"
+  "Name": "नाम",
+  "Total Covid Beds": "कुल कोविद बेड",
+  "Occupancy Status": "व्यवसाय की स्थिति",
+  "Covid Facilities Distribution": "कोविद सुविधाएं वितरण",
+  "Beds for Confirmed Cases": "पुष्टि मामलों के लिए बिस्तर",
+  "Beds for Suspected Cases": "संदिग्ध मामलों के लिए बिस्तर"
 }
