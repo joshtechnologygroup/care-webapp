@@ -17,12 +17,6 @@ import { PropTypes } from 'prop-types';
 
 const useStyles = makeStyles(theme =>
   createStyles({
-    root: {
-      borderRadius: '0',
-      boxShadow: '0.2rem 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.07)',
-      position: 'relative',
-      marginBottom: '16px'
-    },
     input: {
       display: 'none',
     },
@@ -41,9 +35,9 @@ const useStyles = makeStyles(theme =>
     },
     action: {
       position: 'absolute',
-      right: 0,
-      top: 0
-    }
+      right: '.2em',
+      top: '.2em',
+    },
   })
 );
 
@@ -53,7 +47,7 @@ export default function PersonalDetail(props) {
 
   const { profile, handleEdit } = props;
   return (
-    <Card className={classes.root} elevation={4}>
+    <Card elevation={4}>
       <CardContent>
         <Grid container spacing={4}>
           <Grid item className="p-0">

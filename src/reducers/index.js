@@ -1,12 +1,22 @@
 import { combineReducers } from "redux";
 import { user } from "Reducers/UserReducer";
-import { patients, clinicalStatus, clusterGroup, covidStatus } from "Reducers/PatientReducer";
+import { 
+    patients, 
+    clinicalStatus, 
+    clusterGroup, 
+    covidStatus,
+    currentStatus, 
+    states, 
+    patient
+} from "Reducers/PatientReducer";
 import {
     facilities,
     facilityTypes,
     facilityInventoryList,
     InventoryTypeList,
     facilityInfrastructure,
+    createInventory, 
+    shortFacilities,
     roomType,
     bedType
 } from "Reducers/FacilityReducer";
@@ -28,5 +38,10 @@ export default combineReducers({
     transfers: transfers,
     facilityInfrastructure,
     roomType,
-    bedType
+    bedType,
+    currentStatus,
+    states,
+    patient,
+    shortFacilities,
+    createInventory,
 });

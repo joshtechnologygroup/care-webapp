@@ -1,0 +1,28 @@
+{
+  "labTestStatusChoices": [
+    {
+        "id": 1,
+        "name": "Sample Sent"
+    },
+    {
+        "id": 2,
+        "name": "Report Pending"
+    },
+    {
+        "id": 3,
+        "name": "Positive"
+    },
+    {
+        "id": 4,
+        "name": "Negative"
+    },
+    {
+        "id": 5,
+        "name": "Presumptive Positive"
+    },
+    {
+        "id": 6,
+        "name": "Test Inconclusive"
+    }
+  ]
+}

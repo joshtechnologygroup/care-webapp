@@ -6,13 +6,13 @@ import { GRID_CONFIG } from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true } },
+    { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true, filterType: 'string' } },
     { headerName: 'Govt. ID', field: 'govt_id', cellRendererParams: { isSortable: true } },
-    { headerName: 'Patient Name', field: 'patient_name', minWidth: 120, cellRendererParams: { isSortable: true } },
-    { headerName: 'Gender', field: 'gender' },
-    { headerName: 'Age(Years)', field: 'year', minWidth: 100, cellRendererParams: { isSortable: true } },
-    { headerName: 'Age(Months)', field: 'month', minWidth: 110, cellRendererParams: { isSortable: true } },
-    { headerName: 'Contact Mobile No.', field: 'phone_number', minWidth: 140, cellRendererParams: { isSortable: true } },
+    { headerName: 'Patient Name', field: 'patient_name', minWidth: 120, cellRendererParams: { isSortable: true, filterType: 'string' } },
+    { headerName: 'Gender', field: 'gender', cellRendererParams: { filterType: 'boolean', options: [] } },
+    { headerName: 'Age(Years)', field: 'year', minWidth: 100, cellRendererParams: { isSortable: true, filterType: 'number' } },
+    { headerName: 'Age(Months)', field: 'month', minWidth: 110, cellRendererParams: { isSortable: true, filterType: 'number' } },
+    { headerName: 'Contact Mobile No.', field: 'phone_number', minWidth: 140, cellRendererParams: { isSortable: true, filterType: 'string' } },
     {
       headerName: 'From Facility', children: [
         { headerName: 'Facility ID', field: 'from_facility_id', minWidth: 100 },

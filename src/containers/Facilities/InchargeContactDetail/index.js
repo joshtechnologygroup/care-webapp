@@ -67,10 +67,10 @@ export default function InchargeContactDetail(props) {
 }
 
 InchargeContactDetail.propTypes = {
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.array.isRequired,
   handleEdit: PropTypes.func
 }
 
 InchargeContactDetail.defaultProps = {
-  profile: {}
+  profile: []
 }

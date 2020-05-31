@@ -21,6 +21,9 @@ $risks: (
 
 .timeline_wrap {
     padding: 2rem 3rem;
+    @include for-phone-only {
+        padding: 2rem 1rem;
+    }
     .item {
         position: relative;
         border-left: 1px solid $timeline_gray;

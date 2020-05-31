@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
-import { GET } from "Src/constants";
+import { GET, DATE_FORMAT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import * as StringUtils from 'Src/utils/stringformatting';
-import { mappingProps } from 'Src/utils/mapping-functions';
-
+import { GENDER_LIST_MAPPING, STATUS_LIST_MAPPING } from 'Constants/app.const.js';
+import {
+  multiSelectBooleanFilterCallback
+} from "Src/utils/listFilter";
 import { CONFIG } from './config';
 import * as Routes from 'Src/routes';
 import moment from 'moment';
@@ -91,9 +93,9 @@ export function PatientsList( props ) {
 
       update_patients.forEach((attr) => {
         let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
-        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format('DD-MM-YYYY h:mm a');
+        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
         date = new Date(attr[PORTEA_CALLED_AT])
-        attr[PORTEA_CALLED_AT] = moment(date).format('DD-MM-YYYY h:mm a');;
+        attr[PORTEA_CALLED_AT] = moment(date).format(DATE_FORMAT);;
       });
 
       Object.keys(joinById).forEach((id) => {
@@ -202,13 +204,15 @@ export function PatientsList( props ) {
       'facility_name': facilities,
       'facility_district': districts_list,
       'facility_type': facility_types,
-      'ownership_type': ownership_types
-    }
-    let update_select_params = { ...selectedParams }
-    val =  mappingProps(val,
-        mapping_id_list[Object.keys(val)[0]]
-    );
-    setSelectedParams({ ...update_select_params, ...val });
+      'ownership_type': ownership_types,
+      'gender': GENDER_LIST_MAPPING,
+      'patient_status': STATUS_LIST_MAPPING
+    };
+    let update_select_params = multiSelectBooleanFilterCallback(
+      selectedParams,
+      mapping_id_list,
+      val);
+    setSelectedParams({ ...update_select_params });
   }
 
   const handleNumberCallBack = (val) => {
