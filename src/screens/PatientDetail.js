@@ -79,7 +79,7 @@ class PatientDetail extends Component {
           {
             isEditing[formList[0]] ? 
             <PersonalDetailForm
-              profile={this.props.patient}
+              profile={profile[formList[0]]}
               handleSubmit={ (data) => this.onSubmit(data, formList[0]) }
               editMode={true}
             /> :

@@ -2,11 +2,12 @@ import React from 'react';
 import AgProvider from 'Containers/AgProvider';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-import InventoryForm from 'Containers/InventoryForm';
+import BedsForm from 'Containers/BedsForm';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 export const ActionRenderer = (item) => {
+  console.log(item);
   const { data } = item;
   const [open, setOpen] = React.useState(false);
 
@@ -24,7 +25,7 @@ export const ActionRenderer = (item) => {
           <EditIcon color="primary" />
         </IconButton>
       </div>
-      <InventoryForm data={data} index={item.rowIndex} open={open} onClose={handleClose} />
+      <BedsForm data={data} open={open} onClose={handleClose} />
     </AgProvider>
   );
 };

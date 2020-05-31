@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import i18n from "i18next";
-import Snackbar from "@material-ui/core/Snackbar";
+import {Grid, Snackbar} from "@material-ui/core";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
@@ -139,22 +139,35 @@ function AddPatient(props) {
           <FamilyDetails
             profile={profile[formList[6]]}
           />
+          <Grid container justify="space-between">
+            <h2>{i18n.t('*Required fields')}</h2>
+            <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              className="btn py-5 ml-auto"
+              onClick={handleSave}
+            >
+              {i18n.t('Save')}
+            </Button>
+          </Grid>
         </div>
+        
         <Snackbar
-                open={open}
-                autoHideDuration={5000}
-                onClose={handleClose}
-              >
-                <Alert onClose={handleClose} severity={error==true ? "success":"error"}>
-                  {error &&
-                  <div>
-                    {error===true && "Successfully created!"}
-                    {error===false && "Error occured!"}
-                    </div>
-                  }
-                  {error === null && <div>Please fill all the fields first!</div>}
-                </Alert>
-              </Snackbar>
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity={error==true ? "success":"error"}>
+          {error &&
+            <div>
+              {error===true && "Successfully created!"}
+              {error===false && "Error occured!"}
+            </div>
+          }
+          {error === null && <div>Please fill all the fields first!</div>}
+          </Alert>
+        </Snackbar>
       </>
     );
 }

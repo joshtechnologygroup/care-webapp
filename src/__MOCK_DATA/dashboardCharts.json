@@ -1,0 +1,60 @@
+{
+    "dashboardCharts": {
+        "barData": [
+            {
+                "name": "Government", "Mild": 505, "Moderate": 252, "Severe": 98, "amt": 2400
+            },
+            {
+                "name": "Private", "Mild": 135, "Moderate": 152, "Severe": 49, "amt": 2210
+            }
+        ],
+        "barData2": [
+            {
+                "name": "Government", "Mild": 430, "Moderate": 117, "Severe": 24, "amt": 2400
+            },
+            {
+                "name": "Private", "Mild": 60, "Moderate": 71, "Severe": 0, "amt": 2210
+            }
+        ],
+        "pieData": [
+            {
+                "name": "PMC",
+                "value": 558
+            },
+            {
+                "name": "PCMC",
+                "value": 810
+            },
+            {
+                "name": "DHO",
+                "value": 264
+            },
+            {
+                "name": "CS",
+                "value": 262
+            }
+        ],
+        "hBarData": [
+            {
+                "name": "1. CCC", "Government": 6, "Private": 17, "amt": 1400
+            },
+            {
+                "name": "2. DCHC", "Government": 2, "Private": 15, "amt": 1506
+            },
+            {
+                "name": "3. DCH", "Government": 3, "Private": 5, "amt": 989
+            }
+        ],
+        "occupancyStatusData": [
+            {
+                "name": "Mild Capacity", "Capacity": 1130, "Vacancy": 995, "Occupied": 135, "amt": 1130
+            },
+            {
+                "name": "Moderate Capacity", "Capacity": 593, "Vacancy": 541, "Occupied": 52, "amt": 593
+            },
+            {
+                "name": "ICU Capacity", "Capacity": 171, "Vacancy": 145, "Occupied": 22, "amt": 171
+            }
+        ]
+    }
+}

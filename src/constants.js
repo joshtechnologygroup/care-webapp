@@ -20,11 +20,12 @@ export const MAPPING_INVENTORY_ATTRIBUTES = {
     'current_quantity':'currentNo',
     'created_by':'createdBy',
     'updated_at':'updatedAt',
-}
-export const UPDATED_AT='updated_at'
+};
+export const UPDATED_AT='updated_at';
 
-export const PAGINATION_LIMIT = 5;
+export const PAGINATION_LIMIT = 50;
 export const INITIAL_PAGE = 1;
+export const OFFSET = 0;
 
 
 export const TOTAL_PROFILE_FIELDS = 17;
