@@ -4,9 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import AppDoughnut from 'Components/Charts/Doughnut';
-import HorizontalBar from 'Components/Charts/HorizontalBar';
-import Bar from 'Components/Charts/Bar';
+import CoivdBeds from './Charts/CoivdBeds';
+import CovidFacilities from './Charts/CovidFacilities';
+import BedsForCases from './Charts/BedsForCases';
 import { dashboardCharts } from 'Mockdata/dashboardCharts.json';
 
 const useStyles = makeStyles({
@@ -16,29 +16,29 @@ const useStyles = makeStyles({
     }
 });
 
-export const DashboardCharts = (props) => {
+export const Dashboard = (props) => {
     const classes = useStyles();
 
     return (
         <Grid container justify="center" spacing="3">
-            <Grid item xs={6}>
+            <Grid item xs={5}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <AppDoughnut data={dashboardCharts.pieData} />
+                        <CoivdBeds title="Total Covid Beds" data={dashboardCharts.pieData} />
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <HorizontalBar data={dashboardCharts.hBarData} />
+                        <CovidFacilities title="Occupancy Status" data={dashboardCharts.hBarData} />
                     </CardContent>
                 </Card>
             </Grid>
             <Grid item xs={4}>
                 <Card className={classes.root}>
                     <CardContent>
-                        <HorizontalBar data={dashboardCharts.hBarData} />
+                        <CovidFacilities title="Covid Facilities Distribution" data={dashboardCharts.hBarData} />
                     </CardContent>
                 </Card>
             </Grid>
@@ -47,12 +47,12 @@ export const DashboardCharts = (props) => {
                     <Grid container>
                         <Grid item xs={6}>
                             <CardContent>
-                                <Bar data={dashboardCharts.barData} />
+                                <BedsForCases title="Beds for Confirmed Cases" data={dashboardCharts.barData} />
                             </CardContent>
                         </Grid>
                         <Grid item xs={6}>
                             <CardContent>
-                                <Bar data={dashboardCharts.barData} />
+                                <BedsForCases title="Beds for Suspected Cases" data={dashboardCharts.barData2} />
                             </CardContent>
                         </Grid>
                     </Grid>
@@ -62,4 +62,4 @@ export const DashboardCharts = (props) => {
     );
 }
 
-export default DashboardCharts;
+export default Dashboard;

@@ -1,14 +1,18 @@
 import React, { PureComponent } from 'react';
 import {
-  PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend, Tooltip
+  PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip
 } from 'recharts';
+import './styles.scss';
 
 const COLORS = ['#ff2851', '#0375ff', '#00b6ce', '#ffc991'];
 
-export default class AppDoughnut extends PureComponent {
+export default class CoivdBedsDoughnut extends PureComponent {
   render() {
     return (
-      <div style={{ width: '100%', height: 250 }}>
+      <div className="chart-wrap">
+        <span className="chart-title">
+          {this.props.title}
+        </span>
         <ResponsiveContainer>
           <PieChart onMouseEnter={this.onPieEnter}>
             <Legend />

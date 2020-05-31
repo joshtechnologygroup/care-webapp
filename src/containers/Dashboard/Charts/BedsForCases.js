@@ -1,12 +1,17 @@
 import React, { PureComponent } from 'react';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
-export default class AppBar extends PureComponent {
+import './styles.scss';
+
+export default class BedsForCases extends PureComponent {
   render() {
     return (
-      <div style={{ width: '100%', height: 250 }}>
+      <div className="chart-wrap">
+        <span className="chart-title">
+          {this.props.title}
+        </span>
         <ResponsiveContainer>
           <BarChart
             data={this.props.data}

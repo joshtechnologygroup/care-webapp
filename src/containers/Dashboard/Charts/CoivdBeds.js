@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   PieChart, Pie, ResponsiveContainer, Cell, Legend, Tooltip
 } from 'recharts';
+import './styles.scss';
 
 const COLORS = ['#ff2851', '#0375ff', '#00b6ce', '#ffc991'];
 
@@ -20,10 +21,13 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default class AppPie extends PureComponent {
+export default class CoivdBeds extends PureComponent {
   render() {
     return (
-      <div style={{ width: '100%', height: 250 }}>
+      <div className="chart-wrap">
+        <span className="chart-title">
+          {this.props.title}
+        </span>
         <ResponsiveContainer>
           <PieChart>
             <Legend />

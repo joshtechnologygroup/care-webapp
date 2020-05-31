@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Header from 'Containers/Header';
-import DashboardCharts from 'Containers/DashboardCharts';
+import Dashboard from 'Containers/Dashboard';
 
-export const Dashboard = (props) => {
+export const DashboardPage = (props) => {
     const { t } = useTranslation();
 
     return (
@@ -18,11 +18,11 @@ export const Dashboard = (props) => {
                     <h2>{t('Dashboard')}</h2>
                 </Header>
                 <div className="table-container">
-                    <DashboardCharts />
+                    <Dashboard />
                 </div>
             </div>
         </Grid>
     );
 }
 
-export default Dashboard;
+export default DashboardPage;
