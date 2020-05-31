@@ -3,6 +3,8 @@ import {
   DateRenderer
 } from 'Components/CellRenderer';
 
+import {ActionRenderer} from './ActionRenderer';
+
 import { GRID_CONFIG } from 'Constants/app.const';
 
 
@@ -26,6 +28,7 @@ export const CONFIG = {
     { headerName: 'Updated At', field: 'updated_at', minWidth: 200, cellRendererParams: {
       isSortable: true
     }},
+    { headerName: 'Action', field: 'action', cellRenderer: 'actionRenderer' }
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
@@ -42,5 +45,6 @@ export const CONFIG = {
   frameworkComponents: {
     downloadIconRenderer: DownloadIconRenderer,
     dateRenderer: DateRenderer,
+    actionRenderer: ActionRenderer,
   }
 };

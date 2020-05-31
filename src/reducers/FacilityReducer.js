@@ -76,7 +76,7 @@ const roomType = (state = initialState, action) => {
     if (action.type === GET_ROOM_TYPE_LIST) {
         return {
             ...state,
-            ...action.data
+            results: [...action.data]
         };
     }
     return state;
@@ -86,7 +86,7 @@ const bedType = (state = initialState, action) => {
     if (action.type === GET_BED_TYPE_LIST) {
         return {
             ...state,
-            ...action.data
+            results: [...action.data]
         };
     }
     return state;

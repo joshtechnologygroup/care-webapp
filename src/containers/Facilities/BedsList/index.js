@@ -67,7 +67,7 @@ export function BedsList(props) {
   }, [ currentUrl, ordering ]);
 
   useEffect(() => {
-    const { facilityInfrastructureList, facilities, roomTypeList, bedTypeList } = props
+    const { facilityInfrastructureList, facilities, roomTypeList, bedTypeList } = props;
     if(
       facilityInfrastructureList &&
       facilities &&
