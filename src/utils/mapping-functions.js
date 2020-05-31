@@ -51,11 +51,15 @@ export const mappingProps = (params, list=defaultMapping) => {
 };
 
 export const mappingIdWithNames = (list, db_list, attr) => {
+  console.log(list, db_list, attr);
     list.forEach((row) => {
         const found_id = db_list.find((value, index, array) => {
+          console.log(value.id, row[attr])
             return (value.id === row[attr]);
         })
+      if(found_id) {
         row[attr] = found_id.name;
+      }
     });
     return list;
 };

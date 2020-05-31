@@ -9,7 +9,7 @@ export const PASSWORD_RESET_URL = SERVER + API_V1 + 'accounts/password-reset-con
 export const FACILITY_LIST_URL = SERVER + API_V1 + 'facilities/facility';
 export const FACILITY_TYPE_LIST_URL = SERVER + API_V1 + 'facilities/facility-type';
 export const FACILITY_INVENTORY_LIST_URL = SERVER + API_V1 + 'facilities/inventories/';
-export const FACILITY_INFRASTRUCTURE_LIST_URL = SERVER + API_V1 + 'facilities/infrastructures/';
+export const FACILITY_INFRASTRUCTURE_LIST_URL = SERVER + API_V1 + 'facilities/infrastructures/?limit={0}&offset={1}';
 export const ROOM_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/room-type/';
 export const BED_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/bed-type/';
 

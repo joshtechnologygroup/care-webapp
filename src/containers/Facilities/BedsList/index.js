@@ -4,8 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import { GET } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import * as Routes from 'Src/routes';
+import * as StringUtils from 'Src/utils/stringformatting';
 import { CONFIG } from './config';
-import { PAGINATION_LIMIT, INITIAL_PAGE } from 'Src/constants';
+import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET } from 'Src/constants';
 import moment from "moment";
 import { mappingIdWithNames } from 'Src/utils/mapping-functions'
 import PaginationController from 'Components/PaginationController';
@@ -20,12 +21,14 @@ export function BedsList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [ facilityInfrastructureList, setFacilityInfrastructureList ] = useState(props.facilityInfrastructureList);
   const [ currentPage, setCurrentPage ] = useState(INITIAL_PAGE);
+  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
+  const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
 
   const handleApiCall = async () => {
     let required_data = [[], []];
 
     const required = {
-      'facility_infrastructure': [Routes.FACILITY_INFRASTRUCTURE_LIST_URL, ReducerTypes.GET_FACILITY_INFRASTRUCTURE_LIST],
+      'facility_infrastructure': [currentUrl, ReducerTypes.GET_FACILITY_INFRASTRUCTURE_LIST],
       'facilities':[Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST],
       'room_type': [Routes.ROOM_TYPES_LIST_URL, ReducerTypes.GET_ROOM_TYPE_LIST],
       'bed_type': [Routes.BED_TYPES_LIST_URL, ReducerTypes.GET_BED_TYPE_LIST]
@@ -42,7 +45,7 @@ export function BedsList(props) {
 
   useEffect(() => {
       handleApiCall();
-  }, [ ]);
+  }, [ currentUrl ]);
 
   useEffect(() => {
     const { facilityInfrastructureList, facilities, roomType, bedTypeList } = props
@@ -66,7 +69,7 @@ export function BedsList(props) {
       list.forEach((x) => {
         update_facilityInfrastructureList = mappingIdWithNames(update_facilityInfrastructureList, x[0], x[1]);
       })
-
+      setTotalPages(Math.ceil(props.count/PAGINATION_LIMIT))
       setFacilityInfrastructureList(update_facilityInfrastructureList);
     }
   }, [
@@ -75,7 +78,9 @@ export function BedsList(props) {
     props.roomType
   ]);
 
+  const bringPage = async () => {
 
+  }
   return (
     <React.Fragment>
       <Grid
@@ -93,12 +98,26 @@ export function BedsList(props) {
         <Grid item xs={12} sm={4} >
 
           <PaginationController
-            resultsShown={10}
-            totalResults={56}
-            onFirst={() => { console.log('on First Page') }}
-            onPrevious={() => { console.log('on Previous Page') }}
-            onNext={() => { console.log('on Next Page') }}
-            onLast={() => { console.log('on Last Page') }}
+            resultsShown={currentPage}
+            totalResults={totalPages}
+            onFirst={() => {
+              setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
+              setCurrentPage(INITIAL_PAGE)
+            }}
+            onPrevious={() => {
+              if(props.prevPage){
+                setCurrentUrl(props.prevPage);
+                setCurrentPage(currentPage - 1)
+              }}}
+            onNext={() => {
+              if(props.nextPage){
+                setCurrentUrl(props.nextPage);
+                setCurrentPage(currentPage + 1)
+              }}}
+            onLast={() => {
+              setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1)]));
+              setCurrentPage(totalPages);
+            }}
             onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
           />
         </Grid>
@@ -126,6 +145,9 @@ export function BedsList(props) {
 
 const mapStateToProps = (state) => ({
   facilityInfrastructureList: state.facilityInfrastructure.results,
+  count: state.facilityInfrastructure.count,
+  nextPage: state.facilityInfrastructure.next,
+  prevPage: state.facilityInfrastructure.previous,
   bedTypeList: state.bedType.results,
   facilities: state.facilities.results,
   roomType: state.roomType.results,
@@ -133,6 +155,9 @@ const mapStateToProps = (state) => ({
 
 BedsList.propTypes = {
   facilityInfrastructureList: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
+  nextPage: PropTypes.object.isRequired,
+  prevPage: PropTypes.object.isRequired,
   bedTypeList: PropTypes.array.isRequired,
   facilities: PropTypes.array.isRequired,
   roomType: PropTypes.array.isRequired,
