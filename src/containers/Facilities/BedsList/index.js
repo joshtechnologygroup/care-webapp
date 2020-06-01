@@ -9,7 +9,7 @@ import { CONFIG } from './config';
 import {
   multiSelectBooleanFilterCallback
 } from "Src/utils/listFilter";
-import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET } from 'Src/constants';
+import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET, DATE_FORMAT } from 'Src/constants';
 import moment from "moment";
 import { mappingIdWithNames } from 'Src/utils/mapping-functions'
 import PaginationController from 'Components/PaginationController';
@@ -76,7 +76,7 @@ export function BedsList(props) {
     ){
       let update_facilityInfrastructureList = new Array(...props.facilityInfrastructureList);
       update_facilityInfrastructureList.forEach((row, index) => {
-        row.updated_at =  moment(row.updated_at).format('DD-MM-YYYY h:mm a');
+        row.updated_at =  moment(row.updated_at).format(DATE_FORMAT);
       });
 
       const list = [
