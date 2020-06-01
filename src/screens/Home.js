@@ -8,7 +8,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
 
-import Dashboard from 'Screens/Dashboard';
+import DashboardPage from 'Screens/DashboardPage';
 import Patients from 'Screens/Patients';
 import PatientDetail from 'Screens/PatientDetail';
 import FacilityDetails from 'Screens/FacilityDetails';
@@ -59,8 +59,8 @@ function Home() {
                 </Grid>
                 <Grid item xs={12} md={10} className="full-heigh-container">
                     <Switch>
-                        <Route exact path={`/`} component={Dashboard} />
-                        <Route path={`/dashboard`} component={Dashboard} />
+                        <Route exact path={`/`} component={DashboardPage} />
+                        <Route path={`/dashboard`} component={DashboardPage} />
                         <Route path={`/facilities/beds`} component={Beds} />
                         <Route path={`/facilities/doctor-attendant`} component={DoctorAttendant} />
                         <Route path={`/facilities/manage-users`} component={ManageUsers} />
