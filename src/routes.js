@@ -13,7 +13,9 @@ export const FACILITY_INFRASTRUCTURE_LIST_URL = SERVER + API_V1 + 'facilities/in
 export const FACILITY_INFRASTRUCTURE_UPDATE_URL = SERVER + API_V1 + 'facilities/infrastructures/{0}/';
 export const ROOM_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/room-type/';
 export const BED_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/bed-type/';
-export const FACILITY_SHORT_LIST_URL = SERVER + API_V1 + 'facilities/facility/short/'
+export const FACILITY_SHORT_LIST_URL = SERVER + API_V1 + 'facilities/facility/short/';
+export const FACILITY_STAFF_LIST_URL = SERVER + API_V1 + 'facilities/staffs/?limit={0}&offset={1}';
+export const STAFF_DESIGNATION_LIST_URL = SERVER + API_V1 + 'facilities/staff-designation';
 
 // commons
 export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/';
