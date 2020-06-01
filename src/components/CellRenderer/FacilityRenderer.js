@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom";
 import * as StringUtils from "Src/utils/stringformatting";
-import { RELATIVE_PATH_FACILITY_DETAIL } from 'Src/constants'
+import { RELATIVE_PATH_FACILITY_DETAIL } from 'Src/routes'
 
 
 export const FacilityRenderer = (item) => {
