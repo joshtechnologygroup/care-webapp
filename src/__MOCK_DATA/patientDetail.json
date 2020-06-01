@@ -163,36 +163,43 @@
                 "phone_number": "9728526212"
             }
         ],
-        "facility": [
+        "facility_details": [
             {
-                "facilityId": "2",
+                "id": "2",
                 "status": 1,
-                "facilityName": "Hoper City",
-                "facilityDistrict": "South Delhi",
+                "name": "Hoper City",
+                "district": "South Delhi",
                 "type": "Type 1",
-                "ownershipType": "Owned",
-                "admittedDateTime": "1590145222",
-                "dischargedDateTime": "1590145222"
+                "ownership": "Owned",
+                "admitted_date_time": "1590145222"
             },
             {
-                "facilityId": "3",
+                "id": "3",
                 "status": 2,
-                "facilityName": "Hoper City",
-                "facilityDistrict": "North Delhi",
+                "name": "Hoper City",
+                "district": "North Delhi",
                 "type": "Type 1",
-                "ownershipType": "Rented",
-                "admittedDateTime": "1590145222",
-                "dischargedDateTime": "1590145222"
+                "ownership": "Rented",
+                "admitted_date_time": "1590145222"
             },
             {
-                "facilityId": "4",
+                "id": "4",
                 "status": 3,
-                "facilityName": "Hoper City",
-                "facilityDistrict": "Central Delhi",
+                "name": "Hoper City",
+                "district": "Central Delhi",
                 "type": "Type 1",
-                "ownershipType": "Owned",
-                "admittedDateTime": "1590145222",
-                "dischargedDateTime": "1590145222"
+                "ownership": "Owned",
+                "admitted_date_time": "1590145222"
+            },
+            {
+                "id": "4",
+                "status": 4,
+                "name": "Hoper City",
+                "district": "Central Delhi",
+                "type": "Type 1",
+                "ownership": "Owned",
+                "admitted_date_time": "1590145222",
+                "discharged_date_time": "1590145222"
             }
         ]
     }

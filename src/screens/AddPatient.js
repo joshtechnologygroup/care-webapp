@@ -4,7 +4,8 @@ import {Grid, Snackbar} from "@material-ui/core";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
-import FacilityDetails  from 'Components/Cards/FacilityDetails';
+
+import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
@@ -28,7 +29,7 @@ function AddPatient(props) {
       nonCovidDiseases: [],
       attendant: [],
     },
-    facility: [],
+    facility_details: [],
     patient_lab_details: [],
     portie_calling_details: [],
     patient_family_details: [],

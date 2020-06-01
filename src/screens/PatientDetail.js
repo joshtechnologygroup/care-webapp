@@ -7,9 +7,9 @@ import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetail from 'Containers/Patient/MedicationDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
-import FacilityDetails from '../components/Cards/FacilityDetails';
 
 // Final
+import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
@@ -28,7 +28,7 @@ class PatientDetail extends Component {
         'personal',
         'contact',
         'medication',
-        'facility',
+        'facility_details',
         'patient_lab_details',
         'portie_calling_details',
         'patient_family_details',
@@ -37,7 +37,7 @@ class PatientDetail extends Component {
         personal: false,
         contact: false,
         medication: false,
-        facility: false,
+        facility_details: false,
         patient_lab_details: false,
         portie_calling_details: false,
         patient_family_details: false,

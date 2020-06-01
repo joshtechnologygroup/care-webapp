@@ -159,6 +159,9 @@
   "Please select Lab": "Please select Lab.",
   "Please select current test status": "Please select current test status.",
   "Please select date of sample collection": "Please select date of sample collection.",
+  "Admitted date/time": "Admitted date/time",
+  "Select Facility": "Select Facility",
+  "Please select current status": "Please select current status",
   "null_messages": {
     "doctor": "No data exist. Please add doctor/attendant using the plus button.",
     "facility": "No data exist. Please add facility using the plus button.",
