@@ -10,11 +10,12 @@ const transfers = (state = {}, action) => {
     }
     else if (action.type === UPDATE_TRANSFER_STATUS) {
         const newState = {...state};
+        const {id, status, status_updated_at, comments } = action.data
         newState.results = newState.results.map(result => {
-            if(result.id === action.data.id) {
-                result.status = action.data.status;
-                result.status_updated_at = action.data.status_updated_at;
-                result.comments = action.data.comments;
+            if(result.id === id) {
+                result.status = status;
+                result.status_updated_at = status_updated_at;
+                result.comments = comments;
             }
             return result
         })
