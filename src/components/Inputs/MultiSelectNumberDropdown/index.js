@@ -73,11 +73,11 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field, 
                   <MenuItem value="Equals To">
                     Equals to
                   </MenuItem>
-                  <MenuItem value="Less Than">
-                    Less Than
+                  <MenuItem value="Less Than Equal To">
+                    Less Than Equal To
                   </MenuItem>
-                  <MenuItem value="Greater Than">
-                    Greater Than
+                  <MenuItem value="Greater Than Equal To">
+                    Greater Than Equal To
                   </MenuItem>
                   <MenuItem value="Range">
                     Range

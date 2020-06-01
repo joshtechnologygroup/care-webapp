@@ -13,9 +13,8 @@ import Sort from "Components/Sort";
 import Filters from "Components/Filters";
 import {
     multiSelectBooleanFilterCallback,
-    multiSelectNumberFilterCallback,
-    fillBooleanFilterOptions,
-    getFormattedColumnDefs
+    numberFilterCallbackWithRange,
+    fillBooleanFilterOptions
 } from "Src/utils/listFilter";
 import {
     getTransferDependencies
@@ -24,6 +23,7 @@ import {
     TRANSFER_STATUS_CHOICES,
     GENDER_CHOICES,
     GENDER_LIST_MAPPING,
+    transferStatus,
 } from "Constants/app.const";
 import { DATE_FORMAT } from 'Src/constants';
 import { multiSelectDateCallBack } from "../../utils/listFilter";
@@ -68,10 +68,12 @@ export function TransfersList(props) {
             transferList.forEach(transferObj => {
                 const updatedObj = { ...transferObj };
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
-                updatedObj.status_updated_at = moment
+                if(updatedObj.status_updated_at) {
+                    updatedObj.status_updated_at = moment
                     .utc(transferObj.status_updated_at, DATE_FORMAT)
                     .local()
                     .format(DATE_FORMAT);
+                }
                 updatedObj.requested_at = moment
                     .utc(transferObj.requested_at, DATE_FORMAT)
                     .local()
@@ -133,10 +135,11 @@ export function TransfersList(props) {
             const facilityList = Object.keys(shortFacilityLists).map(facilityItem => {
                 return shortFacilityLists[facilityItem].name;
             })
-            CONFIG.columnDefs = fillBooleanFilterOptions(getFormattedColumnDefs(CONFIG.columnDefs), {
+            CONFIG.columnDefs = fillBooleanFilterOptions(CONFIG.columnDefs, {
                 'gender': GENDER_LIST_MAPPING.map(gender => gender.name),
-                'to_facility_name': facilityList,
-                'from_facility_name': facilityList,
+                'to_facility': facilityList,
+                'from_facility': facilityList,
+                'status': transferStatus.map(status => status.name)
             });            
         }
     }, [shortFacilityLists]);
@@ -147,17 +150,21 @@ export function TransfersList(props) {
 
     const handleBooleanCallBack = val => {
         // make sure to match param dict key and required list key are same
-        const requiredLists = {
-            gender: GENDER_LIST_MAPPING,
-        };
-
-        setSelectedParams({
-            ...multiSelectBooleanFilterCallback(
-                selectedParams,
-                requiredLists,
-                val
-            ),
-        });
+        if (!_.isEmpty(shortFacilityLists)){
+            const requiredLists = {
+                gender: GENDER_LIST_MAPPING,
+                from_facility: Object.keys(shortFacilityLists).map(facilityItem => shortFacilityLists[facilityItem]), 
+                to_facility: Object.keys(shortFacilityLists).map(facilityItem => shortFacilityLists[facilityItem]), 
+                status: transferStatus
+            };
+            setSelectedParams({
+                ...multiSelectBooleanFilterCallback(
+                    selectedParams,
+                    requiredLists,
+                    val
+                ),
+            });
+        }
     };
 
     return (
@@ -190,11 +197,10 @@ export function TransfersList(props) {
                         handleBooleanCallBack={val =>
                             handleBooleanCallBack(val)
                         }
-                        handleNumberCallBack={(field, val) =>
+                        handleNumberCallBack={(val) =>
                             setSelectedParams({
-                                ...multiSelectNumberFilterCallback(
+                                ...numberFilterCallbackWithRange(
                                     selectedParams,
-                                    field,
                                     val
                                 ),
                             })
@@ -223,7 +229,7 @@ export function TransfersList(props) {
                     <Grid item xs={12} sm={4}>
                         <Sort
                             onSelect={val => sortByValue(val)}
-                            options={getFormattedColumnDefs(CONFIG.columnDefs)}
+                            options={CONFIG.columnDefs}
                             onToggleSort={toggleVal => setSortType(toggleVal)}
                         />
                     </Grid>
