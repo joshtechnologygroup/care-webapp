@@ -3,8 +3,6 @@ import AgProvider from 'Containers/AgProvider';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import TransferUpdateForm from 'Containers/TransferUpdateForm';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 export const ActionRenderer = (item) => {
   const { data } = item;
@@ -29,14 +27,5 @@ export const ActionRenderer = (item) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  inventoryList:state.inventory.inventory,
-  count:state.inventory.count
-});
-
-ActionRenderer.propTypes = {
-  inventoryList: PropTypes.array.isRequired,
-};
-
-export default connect(mapStateToProps, null)(ActionRenderer);
+export default ActionRenderer;
 
