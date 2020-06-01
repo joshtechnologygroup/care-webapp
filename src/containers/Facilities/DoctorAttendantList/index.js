@@ -30,9 +30,8 @@ export function DoctorAttendantList(props) {
   const [showOverlay, setShowOverlay] = useState(false);
 
   const handleApiCall = async () => {
-    let update_params;
-    update_params = { ...selectedParams };
-    if( ordering.field ){
+    let update_params = { ...selectedParams };
+    if(ordering.field) {
       Object.assign(update_params, {'ordering': [ordering.field]})
     }
     if(ordering.ordering === 'desc'){
