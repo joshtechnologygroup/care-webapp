@@ -38,7 +38,10 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectBoolDropdown
-                          onSelect={(val) => handleBooleanCallBack(val)}
+                          onSelect={(val) => { 
+                              setReset(false);
+                              handleBooleanCallBack(val);
+                            }}
                           options={option.cellRendererParams.options || ['Yes','No']} // can pass dynamically yes,No True false
                           fieldName={option['headerName']}
                           paramName={option['field']}
@@ -49,7 +52,10 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectNumberDropdown
-                          onSelect={(val) => handleNumberCallBack(val)}
+                          onSelect={(val) => {
+                              setReset(false);
+                              handleNumberCallBack(val)}
+                            }
                           fieldName={option['headerName']}
                           field={option['field']}
                           reset={reset}
@@ -59,7 +65,10 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectDateDropdown
-                          onSelect={(val) => handleDateCallBack(val)}
+                          onSelect={(val) => {
+                              setReset(false)
+                              handleDateCallBack(val)
+                            }}
                           fieldName={option['headerName']}
                           field={option['field']}
                           reset={reset}

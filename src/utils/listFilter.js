@@ -60,6 +60,24 @@ export const multiSelectNumberFilterCallback = (selectedParams, val) => {
     return update_select_params;
 };
 
+export const numberFilterCallbackWithRange = (selectedParams, val) => {
+    let update_select_params = { ...selectedParams }
+    delete update_select_params[val.field + '_min']
+    delete update_select_params[val.field + '_max']
+    if(val.type === Constants.EQUAL_TO){
+      update_select_params[val.field + '_min'] = [val.fromValue]
+      update_select_params[val.field + '_max'] = [val.fromValue]
+    } else if(val.type === Constants.LESS_THAN_EQUAL_TO){
+      update_select_params[val.field + '_max'] = [val.fromValue]
+    } else if(val.type === Constants.GREATER_THAN_EQUAL_TO){
+      update_select_params[val.field + '_min'] = [val.fromValue]
+    } else if(val.type === Constants.RANGE){
+      update_select_params[val.field + '_min'] = [val.fromValue]
+      update_select_params[val.field + '_max'] = [val.toValue]
+    }
+    return update_select_params
+}
+
 export const multiSelectDateCallBack = (selectedParams, val) => {
     let update_select_params = { ...selectedParams };
     delete update_select_params[val.field + "_after"];
