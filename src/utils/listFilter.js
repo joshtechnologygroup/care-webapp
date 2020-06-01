@@ -64,14 +64,14 @@ export const multiSelectDateCallBack = (selectedParams, val) => {
     let update_select_params = { ...selectedParams };
     delete update_select_params[val.field + "_after"];
     delete update_select_params[val.field + "_before"];
-    if (val.type === "Equals To") {
+    if (val.type === Constants.EQUAL_TO) {
         update_select_params[val.field + "_after"] = [val.fromValue];
         update_select_params[val.field + "_before"] = [val.fromValue];
-    } else if (val.type === "Less To") {
+    } else if (val.type === Constants.LESS_THAN) {
         update_select_params[val.field + "_after"] = [val.fromValue];
-    } else if (val.type === "Greater Than") {
+    } else if (val.type === Constants.GREATER_THAN) {
         update_select_params[val.field + "_before"] = [val.fromValue];
-    } else if (val.type === "Range") {
+    } else if (val.type === Constants.RANGE) {
         update_select_params[val.field + "_after"] = [val.fromValue];
         update_select_params[val.field + "_before"] = [val.toValue];
     }
