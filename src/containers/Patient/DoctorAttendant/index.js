@@ -7,12 +7,13 @@ import {
   Card,
 } from '@material-ui/core';
 
-import FamilyMemberCard from 'Components/Cards/FamilyMemberCard';
+import DoctorCard from 'Components/Cards/DoctorCard';
 import NullState from 'Components/NullState';
+import imgNull from 'Assets/images/doctor-attendant.jpg';
 import nullImage from 'Assets/images/family-null.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 
-export default function FamilyDetails(props) {
+export default function DoctorAttendant(props) {
   const { i18n } = useTranslation();
   const { profile } = props;
 
@@ -45,7 +46,7 @@ export default function FamilyDetails(props) {
   return (
     <div className="mb-20">
       <div className="section-header">
-        <h4 className="heading--card">{i18n.t('Family Details')}</h4>
+        <h4 className="heading--card">{i18n.t('Doctor / Attendant')}</h4>
         <Button
           variant="contained"
           color="primary"
@@ -54,7 +55,7 @@ export default function FamilyDetails(props) {
           className="btn"
           onClick={add}
         >
-          + {i18n.t('Add Family member')}
+          + {i18n.t('Add doctor/attendant')}
         </Button>
       </div>
       <Grid container spacing={1}>
@@ -81,7 +82,7 @@ export default function FamilyDetails(props) {
                   details={member}
                 />
                 :
-                <FamilyMemberCard
+                <DoctorCard
                   details={member}
                   editCallback={() => edit(index)}
                 />
@@ -93,7 +94,7 @@ export default function FamilyDetails(props) {
           !profile.length && editable !=='new' &&
           <Grid item xs={12}>
             <Card>
-              <NullState img={nullImage} message={i18n.t('null_messages.family')} />
+              <NullState img={imgNull} message={i18n.t('null_messages.doctor')} />
             </Card>
           </Grid>
         }
@@ -102,11 +103,11 @@ export default function FamilyDetails(props) {
   );
 }
 
-FamilyDetails.propTypes = {
+DoctorAttendant.propTypes = {
   profile: PropTypes.array.isRequired,
   handleEdit: PropTypes.func
 };
 
-FamilyDetails.defaultProps = {
+DoctorAttendant.defaultProps = {
   profile: []
 };

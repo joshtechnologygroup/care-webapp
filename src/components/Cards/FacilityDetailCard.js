@@ -8,11 +8,10 @@ import {
   CardContent,
   Typography,
   Chip,
-  Fab,
   Tooltip,
 } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { PhoneOutlined, EventOutlined, AccessTime } from '@material-ui/icons';
+import { EventOutlined, AccessTime } from '@material-ui/icons';
 
 // IMPORTING MOCK CHOICES
 import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';

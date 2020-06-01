@@ -9,6 +9,7 @@ import {
 
 import LabTestCard from 'Components/Cards/LabTestCard';
 import NullState from 'Components/NullState';
+import nullImage from 'Assets/images/lab-null.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 
 export default function LabTestDetail(props) {
@@ -90,10 +91,10 @@ export default function LabTestDetail(props) {
           )
         }
         {
-          !profile.length &&
+          !profile.length && editable !== 'new' &&
           <Grid item xs={12}>
-            <Card>
-              <NullState message={i18n.t('null_messages.labtest')} />
+            <Card className="mb-0">
+              <NullState img={nullImage} message={i18n.t('null_messages.labtest')} />
             </Card>
           </Grid>
         }

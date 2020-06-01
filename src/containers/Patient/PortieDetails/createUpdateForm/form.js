@@ -30,10 +30,8 @@ export default function Form(props) {
       dateTime,
       comments
     },
-    touched,
     errors,
     handleSubmit,
-    handleChange,
     setFieldValue,
     setFieldTouched,
     cancelCallback,

@@ -5,10 +5,8 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
-import MedicationDetail from 'Containers/Patient/MedicationDetail';
-import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
-
-// Final
+import MedicationDetails from 'Containers/Patient/MedicationDetails';
+import DoctorAttendant from 'Containers/Patient/DoctorAttendant';
 import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
@@ -101,19 +99,12 @@ class PatientDetail extends Component {
             />
           }
           <Timeline />
-          {
-            isEditing[formList[2]] ?
-            <MedicationDetailForm
-              profile={profile[formList[2]]}
-              handleSubmit={ (data) => {this.onSubmit(data, formList[2])} }
-              editMode={true}
-            />
-            :
-            <MedicationDetail
-              profile={profile[formList[2]]}
-              handleEdit={ () => this.setEditable(formList[2], true) }
-            />
-          }
+          <MedicationDetails
+            editMode={false} profile={profile[formList[2]]}
+          />
+          <DoctorAttendant
+            profile={profile[formList[2]].attendant}
+          />
           <FacilityDetails
             profile={profile[formList[3]]}
           />

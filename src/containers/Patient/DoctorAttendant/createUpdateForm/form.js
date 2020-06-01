@@ -5,27 +5,23 @@ import {
   Grid,
   TextField,
   Button,
-  Typography,
   InputAdornment,
 } from '@material-ui/core';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Event } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 
-import { SingleSelectChipsInput } from 'Components/Inputs';
-
 // Importing mock data
-import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
-import { labs } from 'Mockdata/labs.json';
+import { doctors } from 'Mockdata/doctors.json';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
   const {
     details: {
       name,
-      date_of_sample,
-      result
+      date,
     },
     errors,
     handleSubmit,
@@ -39,10 +35,10 @@ export default function Form(props) {
     setFieldValue(name, e.target.value);
   };
 
-  const setDate = (e) => {
-    setFieldValue('date_of_sample', e);
-    setFieldTouched('date_of_sample');
-  }
+  const setDateTime = (e) => {
+    setFieldValue('admitted_date_time', e);
+    setFieldTouched('admitted_date_time');
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -50,15 +46,15 @@ export default function Form(props) {
 
         <Grid className="pb-0" item xs={12} sm={6}>
           <Autocomplete
-            options={labs}
+            options={doctors}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => 
             <TextField
               {...params}
-              name="name"
-              label={i18n.t('Lab name')}
-              fullWidth
               value={name}
+              name="name"
+              label={i18n.t('Select doctor')}
+              fullWidth
               onChange={changeText.bind(null, "name")}
               className="field"
               variant="outlined"
@@ -71,13 +67,13 @@ export default function Form(props) {
 
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DatePicker
-              label={i18n.t('Date time')}
+            <DateTimePicker
+              label={i18n.t('Date & time')}
               inputVariant="outlined"
-              value={date_of_sample}
-              onChange={setDate}
+              value={date}
+              onChange={setDateTime}
               className="field"
-              name="date_of_sample"
+              name="date"
               disableFuture
               format="dd/MM/yyyy"
               InputProps={{
@@ -88,22 +84,6 @@ export default function Form(props) {
               fullWidth
             />
           </MuiPickersUtilsProvider>
-        </Grid>
-
-
-        <Grid className="pb-0 mb-10" item xs={12}>
-          <Typography variant="h6">
-            {i18n.t('result')}
-          </Typography>
-          <SingleSelectChipsInput
-            value={result}
-            options={labTestStatusChoices}
-            onChange={(val) => setFieldValue('result', val)}
-            valueKey="id"
-          />
-          <h5 className="text--error">
-            {errors.result}
-          </h5>
         </Grid>
 
         <Grid container justify="flex-end" className="mt-10" item xs={12}>

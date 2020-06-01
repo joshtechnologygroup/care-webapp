@@ -11,12 +11,13 @@ import {
   Tooltip,
   Chip
 } from '@material-ui/core';
+
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { EditOutlined, EventOutlined } from '@material-ui/icons';
 
 // Importing mock data
 import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
 
-import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme =>
   createStyles({
     root: {

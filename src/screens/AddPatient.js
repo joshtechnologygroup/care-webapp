@@ -3,8 +3,8 @@ import i18n from "i18next";
 import {Grid, Snackbar} from "@material-ui/core";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
-import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
-
+import MedicationDetails from 'Containers/Patient/MedicationDetails';
+import DoctorAttendant from 'Containers/Patient/DoctorAttendant';
 import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
@@ -124,9 +124,11 @@ function AddPatient(props) {
             handleSave={handleSave}
             handleError={handleError}
           />
-          <MedicationDetailForm
+          <MedicationDetails
             profile={profile[formList[2]]}
-            handleSubmit={ (data) => {this.onSubmit(data, formList[2])} }
+          />
+          <DoctorAttendant
+            profile={profile[formList[2]].attendant}
           />
           <FacilityDetails
             profile={profile[formList[3]]}

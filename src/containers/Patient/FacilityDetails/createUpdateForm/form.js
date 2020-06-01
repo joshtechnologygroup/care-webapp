@@ -27,10 +27,8 @@ export default function Form(props) {
       admitted_date_time,
       status
     },
-    touched,
     errors,
     handleSubmit,
-    handleChange,
     setFieldValue,
     setFieldTouched,
     cancelCallback,
@@ -57,6 +55,7 @@ export default function Form(props) {
             renderInput={(params) => 
             <TextField
               {...params}
+              value={name}
               name="name"
               label={i18n.t('Select Facility')}
               fullWidth
@@ -92,7 +91,7 @@ export default function Form(props) {
         </Grid>
 
 
-        <Grid className="pb-0" item xs={12} className="mb-10">
+        <Grid className="pb-0 mb-10" item xs={12}>
           <Typography variant="h6">
             {i18n.t('status')}
           </Typography>

@@ -9,12 +9,12 @@ import {
   Typography,
   Tooltip,
 } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PhoneOutlined, EditOutlined } from '@material-ui/icons';
 
 // Importing mock data
 import { genderChoices } from 'Constants/app.const';
 
-import { makeStyles, createStyles, withStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme =>
   createStyles({
     edit: {

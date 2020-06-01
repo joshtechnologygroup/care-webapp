@@ -9,6 +9,7 @@ import {
 
 import FacilityDetailCard from 'Components/Cards/FacilityDetailCard';
 import NullState from 'Components/NullState';
+import nullImage from 'Assets/images/facility.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 
 export default function FacilityDetails(props) {
@@ -75,10 +76,10 @@ export default function FacilityDetails(props) {
           )
         }
         {
-          !profile.length &&
-          <Grid item xs={12}>
+          !profile.length && editable !== 'new' &&
+          <Grid item xs={12} className="mb-0">
             <Card>
-              <NullState message={i18n.t('null_messages.facility')} />
+              <NullState img={nullImage} message={i18n.t('null_messages.facility')} />
             </Card>
           </Grid>
         }

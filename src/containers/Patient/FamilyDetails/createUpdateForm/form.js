@@ -26,10 +26,8 @@ export default function Form(props) {
       gender,
       phone_number,
     },
-    touched,
     errors,
     handleSubmit,
-    handleChange,
     setFieldValue,
     setFieldTouched,
     cancelCallback,
@@ -121,7 +119,7 @@ export default function Form(props) {
           />
         </Grid>
 
-        <Grid className="pb-0" item xs={12} className="mb-10">
+        <Grid className="pb-0 mb-10" item xs={12}>
           <Typography variant="h6">
             {i18n.t('Gender')}
           </Typography>
