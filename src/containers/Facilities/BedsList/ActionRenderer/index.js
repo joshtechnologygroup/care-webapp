@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 export const ActionRenderer = (item) => {
-  console.log(item);
   const { data } = item;
   const [open, setOpen] = React.useState(false);
 
