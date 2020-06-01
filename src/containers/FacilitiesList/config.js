@@ -1,13 +1,14 @@
 import {
   OperationStatusRenderer,
-  OwnerRenderer,
+  OwnerRenderer
 } from "Components/CellRenderer";
+import { FacilityRenderer } from 'Components/CellRenderer/FacilityRenderer'
 import { GRID_CONFIG } from "Constants/app.const";
 
 export const CONFIG = {
   columnDefs: [
     { headerName: "Facility Code", field: "facility_code", minWidth: 110, cellRendererParams: { isSortable: true } },
-    { headerName: "Name", field: "name", minWidth: 150, cellRendererParams: { isSortable: true } },
+    { headerName: "Name", field: "name", minWidth: 250, cellRendererParams: { isSortable: true }, cellRenderer: 'FacilityRenderer' },
     { headerName: "Address", field: "address", minWidth: 120, cellRendererParams: { isSortable: true } },
     { headerName: "District", field: "district", minWidth: 100, cellRendererParams: { filterType: 'boolean', options: [] }  },
     { headerName: "Facility Type", field: "facility_type", minWidth: 90 },
@@ -45,5 +46,6 @@ export const CONFIG = {
   frameworkComponents: {
     OperationStatusRenderer: OperationStatusRenderer,
     OwnerRenderer: OwnerRenderer,
+    FacilityRenderer: FacilityRenderer
   },
 };
