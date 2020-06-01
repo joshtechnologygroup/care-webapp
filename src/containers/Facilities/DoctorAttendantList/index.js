@@ -10,14 +10,13 @@ import {
   multiSelectBooleanFilterCallback
 } from "Src/utils/listFilter";
 import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET } from 'Src/constants';
-import moment from "moment";
 import { mappingIdWithNames } from 'Src/utils/mapping-functions'
 import PaginationController from 'Components/PaginationController';
 import Sort from 'Components/Sort';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Filters from "Components/Filters";
-import { getsFacilityStaffListDependencies } from 'Actions/FacilityStaffAction';
+import { getsFacilityStaffListDependencies, getStaffList } from 'Actions/FacilityStaffAction';
 
 
 export function DoctorAttendantList(props) {
@@ -120,37 +119,22 @@ export function DoctorAttendantList(props) {
   ]);
 
   const handleBooleanCallBack = (val) => {
-    // const { facilities, roomTypeList, bedTypeList } = props
-    // const mapping_id_list = {
-    //   'facility': facilities,
-    //   'room_type': roomTypeList,
-    //   'bed_type': bedTypeList,
-    // };
-    // let update_select_params = multiSelectBooleanFilterCallback(
-    //   selectedParams,
-    //   mapping_id_list,
-    //   val);
-    // setSelectedParams({ ...update_select_params });
+    const { facilities } = props
+    const mapping_id_list = {
+      'facility': facilities,
+    };
+    let update_select_params = multiSelectBooleanFilterCallback(
+      selectedParams,
+      mapping_id_list,
+      val);
+    setSelectedParams({ ...update_select_params });
   }
 
-  const handleNumberCallBack = (val) => {
-    // let update_select_params = { ...selectedParams }
-    // delete update_select_params[val.field + '_min']
-    // delete update_select_params[val.field + '_max']
-    // if(val.type === 'Equals To'){
-    //   update_select_params[val.field + '_min'] = [val.fromValue]
-    //   update_select_params[val.field + '_max'] = [val.fromValue]
-    // } else if(val.type === 'Less Than'){
-    //   update_select_params[val.field + '_max'] = [val.fromValue]
-    // } else if(val.type === 'Greater Than'){
-    //   update_select_params[val.field + '_min'] = [val.fromValue]
-    // } else if(val.type === 'Range'){
-    //   update_select_params[val.field + '_min'] = [val.fromValue]
-    //   update_select_params[val.field + '_max'] = [val.toValue]
-    // }
-    // setSelectedParams({ ...update_select_params });
+  const handleStringCallBack = (field, val) => {
+    let update_select_params = { ... selectedParams }
+    update_select_params[field] = val;
+    setSelectedParams({ ...update_select_params });
   }
-
 
 
   return (
@@ -171,9 +155,14 @@ export function DoctorAttendantList(props) {
             onSeeMore={() => {
               setShowOverlay(!showOverlay);
             }}
-            handleApplyFilter={() => props.getBedsList(currentUrl, selectedParams)}
+            handleApplyFilter={() => props.getStaffList(currentUrl, selectedParams)}
+            handleReset={() => {
+              props.getStaffList(currentUrl, {});
+              setSelectedParams({});
+            }}
             handleBooleanCallBack={val => handleBooleanCallBack(val)}
-            handleNumberCallBack={(val) => handleNumberCallBack(val)}/>
+            handleStringCallBack={(field, val) => handleStringCallBack(field, val)}/>
+
           />
         </Grid>
       </Grid>
@@ -192,7 +181,10 @@ export function DoctorAttendantList(props) {
           <Grid item xs={12} sm={3} >
             <Sort
               onSelect={val => {
-                setOrdering({...ordering, field: [val]});
+                if(val === 'facility')
+                setOrdering({...ordering, field: ['facility__name']});
+                else
+                  setOrdering({...ordering, field: [val]});
               }}
               options={CONFIG.columnDefs}
               onToggleSort={toggleVal => {
@@ -265,7 +257,8 @@ DoctorAttendantList.propTypes = {
   nextPage: PropTypes.object.isRequired,
   prevPage: PropTypes.object.isRequired,
   facilities: PropTypes.array.isRequired,
-  getsFacilityStaffListDependencies: PropTypes.func.isRequired
+  getsFacilityStaffListDependencies: PropTypes.func.isRequired,
+  getStaffList: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { getsFacilityStaffListDependencies })(DoctorAttendantList);
+export default connect(mapStateToProps, { getsFacilityStaffListDependencies, getStaffList })(DoctorAttendantList);

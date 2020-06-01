@@ -3,16 +3,14 @@ import {
   DateRenderer
 } from 'Components/CellRenderer';
 
-import {ActionRenderer} from './ActionRenderer';
-
 import { GRID_CONFIG } from 'Constants/app.const';
 
 
 export const CONFIG = {
   columnDefs: [
     { headerName: 'Facility Name', field: 'facility', minWidth: 150, cellRendererParams: { filterType: 'boolean', options: [] } },
-    { headerName: 'Name', field: 'name', minWidth: 100, cellRendererParams: { filterType: 'string' } },
-    { headerName: 'Phone Number', field: 'phone_number', minWidth: 150, cellRendererParams: { filterType: 'string' } },
+    { headerName: 'Name', field: 'name', minWidth: 100, cellRendererParams: { filterType: 'string', isSortable: true, } },
+    { headerName: 'Phone Number', field: 'phone_number', minWidth: 150, cellRendererParams: { filterType: 'string', isSortable: true, } },
     { headerName: 'Email', field: 'email', minWidth: 200, editable: true, cellRendererParams: {
       isSortable: true,
       filterType: 'string'
@@ -38,6 +36,5 @@ export const CONFIG = {
   frameworkComponents: {
     downloadIconRenderer: DownloadIconRenderer,
     dateRenderer: DateRenderer,
-    actionRenderer: ActionRenderer,
   }
 };
