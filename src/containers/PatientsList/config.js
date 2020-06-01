@@ -9,7 +9,6 @@ export const CONFIG = {
   columnDefs: [
     { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true }, hide: true },
     { headerName: 'Govt. ID', field: 'govt_id', cellRendererParams: { isSortable: true } },
-    { headerName: 'Facility ID', field: 'facility', minWidth: 100, cellRendererParams: { isSortable: true } },
     { headerName: 'Patient Name', cellRenderer: 'PatientRenderer', field: 'name', minWidth: 120 },
     { headerName: 'Gender', field: 'gender' , cellRendererParams: { filterType: 'boolean', options: [ 'Male', 'Female', 'Others'] }},
     { headerName: 'Age(Years)', field: 'year', minWidth: 100, cellRendererParams: { isSortable: true, filterType: 'number' } },

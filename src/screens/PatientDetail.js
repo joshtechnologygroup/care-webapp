@@ -105,7 +105,7 @@ class PatientDetail extends Component {
               handleEdit={ () => this.setEditable(formList[1], true) }
             />
           }
-          <Timeline />
+          {/* <Timeline />
           {
             isEditing[formList[2]] ?
             // <ContactDetailForm
@@ -147,7 +147,7 @@ class PatientDetail extends Component {
               profile={profile[formList[5]]}
               handleEdit={ () => this.setEditable(formList[5], true) }
             />
-          }
+          } */}
         </div>
       </>
     );

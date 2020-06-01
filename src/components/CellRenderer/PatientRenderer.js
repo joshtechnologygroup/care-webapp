@@ -1,7 +1,6 @@
 import React from 'react';
 import AgProvider from 'Containers/AgProvider';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom";
 
 export const PatientRenderer = (item) => {
@@ -13,13 +12,10 @@ export const PatientRenderer = (item) => {
     }
     return (
         <AgProvider>
-            <IconButton aria-label="delete" onClick={handleClick}>
-                <div>
-                    {item.value}
-                </div>
+            <div aria-label="delete" onClick={handleClick}>
+               {item.value}
                 &nbsp;
-    <EditIcon color="primary" fontSize="small" />
-            </IconButton>
+            </div>
         </AgProvider>
     );
 };
