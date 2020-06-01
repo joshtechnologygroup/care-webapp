@@ -3,13 +3,16 @@ import AgProvider from 'Containers/AgProvider';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from "react-router-dom";
+import * as StringUtils from "Src/utils/stringformatting";
+import { RELATIVE_PATH_FACILITY_DETAIL } from 'Src/constants'
+
 
 export const FacilityRenderer = (item) => {
   const { data } = item;
 
   let history = useHistory();
   function handleClick() {
-    history.push(`/facilities/facility-details/${data.id}`);
+    history.push(StringUtils.formatVarString(RELATIVE_PATH_FACILITY_DETAIL, [ data.id ]));
   }
   return (
     <AgProvider>

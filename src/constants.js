@@ -28,6 +28,10 @@ export const INITIAL_PAGE = 1;
 export const OFFSET = 0;
 
 
+// Relative paths to pages
+export const RELATIVE_PATH_FACILITY_DETAIL = '/facilities/facility-details/{0}'
+
+
 export const TOTAL_PROFILE_FIELDS = 17;
 export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
