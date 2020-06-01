@@ -1,16 +1,16 @@
 import {
   FacilityTypeRenderer,
-  OperationStatusRenderer
+  OperationStatusRenderer,
 } from 'Components/CellRenderer';
+import { PatientRenderer } from 'Components/CellRenderer/PatientRenderer'
 import { GRID_CONFIG } from 'Constants/app.const';
-
 
 export const CONFIG = {
   columnDefs: [
     { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true }, hide: true },
     { headerName: 'Govt. ID', field: 'govt_id', cellRendererParams: { isSortable: true } },
     { headerName: 'Facility ID', field: 'facility', minWidth: 100, cellRendererParams: { isSortable: true } },
-    { headerName: 'Patient Name', field: 'name', minWidth: 120 },
+    { headerName: 'Patient Name', cellRenderer: 'PatientRenderer', field: 'name', minWidth: 120 },
     { headerName: 'Gender', field: 'gender' , cellRendererParams: { filterType: 'boolean', options: [ 'Male', 'Female', 'Others'] }},
     { headerName: 'Age(Years)', field: 'year', minWidth: 100, cellRendererParams: { isSortable: true, filterType: 'number' } },
     { headerName: 'Age(Months)', field: 'month', minWidth: 110, cellRendererParams: { filterType: 'number' } },
@@ -104,6 +104,7 @@ export const CONFIG = {
   suppressContextMenu: GRID_CONFIG.suppressContextMenu,
   frameworkComponents: {
     FacilityTypeRenderer: FacilityTypeRenderer,
-    OperationStatusRenderer: OperationStatusRenderer
-  }
+    OperationStatusRenderer: OperationStatusRenderer,
+    PatientRenderer: PatientRenderer,
+  },
 };
