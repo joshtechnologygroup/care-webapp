@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { Input } from "@material-ui/core";
 
-export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }) {
+export default function MultiSelectNumberDropdown({ onSelect, fieldName, field, reset }) {
   const [renderValue, setRenderValue] = React.useState("");
   const [subDropdownValue, setSubDropDownValue] = React.useState("Equals To");
   const [fromValue, setFromValue] = React.useState("");
@@ -34,6 +34,13 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
     }
     e.stopPropagation(); // Prevent option search when typing into the InputBase
   };
+
+  useEffect(() => {
+        if(reset) {
+            setFromValue("");
+            setToValue("");
+        }
+    }, [reset])
 
   return (
     <div className="input-common">
@@ -66,11 +73,11 @@ export default function MultiSelectNumberDropdown({ onSelect, fieldName, field }
                   <MenuItem value="Equals To">
                     Equals to
                   </MenuItem>
-                  <MenuItem value="Less Than">
-                    Less Than
+                  <MenuItem value="Less Than Equal To">
+                    Less Than Equal To
                   </MenuItem>
-                  <MenuItem value="Greater Than">
-                    Greater Than
+                  <MenuItem value="Greater Than Equal To">
+                    Greater Than Equal To
                   </MenuItem>
                   <MenuItem value="Range">
                     Range

@@ -70,7 +70,9 @@ export const regex = {
 export const EQUAL_TO = "Equals To";
 export const LESS_THAN = "Less Than";
 export const GREATER_THAN = "Greater Than";
-export const RANGE = "Range"
+export const LESS_THAN_EQUAL_TO = "Less Than Equal To";
+export const GREATER_THAN_EQUAL_TO = "Greater Than Equal To";
+export const RANGE = "Range";
 
 export const genderChoices = [
     {
@@ -92,6 +94,21 @@ export const genderChoices = [
         value: 'Others',
     },
 ];
+
+export const transferStatus = [
+    {
+        id: 1,
+        name: 'Pending',
+    },
+    {
+        id: 2,
+        name: 'Accepted',
+    },
+    {
+        id: 3,
+        name: 'Rejected',
+    },
+]
 
 
 export const GENDER_LIST_MAPPING = [

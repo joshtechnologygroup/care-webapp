@@ -13,16 +13,29 @@ import Sort from "Components/Sort";
 import Filters from "Components/Filters";
 import {
     multiSelectBooleanFilterCallback,
-    multiSelectNumberFilterCallback,
+    numberFilterCallbackWithRange,
+    fillBooleanFilterOptions
 } from "Src/utils/listFilter";
+import {
+    getTransferDependencies
+} from "Actions/FacilitiesAction";
 import {
     TRANSFER_STATUS_CHOICES,
     GENDER_CHOICES,
     GENDER_LIST_MAPPING,
+    transferStatus,
 } from "Constants/app.const";
 import { DATE_FORMAT } from 'Src/constants';
+import { multiSelectDateCallBack } from "../../utils/listFilter";
 export function TransfersList(props) {
-    const { fetchTransferList, transferList, queryParams, count } = props;
+    const { 
+        fetchTransferList, 
+        fetchTransferDependencies, 
+        transferList, 
+        shortFacilityLists, 
+        queryParams, 
+        count 
+    } = props;
     const itemsPerPage = 4;
 
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
@@ -43,16 +56,24 @@ export function TransfersList(props) {
         }
     }, [transferList, offset, count]);
 
+    useEffect(() => {
+        if (_.isEmpty(shortFacilityLists)) {
+            fetchTransferDependencies();
+        }
+    },[]);
+
     const updateTransferList = transferList => {
         if (!_.isEmpty(transferList)) {
             const updatedTransferList = [];
             transferList.forEach(transferObj => {
                 const updatedObj = { ...transferObj };
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
-                updatedObj.status_updated_at = moment
+                if(updatedObj.status_updated_at) {
+                    updatedObj.status_updated_at = moment
                     .utc(transferObj.status_updated_at, DATE_FORMAT)
                     .local()
                     .format(DATE_FORMAT);
+                }
                 updatedObj.requested_at = moment
                     .utc(transferObj.requested_at, DATE_FORMAT)
                     .local()
@@ -89,6 +110,17 @@ export function TransfersList(props) {
     useEffect(() => {
         const options = {
             ...queryParams,
+            offset: offset,
+        };
+        if (orderingParam) {
+            options.ordering = orderingParam;
+        }
+        fetchTransferList(options);
+    }, [queryParams, offset, fetchTransferList, orderingParam]);
+
+    const applyFilter = () => {
+        const options = {
+            ...queryParams,
             ...selectedParams,
             offset: offset,
         };
@@ -96,15 +128,21 @@ export function TransfersList(props) {
             options.ordering = orderingParam;
         }
         fetchTransferList(options);
-    }, [queryParams, offset, fetchTransferList, orderingParam, selectedParams]);
+    }
 
     useEffect(() => {
-        if (GENDER_LIST_MAPPING) {
-            CONFIG.columnDefs[3].cellRendererParams.options = GENDER_LIST_MAPPING.map(
-                gender => gender.name
-            );
+        if(!_.isEmpty(shortFacilityLists)) {
+            const facilityList = Object.keys(shortFacilityLists).map(facilityItem => {
+                return shortFacilityLists[facilityItem].name;
+            })
+            CONFIG.columnDefs = fillBooleanFilterOptions(CONFIG.columnDefs, {
+                'gender': GENDER_LIST_MAPPING.map(gender => gender.name),
+                'to_facility': facilityList,
+                'from_facility': facilityList,
+                'status': transferStatus.map(status => status.name)
+            });            
         }
-    }, []);
+    }, [shortFacilityLists]);
 
     const sortByValue = val => {
         setOrdering(val);
@@ -112,17 +150,21 @@ export function TransfersList(props) {
 
     const handleBooleanCallBack = val => {
         // make sure to match param dict key and required list key are same
-        const requiredLists = {
-            gender: GENDER_LIST_MAPPING,
-        };
-
-        setSelectedParams({
-            ...multiSelectBooleanFilterCallback(
-                selectedParams,
-                requiredLists,
-                val
-            ),
-        });
+        if (!_.isEmpty(shortFacilityLists)){
+            const requiredLists = {
+                gender: GENDER_LIST_MAPPING,
+                from_facility: Object.keys(shortFacilityLists).map(facilityItem => shortFacilityLists[facilityItem]), 
+                to_facility: Object.keys(shortFacilityLists).map(facilityItem => shortFacilityLists[facilityItem]), 
+                status: transferStatus
+            };
+            setSelectedParams({
+                ...multiSelectBooleanFilterCallback(
+                    selectedParams,
+                    requiredLists,
+                    val
+                ),
+            });
+        }
     };
 
     return (
@@ -144,23 +186,31 @@ export function TransfersList(props) {
                             setShowOverlay(!showOverlay);
                         }}
                         handleStringCallBack={(field, value) =>
-                        { console.log('------', field, value);}
-                        }
+                        { setSelectedParams({
+                                ...selectedParams,
+                                [field]: value
+                            })
+                        }}
                         handleApplyFilter={() =>
-                        { console.log('Apply filter clicked--');}
+                        { applyFilter();}
                         }
                         handleBooleanCallBack={val =>
                             handleBooleanCallBack(val)
                         }
-                        handleNumberCallBack={(field, val) =>
+                        handleNumberCallBack={(val) =>
                             setSelectedParams({
-                                ...multiSelectNumberFilterCallback(
+                                ...numberFilterCallbackWithRange(
                                     selectedParams,
-                                    field,
                                     val
                                 ),
                             })
                         }
+                        handleDateCallBack={
+                            (val) => {
+                                setSelectedParams({...multiSelectDateCallBack(selectedParams, val)})
+                            }
+                        }
+                        handleReset={() => setSelectedParams({})}
                     />
                 </Grid>
             </Grid>
@@ -243,10 +293,11 @@ TransfersList.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    const { transfers } = state;
+    const { transfers, shortFacilities } = state;
     return {
         transferList: transfers.results,
         count: transfers.count,
+        shortFacilityLists: shortFacilities,
     };
 };
 
@@ -254,6 +305,9 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchTransferList: params => {
             dispatch(getTransferList(params));
+        },
+        fetchTransferDependencies: params => {
+            dispatch(getTransferDependencies(params));
         },
     };
 };

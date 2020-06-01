@@ -12,7 +12,7 @@ const getBedsList = (url, params = {}) => async (dispatch) => {
 const updateFacilityInfrastructure = (body, url) => async (dispatch) => {
   const response = await CommonService.makeAuthorizedApiCall(url, PATCH, body,  {});
   const data = await response.json();
-  if(response.ok){
+  if( response.ok ){
     dispatch(getBedsList(FACILITY_INFRASTRUCTURE_LIST_URL));
     return { status: true };
   } else {
