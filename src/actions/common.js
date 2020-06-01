@@ -10,7 +10,7 @@ const dispatchAction = (actionType, response) => async (dispatch) => {
         });
         return { status: response.ok };
     } else {
-        return { status: response.ok, error_message: data.non_field_errors };
+        return { status: response.ok, error_message: data };
     }
 }
 

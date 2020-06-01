@@ -11,7 +11,7 @@ const getTransferList = (params) => async (dispatch) => {
 
 const updateTransferStatus = (patientTransferId, body) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(TRANSFER_UPDATE_URL + patientTransferId + '/', PATCH, body, {})
-    dispatch(dispatchAction(UPDATE_TRANSFER_STATUS, response));
+    return dispatch(dispatchAction(UPDATE_TRANSFER_STATUS, response));
 };
 
 export { getTransferList, updateTransferStatus }
