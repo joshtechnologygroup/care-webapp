@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import i18n from "i18next";
 import PersonalDetail from 'Components/Cards/PersonalDetail';
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
-// import t from 'typy';
 
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
@@ -12,10 +11,14 @@ import LabTestDetail from '../components/Cards/LabTestDetail';
 import PortieDetails from '../components/Cards/PortieDetails';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
 import { fetchPatient, updatePatientDetails } from 'Actions/PatientsAction';
 import _ from "underscore";
+import Loader from 'react-loader-spinner';
+
+
 class PatientDetail extends Component {
   constructor(props) {
     super(props);
@@ -155,9 +158,16 @@ class PatientDetail extends Component {
     );
   } else{
     return(
-       <div>
-      loader
-      </div>
+      <div>
+      <Loader
+        className="mr-3"
+        type="ThreeDots"
+        color="#138ca7"
+        height={90}
+        width={90}
+      />
+      <h3>Loading...</h3>
+    </div>
     )
   }
 }

@@ -10,6 +10,7 @@ import { Button } from '@material-ui/core';
 import { createPatient } from 'Actions/PatientsAction';
 import MuiAlert from "@material-ui/lab/Alert";
 import { TOTAL_PROFILE_FIELDS } from 'Src/constants';
+
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact',])
   const [profile, setProfile] = useState({})
