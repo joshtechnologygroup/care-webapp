@@ -55,7 +55,7 @@ export function Form(props) {
   const setNativePlace = (event) => {
     const { name, value, checked } = event.target;
     if (name === 'nativeStateExist') {
-      if(saveProfile){
+      if(saveProfile) {
         saveProfile('native_state', value);
       }
       setFieldValue('native_state', value);
@@ -78,16 +78,16 @@ export function Form(props) {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFieldValue(name, value);
-    if(saveProfile){
-    saveProfile(name, value);
+    if(saveProfile) {
+      saveProfile(name, value);
     }
     setFieldTouched(name, true, false);
-    if(value){
+    if(value) {
       setFieldTouched(name, false, true);
     }
-    if(saveProfile){
+    if(saveProfile) {
     let error = false;
-    if(value === ""){
+    if(value === "") {
       error = true;
     } else if(Object.keys(touched).length >= TOTAL_CONTACT_DETAILS_FIELDS){
       Object.entries(touched).forEach(([item, itemValue]) => {

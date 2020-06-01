@@ -104,7 +104,7 @@ export default function Form(props) {
         }
       })
     }
-    if(handleError){
+    if(handleError) {
       handleError(error);
     }
     }

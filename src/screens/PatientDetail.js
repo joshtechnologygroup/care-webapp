@@ -59,12 +59,7 @@ class PatientDetail extends Component {
     this.props.fetchPatient(patientId);
   }
   onSubmit = (data, key) => {
-    if(key === "personal") {
-      this.props.updatePatientDetails(data);
-    }
-    if(key === "contact") {
-      this.props.updatePatientDetails(data);
-    }
+    this.props.updatePatientDetails(data);
     this.setState({
       profile: {
         ...this.state.profile,
