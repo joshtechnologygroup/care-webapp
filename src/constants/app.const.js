@@ -111,6 +111,32 @@ export const transferStatus = [
 ]
 
 
+export const booleanStatuses = {
+  positiveNegative: [
+    {
+      value: 1,
+      name: 'Positive'
+    },
+    {
+      value: 2,
+      name: 'Negative'
+    }
+  ]
+}
+
+export const reachableStatus = [
+  {
+    value: true,
+    name: 'Contacted',
+    theme: 'success'
+  },
+  {
+    value: false,
+    name: 'Not Reachable',
+    theme: 'danger'
+  }
+]
+
 export const GENDER_LIST_MAPPING = [
     {
         id: 1,

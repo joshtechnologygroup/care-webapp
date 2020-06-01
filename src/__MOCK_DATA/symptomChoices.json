@@ -1,0 +1,44 @@
+{
+  "symptomChoices": [
+    {
+      "id": 1,
+      "name": "Dizzyness"
+    },
+    {
+      "id": 2,
+      "name": "Fever"
+    },
+    {
+      "id": 3,
+      "name": "Tiredness"
+    },
+    {
+      "id": 4,
+      "name": "Difficulty Breathing"
+    },
+    {
+      "id": 5,
+      "name": "Chest Pain"
+    },
+    {
+      "id": 6,
+      "name": "Dry Cough"
+    },
+    {
+      "id": 7,
+      "name": "Cold"
+    },
+    {
+      "id": 8,
+      "name": "Sore throat"
+    },
+    {
+      "id": 9,
+      "name": "Diarrhoea"
+    },
+    {
+      "id": 10,
+      "name": "Body Ache"
+    }
+  ]
+}

@@ -4,11 +4,12 @@ import {
     GET_FACILITY_INVENTORY_LIST,
     GET_INVENTORY_TYPE_LIST,
     SET_ERROR_CREATE_INVENTORY,
-    INVENTORY_CREATED_SUCCESSFULLY,
     GET_SHORT_FACILITY_LIST,
     GET_FACILITY_INFRASTRUCTURE_LIST,
     GET_ROOM_TYPE_LIST,
-    GET_BED_TYPE_LIST
+    GET_BED_TYPE_LIST,
+    GET_FACILITY_STAFF_LIST,
+    GET_STAFF_DESIGNATION_LIST
 } from "Reducers/Types";
 
 const initialState = { error: null};
@@ -103,6 +104,26 @@ const createInventory = (state = initialState, action) => {
     return state;
 };
 
+const facilityStaff = (state = initialState, action) => {
+    if (action.type === GET_FACILITY_STAFF_LIST) {
+        return {
+            ...state,
+            ...action.data
+        };
+    }
+    return state;
+};
+
+const staffDesignation = (state = initialState, action) => {
+    if (action.type === GET_STAFF_DESIGNATION_LIST) {
+        return {
+            ...state,
+            results: [...action.data]
+        };
+    }
+    return state;
+};
+
 export { 
     facilities,
     facilityTypes, 
@@ -112,5 +133,7 @@ export {
     roomType, 
     bedType, 
     shortFacilities, 
-    createInventory 
+    createInventory ,
+    facilityStaff,
+    staffDesignation
 };

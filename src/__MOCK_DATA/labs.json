@@ -1,0 +1,28 @@
+{
+  "labs": [
+    {
+        "id": 1,
+        "name": "Respiratory Virus Lab"
+    },
+    {
+        "id": 2,
+        "name": "Lab 2"
+    },
+    {
+        "id": 3,
+        "name": "Lab 3"
+    },
+    {
+        "id": 4,
+        "name": "Lab 4"
+    },
+    {
+        "id": 5,
+        "name": "Lab 5"
+    },
+    {
+        "id": 6,
+        "name": "Lab 6"
+    }
+  ]
+}

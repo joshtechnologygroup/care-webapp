@@ -71,7 +71,7 @@ export function Inventory(props){
                     </Button>
                     </div>
                 </Header>
-                <div className="table-container">
+                <div className="main-container">
                     <InventoryList value={val}/>
                 </div>
                 <InventoryForm open={open} onClose={handleClose} />

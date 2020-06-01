@@ -18,7 +18,9 @@ import {
     createInventory, 
     shortFacilities,
     roomType,
-    bedType
+    bedType,
+    facilityStaff,
+    staffDesignation
 } from "Reducers/FacilityReducer";
 import { ownershipTypes, districts } from "Reducers/MiscReducer";
 import { transfers } from "Reducers/TransferReducer";
@@ -44,4 +46,6 @@ export default combineReducers({
     patient,
     shortFacilities,
     createInventory,
+    facilityStaff,
+    staffDesignation
 });

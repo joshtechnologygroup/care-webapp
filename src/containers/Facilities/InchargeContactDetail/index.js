@@ -14,12 +14,6 @@ import CreateUpdateForm from './CreateUpdateForm';
 
 const useStyles = makeStyles(theme =>
   createStyles({
-    root: {
-      borderRadius: '0',
-      boxShadow: '0.2rem 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.07)',
-      position: 'relative',
-      marginBottom: '16px'
-    },
     action: {
       position: 'absolute',
       right: 0,
@@ -48,7 +42,7 @@ export default function InchargeContactDetail(props) {
 
   return (
     <React.Fragment>
-      <Card className={classes.root} elevation={4}>
+      <Card elevation={4}>
         <CardHeader
           title={i18n.t('Incharge Contact Details')}
           action={

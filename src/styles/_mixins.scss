@@ -13,3 +13,8 @@
     @content;
   }
 }
+@mixin for-above-phone {
+  @media only screen and (min-width: $mob-min) {
+    @content;
+  }
+}

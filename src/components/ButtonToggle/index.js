@@ -9,7 +9,7 @@ export default function ButtonToggle(props) {
   const [alignment, setAlignment] = React.useState(defaultSelected);
 
   const handleChange = (event, newAlignment) => {
-    if (!restrictUnselect || newAlignment) {
+    if (!restrictUnselect || newAlignment !== null) {
       setAlignment(newAlignment);
       onChange(newAlignment);
     }

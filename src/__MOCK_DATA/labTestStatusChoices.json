@@ -6,23 +6,28 @@
     },
     {
         "id": 2,
-        "name": "Report Pending"
+        "name": "Report Pending",
+        "theme": "warning"
     },
     {
         "id": 3,
-        "name": "Positive"
+        "name": "Positive",
+        "theme": "danger"
     },
     {
         "id": 4,
-        "name": "Negative"
+        "name": "Negative",
+        "theme": "success"
     },
     {
         "id": 5,
-        "name": "Presumptive Positive"
+        "name": "Presumptive Positive",
+        "theme": "danger-light"
     },
     {
         "id": 6,
-        "name": "Test Inconclusive"
+        "name": "Test Inconclusive",
+        "theme": "primary"
     }
   ]
 }

@@ -183,7 +183,7 @@ export function BedsList(props) {
             }}
             handleApplyFilter={() => props.getBedsList(currentUrl, selectedParams)}
             handleBooleanCallBack={val => handleBooleanCallBack(val)}
-            handleNumberCallBack={(val) => handleNumberCallBack(val)}/>
+            handleNumberCallBack={(val) => handleNumberCallBack(val)}
           />
         </Grid>
       </Grid>

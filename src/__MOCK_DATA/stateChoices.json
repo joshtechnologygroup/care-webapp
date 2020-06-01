@@ -1,28 +1,28 @@
 {
   "stateChoices": [
     {
-        "id": 1,
-        "name": "Haryana"
+      "id": 1,
+      "name": "Haryana"
     },
     {
-        "id": 2,
-        "name": "Uttar Pradesh"
+      "id": 2,
+      "name": "Uttar Pradesh"
     },
     {
-        "id": 3,
-        "name": "Delhi"
+      "id": 3,
+      "name": "Delhi"
     },
     {
-        "id": 4,
-        "name": "Maharashtra"
+      "id": 4,
+      "name": "Maharashtra"
     },
     {
-        "id": 5,
-        "name": "Karnataka"
+      "id": 5,
+      "name": "Karnataka"
     },
     {
-        "id": 6,
-        "name": "Kerala"
+      "id": 6,
+      "name": "Kerala"
     }
   ]
 }

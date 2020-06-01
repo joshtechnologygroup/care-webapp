@@ -50,9 +50,25 @@ export const theme = createMuiTheme({
           background: '#ff4746',
           color: '#ffffff',
         },
+        '&.danger-light': {
+          background: '#ec7d76',
+          color: '#ffffff',
+        },
         '&.success': {
           background: '#3eac2d',
           color: '#ffffff',
+        },
+        '&.warning': {
+          background: '#FF9500',
+          color: '#000000',
+        },
+        '&.selected': {
+          color: '#ffffff',
+          background: '#007aff',
+        },
+        '&.primary': {
+          color: '#ffffff',
+          background: '#007aff',
         },
       },
       label: {
@@ -63,7 +79,7 @@ export const theme = createMuiTheme({
     MuiCard: {
       root: {
         borderRadius: '0',
-        boxShadow: '0.2rem 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.07)',
+        boxShadow: '0.2rem 0.2rem 0.3rem 0.12rem rgba(0, 0, 0, 0.07)',
         position: 'relative',
         marginBottom: '1.8em'
       },
@@ -71,6 +87,45 @@ export const theme = createMuiTheme({
     MuiCardHeader: {
       root: {
         borderBottom: '.1em #eee solid',
+      },
+    },
+    MuiFormControl: {
+      root: {
+        '&.field': {
+          minHeight: '6.6rem',
+          '& .MuiInputBase-root': {
+            background: '#FFFFFF',
+            borderRadius: 0,
+            '& .MuiAutocomplete-input': {
+              padding: '.5rem 0',
+            }
+          },
+          '& .MuiInputBase-input': {
+            fontSize: '1.6rem',
+            lineHeight: '2rem',
+            padding: '1.6rem 1.6rem 1.2rem',
+          },
+          '& .MuiSvgIcon-root': {
+            fontSize: '2.4rem',
+          },
+          '& .MuiInputLabel-outlined': {
+            fontSize: '1.8rem',
+            transform: 'translate(1.4rem, 1.6rem) scale(1)'
+          },
+          '& .MuiInputLabel-shrink': {
+            transform: 'translate(1.4rem, -.6rem) scale(.75)'
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            fontSize: '1.8rem'
+          },
+          '& .MuiFormHelperText-root': {
+            margin: '0',
+            fontSize: '1.2rem',
+          },
+          '& .MuiOutlinedInput-multiline': {
+            padding: '0',
+          },
+        },
       },
     },
   }
