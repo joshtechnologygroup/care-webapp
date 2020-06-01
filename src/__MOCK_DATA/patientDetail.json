@@ -26,14 +26,12 @@
         },
         "medication": {
             "clinicalStatus": "Mild",
-            "covidStatus": "Negative",
+            "covidStatus": "Positive",
             "symptoms": [
                 "Dizzyness",
                 "Fever",
-                "Tiredness",
                 "Difficulty Breathing",
                 "Chest Pain",
-                "Dry Cough",
                 "Cold",
                 "Sore throat",
                 "Diarrhoea",
@@ -48,139 +46,160 @@
             ],
             "attendant": [
                 {
-                    "date": "1590145200",
+                    "date": "2020-05-31T21:07:45.493081+05:30",
                     "name": "Dr Praveen Jha",
                     "email": "sample.email@somesite.com",
                     "phone": "9876543210"
                 },
                 {
-                    "date": "1590145200",
+                    "date": "2020-05-31T21:07:45.493081+05:30",
                     "name": "Dr Roy",
                     "email": "another.mail@example.com",
                     "phone": "9876543210"
                 },
                 {
-                    "date": "1590145200",
+                    "date": "2020-05-31T21:07:45.493081+05:30",
                     "name": "Prof. Joel D'souza",
                     "email": "some_mail@mymail.com",
                     "phone": "9876543210"
                 },
                 {
-                    "date": "1590145200",
+                    "date": "2020-05-31T21:07:45.493081+05:30",
                     "name": "Dr. Morris",
                     "email": "another@mailer.com",
                     "phone": "9876543210"
                 }
             ]
         },
-        "labTests": [
+        "patient_lab_details": [
             {
-                "labName": "Synergia Path Labs",
-                "labCode": "SPL1",
-                "sampleDate": "1590145200",
-                "status": 2,
-                "updated": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 1,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             },
             {
-                "labName": "XAB Labs",
-                "labCode": "X012",
-                "sampleDate": "1590145200",
-                "status": 1,
-                "8": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 2,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             },
             {
-                "labName": "FAB Medicia Labs",
-                "labCode": "FML1",
-                "sampleDate": "1590145200",
-                "status": 2,
-                "updated": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 3,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             },
             {
-                "labName": "Sample path Labs",
-                "labCode": "SPL1",
-                "sampleDate": "1590145200",
-                "status": 4,
-                "updated": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 4,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
+            },
+            {
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 5,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
+            },
+            {
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 6,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             }
         ],
-        "portieDetails": [
+        "portie_calling_details": [
             {
-                "portieName": "Shamaira Gupta",
-                "portieContact": 9876543210,
-                "status": "Not able to reach on Phone",
-                "patientContact": "9876543210",
-                "patientRelation": 1,
-                "patientRelationContact": "",
-                "dateTime": "1590145200",
-                "comments": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                "id": 1,
+                "status": false,
+                "name": "Shamaira Gupta",
+                "portie_phone_number": 9876543210,
+                "patient_relation": "Patient",
+                "patient_contact_number": "9876543210",
+                "dateTime": "01/05/2020 00:06 AM",
+                "comments": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
             },
             {
-                "portieName": "Rishu Gupta",
-                "portieContact": 9876543210,
-                "status": "Contacted",
-                "patientContact": "9876543210",
-                "patientRelation": 3,
-                "patientRelationContact": "9999654321",
-                "dateTime": "1590145222",
-                "comments": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                "id": 2,
+                "status": true,
+                "name": "Rishu Gupta",
+                "portie_phone_number": 9876543210,
+                "patient_relation": "Father",
+                "patient_contact_number": "9999654321",
+                "dateTime": "01/06/2020 00:06 AM",
+                "comments": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
             }
         ],
-        "family": [
+        "patient_family_details": [
             {
-                "name": "Sample singh",
-                "relation": 5,
-                "gender": 2,
-                "ageYears": 24,
-                "ageMonths": 7,
-                "phone": "09876543210"
-            },
-            {
-                "name": "Sample singh",
-                "relation": 7,
-                "gender": 2,
-                "ageYears": 2,
-                "ageMonths": 9,
-                "phone": "09876543210"
-            },
-            {
-                "name": "Sample singh",
-                "relation": 2,
+                "name": "Michael George",
+                "relation": "father",
+                "age_year": 80,
+                "age_month": 0,
                 "gender": 1,
-                "ageYears": 44,
-                "ageMonths": 0,
-                "phone": "09876543210"
+                "phone_number": "9728526212"
+            },
+            {
+                "name": "Princia Floyd",
+                "relation": "Spouse",
+                "age_year": 40,
+                "age_month": 11,
+                "gender": 2,
+                "phone_number": "9728526212"
+            },
+            {
+                "name": "Pinky",
+                "relation": "Daughter",
+                "age_year": 4,
+                "age_month": 4,
+                "gender": 2,
+                "phone_number": "9728526212"
             }
         ],
-        "facility": [
+        "facility_details": [
             {
-                "facilityId": "2",
+                "id": "2",
                 "status": 1,
-                "facilityName": "Hoper City",
-                "facilityDistrict": "South Delhi",
+                "name": "Hoper City",
+                "district": "South Delhi",
                 "type": "Type 1",
-                "ownershipType": "Owned",
-                "admittedDateTime": "1590145222",
-                "dischargedDateTime": "1590145222"
+                "ownership": "Owned",
+                "admitted_date_time": "1590145222"
             },
             {
-                "facilityId": "3",
+                "id": "3",
                 "status": 2,
-                "facilityName": "Hoper City",
-                "facilityDistrict": "North Delhi",
+                "name": "Hoper City",
+                "district": "North Delhi",
                 "type": "Type 1",
-                "ownershipType": "Rented",
-                "admittedDateTime": "1590145222",
-                "dischargedDateTime": "1590145222"
+                "ownership": "Rented",
+                "admitted_date_time": "1590145222"
             },
             {
-                "facilityId": "4",
+                "id": "4",
                 "status": 3,
-                "facilityName": "Hoper City",
-                "facilityDistrict": "Central Delhi",
+                "name": "Hoper City",
+                "district": "Central Delhi",
                 "type": "Type 1",
-                "ownershipType": "Owned",
-                "admittedDateTime": "1590145222",
-                "dischargedDateTime": "1590145222"
+                "ownership": "Owned",
+                "admitted_date_time": "1590145222"
+            },
+            {
+                "id": "4",
+                "status": 4,
+                "name": "Hoper City",
+                "district": "Central Delhi",
+                "type": "Type 1",
+                "ownership": "Owned",
+                "admitted_date_time": "1590145222",
+                "discharged_date_time": "1590145222"
             }
         ]
     }

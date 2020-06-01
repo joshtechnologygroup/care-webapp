@@ -3,6 +3,13 @@ import i18n from "i18next";
 import {Grid, Snackbar} from "@material-ui/core";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
+import MedicationDetails from 'Containers/Patient/MedicationDetails';
+import DoctorAttendant from 'Containers/Patient/DoctorAttendant';
+import FacilityDetails from 'Containers/Patient/FacilityDetails';
+import LabTestDetails from 'Containers/Patient/LabTestDetails';
+import PortieDetails from 'Containers/Patient/PortieDetails';
+import FamilyDetails from 'Containers/Patient/FamilyDetails';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from 'Containers/Header';
@@ -11,8 +18,22 @@ import { createPatient } from 'Actions/PatientsAction';
 import MuiAlert from "@material-ui/lab/Alert";
 import { TOTAL_PROFILE_FIELDS } from 'Src/constants';
 function AddPatient(props) {
-  const [formList, setFormList] = useState(['personal','contact',])
-  const [profile, setProfile] = useState({})
+  const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
+  const [profile, setProfile] = useState({
+    personal: {},
+    contact:  {},
+    medication: {
+      clinicalStatus: '',
+      covidStatus: '',
+      symptoms: [],
+      nonCovidDiseases: [],
+      attendant: [],
+    },
+    facility_details: [],
+    patient_lab_details: [],
+    portie_calling_details: [],
+    patient_family_details: [],
+  });
   const [error, setError] = useState(null)
   const [formError, setFormError] = useState(false);
   const [open, setOpen] = useState(false)
@@ -103,35 +124,53 @@ function AddPatient(props) {
             handleSave={handleSave}
             handleError={handleError}
           />
+          <MedicationDetails
+            profile={profile[formList[2]]}
+          />
+          <DoctorAttendant
+            profile={profile[formList[2]].attendant}
+          />
+          <FacilityDetails
+            profile={profile[formList[3]]}
+          />
+          <LabTestDetails
+            profile={profile[formList[4]]}
+          />
+          <PortieDetails
+            profile={profile[formList[5]]}
+          />
+          <FamilyDetails
+            profile={profile[formList[6]]}
+          />
           <Grid container justify="space-between">
-          <h2>{i18n.t('*Required fields')}</h2>
-          <Button
-            variant="contained"
-            color="primary"
-            disableElevation
-            className="btn py-5 ml-auto"
-            onClick={handleSave}
-          >
-            {i18n.t('Save')}
-          </Button>
+            <h2>{i18n.t('*Required fields')}</h2>
+            <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              className="btn py-5 ml-auto"
+              onClick={handleSave}
+            >
+              {i18n.t('Save')}
+            </Button>
           </Grid>
         </div>
         
         <Snackbar
-                open={open}
-                autoHideDuration={5000}
-                onClose={handleClose}
-              >
-                <Alert onClose={handleClose} severity={error==true ? "success":"error"}>
-                  {error &&
-                  <div>
-                    {error===true && "Successfully created!"}
-                    {error===false && "Error occured!"}
-                    </div>
-                  }
-                  {error === null && <div>Please fill all the fields first!</div>}
-                </Alert>
-              </Snackbar>
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity={error==true ? "success":"error"}>
+          {error &&
+            <div>
+              {error===true && "Successfully created!"}
+              {error===false && "Error occured!"}
+            </div>
+          }
+          {error === null && <div>Please fill all the fields first!</div>}
+          </Alert>
+        </Snackbar>
       </>
     );
 }

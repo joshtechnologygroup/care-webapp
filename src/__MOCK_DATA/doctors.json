@@ -1,0 +1,28 @@
+{
+  "doctors": [
+    {
+        "id": 1,
+        "name": "Rishu Gupta"
+    },
+    {
+        "id": 2,
+        "name": "Madhuri Kashyap"
+    },
+    {
+        "id": 3,
+        "name": "Nishank Kumar"
+    },
+    {
+        "id": 4,
+        "name": "Sania Mehra"
+    },
+    {
+        "id": 5,
+        "name": "Dr. Josheph"
+    },
+    {
+        "id": 6,
+        "name": "Dr, Jyotirama"
+    }
+  ]
+}

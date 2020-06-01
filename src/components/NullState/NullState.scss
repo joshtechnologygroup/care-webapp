@@ -1,0 +1,12 @@
+@import '../../styles/import';
+
+.null-state {
+  padding: 1.6rem;
+  text-align: center;
+  background: $white;
+  &__img {
+    width: 100%;
+    max-width: 25rem;
+    opacity: .5;
+  }
+}

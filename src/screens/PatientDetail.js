@@ -5,11 +5,16 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
-import MedicationDetail from 'Components/Cards/MedicationDetail';
-import LabTestDetail from '../components/Cards/LabTestDetail';
-import PortieDetails from '../components/Cards/PortieDetails';
+import MedicationDetails from 'Containers/Patient/MedicationDetails';
+import DoctorAttendant from 'Containers/Patient/DoctorAttendant';
+import FacilityDetails from 'Containers/Patient/FacilityDetails';
+import LabTestDetails from 'Containers/Patient/LabTestDetails';
+import PortieDetails from 'Containers/Patient/PortieDetails';
+import FamilyDetails from 'Containers/Patient/FamilyDetails';
+
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
 import { fetchPatient } from 'Actions/PatientsAction';
@@ -21,19 +26,19 @@ class PatientDetail extends Component {
         'personal',
         'contact',
         'medication',
-        'facility',
-        'labTests',
-        'portieDetails',
-        'familyDetails',
+        'facility_details',
+        'patient_lab_details',
+        'portie_calling_details',
+        'patient_family_details',
       ],
       isEditing: {
         personal: false,
         contact: false,
         medication: false,
-        facility: false,
-        labTests: false,
-        portieDetails: false,
-        familyDetails: false,
+        facility_details: false,
+        patient_lab_details: false,
+        portie_calling_details: false,
+        patient_family_details: false,
       },
       profile: patientDetail
     }
@@ -94,48 +99,24 @@ class PatientDetail extends Component {
             />
           }
           <Timeline />
-          {
-            isEditing[formList[2]] ?
-            // <ContactDetailForm
-            //   profile={profile.contact}
-            //   handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
-            //   editMode={true}
-            // />
-            <h2>I'm being edited</h2>
-            :
-            <MedicationDetail
-              profile={profile[formList[2]]}
-              handleEdit={ () => this.setEditable(formList[2], true) }
-            />
-          }
-          {
-            isEditing[formList[4]] ?
-            // <ContactDetailForm
-            //   profile={profile.contact}
-            //   handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
-            //   editMode={true}
-            // />
-            <h2>I'm being edited</h2>
-            :
-            <LabTestDetail
-              profile={profile[formList[4]]}
-              handleEdit={ () => this.setEditable(formList[4], true) }
-            />
-          }
-          {
-            isEditing[formList[5]] ?
-            // <ContactDetailForm
-            //   profile={profile.contact}
-            //   handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
-            //   editMode={true}
-            // />
-            <h2>I'm being edited</h2>
-            :
-            <PortieDetails
-              profile={profile[formList[5]]}
-              handleEdit={ () => this.setEditable(formList[5], true) }
-            />
-          }
+          <MedicationDetails
+            editMode={false} profile={profile[formList[2]]}
+          />
+          <DoctorAttendant
+            profile={profile[formList[2]].attendant}
+          />
+          <FacilityDetails
+            profile={profile[formList[3]]}
+          />
+          <LabTestDetails
+            profile={profile[formList[4]]}
+          />
+          <PortieDetails
+            profile={profile[formList[5]]}
+          />
+          <FamilyDetails
+            profile={profile[formList[6]]}
+          />
         </div>
       </>
     );
