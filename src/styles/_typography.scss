@@ -58,7 +58,8 @@
         color: $blue-primary;
         font-size: 2rem;
         line-height: 2rem;
-        font-weight: 400;        
+        font-weight: 400;   
+        text-transform: capitalize;     
     }
     &--card {
         color: $blue-primary;

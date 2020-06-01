@@ -67,7 +67,7 @@ export const theme = createMuiTheme({
     MuiCard: {
       root: {
         borderRadius: '0',
-        boxShadow: '0.2rem 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.07)',
+        boxShadow: '0.2rem 0.2rem 0.3rem 0.12rem rgba(0, 0, 0, 0.07)',
         position: 'relative',
         marginBottom: '1.8em'
       },

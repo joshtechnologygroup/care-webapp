@@ -123,30 +123,30 @@
                 "comments": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
             }
         ],
-        "family": [
+        "patient_family_details": [
             {
-                "name": "Sample singh",
-                "relation": 5,
-                "gender": 2,
-                "ageYears": 24,
-                "ageMonths": 7,
-                "phone": "09876543210"
-            },
-            {
-                "name": "Sample singh",
-                "relation": 7,
-                "gender": 2,
-                "ageYears": 2,
-                "ageMonths": 9,
-                "phone": "09876543210"
-            },
-            {
-                "name": "Sample singh",
-                "relation": 2,
+                "name": "Michael George",
+                "relation": "father",
+                "age_year": 80,
+                "age_month": 0,
                 "gender": 1,
-                "ageYears": 44,
-                "ageMonths": 0,
-                "phone": "09876543210"
+                "phone_number": "9728526212"
+            },
+            {
+                "name": "Princia Floyd",
+                "relation": "Spouse",
+                "age_year": 40,
+                "age_month": 11,
+                "gender": 2,
+                "phone_number": "9728526212"
+            },
+            {
+                "name": "Pinky",
+                "relation": "Daughter",
+                "age_year": 4,
+                "age_month": 4,
+                "gender": 2,
+                "phone_number": "9728526212"
             }
         ],
         "facility": [

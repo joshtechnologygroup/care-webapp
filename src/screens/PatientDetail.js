@@ -8,11 +8,11 @@ import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetail from 'Containers/Patient/MedicationDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
 import LabTestDetail from '../components/Cards/LabTestDetail';
-import FamilyDetails from '../components/Cards/FamilyDetails';
 import FacilityDetails from '../components/Cards/FacilityDetails';
 
 // Final
 import PortieDetails from 'Containers/Patient/PortieDetails';
+import FamilyDetails from 'Containers/Patient/FamilyDetails';
 
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
@@ -31,7 +31,7 @@ class PatientDetail extends Component {
         'facility',
         'labTests',
         'portie_calling_details',
-        'family',
+        'patient_family_details',
       ],
       isEditing: {
         personal: false,
@@ -40,7 +40,7 @@ class PatientDetail extends Component {
         facility: false,
         labTests: false,
         portie_calling_details: false,
-        family: false,
+        patient_family_details: false,
       },
       profile: patientDetail
     }

@@ -42,7 +42,7 @@ export default function SingleSelectChipsInput(props) {
       <Checkbox key={index}
         name={option.name}
         className={`mr-5 mt-5 p-0 ${classes.root}`}
-        checked={val === (valueKey ? option[valueKey] : option.name)}
+        checked={val == (valueKey ? option[valueKey] : option.name)}
         value={valueKey ? option[valueKey] : option.name}
         onChange={(e) => change(e, option)}
         color="default"

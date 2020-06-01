@@ -5,29 +5,30 @@ import * as Yup from 'yup';
 import { Grid, Typography, Card, } from '@material-ui/core';
 import Form from './form';
 
-
-export const CreateUpdatePortieDetails = (props) => {
+export const CreateUpdateForm = (props) => {
     const { editMode, details, handleSubmit, cancelCallback } = props;
     const { i18n } = useTranslation();
 
     const validationSchema = Yup.object({
-        status: Yup.boolean().required(i18n.t('Please select contact status')),
-        name: Yup.string().required(i18n.t('Please enter Portie name')),
-        portie_phone_number: Yup.number().required(i18n.t('Please enter Portie contact number')).min(10, i18n.t('Please enter a valid contact number')),
-        patient_relation: Yup.string().required(i18n.t('Please choose relation of Patient with the person')),
+        name: Yup.string().required(i18n.t('Please enter Family member name')),
+        age_month: Yup.number().required(i18n.t('Please enter age')).max(11, i18n.t('Invalid value')).min(0, 'Invalid value'),
+        age_year: Yup.number().required(i18n.t('Please enter age')).min(0, 'Invalid value'),
+        phone_number: Yup.number().positive().required(i18n.t('Please enter phone number')).min(10, i18n.t('Please enter a valid contact number')),
+        relation: Yup.string().required(i18n.t('Please choose relation with Patient')),
+        gender: Yup.number().required(i18n.t('Please choose gender')),
     });
 
     const submit = (data) => {
-        console.log(data);
         handleSubmit(data);
+        console.log('data', data);
     };
 
     return (
-        <Card className="mb-10 add-placeholder">
+        <Card className="add-placeholder mb-5">
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Typography variant="h5">
-                        {editMode ? i18n.t('Edit Portie details') : i18n.t('Add new Portie details') }
+                        {editMode ? i18n.t('Edit Family member') : i18n.t('Add Family member') }
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -46,4 +47,4 @@ export const CreateUpdatePortieDetails = (props) => {
     );
 }
 
-export default CreateUpdatePortieDetails;
+export default CreateUpdateForm;

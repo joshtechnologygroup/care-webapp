@@ -77,9 +77,9 @@ export default function PortieDetails(props) {
             />
             :
             <CreateUpdatePortieDetails
+              key={index}
               handleSubmit={handleSubmit}
               cancelCallback={cancel}
-              key={index}
               editMode={true}
               details={details}
             />

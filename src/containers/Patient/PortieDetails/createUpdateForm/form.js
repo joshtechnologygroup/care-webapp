@@ -20,157 +20,157 @@ import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 import { reachableStatus } from 'Constants/app.const';
 
 export default function Form(props) {
-    const {
-      details: {
-        status,
-        name,
-        portie_phone_number,
-        patient_relation,
-        dateTime,
-        comments
-      },
-      touched,
-      errors,
-      handleSubmit,
-      handleChange,
-      setFieldValue,
-      setFieldTouched,
-      cancelCallback,
-    } = props;
-    const { i18n } = useTranslation();
-    
-    const changeText = (name, e) => {
-      setFieldTouched(e.target.name);
-      setFieldValue(name, e.target.value);
-    };
+  const { i18n } = useTranslation();
+  const {
+    details: {
+      status,
+      name,
+      portie_phone_number,
+      patient_relation,
+      dateTime,
+      comments
+    },
+    touched,
+    errors,
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    setFieldTouched,
+    cancelCallback,
+  } = props;
 
-    const setDateTime = (e) => {
-      console.log('e', e)
-      setFieldValue('dateTime', e);
-    };
+  const changeText = (name, e) => {
+    setFieldTouched(e.target.name);
+    setFieldValue(name, e.target.value);
+  };
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} className="mb-10">
-            <Typography variant="h6">
-              {i18n.t('Contact status')}
-            </Typography>
-            <SingleSelectChipsInput
-              value={status}
-              options={reachableStatus}
-              onChange={(val) => setFieldValue('status', val)}
-              valueKey="value"
-            />
-            <h5 className="text--error">
-              {errors.status}
-            </h5>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DateTimePicker
-                label={i18n.t('Date time')}
-                inputVariant="outlined"
-                value={dateTime}
-                onChange={setDateTime}
-                className="field"
-                name="dateTime"
-                disableFuture
-                format="dd/MM/yyyy hh:mm a"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment><Event /></InputAdornment>
-                  ),
-                }}
-                fullWidth
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              name="name"
-              label={i18n.t('Portie Name')}
-              fullWidth
-              defaultValue={name}
-              onChange={changeText.bind(null, "name")}
-              className="field"
-              variant="outlined"
-              helperText={errors.name}
-              error={Boolean(errors.name)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField 
-              name="portie_phone_number"
-              defaultValue={portie_phone_number}
-              label={i18n.t('Portie contact number')}
-              fullWidth
-              onChange={changeText.bind(null, "portie_phone_number")}
-              className="field"
-              variant="outlined"
-              helperText={errors.portie_phone_number}
-              error={Boolean(errors.portie_phone_number)}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField 
-              select
-              name="patient_relation"
-              defaultValue={patient_relation}
-              label={i18n.t('Patient relation')}
-              fullWidth
-              onChange={changeText.bind(null, "patient_relation")}
-              className="field"
-              variant="outlined"
-              helperText={errors.patient_relation}
-              error={Boolean(errors.patient_relation)}
-            >
-              {
-              relationshipChoices.map((option) => (
-                <MenuItem key={option.id} value={option.name}>
-                  {option.name}
-                </MenuItem>))
-              }
-            </TextField>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField 
-              multiline
-              name="comments"
-              defaultValue={comments}
-              label={i18n.t('Comments')}
-              fullWidth
-              onChange={changeText.bind(null, "comments")}
-              className="field"
-              variant="outlined"
-              helperText={errors.comments}
-              error={Boolean(errors.comments)}
-            />
-          </Grid>
-          <Grid container justify="flex-end" className="mt-10" item xs={12}>
-            <Button
-              variant="contained"
-              disableElevation
-              size="medium"
-              className="btn py-5"
-              onClick={cancelCallback}
-            >
-              {i18n.t('Cancel')}
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disableElevation
-              size="medium"
-              className="btn py-5 ml-10"
-            >
-              {i18n.t('Save')}
-            </Button>
-          </Grid>
+  const setDateTime = (e) => {
+    console.log('e', e)
+    setFieldValue('dateTime', e);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} className="mb-10">
+          <Typography variant="h6">
+            {i18n.t('Contact status')}
+          </Typography>
+          <SingleSelectChipsInput
+            value={status}
+            options={reachableStatus}
+            onChange={(val) => setFieldValue('status', val)}
+            valueKey="value"
+          />
+          <h5 className="text--error">
+            {errors.status}
+          </h5>
         </Grid>
-      </form>
-    );
+        <Grid item xs={12} sm={6}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DateTimePicker
+              label={i18n.t('Date time')}
+              inputVariant="outlined"
+              value={dateTime}
+              onChange={setDateTime}
+              className="field"
+              name="dateTime"
+              disableFuture
+              format="dd/MM/yyyy hh:mm a"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment><Event /></InputAdornment>
+                ),
+              }}
+              fullWidth
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            name="name"
+            label={i18n.t('Portie Name')}
+            fullWidth
+            defaultValue={name}
+            onChange={changeText.bind(null, "name")}
+            className="field"
+            variant="outlined"
+            helperText={errors.name}
+            error={Boolean(errors.name)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField 
+            name="portie_phone_number"
+            defaultValue={portie_phone_number}
+            label={i18n.t('Portie contact number')}
+            fullWidth
+            onChange={changeText.bind(null, "portie_phone_number")}
+            className="field"
+            variant="outlined"
+            helperText={errors.portie_phone_number}
+            error={Boolean(errors.portie_phone_number)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField 
+            select
+            name="patient_relation"
+            defaultValue={patient_relation}
+            label={i18n.t('Patient relation')}
+            fullWidth
+            onChange={changeText.bind(null, "patient_relation")}
+            className="field"
+            variant="outlined"
+            helperText={errors.patient_relation}
+            error={Boolean(errors.patient_relation)}
+          >
+            {
+            relationshipChoices.map((option) => (
+              <MenuItem key={option.id} value={option.name}>
+                {option.name}
+              </MenuItem>))
+            }
+          </TextField>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField 
+            multiline
+            name="comments"
+            defaultValue={comments}
+            label={i18n.t('Comments')}
+            fullWidth
+            onChange={changeText.bind(null, "comments")}
+            className="field"
+            variant="outlined"
+            helperText={errors.comments}
+            error={Boolean(errors.comments)}
+          />
+        </Grid>
+        <Grid container justify="flex-end" className="mt-10" item xs={12}>
+          <Button
+            variant="contained"
+            disableElevation
+            size="medium"
+            className="btn py-5"
+            onClick={cancelCallback}
+          >
+            {i18n.t('Cancel')}
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disableElevation
+            size="medium"
+            className="btn py-5 ml-10"
+          >
+            {i18n.t('Save')}
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
+  );
 }
 
 Form.propTypes = {

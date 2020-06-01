@@ -7,7 +7,7 @@ import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/Medicatio
 import FacilityDetails  from 'Components/Cards/FacilityDetails';
 import LabTestDetail from 'Components/Cards/LabTestDetail';
 import PortieDetails from 'Containers/Patient/PortieDetails';
-import FamilyDetails from 'Components/Cards/FamilyDetails';
+import FamilyDetails from 'Containers/Patient/FamilyDetails';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -31,7 +31,7 @@ function AddPatient(props) {
     facility: [],
     labTests: [],
     portie_calling_details: [],
-    family: [],
+    patient_family_details: [],
   });
   const [error, setError] = useState(null)
   const [formError, setFormError] = useState(false);
