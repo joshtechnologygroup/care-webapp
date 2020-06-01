@@ -210,7 +210,7 @@ export default function Form(props) {
               select
               name="clinical_status"
               label={i18n.t('Clinical status of patient')}
-              value={medicationDetails? medicationDetails.clinical_status:clinical_status}
+              value={medicationDetails ? medicationDetails.clinical_status : clinical_status}
               onChange={change}
               helperText={touched.clinical_status ? errors.clinical_status : ""}
               error={touched.clinical_status && Boolean(errors.clinical_status)}
@@ -230,7 +230,7 @@ export default function Form(props) {
               select
               name="covid_status"
               label={i18n.t('Covid status of patient')}
-              value={medicationDetails ? medicationDetails.covid_status: covid_status}
+              value={medicationDetails ? medicationDetails.covid_status : covid_status}
               onChange={change}
               helperText={touched.covid_status ? errors.covid_status : ""}
               error={touched.covid_status && Boolean(errors.covid_status)}

@@ -70,13 +70,13 @@ function AddPatient(props) {
       setFormError(true);
       return;
     }
-    if(formError === true){
+    if(formError) {
       setOpen(true);
       return;
     }
     if(totalFields === TOTAL_PROFILE_FIELDS) {
       const response = await props.createPatient(profile)
-    if(response === true) {
+    if(response) {
       setError(true)
     } else {
       setError(false)
