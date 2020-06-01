@@ -5,48 +5,28 @@ import {
     TextField
 
 } from '@material-ui/core';
-import { PropTypes } from 'prop-types';
-import Select from 'react-select'
 import useStyles from './styles';
 import { connect } from 'react-redux';
-import _ from 'underscore'
+
 export function Form(props) {
     const classes = useStyles();
     const { i18n } = useTranslation();
-    const {data, handleChange} = props;
-    const [errors, setErrors] = useState({ required_quantity: false, current_quantity: false, form: ''})
-
-    const facilityName = []; 
-    const inventoryType = [];
-
-    if(!_.isEmpty(props.shortFacilities)){
-        Object.keys(props.shortFacilities).forEach((facility, index) =>{
-            facilityName.push({
-                'value': `facility-type-${index}`,
-                'label': props.shortFacilities[facility].name
-            })
-        }) 
-    }
-
-    if(!_.isEmpty(props.inventoryTypesList)){
-        Object.keys(props.inventoryTypesList).forEach((inventoryitem, index) =>{
-            inventoryType.push({
-                'value': `facility-type-${index}`,
-                'label': props.inventoryTypesList[inventoryitem].name
-            })
-          })
-     }
+    const { data, handleChange } = props;
+    const [errors, setErrors] = useState({ total_bed: false, occupied_bed: false, available_bed: false , form: ''})
 
     const change = (name, value) => {
         handleChange(name, value);
     };
      const changeText = (name, e) => {
         switch (name) {
-            case 'required_quantity':
-              errors.required_quantity = e.target.value ? false : true;
+            case 'total_beds':
+              errors.total_bed = e.target.value && ( parseInt(e.target.value) >= 0) ? false : true;
               break;
-            case 'current_quantity':
-              errors.current_quantity = e.target.value ? false : true;
+            case 'occupied_beds':
+              errors.occupied_bed = e.target.value && (parseInt(e.target.value) >= 0) ? false : true;
+              break;
+            case 'available_bed':
+              errors.available_bed = e.target.value && (parseInt(e.target.value) >= 0) ? false : true;
               break;
             default: break;
           }
@@ -57,50 +37,38 @@ export function Form(props) {
         handleChange(name, e.target.value);
     };
 
-    useEffect(() => {
-        if(props.facilityList && !_.isEmpty(props.facilityList) && props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)){
-         handleChange({"name": facilityName[0], "type": inventoryType[0]}); // Setting initial state
-        }
-    }, [errors]);
 
     return (
         <form>
             <Grid item container spacing={2}>
                 <Grid item sm={6} xs={12}>
-                    <label className={classes.label}>{i18n.t('Facility Name')}</label>
-                    <Select
-                        options={facilityName}
-                        defaultValue={facilityName[0]}
-                        onChange={change.bind(null, "name")}
+                    <TextField 
+                        name="total_beds"
+                        type="number"
+                        label={i18n.t('Total Beds - ' +  data.total_bed.toString())}
+                        fullWidth
+                        onChange={changeText.bind(null, "total_beds")}
+                        error={errors.total_bed}
                     />
                 </Grid>
-
                 <Grid item sm={6} xs={12}>
-                    <label className={classes.label}>{i18n.t('Inventory Type')}</label>
-                    <Select
-                        options={inventoryType}
-                        defaultValue={inventoryType[0]}
-                        onChange={change.bind(null, "type")}
-                    />
+                  <TextField
+                    name="occupied_beds"
+                    type="number"
+                    label={i18n.t('Occupied Beds - ' + data.occupied_bed.toString())}
+                    fullWidth
+                    onChange={changeText.bind(null, "occupied_beds")}
+                    error={errors.occupied_bed}
+                  />
                 </Grid>
                 <Grid item sm={6} xs={12}>
                     <TextField 
-                        name="required_quantity"
+                        name="available_bed"
                         type="number"
-                        label={i18n.t('Required Number')}
+                        label={i18n.t('Available Beds - ' + data.available_bed.toString())}
                         fullWidth
-                        onChange={changeText.bind(null, "required_quantity")}
-                        error={errors.required_quantity}
-                    />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                    <TextField 
-                        name="current_quantity"
-                        type="number"
-                        label={i18n.t('Current Number')}
-                        fullWidth
-                        onChange={changeText.bind(null, "current_quantity")}
-                        error={errors.current_quantity}
+                        onChange={changeText.bind(null, "available_bed")}
+                        error={errors.available_bed}
                     />
                 </Grid>
             </Grid>
@@ -109,23 +77,6 @@ export function Form(props) {
 }
 
 
-Form.defaultProps = {
-    profile: {}
-}
-
-const mapStateToProps = (state) => ({
-    inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes,
-    shortFacilities: state.shortFacilities,
-    count:state.inventory.count
-  });
+const mapStateToProps = (state) => ({});
   
-Form.propTypes = {
-    profile: PropTypes.object.isRequired,
-    inventoryList: PropTypes.array.isRequired,
-    inventoryTypesList: PropTypes.array.isRequired,
-    shortFacilities: PropTypes.array.isRequired,
-    handleEdit: PropTypes.func.isRequired
-};
-  
-  export default connect(mapStateToProps, null)(Form);
+export default connect(mapStateToProps, null)(Form);

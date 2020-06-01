@@ -10,73 +10,43 @@ import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import Form from './form';
 import useStyles from './styles';
-import { createOrUpdateInventory } from 'Actions/FacilitiesAction';
+import { updateFacilityInfrastructure } from 'Actions/BedsListAction';
 import { PropTypes } from 'prop-types';
+import { FACILITY_INFRASTRUCTURE_UPDATE_URL, FACILITY_INFRASTRUCTURE_LIST_URL } from 'Src/routes';
 import { connect } from 'react-redux';
-import _ from 'underscore'
+import * as StringUtil from 'Src/utils/stringformatting'
 
 export const BedsForm = (props) => {
     const classes = useStyles();
-    const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
-    const [error, setError] = useState(false)
-    const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList } = props;
-    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: ''})
-
+    const [error, setError] = useState(false )
+    const { open, data, onClose } = props;
+    const [errors, setErrors] = useState({ total_beds: true, occupied_beds: true, available_bed: true, form: ''})
+    const [ updatedData, setUpdateData ] = useState({total_bed: data.total_bed, occupied_bed: data.occupied_bed, available_bed: data.available_bed });
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
-    
-    useEffect(() => {
-        if(!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)){
-                    setError(true)
-         }
-         else{
-            setError(false)
-         }
-      }, [facilityList, inventoryTypesList]);
 
-    const createInventory = () => {
-        let initial = inventoryData;
-        if(!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)){
-        Object.keys(facilityList).forEach((facility, index) =>{
-            if(initial.type.label === facilityList[facility].name){
-               initial['facility'] = facilityList[facility].id
-               return;
-            }
-        });
-        delete initial.name;
-        Object.keys(inventoryTypesList).forEach((inventoryitem, index) =>{
-             if(initial.type.label === inventoryTypesList[inventoryitem].name){
-                initial['item'] = inventoryTypesList[inventoryitem].id
-                return;
-             }
-        });
-        delete initial.type;
-        setInventoryData({inventoryData:initial});
-        if(isAddAnother === false && data){
-            createOrUpdateInventory(initial, data.id)
-        } else {
-             createOrUpdateInventory(initial)
-        }
-        }
-        if(!isAddAnother) {
-            onClose();
+    const updateFacilityInfrastructure = () => {
+        const response = props.updateFacilityInfrastructure(updatedData, StringUtil.formatVarString(FACILITY_INFRASTRUCTURE_UPDATE_URL, [ data.id ]))
+        if(!response.status){
+          setError(true);
+          setErrors({...errors, form: response.detail})
         }
     }
-   
     const handleChange = (name, e) => {
-        if(typeof name === 'object') {
-            setInventoryData({...inventoryData, ...name});
-        } else {
-            setInventoryData({...inventoryData, [name]: e});
-        }
         switch (name) {
-            case 'required_quantity':
-              errors.required_quantity = e ? false : true;
+          case 'total_beds':
+              setUpdateData({...updatedData, 'total_bed': e ?  parseInt(e) : data.total_bed})
+              errors.total_beds = !(e && (parseInt(e) >= 0));
               break;
-            case 'current_quantity':
-              errors.current_quantity = e ? false : true;
+            case 'occupied_beds':
+              setUpdateData({...updatedData, 'occupied_bed': e ?  parseInt(e) : data.occupied_bed})
+              errors.occupied_beds = !(e && (parseInt(e) >= 0));
+              break;
+            case 'available_bed':
+              setUpdateData({...updatedData, 'available_bed': e ?  parseInt(e) : data.available_bed})
+              errors.available_bed = !(e && (parseInt(e) >= 0));
               break;
             default: break;
           }
@@ -94,7 +64,7 @@ export const BedsForm = (props) => {
                 <Grid item xs={12}>
                     <Formik>
                         {
-                            props => <Form data={inventoryData}  {...props} handleChange={handleChange} />
+                            props => <Form  {...props} data={data} handleChange={handleChange} />
                         }
                     </Formik>
                 </Grid>
@@ -102,7 +72,7 @@ export const BedsForm = (props) => {
                     {
                     error === true && 
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>Facility Name and Inventory Type not exists...</FormHelperText>
+                        <FormHelperText className={classes.error}>{errors.form}</FormHelperText>
                     </FormControl>
                     }
                 </Grid>
@@ -120,8 +90,8 @@ export const BedsForm = (props) => {
                         variant="contained"
                         color="primary"
                         size="medium"
-                        onClick={createInventory}
-                        disabled={errors.required_quantity || errors.current_quantity}
+                        onClick={updateFacilityInfrastructure}
+                        disabled={errors.total_beds && errors.occupied_beds && errors.available_bed }
                     >
                         {i18n.t('Ok')}
                     </Button>
@@ -133,17 +103,10 @@ export const BedsForm = (props) => {
 
 
 const mapStateToProps = (state) => ({
-    inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes,
-    facilityList: state.shortFacilities,
-    count:state.inventory.count
   });
 
 BedsForm.propTypes = {
-    inventoryList: PropTypes.array.isRequired,
-    inventoryTypesList: PropTypes.array.isRequired,
-    facilityList: PropTypes.array.isRequired,
-    createOrUpdateInventory: PropTypes.func.isRequired,
+  updateFacilityInfrastructure: PropTypes.func.isRequired
 };
   
-export default connect(mapStateToProps, { createOrUpdateInventory })(BedsForm);
+export default connect(mapStateToProps, { updateFacilityInfrastructure })(BedsForm);
