@@ -38,8 +38,11 @@ const getProfileDependencies = (params) => async (dispatch) => {
     ));
 };
 
-
-const createPatient = (state) => async (dispatch) => {
+/**
+ * 
+ * @param {object} state: body of the patient object to be created 
+ */
+const createPatient = state => async (dispatch) => {
     const create_patient_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_LIST_URL, POST, state, {})
     return create_patient_response.ok;
 }

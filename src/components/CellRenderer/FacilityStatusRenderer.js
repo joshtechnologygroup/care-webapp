@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Paper,
-  FormControl,
-  Select,
-  MenuItem
 } from '@material-ui/core';
 import _ from 'underscore';
 
@@ -35,22 +32,22 @@ const FacilityStatusRenderer = ({ value, data, updateStatus }) => {
     setStatus(e.target.value);
   }
 
-  if(value === 'Pending') { // TODO: this condition is to check Admin role or Facility owner
-    return (
-      <FormControl className={classes.formControl}>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={statue}
-          onChange={handleChange}
-        >
-          {FacilityStatus.map( item => (
-            <MenuItem key={item.value} value={item.value}>{item.title}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    );
-  }
+//   if(value === 'Pending') { // TODO: this condition is to check Admin role or Facility owner
+//     return (
+//       <FormControl className={classes.formControl}>
+//         <Select
+//           labelId="demo-simple-select-label"
+//           id="demo-simple-select"
+//           value={statue}
+//           onChange={handleChange}
+//         >
+//           {FacilityStatus.map( item => (
+//             <MenuItem key={item.value} value={item.value}>{item.title}</MenuItem>
+//           ))}
+//         </Select>
+//       </FormControl>
+//     );
+//   }
   return (
     <div className="renderer-container">
       <Paper elevation={0}>

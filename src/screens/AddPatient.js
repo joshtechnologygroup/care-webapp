@@ -57,7 +57,7 @@ function AddPatient(props) {
   }
 
   const handleSave = async () => { //calling save profile api
-    let totalFields = Object.keys(profile).length
+    let totalFields = Object.keys(profile).length;
     if(profile['native_state']){
       totalFields = totalFields - 1;
     }
@@ -65,27 +65,24 @@ function AddPatient(props) {
     {
       totalFields = totalFields - 1;
     }
-    if(profile['municipalWard']){
-      totalFields = totalFields - 1;
-    }
     if((profile['home_isolation'] === false && profile['facility'] === null) || totalFields !== TOTAL_PROFILE_FIELDS){
       setOpen(true);
       setFormError(true);
       return;
     }
-    if(formError === true){
+    if(formError) {
       setOpen(true);
       return;
     }
-    if(totalFields === TOTAL_PROFILE_FIELDS){
+    if(totalFields === TOTAL_PROFILE_FIELDS) {
       const response = await props.createPatient(profile)
-    if(response === true){
+    if(response) {
       setError(true)
     } else {
       setError(false)
     }
     setOpen(true)
-    }else{
+    } else {
       setOpen(true);
       setFormError(true);
     }
