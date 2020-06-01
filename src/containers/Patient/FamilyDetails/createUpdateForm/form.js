@@ -16,7 +16,6 @@ import { GENDER_LIST_MAPPING } from 'Constants/app.const';
 import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 
 export default function Form(props) {
-  // const classes = useStyles();
   const { i18n } = useTranslation();
   const {
     details: {

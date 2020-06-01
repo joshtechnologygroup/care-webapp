@@ -5,7 +5,7 @@ import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetailForm  from 'Containers/Patient/MedicationDetail/MedicationDetailForm';
 import FacilityDetails  from 'Components/Cards/FacilityDetails';
-import LabTestDetail from 'Components/Cards/LabTestDetail';
+import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
 
@@ -29,7 +29,7 @@ function AddPatient(props) {
       attendant: [],
     },
     facility: [],
-    labTests: [],
+    patient_lab_details: [],
     portie_calling_details: [],
     patient_family_details: [],
   });
@@ -130,7 +130,7 @@ function AddPatient(props) {
           <FacilityDetails
             profile={profile[formList[3]]}
           />
-          <LabTestDetail
+          <LabTestDetails
             profile={profile[formList[4]]}
           />
           <PortieDetails

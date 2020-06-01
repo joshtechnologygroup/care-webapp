@@ -9,7 +9,7 @@ import {
   Typography,
   Tooltip,
 } from '@material-ui/core';
-import { PhoneOutlined, EditOutlined, Add } from '@material-ui/icons';
+import { PhoneOutlined, EditOutlined } from '@material-ui/icons';
 
 // Importing mock data
 import { genderChoices } from 'Constants/app.const';

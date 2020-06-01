@@ -29,13 +29,8 @@ export default function SingleSelectChipsInput(props) {
   const [val, setVal] = useState(value);
 
   const change = (e, option) => {
-    if (typeof option[valueKey] === 'boolean') {
-      setVal(e.target.value === 'true' ? true : false);
-      onChange && onChange(e.target.value === 'true' ? true : false);
-    } else {
-      setVal(e.target.value);
-      onChange && onChange(e.target.value);
-    }
+    setVal(valueKey ? option[valueKey] : option.name);
+    onChange && onChange(valueKey ? option[valueKey] : option.name);
   };
   return (
     options.length && options.map((option, index) =>

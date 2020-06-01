@@ -50,11 +50,23 @@ export const theme = createMuiTheme({
           background: '#ff4746',
           color: '#ffffff',
         },
+        '&.danger-light': {
+          background: '#ec7d76',
+          color: '#ffffff',
+        },
         '&.success': {
           background: '#3eac2d',
           color: '#ffffff',
         },
+        '&.warning': {
+          background: '#FF9500',
+          color: '#000000',
+        },
         '&.selected': {
+          color: '#ffffff',
+          background: '#007aff',
+        },
+        '&.primary': {
           color: '#ffffff',
           background: '#007aff',
         },
@@ -84,6 +96,9 @@ export const theme = createMuiTheme({
           '& .MuiInputBase-root': {
             background: '#FFFFFF',
             borderRadius: 0,
+            '& .MuiAutocomplete-input': {
+              padding: '.5rem 0',
+            }
           },
           '& .MuiInputBase-input': {
             fontSize: '1.6rem',

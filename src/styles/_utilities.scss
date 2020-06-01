@@ -123,3 +123,19 @@
 .overflow-visible {
   overflow: visible !important;
 }
+
+// Color
+.bg {
+  $color-map: (
+    "danger": $red,
+    "danger-light": $red,
+    "success": $green,
+    "warning": $orange,
+    "primary": $blue-primary
+  );
+  @each $name, $color in $color-map {
+    &--#{$name} {
+      background: rgba($color, .08) !important;
+    }
+  }
+}

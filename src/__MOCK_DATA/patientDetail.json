@@ -71,34 +71,48 @@
                 }
             ]
         },
-        "labTests": [
+        "patient_lab_details": [
             {
-                "labName": "Synergia Path Labs",
-                "labCode": "SPL1",
-                "sampleDate": "1590145200",
-                "status": 2,
-                "updated": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 1,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             },
             {
-                "labName": "XAB Labs",
-                "labCode": "X012",
-                "sampleDate": "1590145200",
-                "status": 1,
-                "8": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 2,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             },
             {
-                "labName": "FAB Medicia Labs",
-                "labCode": "FML1",
-                "sampleDate": "1590145200",
-                "status": 2,
-                "updated": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 3,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             },
             {
-                "labName": "Sample path Labs",
-                "labCode": "SPL1",
-                "sampleDate": "1590145200",
-                "status": 4,
-                "updated": "1590145200"
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 4,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
+            },
+            {
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 5,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
+            },
+            {
+                "name": "Respiratory Virus Lab",
+                "code": "10004",
+                "date_of_sample": "2020-05-31T21:07:45.493081+05:30",
+                "result": 6,
+                "status_updated_at": "2020-05-31T21:07:45.493143+05:30"
             }
         ],
         "portie_calling_details": [

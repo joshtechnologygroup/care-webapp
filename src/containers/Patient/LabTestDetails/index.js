@@ -7,11 +7,11 @@ import {
   Card,
 } from '@material-ui/core';
 
-import FamilyMemberCard from 'Components/Cards/FamilyMemberCard';
+import LabTestCard from 'Components/Cards/LabTestCard';
 import NullState from 'Components/NullState';
 import { CreateUpdateForm } from './createUpdateForm';
 
-export default function FamilyDetails(props) {
+export default function LabTestDetail(props) {
   const { i18n } = useTranslation();
   const { profile } = props;
 
@@ -42,9 +42,9 @@ export default function FamilyDetails(props) {
   };
 
   return (
-    <div className="mb-20">
+    <>
       <div className="section-header">
-        <h4 className="heading--card">{i18n.t('Family Details')}</h4>
+        <h4 className="heading--card">{i18n.t('Lab Tests')}</h4>
         <Button
           variant="contained"
           color="primary"
@@ -53,7 +53,7 @@ export default function FamilyDetails(props) {
           className="btn"
           onClick={add}
         >
-          + {i18n.t('Add Family member')}
+          + {i18n.t('Add Lab test')}
         </Button>
       </div>
       <Grid container spacing={1}>
@@ -69,7 +69,7 @@ export default function FamilyDetails(props) {
           </Grid>
         }
         {
-          profile.map((member, index) =>
+          profile.map((test, index) => 
             <Grid key={index} className="mb-0" item xs={12}>
               {
                 editable === index ?
@@ -77,11 +77,12 @@ export default function FamilyDetails(props) {
                   handleSubmit={handleSubmit}
                   cancelCallback={cancel}
                   editMode={true}
-                  details={member}
+                  details={test}
                 />
                 :
-                <FamilyMemberCard
-                  details={member}
+                <LabTestCard
+                  className="mb-0"
+                  details={test}
                   editCallback={() => edit(index)}
                 />
               }
@@ -92,20 +93,19 @@ export default function FamilyDetails(props) {
           !profile.length &&
           <Grid item xs={12}>
             <Card>
-              <NullState message={i18n.t('null_messages.family')} />
+              <NullState message={i18n.t('null_messages.labtest')} />
             </Card>
           </Grid>
         }
       </Grid>
-    </div>
+    </>
   );
 }
 
-FamilyDetails.propTypes = {
+LabTestDetail.propTypes = {
   profile: PropTypes.array.isRequired,
-  handleEdit: PropTypes.func
 };
 
-FamilyDetails.defaultProps = {
+LabTestDetail.defaultProps = {
   profile: []
 };
