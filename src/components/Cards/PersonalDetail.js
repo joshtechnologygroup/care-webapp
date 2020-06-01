@@ -14,6 +14,7 @@ import { EditOutlined } from '@material-ui/icons';
 import patientMale from 'Assets/images/patient-male.svg';
 import patientFemale from 'Assets/images/patient-female.svg';
 import { PropTypes } from 'prop-types';
+import { GENDER_CHOICES } from 'Constants/app.const';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -45,31 +46,32 @@ export default function PersonalDetail(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
 
-  const { profile, handleEdit } = props;
+  const { profile, handleEdit, medicationDetails } = props;
+  
   return (
     <Card elevation={4}>
       <CardContent>
         <Grid container spacing={4}>
           <Grid item className="p-0">
             <div className={`${classes.image} flex-center`}>
-              <img className={`${classes.img} + ${profile.imageSrc ? '' : classes.imgNull}`} src={profile.imageSrc ? profile.imageSrc : profile.gender === 'Male' ? patientMale: patientFemale} alt={profile.firstName} />
+              <img className={`${classes.img} + ${profile.imageSrc ? '' : classes.imgNull}`} src={profile.imageSrc ? profile.imageSrc : GENDER_CHOICES[profile.gender] === 'Male' ? patientMale: patientFemale} alt={profile.name} />
             </div>
           </Grid>
           <Grid item>
             <Typography variant="h4" color="primary">
-              {profile.firstName} {profile.lastName}
+              {profile.name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {i18n.t(profile.gender)}, {profile.ageYears ? profile.ageYears + ' ' + i18n.t('years'): '' } {profile.ageMonths? profile.ageMonths + ' ' + i18n.t('months'): '' }
+              {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.age_years ? profile.age_years + ' ' + i18n.t('years'): '' } {profile.ageMonths? profile.ageMonths + ' ' + i18n.t('months'): '' }
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {i18n.t('Govt. ID')}: {profile.idGovt}
+              {i18n.t('Govt. ID')}: {profile.govt_id}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {i18n.t('ICMR ID')}: {profile.idICMR}
+              {i18n.t('ICMR ID')}: {profile.icmr_id}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {i18n.t('Cluster group')}: {profile.clusterGroup}
+              {i18n.t('Cluster group')}: {medicationDetails.cluster_group}
             </Typography>
           </Grid>
         </Grid>

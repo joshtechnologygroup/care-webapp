@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import i18n from "i18next";
 import PersonalDetail from 'Components/Cards/PersonalDetail';
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
+// import t from 'typy';
+
 import ContactDetail from 'Components/Cards/ContactDetail';
 import Timeline from 'Components/Cards/Timeline';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
@@ -12,7 +14,8 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
-import { fetchPatient } from 'Actions/PatientsAction';
+import { fetchPatient, updatePatientDetails } from 'Actions/PatientsAction';
+import _ from "underscore";
 class PatientDetail extends Component {
   constructor(props) {
     super(props);
@@ -47,11 +50,18 @@ class PatientDetail extends Component {
       }
     });
   }
+  
   componentDidMount(){
-    this.props.fetchPatient(1);
+    const patientId = this.props.match.params.patientId;
+    this.props.fetchPatient(patientId);
   }
   onSubmit = (data, key) => {
-    console.log("submit", key, data);
+    if(key === "personal") {
+      this.props.updatePatientDetails(data);
+    }
+    if(key === "contact") {
+      this.props.updatePatientDetails(data);
+    }
     this.setState({
       profile: {
         ...this.state.profile,
@@ -63,8 +73,10 @@ class PatientDetail extends Component {
       }
     })
   }
+  
   render() {
     const { formList, isEditing, profile } = this.state;
+    if(!_.isEmpty(this.props.patient)){
     return (
       <>
         <h2 className="page-header header-container">{i18n.t('Patient Detail')}</h2>
@@ -72,24 +84,26 @@ class PatientDetail extends Component {
           {
             isEditing[formList[0]] ? 
             <PersonalDetailForm
-              profile={profile[formList[0]]}
+              profile={this.props.patient.personal_details[0]}
               handleSubmit={ (data) => this.onSubmit(data, formList[0]) }
               editMode={true}
+              medicationDetails={this.props.patient.medication_details[0]}
             /> :
             <PersonalDetail
-              profile={profile[formList[0]]}
+              profile={this.props.patient.personal_details[0]}
+              medicationDetails={this.props.patient.medication_details[0]}
               handleEdit={ () => this.setEditable(formList[0], true) }
             />
           }
           {
             isEditing[formList[1]] ?
             <ContactDetailForm
-              profile={profile[formList[1]]}
+              profile={this.props.patient.contact_details}
               handleSubmit={ (data) => {this.onSubmit(data, formList[1])} }
               editMode={true}
             /> :
             <ContactDetail
-              profile={profile[formList[1]]}
+              profile={this.props.patient.contact_details}
               handleEdit={ () => this.setEditable(formList[1], true) }
             />
           }
@@ -139,21 +153,29 @@ class PatientDetail extends Component {
         </div>
       </>
     );
+  } else{
+    return(
+       <div>
+      loader
+      </div>
+    )
   }
+}
 }
 
 
 const mapStateToProps = state => {
     const { patient } = state;
     return {
-        patient: patient.results,
+        patient: patient,
     };
 };
 
 
 PatientDetail.propTypes = {
-  patient: PropTypes.array.isRequired,
+  patient: PropTypes.object.isRequired,
   fetchPatient: PropTypes.func.isRequired,
+  updatePatientDetails :PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { fetchPatient })(PatientDetail);
+export default connect(mapStateToProps, { fetchPatient, updatePatientDetails })(PatientDetail);

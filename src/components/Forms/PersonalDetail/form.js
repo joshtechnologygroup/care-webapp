@@ -39,6 +39,7 @@ export default function Form(props) {
       facility,
       home_isolation
     },
+    medicationDetails,
     errors,
     touched,
     handleSave,
@@ -51,8 +52,9 @@ export default function Form(props) {
     facilityList,
     clusterGroup,
     handleError,
+    handleSubmit,
   } = props;
-
+ 
   const [values, setValues] = React.useState({
     facilityExists: Boolean(facility),
     homeIsolationExist: Boolean(home_isolation),
@@ -60,15 +62,19 @@ export default function Form(props) {
   
   const setIsolationFacility = (event) => {
     if (event.target.name === 'facilityExists') {
-      saveProfile("home_isolation", !event.target.checked)
+      if(saveProfile) {
+        saveProfile("home_isolation", !event.target.checked)
+      }
       setFieldValue('homeIsolationExist', '');
       setValues({
         homeIsolationExist: false,
         [event.target.name]: event.target.checked
       });
     } else if (event.target.name === 'homeIsolationExist') {
-      saveProfile("home_isolation", event.target.checked)
-      saveProfile("facility", null)
+        if(saveProfile) {
+          saveProfile("home_isolation", event.target.checked);
+          saveProfile("facility", null);
+        }
       setFieldValue('facilityExists', '');
       setValues({
         [event.target.name]: event.target.checked,
@@ -78,12 +84,16 @@ export default function Form(props) {
   };
   const change = (event) => {
     const { name, value } = event.target;
+    setFieldValue(name, value);
+    if(saveProfile){
     saveProfile(name, value)
+    }
     setFieldTouched(name, true, false);
     if(value){
       setFieldTouched(event.target.name, false, true);
     }
     let error = false;
+    if(saveProfile){
     if(value === ""){
       error = true;
     } else if(Object.keys(touched).length >= TOTAL_PERSONEL_DETAILS_FIELDS){
@@ -94,14 +104,19 @@ export default function Form(props) {
         }
       })
     }
-    handleError(error);
+    if(handleError){
+      handleError(error);
+    }
+    }
   };
 
   const setProfileFields = (name, value) =>{
     const genderId = GENDER_MAPPING_PROPS[value];
-    saveProfile(name, genderId)
+    if(saveProfile) {
+      saveProfile(name, genderId)
+    }
     setFieldTouched(name, true, false);
-    if(value){
+    if(value) {
       setFieldTouched(name, false, true);
     }
   }
@@ -110,7 +125,7 @@ export default function Form(props) {
     setFieldValue('imageSrc', image);
   };
   return (
-  <form >
+  <form onSubmit={handleSubmit}>
     <Card className={classes.root} elevation={4}>
       <CardContent>
         <Grid container spacing={4}>
@@ -195,7 +210,7 @@ export default function Form(props) {
               select
               name="clinical_status"
               label={i18n.t('Clinical status of patient')}
-              value={clinical_status}
+              value={medicationDetails.clinical_status}
               onChange={change}
               helperText={touched.clinical_status ? errors.clinical_status : ""}
               error={touched.clinical_status && Boolean(errors.clinical_status)}
@@ -215,7 +230,7 @@ export default function Form(props) {
               select
               name="covid_status"
               label={i18n.t('Covid status of patient')}
-              value={covid_status}
+              value={medicationDetails.covid_status}
               onChange={change}
               helperText={touched.covid_status ? errors.covid_status : ""}
               error={touched.covid_status && Boolean(errors.covid_status)}
@@ -308,13 +323,12 @@ export default function Form(props) {
                 }
               />
             </Grid>
-              {
-                editMode && 
+                {
+                
                 <Grid item xs={12} sm={3} className="ml-auto">
                   <Button
                     fullWidth
-                    type="button"
-                    onclick={handleSave}
+                    type="submit"
                     variant="contained"
                     color="primary"
                     disableElevation
