@@ -12,7 +12,7 @@ export const Beds = () => {
         >
             <div className="primary-bg-light">
                 <Header />
-                <div className="table-container">
+                <div className="main-container">
                     <BedsList />
                 </div>
             </div>

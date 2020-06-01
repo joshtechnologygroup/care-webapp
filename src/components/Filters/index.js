@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Button, TextField } from '@material-ui/core';
+import { Grid, Button, TextField, IconButton} from '@material-ui/core';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { useTranslation } from "react-i18next";
 
 import { MultiSelectBoolDropdown, MultiSelectNumberDropdown, MultiSelectDateDropdown } from 'Components/Inputs';
@@ -103,18 +104,18 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
         </Grid>
         <Grid item xs={2} md={2} container direction="row" justify="flex-start"
           alignItems="flex-start">
-            <Grid item md={8} container spacing={2}>
-                <Grid md={6}>
+            <Grid item md={8} container>
+                <Grid md={7}>
                     <Button className="apply_btn" variant="contained" color="primary" onClick={handleApplyFilter}>
                         Apply
                     </Button>
                 </Grid>
-                <Grid md={6}>
-                    <Button className="more-less_btn" color="primary" onClick={() => {
+                <Grid md={5}>
+                    <IconButton color="primary" onClick={() => {
                         setReset(true); 
                         setTextFieldVal(new Array(filterOptions.length).fill(""))
                         handleReset();
-                    }}>Reset</Button>
+                    }}><RotateLeftIcon /></IconButton>
                 </Grid>
             </Grid>
             <Grid md={4}>
