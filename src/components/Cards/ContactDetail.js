@@ -55,22 +55,22 @@ export default function ContactDetail(props) {
               {i18n.t('Phone number')}
             </Typography>
             <Typography variant="h6">
-              {profile.number} (
+              {profile.phone_number} (
                 {
                   relationshipChoices.map(choice => {
-                    return choice.id === profile.numberBelongsTo ? (choice.name) : ''
+                    return choice.id === profile.phone_number_belongs_to ? (choice.name) : ''
                   })
                   
                 })
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={(profile.nativeState || profile.nativeCountry) ? 6 : 9} className="pb-0">
+          <Grid item xs={12} sm={(profile.native_state || profile.native_country) ? 6 : 9} className="pb-0">
             <Typography variant="h6" color="primary" className="d-flex">
               <RoomOutlined className={classes.icon} />
               {i18n.t('Address')}
             </Typography>
             <Typography variant="h6">
-              {profile.address}, {profile.municipalWard}
+              {profile.address}
             </Typography>
             <Typography variant="h6">
               {profile.district}, {profile.city}
@@ -84,7 +84,7 @@ export default function ContactDetail(props) {
             </Typography>
           </Grid>
             {
-              (profile.nativeState || profile.nativeCountry) &&
+              (profile.native_state || profile.native_country) &&
               <Grid item xs={12} sm={3} className="pb-0">
                 <Typography variant="h6" color="primary" className="d-flex">
                   <HomeOutlined className={classes.icon} />

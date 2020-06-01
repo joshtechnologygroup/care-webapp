@@ -1,6 +1,6 @@
 import * as CommonService from "Src/utils/services";
 import * as Routes from 'Src/routes';
-import { GET, POST } from "Src/constants";
+import { GET, POST, PUT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 
@@ -56,5 +56,17 @@ const fetchPatient = id => async (dispatch) => {
     }
 }
 
+/**
+ * 
+ * @param {object} body: body of the patient details
+ * @param {number} id: patient id required to update the patient details
+ */
+const updatePatientDetails = (body, id) => async (dispatch) => {
+    const update_patient_response = await CommonService.makeAuthorizedApiCall(`${Routes.GET_PATIENT_URL}${id}/`, PUT, body, {})
+    if(update_patient_response.ok) {
+        const update_patient_data = await update_patient_response.json();
+    }
+}
 
-export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient }
+
+export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails }

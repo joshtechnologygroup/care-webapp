@@ -53,30 +53,41 @@ export function Form(props) {
     nativeStateExist: Boolean(native_state),
   })
   const setNativePlace = (event) => {
-    if (event.target.name === 'nativeStateExist') {
-      saveProfile('native_state', event.target.value);
+    const { name, value, checked } = event.target;
+    if (name === 'nativeStateExist') {
+      if(saveProfile) {
+        saveProfile('native_state', value);
+      }
+      setFieldValue('native_state', value);
       setValues(prevState =>({
         ...prevState,
-        [event.target.name]: event.target.checked
-    }))
-    } else if (event.target.name === 'nativeCountryExist') {
-      saveProfile('native_country', event.target.value);
+        [name]: checked
+    }));
+    } else if (name === 'nativeCountryExist') {
+      if(saveProfile) {
+        saveProfile('native_country', value);
+      }
+      setFieldValue('native_country', value);
       setValues(prevState =>({
         ...prevState,
-        [event.target.name]: event.target.checked
+        [name]: checked
     }))
     }
   };
   
   const handleChange = (event) => {
     const { name, value } = event.target;
-    saveProfile(name, value)
+    setFieldValue(name, value);
+    if(saveProfile) {
+      saveProfile(name, value);
+    }
     setFieldTouched(name, true, false);
-    if(value){
+    if(value) {
       setFieldTouched(name, false, true);
     }
+    if(saveProfile) {
     let error = false;
-    if(value === ""){
+    if(value === "") {
       error = true;
     } else if(Object.keys(touched).length >= TOTAL_CONTACT_DETAILS_FIELDS){
       Object.entries(touched).forEach(([item, itemValue]) => {
@@ -87,10 +98,11 @@ export function Form(props) {
       })
     }
     handleError(error);
+  }
   };
 
   return (
-  <form >
+  <form onSubmit={handleSubmit}>
     <Card className={classes.root} elevation={4}>
       <CardHeader
         title={i18n.t('Contact Details')}
@@ -270,7 +282,6 @@ export function Form(props) {
               <Button
                 fullWidth
                 type="submit"
-                onclick={handleSubmit}
                 variant="contained"
                 color="primary"
                 disableElevation

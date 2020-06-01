@@ -7,22 +7,23 @@ import { connect } from 'react-redux';
 import { getProfileDependencies } from 'Actions/PatientsAction';
 export function PersonalDetailForm(props) {
 
-  const { profile, editMode, handleSave, handleError, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus } = props;
+  const { profile, editMode, handleSave, handleError, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus, medicationDetails } = props;
   const validationSchema = Yup.object({
     name: Yup.string("Please enter name").required('Patient Name is required'),
     month: Yup.number("Please enter months").required('Months is required').max(12, "Max value for months is 12"),
     year: Yup.number("Please enter years").required('Years is required').min(0, "Invalid value for age"),
     gender: Yup.number("Please enter gender").required('Gender is required'),
-    icmr_id: Yup.string("Please enter ICMR ID").required('ICMR ID is required'),
-    govt_id: Yup.number("Please enter Govt. ID").required('Govt ID is required'),
-    cluster_group: Yup.string("Please enter Cluster group").required('Cluster group is required'),
+    icmr_id: Yup.string("Please enter ICMR ID"),
+    govt_id: Yup.string("Please enter Govt. ID").required('Govt ID is required'),
+    cluster_group: Yup.number("Please enter Cluster group"),
     clinical_status: Yup.string("Please enter clinical status").required('Clinical status is required'),
     covid_status:  Yup.string("Please enter covid status").required('covid status is required'),
   });
 
-  const submit= () => {
-    handleSave();
+  const submit= (data) => {
+    props.handleSubmit(data);
   };
+  
   useEffect(() => {
     if (!facilityList || !covidStatus || !clinicalStatus || !currentStatus || !clusterGroup) {
       fetchProfileDependencies();
@@ -35,7 +36,7 @@ export function PersonalDetailForm(props) {
       onSubmit={submit}
       >
       {
-        props => <Form editMode={editMode} facilityList={facilityList} clusterGroup={clusterGroup} handleError={handleError} covidStatus={covidStatus} clinicalStatus={clinicalStatus} currentStatus={currentStatus} saveProfile={saveProfile}{...props} />
+        props => <Form editMode={editMode} facilityList={facilityList} clusterGroup={clusterGroup} medicationDetails={medicationDetails} handleError={handleError} covidStatus={covidStatus} clinicalStatus={clinicalStatus} currentStatus={currentStatus} saveProfile={saveProfile}{...props} />
       }
     </Formik>
   );
@@ -50,6 +51,7 @@ PersonalDetailForm.defaultProps = {
   profile: {},
   fetchInventoryDependencies: () => {},
   handleEdit:() => {},
+  handleSubmit:() => {},
   queryParams: {},
   count: 0,
 };
