@@ -30,4 +30,8 @@ async function makeAuthorizedApiCall(base_url, method = GET, body = {}, params =
     return makeApiCall(base_url, method, body, headers, params)
 }
 
+export async function updateTransferStatus(url, method, body = {}, params = {}) {
+    return await makeAuthorizedApiCall(url, method, body, params)
+}
+
 export { makeApiCall, makeAuthorizedApiCall };

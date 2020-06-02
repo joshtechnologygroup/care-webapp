@@ -1,4 +1,4 @@
-import React, {useState, useRef } from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import CustomModal from 'Components/CustomModal';
 import { useTranslation } from "react-i18next";
@@ -12,25 +12,30 @@ import _ from 'underscore';
 
 
 export const TransferUpdateForm = (props) => {
-    const { open, onClose, rowData, updateStatus } = props;
+    const { open, onClose, rowData, updateStatus, update_transfer_errors, showSuccessToast } = props;
     const { i18n } = useTranslation();
     const submit = (data) => {
-        const response = updateStatus(rowData.id, data);
-        if(response.status === 200) {
-            onClose();
-        } else {
-            console.log(response);
-        }
+        setIsSubmitted(true);
+        updateStatus(rowData.id, data);
     };
+    const [isSubmitted, setIsSubmitted] = useState(false)
+
+    useEffect(() => {
+        if(isSubmitted && !update_transfer_errors) {
+            showSuccessToast();
+            onClose();
+        }
+    }, [update_transfer_errors, isSubmitted])
+
     return (
-        <CustomModal open={open} onClose={onClose} title={i18n.t('Add Patient Transfer') }>
+        <CustomModal open={open} onClose={onClose} title={i18n.t('Update Patient Transfer Status') }>
              <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Formik
                         initialValues={{status: parseInt(_.invert(TRANSFER_STATUS_CHOICES)[rowData.status]), comments: rowData.comments ? rowData.comments : ""}}
                         onSubmit={submit}>
                         {
-                            props => <Form {...props} />
+                            props => <Form {...props} update_transfer_errors={update_transfer_errors}/>
                         }
                     </Formik>
                 </Grid>
@@ -38,6 +43,12 @@ export const TransferUpdateForm = (props) => {
         </CustomModal>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+        update_transfer_errors: state.transfers.update_transfer_errors
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -47,4 +58,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(TransferUpdateForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TransferUpdateForm);
