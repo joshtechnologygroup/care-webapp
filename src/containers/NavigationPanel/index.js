@@ -111,16 +111,16 @@ export function NavigationPanel(props) {
                   {i18n.t('Doctor / Attendant')}
                 </Link>
               </li>
-              <li className={getActivatedRoute('/facilities/manage-users') ? 'active' : ''}>
-                <Link to={'/facilities/manage-users'} className="nav-link">
-                  {i18n.t('Manage Users')}
-                </Link>
-              </li>
-              <li className={getActivatedRoute('/facilities/facility-details') ? 'active' : ''}>
-                <Link to={'/facilities/facility-details'} className="nav-link">
-                  {i18n.t('Facility Details')}
-                </Link>
-              </li>
+              {/*<li className={getActivatedRoute('/facilities/manage-users') ? 'active' : ''}>*/}
+              {/*  <Link to={'/facilities/manage-users'} className="nav-link">*/}
+              {/*    {i18n.t('Manage Users')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+              {/*<li className={getActivatedRoute('/facilities/facility-details') ? 'active' : ''}>*/}
+              {/*  <Link to={'/facilities/facility-details'} className="nav-link">*/}
+              {/*    {i18n.t('Facility Details')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
             </ul>
           </li>
         </ul>

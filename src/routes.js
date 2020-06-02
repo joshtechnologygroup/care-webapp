@@ -41,3 +41,7 @@ export const CREATE_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
 //patient dependencies
 export const PATIENT_STATUS_LIST_URL = SERVER + API_V1 + 'patients/current-status/'
 export const STATE_LIST_URL = SERVER + API_V1 + 'accounts/states/'
+
+
+// Relative paths to pages
+export const RELATIVE_PATH_FACILITY_DETAIL = '/facilities/facility-details/{0}'

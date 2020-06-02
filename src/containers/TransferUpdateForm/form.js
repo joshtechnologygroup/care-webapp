@@ -8,6 +8,9 @@ import {
 } from '@material-ui/core';
 import { transferStatus } from "Constants/app.const";
 import Select from 'react-select'
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import useStyles from './styles';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -16,7 +19,9 @@ export default function Form(props) {
     setFieldValue,
     setFieldTouched,
     initialValues,
+    update_transfer_errors
   } = props;
+  const classes = useStyles();
 
   const changeText = (name, e) => {
     setFieldTouched(e.target.name);
@@ -33,6 +38,12 @@ export default function Form(props) {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
+            {
+                update_transfer_errors && update_transfer_errors.non_field_errors &&
+                <FormControl component="fieldset" error={true}>
+                    <FormHelperText className={classes.error}>{update_transfer_errors.non_field_errors}</FormHelperText>
+                </FormControl>
+            }
 
         <Grid item sm={12} xs={12}>
             <Select
@@ -40,13 +51,21 @@ export default function Form(props) {
                 defaultValue={statusChoices.find(choice => choice.value == initialValues.status)}
                 name="status"
                 onChange={(val) => setFieldValue('status', val.value)}
+                error={update_transfer_errors && update_transfer_errors.status}
             />
+            {
+                update_transfer_errors && update_transfer_errors.status &&
+                <FormControl component="fieldset" error={true}>
+                    <FormHelperText className={classes.error}>{update_transfer_errors.status[0]}</FormHelperText>
+                </FormControl>
+            }
         </Grid>
         <Grid item sm={12} xs={12}>
             <TextField
                 name="comments"
                 label={i18n.t('Comments')}
                 fullWidth
+                defaultValue={initialValues.comments}
                 onChange={changeText.bind(null, "comments")}
                 variant="outlined"
             />
