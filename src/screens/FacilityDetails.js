@@ -78,6 +78,8 @@ export function FacilityDetails(props) {
         })
       });
 
+
+
       setFacility({inchargeContactDetails: facilityAdminstrators, contact: required_facility});
       setLoading(false);
     }

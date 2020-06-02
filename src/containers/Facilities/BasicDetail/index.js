@@ -39,11 +39,11 @@ export default function BasicDetail(props) {
     <Card elevation={4}>
       <CardHeader
         title={i18n.t('Contact Details')}
-        action={
-          <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={handleEdit}>
-            <EditOutlined fontSize="large"/>
-          </IconButton>
-        }
+        // action={
+        //   <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={handleEdit}>
+        //     <EditOutlined fontSize="large"/>
+        //   </IconButton>
+        // }
       />
       <CardContent>
         <Grid container spacing={2} alignItems="flex-start">

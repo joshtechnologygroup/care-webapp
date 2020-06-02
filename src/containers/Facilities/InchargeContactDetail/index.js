@@ -16,7 +16,7 @@ export default function InchargeContactDetail(props) {
     <React.Fragment>
       <Card elevation={4}>
         <CardHeader
-          title={i18n.t('Incharge Contact Details')}
+          title={i18n.t('Administrators')}
         />
         <CardContent>
           <InchargeList profile={props.profile} />

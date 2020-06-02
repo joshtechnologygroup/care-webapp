@@ -2,7 +2,7 @@ import { GRID_CONFIG } from "Constants/app.const";
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: "Incharge Name", field: "name", minWidth: 110 },
+    { headerName: "Name", field: "name", minWidth: 110 },
     { headerName: "phone", field: "phone_number", minWidth: 250 },
     { headerName: "Email", field: "email", minWidth: 120 },
   ],
