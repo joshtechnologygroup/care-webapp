@@ -129,19 +129,17 @@ class PatientDetail extends Component {
                   handleEdit={() => this.setEditable(formList[1], true)}
                 />
             }
-            <Timeline />
+            <Timeline timeline={this.props.patient.patient_timeline}/>
             <MedicationDetails
               editMode={false} profile={this.props.patient.medication_details[0]}
             />
-            <DoctorAttendant
+            {/* <DoctorAttendant
               profile={profile[formList[2]].attendant}
-            />
+            /> */}
             <FacilityDetails
-              // profile={profile[formList[3]]}
               profile={this.props.patient.facility_details}
             />
             <LabTestDetails
-              // profile={profile[formList[4]]}
               profile={this.props.patient.patient_lab_details}
             />
             <PortieDetails

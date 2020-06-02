@@ -6,18 +6,23 @@ import {
   Card,
   Button,
 } from '@material-ui/core';
-
+import _ from 'underscore';
 import FacilityDetailCard from 'Components/Cards/FacilityDetailCard';
 import NullState from 'Components/NullState';
 import nullImage from 'Assets/images/facility.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
-
-export default function FacilityDetails(props) {
+import { connect } from 'react-redux';
+import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';
+export function FacilityDetails(props) {
   const { i18n } = useTranslation();
-  const { profile } = props;
+  const { profile, currentStatus } = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
+  let status = true;
+  if (profile.length === 1 && facilityStatusChoices[profile[0].patient_status - 1].name === 'Home Isolation' || _.isEmpty(profile)) {
+    status = false;
+  }
 
   const add = () => {
     setEditable('new');
@@ -34,7 +39,7 @@ export default function FacilityDetails(props) {
   const cancel = () => {
     setEditable('');
   };
-  
+
   return (
     <div className="mb-20">
       <div className="section-header">
@@ -66,7 +71,7 @@ export default function FacilityDetails(props) {
             />
           </Grid>
         }
-        {
+        {status &&
           profile.map((member, index) =>
             <Grid key={index} className="mb-0" item xs={12}>
               <FacilityDetailCard
@@ -76,7 +81,7 @@ export default function FacilityDetails(props) {
           )
         }
         {
-          !profile.length && editable !== 'new' &&
+          editable !== 'new' && !status &&
           <Grid item xs={12} className="mb-0">
             <Card>
               <NullState img={nullImage} message={i18n.t('null_messages.facility')} />
@@ -90,9 +95,17 @@ export default function FacilityDetails(props) {
 
 FacilityDetails.propTypes = {
   profile: PropTypes.array.isRequired,
-  handleEdit: PropTypes.func
+  handleEdit: PropTypes.func,
+  currentStatus: PropTypes.array.isRequired,
 }
 
 FacilityDetails.defaultProps = {
   profile: []
 }
+
+const mapStateToProps = (state) => ({
+  currentStatus: state.currentStatus.results,
+});
+
+
+export default connect(mapStateToProps, null)(FacilityDetails);

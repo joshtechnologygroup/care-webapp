@@ -129,22 +129,6 @@ export function FacilityDetailCard(props) {
             </Grid>
           </CardContent>
         }
-        {status === 'Home Isolation' &&
-          <CardContent><Grid item xs={12} sm={3} className="ml-auto">
-            <Chip
-              label={
-                currentStatus.map(choice => {
-                  return choice.id === details.patient_status ? choice.name : ''
-                })
-              }
-              className={
-                currentStatus.map(choice => {
-                  return choice.id === details.patient_status ? `${classes.chip} ${choice.theme}` : ''
-                }).join(' ')
-              }
-            />
-          </Grid></CardContent>
-        }
       </Card>
     );
   } else {
