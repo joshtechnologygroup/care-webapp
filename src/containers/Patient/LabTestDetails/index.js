@@ -70,7 +70,7 @@ export default function LabTestDetail(props) {
           </Grid>
         }
         {
-          profile.map((test, index) => 
+          profile.map((test, index) =>
             <Grid key={index} className="mb-0" item xs={12}>
               {
                 editable === index ?

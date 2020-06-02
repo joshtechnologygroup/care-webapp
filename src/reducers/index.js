@@ -20,7 +20,8 @@ import {
     roomType,
     bedType,
     facilityStaff,
-    staffDesignation
+    staffDesignation,
+    ownerships
 } from "Reducers/FacilityReducer";
 import { ownershipTypes, districts } from "Reducers/MiscReducer";
 import { transfers } from "Reducers/TransferReducer";

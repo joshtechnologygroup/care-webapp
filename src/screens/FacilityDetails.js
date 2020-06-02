@@ -3,10 +3,10 @@ import i18n from "i18next";
 import BasicDetail from 'Containers/Facilities/BasicDetail';
 import BasicDetailsForm from 'Containers/Facilities/BasicDetailsForm';
 import InchargeContactDetail from 'Containers/Facilities/InchargeContactDetail';
-
+import _ from "underscore";
 // Importing mock data: Please remove upon integration
 import { facilityDetails } from 'Mockdata/facilityDetails.json';
-
+import { connect } from "react-redux";
 class FacilityDetails extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +23,7 @@ class FacilityDetails extends Component {
     }
     this.setEditable = this.setEditable.bind(this);
   }
+  
   setEditable = (key, value) => {
     this.setState({
       isEditing: {
@@ -54,11 +55,18 @@ class FacilityDetails extends Component {
             isEditing[formList[0]] ? 
             <BasicDetailsForm
               profile={profile.contact}
+              districtsList={this.props.districtsList}
+              ownershipTypesList={this.props.ownershipTypesList}
+              facilityTypesList={this.props.facilityTypesList}
               handleSubmit={ (data) => this.onSubmit(data, formList[0]) }
               editMode={true}
             /> :
             <BasicDetail
               profile={profile.contact}
+              districtsList={this.props.districtsList}
+              ownershipTypesList={this.props.ownershipTypesList}
+              facilityTypesList={this.props.facilityTypesList}
+              currentStatus={this.props.currentStatus}
               handleEdit={ () => this.setEditable(formList[0], true) }
             />
           }
@@ -73,4 +81,24 @@ class FacilityDetails extends Component {
   }
 }
 
-export default FacilityDetails;
+
+FacilityDetails.defaultProps = {
+  fetchPatientDetailsDependencies: () => {},
+  queryParams: {},
+  count: 0,
+  value: "",
+  error:null,
+};
+
+const mapStateToProps = state => {
+  const { districts, facilityTypes, ownershipTypes, currentStatus } = state;
+  return {
+    districtsList: districts.results,
+    ownershipTypesList: ownershipTypes.results,
+    facilityTypesList: facilityTypes.results,
+    currentStatus: currentStatus.results,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(FacilityDetails);

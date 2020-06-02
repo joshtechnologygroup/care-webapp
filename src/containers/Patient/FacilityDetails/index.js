@@ -34,7 +34,7 @@ export default function FacilityDetails(props) {
   const cancel = () => {
     setEditable('');
   };
-
+  
   return (
     <div className="mb-20">
       <div className="section-header">
