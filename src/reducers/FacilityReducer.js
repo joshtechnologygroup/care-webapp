@@ -9,7 +9,8 @@ import {
     GET_ROOM_TYPE_LIST,
     GET_BED_TYPE_LIST,
     GET_FACILITY_STAFF_LIST,
-    GET_STAFF_DESIGNATION_LIST
+    GET_STAFF_DESIGNATION_LIST,
+    GET_FACILITY_ADMINSTRATORS_LIST
 } from "Reducers/Types";
 
 const initialState = { error: null};
@@ -124,6 +125,17 @@ const staffDesignation = (state = initialState, action) => {
     return state;
 };
 
+const facilityAdminstrators = (state = initialState, action) => {
+    if (action.type === GET_FACILITY_ADMINSTRATORS_LIST) {
+        return {
+            ...state,
+            results: [...action.data]
+        };
+    }
+    return state;
+};
+
+
 export { 
     facilities,
     facilityTypes, 
@@ -135,5 +147,6 @@ export {
     shortFacilities, 
     createInventory ,
     facilityStaff,
-    staffDesignation
+    staffDesignation,
+    facilityAdminstrators
 };

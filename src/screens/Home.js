@@ -64,7 +64,7 @@ function Home() {
                         <Route path={`/facilities/beds`} component={Beds} />
                         <Route path={`/facilities/doctor-attendant`} component={DoctorAttendant} />
                         <Route path={`/facilities/manage-users`} component={ManageUsers} />
-                        <Route path={`/facilities/:facilityId`} component={FacilityDetails} />
+                        <Route path={`/facilities/facility-details/:facilityId`} component={FacilityDetails} />
                         <Route path={`/facilities`} component={Facilities} />
                         <Route exact path={`/patients`} component={Patients} />
                         <Route path={`/patients/add`} component={AddPatient} />

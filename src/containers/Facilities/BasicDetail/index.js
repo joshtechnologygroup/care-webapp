@@ -39,23 +39,23 @@ export default function BasicDetail(props) {
     <Card elevation={4}>
       <CardHeader
         title={i18n.t('Contact Details')}
-        action={
-          <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={handleEdit}>
-            <EditOutlined fontSize="large"/>
-          </IconButton>
-        }
+        // action={
+        //   <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={handleEdit}>
+        //     <EditOutlined fontSize="large"/>
+        //   </IconButton>
+        // }
       />
       <CardContent>
         <Grid container spacing={2} alignItems="flex-start">
           <Grid item sm={6}>
               <Typography variant="h4" color="primary">
-                {profile.facilityName}
+                {profile.name}
               </Typography>
               <Typography variant="h6" color="textSecondary">
-                {i18n.t('Facility Id')}: {profile.facilityId}
+              {i18n.t('Ownership Type')}: {profile.owned_by}
               </Typography>
               <Typography variant="h6" color="textSecondary">
-              {i18n.t('Municipal Ward')}: {profile.municipalWard}, {profile.city}
+                {i18n.t('Facility Type')}: {profile.facility_type}
               </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -64,17 +64,13 @@ export default function BasicDetail(props) {
               {i18n.t('Address')}
             </Typography>
             <Typography variant="h6">
-              {profile.address}, {profile.municipalWard}
+              {profile.address}, {profile.local_body}
             </Typography>
             <Typography variant="h6">
               {profile.district}, {profile.city}
             </Typography>
             <Typography variant="h6">
-              {
-                stateChoices.map(choice => {
-                  return choice.id === profile.state ? (choice.name) : ''
-                })
-              } - {profile.pincode}
+              {profile.state} - {profile.pincode}
             </Typography>
           </Grid>
         </Grid>
