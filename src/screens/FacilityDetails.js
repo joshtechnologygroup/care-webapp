@@ -95,7 +95,7 @@ export function FacilityDetails(props) {
     setIsEditing({...isEditing, [key]: value});
   };
   const onSubmit = (data, key) => {
-    console.log('submit clicked');
+
   };
 
   if (loading) {
