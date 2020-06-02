@@ -11,6 +11,7 @@ import {
 } from "Reducers/PatientReducer";
 import {
     facilities,
+    facilityAdminstrators,
     facilityTypes,
     facilityInventoryList,
     InventoryTypeList,
@@ -22,7 +23,7 @@ import {
     facilityStaff,
     staffDesignation
 } from "Reducers/FacilityReducer";
-import { ownershipTypes, districts } from "Reducers/MiscReducer";
+import {ownershipTypes, districts, cities, localBody} from "Reducers/MiscReducer";
 import { transfers } from "Reducers/TransferReducer";
 
 export default combineReducers({
@@ -47,5 +48,8 @@ export default combineReducers({
     shortFacilities,
     createInventory,
     facilityStaff,
-    staffDesignation
+    staffDesignation,
+    cities,
+    localBody,
+    facilityAdminstrators
 });
