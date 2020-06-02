@@ -38,34 +38,22 @@ export function FacilityDetailCard(props) {
   }, [districtsList, facilityTypesList, ownershipTypesList, currentStatus]);
 
   if (open) {
-    let district = details.district;
-    Object.keys(districtsList).forEach(item => {
-      if (districtsList[item].id === details.district) {
-        district = districtsList[item].name;
-        return;
-      }
-    });
-    let facilityType;
-    Object.keys(facilityTypesList).forEach(item => {
-      if (facilityTypesList[item].id === details.facility_type) {
-        facilityType = facilityTypesList[item].name;
-        return;
-      }
-    });
-    let ownershipType;
-    Object.keys(ownershipTypesList).forEach(item => {
-      if (ownershipTypesList[item].id === details.owned_by) {
-        ownershipType = ownershipTypesList[item].name;
-        return;
-      }
-    });
-    let status;
-    Object.keys(currentStatus).forEach(item => {
-      if (currentStatus[item].id === details.patient_status) {
-        status = currentStatus[item].name;
-        return;
-      }
-    });
+    let district = Object.keys(districtsList).find(item => districtsList[item].id === details.district);
+    if (district) {
+      district = districtsList[district].name;
+    }
+    let facilityType = Object.keys(facilityTypesList).find(item => facilityTypesList[item].id === details.facility_type);
+    if (facilityType) {
+      facilityType = facilityTypesList[facilityType].name;
+    }
+    let ownershipType = Object.keys(ownershipTypesList).find(item => ownershipTypesList[item].id === details.owned_by);
+    if (ownershipType) {
+      ownershipType = ownershipTypesList[ownershipType].name;
+    }
+    let status = Object.keys(currentStatus).find(item => currentStatus[item].id === details.patient_status);
+    if (status) {
+      status = currentStatus[status].name;
+    }
 
     return (
       <Card className="mb-0" elevation={4}>

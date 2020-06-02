@@ -12,6 +12,7 @@ import { diseaseChoices } from 'Mockdata/diseaseChoices.json';
 import { booleanStatuses } from 'Constants/app.const';
 import { clinicalStatusChoices } from 'Mockdata/clinicalStatusChoices.json';
 import { CovidStatusChoices } from 'Mockdata/CovidStatusChoices.json';
+import _ from 'underscore';
 export default function MedicationDetailView(props) {
   const classes = Styles();
   const { i18n } = useTranslation();

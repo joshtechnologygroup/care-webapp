@@ -125,7 +125,7 @@ export default function Form(props) {
           >
             {
             relationshipChoices.map((option) => (
-              <MenuItem key={option.name} value={option.id}>
+              <MenuItem key={option.id} value={option.name}>
                 {option.name}
               </MenuItem>))
             }
