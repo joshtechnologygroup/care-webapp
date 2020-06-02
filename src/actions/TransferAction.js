@@ -4,7 +4,8 @@ import { GET, PATCH } from "Src/constants";
 import { 
     GET_TRANSFER_LIST, 
     UPDATE_TRANSFER_STATUS, 
-    UPDATE_TRANSFER_STATUS_ERROR 
+    UPDATE_TRANSFER_STATUS_ERROR,
+    SET_TRANSFER_UPDATE_API_STATE 
 } from 'Reducers/Types';
 import { dispatchAction } from 'Actions/common';
 
@@ -23,4 +24,11 @@ const updateTransferStatus = (patientTransferId, body) => async (dispatch) => {
     return response;
 };
 
-export { getTransferList, updateTransferStatus }
+const setTransferUpdateApiSuccess = (data) => async (dispatch) => {
+    dispatch({
+        type: SET_TRANSFER_UPDATE_API_STATE,
+        data: data
+    })
+};
+
+export { getTransferList, updateTransferStatus, setTransferUpdateApiSuccess }
