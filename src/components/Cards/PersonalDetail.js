@@ -32,11 +32,6 @@ const useStyles = makeStyles(theme =>
       opacity: .5,
       width: '70%'
     },
-    action: {
-      position: 'absolute',
-      right: '.2em',
-      top: '.2em',
-    },
   })
 );
 

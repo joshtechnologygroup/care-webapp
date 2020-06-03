@@ -176,7 +176,8 @@
     "facility": "No data exist. Please add facility using the plus button.",
     "labtest": "No data exist. Please add lab test details using the plus button.",
     "portie": "No data exist. Please add Portie details using the plus button.",
-    "family": "No family member added. Please add family member using the plus button"
+    "family": "No family member added. Please add family member using the plus button",
+    "timeline": "No data exist."
   },
   "Current Password": "Current Password",
   "New Password": "New Password",
