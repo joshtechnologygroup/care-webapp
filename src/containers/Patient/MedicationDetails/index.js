@@ -54,7 +54,7 @@ export default function MedicationDetail(props) {
             <Grid container>
               {
                 editable ?
-                <MedicationUpdateForm editMode={profile.symptoms.length ? true : false} handleSubmit={handleSubmit} cancelCallback={cancelEdit} profile={profile} />
+                <MedicationUpdateForm editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} cancelCallback={cancelEdit} profile={profile} />
                 :
                 <MedicationDetailView profile={profile} />
               }

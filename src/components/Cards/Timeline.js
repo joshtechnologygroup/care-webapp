@@ -1,10 +1,13 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
+import { PropTypes } from 'prop-types';
 import {
   Grid,
   Card,
   Typography,
 } from '@material-ui/core';
+import NullState from 'Components/NullState';
+import imgNull from 'Assets/images/timeline.jpg';
 import { EventOutlined, AccessTime } from '@material-ui/icons';
 import moment from 'moment';
 import './Timeline.scss';
@@ -17,7 +20,8 @@ export default function Timeline(props) {
       <div className="section-header">
         <h4 className="heading--card">{i18n.t('Patient Timeline')}</h4>
       </div>
-      {timeline &&
+      {
+        Boolean(timeline.length) &&
         <Card elevation={4}>
           <Grid
             container
@@ -38,21 +42,26 @@ export default function Timeline(props) {
             ))}
           </Grid>
         </Card>
-}
-        {
-          !timeline && 
-          <Card elevation={4}>
-          <Grid
-            container
-            direction="column-reverse"
-            justify="flex-end"
-            alignItems="stretch"
-            className="timeline_wrap"
+      }
+      {
+        !timeline.length > 0 && 
+        <Grid
+            item
+            xs={12}
           >
-            NO TIMELINE EXIST
-          </Grid>
-        </Card>
-        }
+          <Card>
+            <NullState img={imgNull} message={i18n.t('null_messages.timeline')} />
+          </Card>
+        </Grid>
+     }
     </>
   );
 }
+
+Timeline.propTypes = {
+  timeline: PropTypes.array.isRequired,
+}
+
+Timeline.defaultProps = {
+  timeline: []
+};
