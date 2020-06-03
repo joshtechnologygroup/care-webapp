@@ -22,18 +22,19 @@ export default function MultiSelectChipsInput(props) {
   const {
     options,
     value,
+    valueKey,
     onChange,
   } = props;
-  const [val, setVal] = useState(value);
 
-  const change = (e) => {
-    if (e.target.checked && !value.includes(e.target.name)) {
-      setVal(value.push(e.target.name))
-      onChange && onChange(new Array(...value));
+  const change = (e, option) => {
+    let selectedVal = valueKey ? option[valueKey] : option.name;
+    if (e.target.checked && !value.includes(selectedVal)) {
+      value.push(selectedVal);
+      onChange && onChange([...value]);
     }
-    if (!e.target.checked && value.includes(e.target.name)) {
-      setVal(value.splice(value.indexOf(e.target.name), 1))
-      onChange && onChange(new Array(...value));
+    if (!e.target.checked && value.includes(selectedVal)) {
+      value.splice(value.indexOf(selectedVal), 1);
+      onChange && onChange([...value]);
     }
   };
   
@@ -42,12 +43,13 @@ export default function MultiSelectChipsInput(props) {
         <Checkbox key={index}
           name={option.name}
           className={`mr-5 mt-5 p-0 ${classes.root}`}
-          checked={value.indexOf(option.name) > -1}
-          onChange={change}
-          inputProps={{ 'aria-label': 'primary checkbox' }}
+          checked={value.indexOf(valueKey ? option[valueKey] : option.name) > -1}
+          onChange={(e) => change(e, option)}
+          inputProps={{ 'aria-label': option.name }}
           checkedIcon={
             <Chip className="selected" label={option.name} />
           }
+          color="default"
           icon={
             <Chip label={option.name} />
           }
@@ -59,10 +61,12 @@ export default function MultiSelectChipsInput(props) {
 MultiSelectChipsInput.propTypes = {
   options: PropTypes.array.isRequired,
   value: PropTypes.array.isRequired,
-  onChange: PropTypes.func
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 }
 
 MultiSelectChipsInput.defaultProps = {
   options: [],
-  value: []
+  value: [],
+  valueKey: '',
 }

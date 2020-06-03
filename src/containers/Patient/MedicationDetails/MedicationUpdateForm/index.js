@@ -12,8 +12,8 @@ export default function MedicationDetailForm(props) {
   const validationSchema = Yup.object({
     covid_status: Yup.string().required(i18n.t('Please select COVID status')),
     clinical_status: Yup.number().required(i18n.t('Please select clinical status')),
-    symptoms: Yup.array().of(Yup.string()).min(1, i18n.t('Please select atleast one symptom')),
-    nonCovidDiseases: Yup.array().of(Yup.string()),
+    symptoms: Yup.array().of(Yup.number()).min(1, i18n.t('Please select atleast one symptom')),
+    nonCovidDiseases: Yup.array().of(Yup.number()),
   });
   const submit= (data) => {
     console.log("abc")

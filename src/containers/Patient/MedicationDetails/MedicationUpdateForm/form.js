@@ -67,6 +67,7 @@ export default function Form(props) {
           options={symptomChoices}
           value={symptoms}
           onChange={(val) => setValue(val, 'symptoms')}
+          valueKey="id"
         />
       </Grid>
 
@@ -78,6 +79,7 @@ export default function Form(props) {
           options={diseaseChoices}
           value={nonCovidDiseases}
           onChange={(val) => setValue(val, 'nonCovidDiseases')}
+          valueKey="id"
         />
       </Grid>
       {
