@@ -20,7 +20,7 @@ export function Form(props) {
   const change = (name, value) => handleChange(name, value);
 
   const changeText = (name, e) => {
-    if(typeof name !== typeof {}){
+    if(typeof name !== 'object'){
       errors[name] = !(e.target.value && parseInt(e.target.value) >= 0);
     }
     setErrors(prevState => ({
