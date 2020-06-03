@@ -115,7 +115,6 @@ export const getFormattedColumnDefs = columnDefs => {
 export const fillBooleanFilterOptions = (columnDefs, requiredLists) => {
     columnDefs.forEach(column => {
         Object.keys(requiredLists).forEach(function(listKey) {
-            console.log(column.field, listKey);
             if (column.field === listKey) {
                 column.cellRendererParams.options = requiredLists[listKey];
             }
@@ -123,3 +122,7 @@ export const fillBooleanFilterOptions = (columnDefs, requiredLists) => {
     });
     return columnDefs;
 };
+
+export const replaceIds = (IdList, mapList) => {
+    return IdList.map(id => mapList.find(item => item.id === id).name)
+}

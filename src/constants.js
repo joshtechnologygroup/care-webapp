@@ -6,6 +6,7 @@ export const PUT = 'PUT';
 export const GET = 'GET';
 
 export const TOKEN = 'Token';
+export const USER_ID = 'user-id';
 export const APPLICATION_JSON = 'application/json';
 
 

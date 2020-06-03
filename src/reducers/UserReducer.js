@@ -1,6 +1,7 @@
 import { 
     SET_USER,
     CLEAR_USER,
+    GET_USER_PROFILE,
 } from 'Reducers/Types';
 
 const initialState = {
@@ -22,4 +23,18 @@ const user = (state = initialState, action) => {
     }
 }
 
-export { user };
+const profile = (state = {}, action) => {    
+
+    switch (action.type) {
+
+        case GET_USER_PROFILE:
+            return { 
+                ...state,
+                ...action.data 
+            };
+        default:
+            return state;
+    }
+}
+
+export { user, profile };

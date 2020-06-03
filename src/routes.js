@@ -10,6 +10,8 @@ export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/';
 export const CITIES_LIST_URL = SERVER + API_V1 + 'accounts/cities/';
 export const STATE_LIST_URL = SERVER + API_V1 + 'accounts/states/'
 export const LOCAL_BODY_URL = SERVER + API_V1 + 'accounts/local-body/'
+export const USER_PROFILE_URL = SERVER + API_V1 + 'accounts/users/';
+export const USER_TYPE_URL = SERVER + API_V1 + 'accounts/user-types/';
 
 // Facilities
 export const FACILITY_LIST_URL = SERVER + API_V1 + 'facilities/facility';

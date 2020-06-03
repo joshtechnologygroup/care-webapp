@@ -5,6 +5,8 @@ export const GET_DISTRICT_LIST = 'GET_DISTRICT_LIST';
 export const GET_STATE_LIST = 'GET_STATE_LIST';
 export const GET_CITIES_LIST = 'GET_CITIES_LIST';
 export const GET_LOCAL_BODY_LIST = 'GET_LOCAL_BODY_LIST';
+export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+export const USER_TYPE_LIST = 'USER_TYPE_LIST';
 
 // Facilities
 export const GET_FACILITY_LIST = 'GET_FACILITY_LIST';
