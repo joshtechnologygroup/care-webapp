@@ -9,8 +9,8 @@ const getBedsList = (url, params = {}) => async (dispatch) => {
   dispatch(dispatchAction(ReducerTypes.GET_FACILITY_INFRASTRUCTURE_LIST, response));
 };
 
-const updateFacilityInfrastructure = (body, url) => async (dispatch) => {
-  const response = await CommonService.makeAuthorizedApiCall(url, PATCH, body,  {});
+const createUpdateFacilityInfrastructure = (body, url, method = PATCH) => async (dispatch) => {
+  const response = await CommonService.makeAuthorizedApiCall(url, method, body,  {});
   const data = await response.json();
   if( response.ok ){
     dispatch(getBedsList(FACILITY_INFRASTRUCTURE_LIST_URL));
@@ -20,9 +20,9 @@ const updateFacilityInfrastructure = (body, url) => async (dispatch) => {
   }
 }
 
-const getsBedsListDependencies = (required_data) => async (dispatch) => {
+const getBedsListDependencies = (required_data) => async (dispatch) => {
   return await dispatch(dispatchDependentActions(...required_data));
 };
 
 
-export { getsBedsListDependencies, getBedsList, updateFacilityInfrastructure };
+export { getBedsListDependencies, getBedsList, createUpdateFacilityInfrastructure };

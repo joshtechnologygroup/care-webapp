@@ -23,6 +23,7 @@ async function makeApiCall(base_url, method = GET, body = {}, headers = {}, para
 }
 
 async function makeAuthorizedApiCall(base_url, method = GET, body = {}, params = {} ) {
+    console.log(CookieService.getTokenCookie());
     const headers = {
         'Authorization': `Token ${ CookieService.getTokenCookie() }`, 
         'Content-Type': APPLICATION_JSON,

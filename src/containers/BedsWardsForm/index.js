@@ -1,0 +1,203 @@
+import React, {useState, useEffect} from 'react';
+import Grid from '@material-ui/core/Grid';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Button from '@material-ui/core/Button';
+import CustomModal from 'Components/CustomModal';
+import {useTranslation} from "react-i18next";
+import {FACILITY_INFRASTRUCTURE_CREATE_URL} from 'Src/routes';
+import {POST} from 'Src/constants'
+import {createUpdateFacilityInfrastructure} from 'Actions/BedsListAction'
+import {Formik} from 'formik';
+import Form from './form';
+import useStyles from './styles';
+import {PropTypes} from 'prop-types';
+import {connect} from 'react-redux';
+
+export const BedsWardsForm = (props) => {
+  const classes = useStyles();
+  const [inventoryData, setInventoryData] = useState({});
+  const [facilityOptions, setFacilityOptions] = useState([])
+  const [roomOptions, setRoomOptions] = useState([])
+  const [bedOptions, setBedOptions] = useState([])
+  const [isAddAnother, setIsAddAnother] = useState(false);
+  const [error, setError] = useState({status: false})
+  const {open, data, onClose} = props;
+  const [errors, setErrors] = useState({
+    facility: true,
+    room_type: true,
+    bed_type: true,
+    total_bed: true,
+    occupied_bed: true,
+    available_bed: true
+  });
+  const [selectedData, setSelectedData] = useState({
+    facility: null,
+    room_type: null,
+    bed_type: null,
+    total_bed: null,
+    occupied_bed: null,
+    available_bed: null
+  })
+
+
+  const addAnother = (event) => {
+    setIsAddAnother(event.target.checked)
+  }
+
+  useEffect(() => {
+    const {facilities, roomTypes, bedTypes} = props
+    if (facilities && roomTypes && bedTypes) {
+      let update_facility = [];
+      facilities.forEach((row) => {
+        update_facility.push({'value': row.id, 'label': row.name});
+      });
+      let update_roomtype = [];
+      roomTypes.forEach((row) => {
+        update_roomtype.push({'value': row.id, 'label': row.name});
+      });
+      let update_bedtype = [];
+      bedTypes.forEach((row) => {
+        update_bedtype.push({'value': row.id, 'label': row.name});
+      });
+      setSelectedData({
+        ...selectedData,
+        facility: update_facility[0].value,
+        room_type: update_bedtype[0].value,
+        bed_type: update_roomtype[0].value
+      })
+      setErrors({...errors, facility: false, room_type: false, bed_type: false});
+      setFacilityOptions(update_facility);
+      setBedOptions(update_bedtype);
+      setRoomOptions(update_roomtype);
+    }
+  }, [
+    props.facilities,
+    props.bedTypes,
+    props.roomTypes
+  ]);
+
+  const handleChange = (name, e) => {
+    console.log(e)
+    switch (name) {
+      case 'facility':
+        setSelectedData({...selectedData, facility: e.value})
+        break;
+      case 'room_type':
+        setSelectedData({...selectedData, room_type: e.value})
+        break;
+      case 'bed_type':
+        setSelectedData({...selectedData, bed_type: e.value})
+        break;
+      case 'total_bed':
+        setSelectedData({...selectedData, total_bed: e})
+        errors.total_bed = !(e && parseInt(e) >= 0);
+        break;
+      case 'occupied_bed':
+        setSelectedData({...selectedData, occupied_bed: e})
+        errors.occupied_bed = !(e && parseInt(e) >= 0);
+        break;
+      case 'available_bed':
+        setSelectedData({...selectedData, available_bed: e})
+        errors.available_bed = !(e && parseInt(e) >= 0);
+        break;
+      default:
+        break;
+    }
+
+    setErrors(prevState => ({
+      ...prevState,
+      ...errors
+    }))
+  }
+
+  const {i18n} = useTranslation();
+
+  const handleSubmit = () => {
+    const response = props.createUpdateFacilityInfrastructure(selectedData, FACILITY_INFRASTRUCTURE_CREATE_URL, POST);
+    if (!response) {
+      setError({...response});
+    }
+    if (!isAddAnother) {
+      onClose();
+    }
+  }
+
+
+  console.log(selectedData, errors)
+
+  return (
+    <CustomModal open={open} onClose={onClose} title={i18n.t('Inventory')}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Formik>
+            {
+              props =>
+                <Form
+                  data={inventoryData}
+                  updateData={data}
+                  {...props}
+                  handleChange={handleChange}
+                  facilityOptions={facilityOptions}
+                  roomOptions={roomOptions}
+                  bedOptions={bedOptions}/>
+            }
+          </Formik>
+        </Grid>
+        <Grid item xs={12}>
+          {
+            error.status === true &&
+            <FormControl component="fieldset" error={true}>
+              <FormHelperText className={classes.error}>{error.detail}</FormHelperText>
+            </FormControl>
+          }
+        </Grid>
+        <Grid item xs={12}>
+          {!data &&
+          <FormControlLabel
+            value="end"
+            control={<Switch checked={isAddAnother} onChange={addAnother} color="primary"/>}
+            label="Add Another"
+            labelPlacement="end"
+          />
+          }
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            size="medium"
+            onClick={handleSubmit}
+            disabled={
+              errors.facility ||
+              errors.room_type ||
+              errors.available_bed ||
+              errors.total_bed ||
+              errors.occupied_bed ||
+              errors.available_bed
+            }
+          >
+            {i18n.t('Ok')}
+          </Button>
+        </Grid>
+      </Grid>
+    </CustomModal>
+  );
+}
+
+
+const mapStateToProps = (state) => ({
+  facilities: state.shortFacilities.results,
+  roomTypes: state.roomType.results,
+  bedTypes: state.bedType.results,
+});
+
+BedsWardsForm.propTypes = {
+  facilities: PropTypes.array.isRequired,
+  roomTypes: PropTypes.array.isRequired,
+  bedTypes: PropTypes.array.isRequired,
+  createUpdateFacilityInfrastructure: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, {createUpdateFacilityInfrastructure})(BedsWardsForm);
