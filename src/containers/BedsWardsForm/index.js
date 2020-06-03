@@ -80,33 +80,15 @@ export const BedsWardsForm = (props) => {
   ]);
 
   const handleChange = (name, e) => {
-    console.log(e)
-    switch (name) {
-      case 'facility':
-        setSelectedData({...selectedData, facility: e.value})
-        break;
-      case 'room_type':
-        setSelectedData({...selectedData, room_type: e.value})
-        break;
-      case 'bed_type':
-        setSelectedData({...selectedData, bed_type: e.value})
-        break;
-      case 'total_bed':
-        setSelectedData({...selectedData, total_bed: e})
-        errors.total_bed = !(e && parseInt(e) >= 0);
-        break;
-      case 'occupied_bed':
-        setSelectedData({...selectedData, occupied_bed: e})
-        errors.occupied_bed = !(e && parseInt(e) >= 0);
-        break;
-      case 'available_bed':
-        setSelectedData({...selectedData, available_bed: e})
-        errors.available_bed = !(e && parseInt(e) >= 0);
-        break;
-      default:
-        break;
+    if ((typeof e) === (typeof {})) {
+      selectedData[name] = e.value;
+    } else {
+      selectedData[name] = e;
+      errors[name] = !(e && parseInt(e) >= 0);
     }
-
+    setSelectedData(prevState => ({
+      ...prevState, ...selectedData
+    }));
     setErrors(prevState => ({
       ...prevState,
       ...errors
@@ -124,9 +106,6 @@ export const BedsWardsForm = (props) => {
       onClose();
     }
   }
-
-
-  console.log(selectedData, errors)
 
   return (
     <CustomModal open={open} onClose={onClose} title={i18n.t('Inventory')}>
@@ -148,7 +127,7 @@ export const BedsWardsForm = (props) => {
         </Grid>
         <Grid item xs={12}>
           {
-            error.status === true &&
+            error.status &&
             <FormControl component="fieldset" error={true}>
               <FormHelperText className={classes.error}>{error.detail}</FormHelperText>
             </FormControl>

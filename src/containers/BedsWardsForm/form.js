@@ -17,22 +17,11 @@ export function Form(props) {
   const {data, updateData, handleChange} = props;
   const [errors, setErrors] = useState({total_bed: false, occupied_bed: false, available_bed: false, form: ''})
 
-  const change = (name, value) => {
-    handleChange(name, value);
-  };
+  const change = (name, value) => handleChange(name, value);
+
   const changeText = (name, e) => {
-    switch (name) {
-      case 'total_beds':
-        errors.total_bed = !(e.target.value && parseInt(e.target.value) >= 0);
-        break;
-      case 'occupied_beds':
-        errors.occupied_bed = (e.target.value && parseInt(e.target.value) >= 0);
-        break;
-      case 'available_beds':
-        errors.available_bed = (e.target.value && parseInt(e.target.value) >= 0);
-        break;
-      default:
-        break;
+    if(typeof name !== typeof {}){
+      errors[name] = !(e.target.value && parseInt(e.target.value) >= 0);
     }
     setErrors(prevState => ({
       ...prevState,
