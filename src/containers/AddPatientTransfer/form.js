@@ -16,8 +16,7 @@ import { connect } from 'react-redux';
 import _ from 'underscore'
 import * as CommonService from "Src/utils/services";
 import { GET } from "Src/constants";
-import { GET_PATIENT_URL } from 'Src/routes';
-import { TRANSFER_STATUS_CHOICES } from "Constants/app.const";
+import { GET_SHORT_PATIENT_LIST_URL, GET_PATIENT_URL } from 'Src/routes';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { fetchPatient } from 'Actions/PatientsAction';
 
@@ -37,14 +36,11 @@ export function Form(props) {
         addTransferErrors,
         errors,
         patient,
-        getPatient
+        getPatient,
       } = props;
     const { i18n } = useTranslation();
     const [inputValue, setInputValue] = useState("");
-    const transferStatusChoices = Object.keys(TRANSFER_STATUS_CHOICES).map((key) => ({
-        'value': key,
-        'label': TRANSFER_STATUS_CHOICES[key]
-    })); 
+    const [selectedFacility, setSelectedFacility] = useState(null)
 
     const facilityName = []; 
     if(props.facilityList && !_.isEmpty(props.facilityList)){
@@ -57,7 +53,8 @@ export function Form(props) {
     }
 
     const filterPatients = async (inputValue) => {
-        const response = await CommonService.makeAuthorizedApiCall(`${GET_PATIENT_URL}?limit=3&offset=0&name=${inputValue}`, GET, {},  {})
+        const url = selectedFacility ? `${GET_PATIENT_URL}?limit=3&offset=0&name=${inputValue}&from_facility=${selectedFacility}` : `${GET_PATIENT_URL}?limit=3&offset=0&name=${inputValue}`
+        const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  {})
         const jsonResponse = await response.json();
         return jsonResponse.results;
     }
@@ -96,13 +93,16 @@ export function Form(props) {
             </FormControl>
             }
             <Grid item container spacing={2}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={12} xs={12}>
                     <label className={classes.label}>{i18n.t('From Facility')}</label>
                     <Select
                         options={facilityName}
                         defaultValue={""}
                         name="from_facility"
-                        onChange={(val) => setFieldValue('from_facility', val.value)}
+                        onChange={(val) => {
+                            setFieldValue('from_facility', val.value);
+                            setSelectedFacility(val.value);
+                        }}
                         error={errors.from_facility}
                     />
                     {
@@ -112,23 +112,7 @@ export function Form(props) {
                     </FormControl>
                     }
                 </Grid>
-                <Grid item sm={6} xs={12}>
-                    <label className={classes.label}>{i18n.t('To Facility')}</label>
-                    <Select
-                        options={facilityName}
-                        defaultValue={""}
-                        name="to_facility"
-                        onChange={(val) => setFieldValue('to_facility', val.value)}
-                        error={errors.to_facility}
-                    />
-                    {
-                    errors.to_facility && 
-                    <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>{errors.to_facility}</FormHelperText>
-                    </FormControl>
-                    }
-                </Grid>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={12} xs={12}>
                     <label className={classes.label}>{i18n.t('Patient')}</label>
                     <AsyncSelect
                         cacheOptions
@@ -155,28 +139,21 @@ export function Form(props) {
                         />
                     }
                 </Grid>
-                <Grid item sm={6} xs={12}>
-                    <label className={classes.label}>{i18n.t('Status')}</label>
+                <Grid item sm={12} xs={12}>
+                    <label className={classes.label}>{i18n.t('To Facility')}</label>
                     <Select
-                        options={transferStatusChoices}
-                        defaultValue={transferStatusChoices[0]}
-                        name="status"
-                        onChange={(val) => setFieldValue('status', val.value)}
+                        options={facilityName}
+                        defaultValue={""}
+                        name="to_facility"
+                        onChange={(val) => setFieldValue('to_facility', val.value)}
+                        error={errors.to_facility}
                     />
                     {
-                    errors.status && 
+                    errors.to_facility && 
                     <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>{errors.status}</FormHelperText>
+                        <FormHelperText className={classes.error}>{errors.to_facility}</FormHelperText>
                     </FormControl>
                     }
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                    <TextField
-                        name="Comments"
-                        label={i18n.t('Comments')}
-                        onChange={changeText.bind(null, 'comments')}
-                        fullWidth
-                    />
                 </Grid>
                 <Grid container justify="flex-end" className="mt-10" item xs={12}>
                     <Button

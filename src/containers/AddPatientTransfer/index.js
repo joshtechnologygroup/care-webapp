@@ -7,10 +7,11 @@ import * as Yup from 'yup';
 import Form from './form';
 import { connect } from 'react-redux';
 import { setAddTransferApiSuccess, addPatientTransfer } from "Actions/TransferAction";
+import { CLEAR_PATIENT } from "Reducers/Types";
 
 
 const PatientTransferForm = (props) => {
-    const { open, onClose, showSuccessToast, apiSuccess, setApiStatus, addPatientTransfer, addTransferErrors } = props;
+    const { open, onClose, showSuccessToast, apiSuccess, setApiStatus, addPatientTransfer, addTransferErrors, clearPatient } = props;
     const { i18n } = useTranslation();
     const submit = (data) => {
         addPatientTransfer(data);
@@ -24,6 +25,7 @@ const PatientTransferForm = (props) => {
 
     const handleClose = () => {
         onClose();
+        clearPatient();
         setApiStatus({
             apiSuccess: null,
             add_transfer_errors: {}
@@ -74,6 +76,12 @@ const mapDispatchToProps = dispatch => {
         },
         setApiStatus: (data) => {
             dispatch(setAddTransferApiSuccess(data));
+        },
+        clearPatient: () => {
+            dispatch({
+                type: CLEAR_PATIENT,
+                data: {}
+            });
         }
     };
 };
