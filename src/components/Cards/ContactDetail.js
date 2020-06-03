@@ -3,9 +3,8 @@ import { useTranslation } from "react-i18next";
 import {
   Grid,
   Card,
-  CardHeader,
   CardContent,
-  IconButton,
+  Button,
   Typography,
 } from '@material-ui/core';
 import { EditOutlined, PhoneOutlined, RoomOutlined, HomeOutlined } from '@material-ui/icons';
@@ -19,11 +18,6 @@ import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 
 const useStyles = makeStyles(theme =>
   createStyles({
-    action: {
-      position: 'absolute',
-      right: '.2em',
-      top: '.2em',
-    },
     icon: {
       fontSize: '2.2rem',
       marginRight: '4px',
@@ -38,15 +32,24 @@ export default function ContactDetail(props) {
 
   const { profile, handleEdit } = props;
   return (
+    <>
+    <div className="section-header">
+      <h4 className="heading--card">{i18n.t('Contact Details')}</h4>
+      {
+        !profile.length &&
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          size="medium"
+          className="btn"
+          onClick={handleEdit}
+        >
+          {i18n.t('Edit')}
+        </Button>
+      }
+    </div>
     <Card elevation={4}>
-      <CardHeader
-        title={i18n.t('Contact Details')}
-        action={
-          <IconButton variant="contained" className={classes.action} aria-label="settings" onClick={handleEdit}>
-            <EditOutlined fontSize="large"/>
-          </IconButton>
-        }
-      />
       <CardContent>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={3} className="pb-0">
@@ -107,6 +110,7 @@ export default function ContactDetail(props) {
         </Grid>
       </CardContent>
     </Card>
+    </>
   );
 }
 

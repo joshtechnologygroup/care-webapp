@@ -14,9 +14,6 @@ import {
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PhoneOutlined, EmailOutlined, EditOutlined } from '@material-ui/icons';
 
-// Importing mock data
-import { genderChoices } from 'Constants/app.const';
-
 const useStyles = makeStyles(theme =>
   createStyles({
     edit: {

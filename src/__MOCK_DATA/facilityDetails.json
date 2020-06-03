@@ -3,33 +3,33 @@
         "inchargeContactDetails": [
             {
                 "name": "Frozen yoghurt",
-                "phone": "9891782124",
+                "phone_number": "9891782124",
                 "email": "frozen_yoghurt@covid.com"
             },
             {
                 "name": "Ice cream sandwich",
-                "phone": "9891782124",
+                "phone_number": "9891782124",
                 "email": "ice_cream_sandwich@covid.com"
             },
             {
                 "name": "Eclair",
-                "phone": "9891782124",
+                "phone_number": "9891782124",
                 "email": "eclair@covid.com"
             },
             {
                 "name": "Cupcake",
-                "phone": "9891782124",
+                "phone_number": "9891782124",
                 "email": "cupcake@covid.com"
             },
             {
                 "name": "Gingerbread",
-                "phone": "9891782124",
+                "phone_number": "9891782124",
                 "email": "gingerbread@covid.com"
             }
         ],
         "contact": {
-            "facilityId": "9876543210",
-            "facilityName": "Hoper City",
+            "id": "9876543210",
+            "name": "Hoper City",
             "address": "Hno: 15, Street 3, Industrial Area",
             "municipalWard": "Kalimpong",
             "city": "Kolkata",

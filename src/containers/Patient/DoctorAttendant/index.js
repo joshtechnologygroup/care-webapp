@@ -10,7 +10,6 @@ import {
 import DoctorCard from 'Components/Cards/DoctorCard';
 import NullState from 'Components/NullState';
 import imgNull from 'Assets/images/doctor-attendant.jpg';
-import nullImage from 'Assets/images/family-null.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 
 export default function DoctorAttendant(props) {

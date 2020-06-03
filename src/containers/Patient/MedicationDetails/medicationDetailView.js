@@ -1,22 +1,11 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import moment from 'moment';
 import {
   Grid,
-  Card,
-  Button,
-  CardContent,
-  IconButton,
   Typography,
   Chip,
-  Fab,
 } from '@material-ui/core';
-import { EditOutlined, MailOutline, PhoneOutlined, Add } from '@material-ui/icons';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { PropTypes } from 'prop-types';
-// import CreateUpdateDoctor from './CreateUpdateDoctor';
-import NullState from 'Components/NullState';
-import imgNull from 'Assets/images/doctor-attendant.jpg';
 import Styles from './styles';
 
 export default function MedicationDetailView(props) {
