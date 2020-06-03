@@ -38,8 +38,6 @@ export function Form(props) {
         handleChange(name, e.target.value);
     };
 
-    console.log(data)
-
     return (
         <form>
             <Grid item container spacing={2}>
