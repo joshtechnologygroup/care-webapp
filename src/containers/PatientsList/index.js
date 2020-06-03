@@ -99,11 +99,11 @@ export function PatientsList( props ) {
         attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
         date = new Date(attr[PORTEA_CALLED_AT])
         attr[PORTEA_CALLED_AT] = moment(date).format(DATE_FORMAT);;
-      },[]);
+      });
 
       Object.keys(joinById).forEach((id) => {
         update_patients.forEach(patient => joinById[id].forEach(value => {
-          if(value.id == patient[id]){
+          if(value.id === parseInt(patient[id])){
             patient[id] = value.name
           }
         }));

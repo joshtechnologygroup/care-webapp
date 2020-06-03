@@ -71,7 +71,7 @@ export function FacilityDetails(props) {
             />
           </Grid>
         }
-        {status &&
+        { status &&
           profile.map((member, index) =>
             <Grid key={index} className="mb-0" item xs={12}>
               <FacilityDetailCard
