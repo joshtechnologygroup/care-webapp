@@ -28,7 +28,7 @@ export const CONFIG = {
     { headerName: 'Updated At', field: 'updated_at', minWidth: 150, cellRendererParams: {
       isSortable: true
     }},
-    { headerName: '', maxWidth: 50, field: 'action', cellRenderer: 'actionRenderer' }
+    { headerName: 'Action', maxWidth: 100, field: 'action', cellRenderer: 'actionRenderer' }
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,

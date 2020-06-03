@@ -1,0 +1,21 @@
+{
+    "CovidStatusChoices": [
+        {
+            "id": 1,
+            "name": "Positive"
+        },
+        {
+            "id": 2,
+            "name": "Negative"
+        },
+        {
+            "id": 3,
+            "name": "Result awaited"
+        },
+        {
+            "id": 4,
+            "name": "Not tested Yet"
+        }
+    ]
+}
+  

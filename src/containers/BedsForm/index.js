@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import Form from './form';
 import useStyles from './styles';
-import { updateFacilityInfrastructure } from 'Actions/BedsListAction';
+import { createUpdateFacilityInfrastructure } from 'Actions/BedsListAction';
 import { PropTypes } from 'prop-types';
 import { FACILITY_INFRASTRUCTURE_UPDATE_URL, FACILITY_INFRASTRUCTURE_LIST_URL } from 'Src/routes';
 import { connect } from 'react-redux';
@@ -28,7 +28,7 @@ export const BedsForm = (props) => {
     }
 
     const updateFacilityInfrastructure = () => {
-        const response = props.updateFacilityInfrastructure(updatedData, StringUtil.formatVarString(FACILITY_INFRASTRUCTURE_UPDATE_URL, [ data.id ]))
+        const response = props.createUpdateFacilityInfrastructure(updatedData, StringUtil.formatVarString(FACILITY_INFRASTRUCTURE_UPDATE_URL, [ data.id ]), 'PATCH')
         if(!response.status){
           setError(true);
           setErrors({...errors, form: response.detail})
@@ -106,7 +106,7 @@ const mapStateToProps = (state) => ({
   });
 
 BedsForm.propTypes = {
-  updateFacilityInfrastructure: PropTypes.func.isRequired
+  createUpdateFacilityInfrastructure: PropTypes.func.isRequired
 };
   
-export default connect(mapStateToProps, { updateFacilityInfrastructure })(BedsForm);
+export default connect(mapStateToProps, { createUpdateFacilityInfrastructure })(BedsForm);
