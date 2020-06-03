@@ -109,7 +109,7 @@ class PatientDetail extends Component {
               handleEdit={ () => this.setEditable(formList[1], true) }
             />
           }
-          {/* <Timeline />
+          <Timeline />
           <MedicationDetails
             editMode={false} profile={profile[formList[2]]}
           />
@@ -127,7 +127,7 @@ class PatientDetail extends Component {
           />
           <FamilyDetails
             profile={profile[formList[6]]}
-          /> */}
+          />
         </div>
       </>
     );

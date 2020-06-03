@@ -8,7 +8,6 @@ import {
   TextField,
   Button,
   MenuItem,
-  CardHeader,
   FormControlLabel,
   Checkbox,
   Typography,
@@ -103,10 +102,10 @@ export function Form(props) {
 
   return (
   <form onSubmit={handleSubmit}>
+    <div className="section-header">
+      <h4 className="heading--card">{i18n.t('Contact Details')}</h4>
+    </div>
     <Card className={classes.root} elevation={4}>
-      <CardHeader
-        title={i18n.t('Contact Details')}
-      />
       <CardContent>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
@@ -172,7 +171,7 @@ export function Form(props) {
                     {option.name}
                   </MenuItem>))
                 }
-              </TextField>
+            </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField

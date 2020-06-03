@@ -35,7 +35,7 @@ export default function FacilityDetailCard(props) {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={3}>
             <Typography variant="h5" color="primary">
-              <Tooltip title={i18n.t('Facility name')}>
+              <Tooltip title={i18n.t('Facility Name')}>
                 <span>{details.name}</span>
               </Tooltip>
               <Typography variant="inherit" className="text--gray">
