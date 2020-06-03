@@ -91,7 +91,6 @@ export function BedsList(props) {
       })
 
 
-
       const update_list = {
         'updated_facility_list': [],
         'updated_room_type_list': [],
