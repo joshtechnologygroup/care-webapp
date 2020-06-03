@@ -1,11 +1,14 @@
 import * as CommonService from "Src/utils/services";
-import { TRANSFER_LIST_URL, TRANSFER_UPDATE_URL } from 'Src/routes';
-import { GET, PATCH } from "Src/constants";
+import { TRANSFER_LIST_URL, TRANSFER_UPDATE_URL, ADD_PATIENT_TRANSFER_URL } from 'Src/routes';
+import { GET, PATCH, POST } from "Src/constants";
 import { 
     GET_TRANSFER_LIST, 
     UPDATE_TRANSFER_STATUS, 
     UPDATE_TRANSFER_STATUS_ERROR,
-    SET_TRANSFER_UPDATE_API_STATE 
+    SET_TRANSFER_UPDATE_API_STATE,
+    ADD_PATIENT_TRANSFER,
+    ADD_PATIENT_TRANSFER_ERROR,
+    SET_TRANSFER_ADD_API_STATE
 } from 'Reducers/Types';
 import { dispatchAction } from 'Actions/common';
 
@@ -24,6 +27,16 @@ const updateTransferStatus = (patientTransferId, body) => async (dispatch) => {
     return response;
 };
 
+const addPatientTransfer = (body) => async (dispatch) => {
+    const response = await CommonService.addPatientTransfer(ADD_PATIENT_TRANSFER_URL, POST, body, {})
+    if(response.status === 200) {
+        return dispatch(dispatchAction(ADD_PATIENT_TRANSFER, response));
+    } else if(response.status === 400) {
+        return dispatch(dispatchAction(ADD_PATIENT_TRANSFER_ERROR, response));
+    }
+    return response;
+};
+
 const setTransferUpdateApiSuccess = (data) => async (dispatch) => {
     dispatch({
         type: SET_TRANSFER_UPDATE_API_STATE,
@@ -31,4 +44,11 @@ const setTransferUpdateApiSuccess = (data) => async (dispatch) => {
     })
 };
 
-export { getTransferList, updateTransferStatus, setTransferUpdateApiSuccess }
+const setAddTransferApiSuccess = (data) => async (dispatch) => {
+    dispatch({
+        type: SET_TRANSFER_ADD_API_STATE,
+        data: data
+    })
+};
+
+export { getTransferList, updateTransferStatus, setTransferUpdateApiSuccess, addPatientTransfer, setAddTransferApiSuccess }
