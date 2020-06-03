@@ -6,6 +6,7 @@ import {
     GET_PATIENT_STATUS_LIST,
     GET_STATE_LIST,
     SET_CURRENT_PATIENT,
+    CLEAR_PATIENT
 } from "Reducers/Types";
 
 const initialState = {};
@@ -76,13 +77,17 @@ const states = (state = {}, action) => {
 };
 
 const patient = (state = {}, action) => {
-    if (action.type === SET_CURRENT_PATIENT) {
-        return {
-            ...state,
-            ...action.data
-        };
+    switch(action.type){
+        case SET_CURRENT_PATIENT:
+            return {
+                ...state,
+                ...action.data
+            }
+        case CLEAR_PATIENT:
+            return {};
+        default:
+            return state;
     }
-    return state;
 };
 
 export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states, patient };
