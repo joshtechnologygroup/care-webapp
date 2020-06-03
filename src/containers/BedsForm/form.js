@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import useStyles from './styles';
 import { connect } from 'react-redux';
+import Select from "react-select";
 
 export function Form(props) {
     const classes = useStyles();
@@ -37,10 +38,37 @@ export function Form(props) {
         handleChange(name, e.target.value);
     };
 
-
     return (
         <form>
             <Grid item container spacing={2}>
+              <Grid item sm={6} xs={12}>
+                <label className={classes.label}>{i18n.t('Facility Name')}</label>
+                <Select
+                  defaultValue={[{'label': data.facility}]}
+                  onChange={change.bind(null, "facility")}
+                  isDisabled={true}
+                />
+              </Grid>
+
+              <Grid item sm={6} xs={12}>
+                <label className={classes.label}>{i18n.t('Room Type')}</label>
+                <Select
+                  defaultValue={[{'label': data.room_type}]}
+                  onChange={change.bind(null, "room_type")}
+                  isDisabled={true}
+                />
+              </Grid>
+
+              <Grid item sm={6} xs={12}>
+                <label className={classes.label}>{i18n.t('Bed Type')}</label>
+                <Select
+                  defaultValue={[{'label': data.bed_type}]}
+                  onChange={change.bind(null, "bed_type")}
+                  isDisabled={true}
+                />
+              </Grid>
+
+
                 <Grid item sm={6} xs={12}>
                     <TextField 
                         name="total_beds"
