@@ -6,29 +6,35 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Form from './form';
 import { connect } from 'react-redux';
-import { updateTransferStatus } from "Actions/TransferAction";
+import { updateTransferStatus, setTransferUpdateApiSuccess } from "Actions/TransferAction";
 import { TRANSFER_STATUS_CHOICES } from "Constants/app.const";
 import _ from 'underscore';
 
 
 export const TransferUpdateForm = (props) => {
-    const { open, onClose, rowData, updateStatus, update_transfer_errors, showSuccessToast } = props;
+    const { open, onClose, rowData, updateStatus, update_transfer_errors, showSuccessToast, apiSuccess, setApiStatus } = props;
     const { i18n } = useTranslation();
-    const submit = (data) => {
-        setIsSubmitted(true);
+    const submit = async (data) => {
         updateStatus(rowData.id, data);
     };
-    const [isSubmitted, setIsSubmitted] = useState(false)
 
     useEffect(() => {
-        if(isSubmitted && !update_transfer_errors) {
+        if(apiSuccess) {
             showSuccessToast();
-            onClose();
+            handleClose();
         }
-    }, [update_transfer_errors, isSubmitted])
+    }, [apiSuccess])
+
+    const handleClose = () => {
+        onClose();
+        setApiStatus({
+            apiSuccess: null,
+            update_transfer_errors: {}
+        });
+    }
 
     return (
-        <CustomModal open={open} onClose={onClose} title={i18n.t('Update Patient Transfer Status') }>
+        <CustomModal open={open} onClose={handleClose} title={i18n.t('Update Patient Transfer Status') }>
              <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Formik
@@ -46,6 +52,7 @@ export const TransferUpdateForm = (props) => {
 
 const mapStateToProps = state => {
     return {
+        apiSuccess: state.transfers.apiSuccess,
         update_transfer_errors: state.transfers.update_transfer_errors
     };
 };
@@ -55,6 +62,9 @@ const mapDispatchToProps = dispatch => {
         updateStatus: (patientTransferId, body) => {
             dispatch(updateTransferStatus(patientTransferId, body));
         },
+        setApiStatus: (data) => {
+            dispatch(setTransferUpdateApiSuccess(data));
+        }
     };
 };
 

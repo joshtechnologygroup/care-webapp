@@ -34,4 +34,8 @@ export async function updateTransferStatus(url, method, body = {}, params = {}) 
     return await makeAuthorizedApiCall(url, method, body, params)
 }
 
+export async function addPatientTransfer(url, method, body = {}, params = {}) {
+    return await makeAuthorizedApiCall(url, method, body, params)
+}
+
 export { makeApiCall, makeAuthorizedApiCall };

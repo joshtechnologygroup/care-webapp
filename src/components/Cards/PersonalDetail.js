@@ -43,19 +43,22 @@ export default function PersonalDetail(props) {
   
   return (
     <>
-      <div className="section-header mt-0">
-        <h4 className="heading--card">{i18n.t('Personal Details')}</h4>
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          size="medium"
-          className="btn"
-          onClick={handleEdit}
-        >
-          {i18n.t('Edit')}
-        </Button>
-      </div>
+      {
+        !props.hideEdit &&
+        <div className="section-header mt-0">
+          <h4 className="heading--card">{i18n.t('Personal Details')}</h4>
+            <Button
+              variant="contained"
+              color="primary"
+              disableElevation
+              size="medium"
+              className="btn"
+              onClick={handleEdit}
+            >
+              {i18n.t('Edit')}
+            </Button>
+        </div>
+      }
 
       <Card elevation={4}>
         <CardContent>

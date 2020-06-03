@@ -1,11 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid, Button } from '@material-ui/core';
+import { useTranslation } from "react-i18next";
 
 import Header from 'Containers/Header';
 import TransfersList from 'Containers/TransfersList';
+import PatientTransferForm from '../containers/AddPatientTransfer';
 
-class Transfer extends Component {
-  render() {
+const Transfer = () => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const showSuccessToast = () => {
+        alert('Successfully Updated');
+    };
+
+    const { i18n } = useTranslation();
+
     return (
       <Grid
         container
@@ -19,19 +36,19 @@ class Transfer extends Component {
                 variant="contained"
                 color="primary"
                 size="medium"
-                onClick={() => { console.log('initiate') }}
+                onClick={handleClick}
               >
-                initiate
-                    </Button>
+                  {i18n.t('INITIATE')}
+                </Button>
             </div>
           </Header>
           <div className="main-container">
             <TransfersList />
           </div>
+          <PatientTransferForm open={open} onClose={handleClose} showSuccessToast={showSuccessToast} />
         </div>
       </Grid>
     );
-  }
 }
 
 export default Transfer;
