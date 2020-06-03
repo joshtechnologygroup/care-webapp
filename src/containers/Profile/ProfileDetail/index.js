@@ -9,9 +9,13 @@ import {
   Typography,
   Chip
 } from '@material-ui/core';
+import {
+    replaceIds
+  } from "Src/utils/listFilter";
 import { EditOutlined } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
+import _ from "underscore";
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -38,7 +42,8 @@ export default function ProfileDetail(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
 
-  const { profile, handleEdit } = props;
+  const { profile, handleEdit, districtsList, shortFacilityList, userTypes } = props;
+  console.log(userTypes, profile.user_type);
   return (
     <Card className={classes.root} elevation={4}>
       <CardHeader
@@ -56,13 +61,13 @@ export default function ProfileDetail(props) {
               {profile.name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {profile.role}
+            {!_.isEmpty(userTypes) && !_.isEmpty(profile) && userTypes.find(type => type.id === profile.user_type).name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
               {i18n.t('Email')}: {profile.email}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-              {i18n.t('Phone')}: {profile.phone}
+              {i18n.t('Phone')}: {profile.phone_number}
             </Typography>
           </Grid>
           <Grid item sm={6}>
@@ -71,8 +76,8 @@ export default function ProfileDetail(props) {
             </Typography>
             <Grid container spacing={1}>
               {
-                profile.districtPreference.map((item) => (
-                  <Grid item><Chip variant="outlined" size="small" label={item.label} color="primary" /></Grid>
+                !_.isEmpty(profile) && !_.isEmpty(districtsList) && !_.isEmpty(shortFacilityList) && replaceIds(profile.preferred_districts, districtsList).map((district) => (
+                  <Grid item ><Chip variant="outlined" size="small" label={district} color="primary" /></Grid>
                 ))
               }
             </Grid>
@@ -81,8 +86,8 @@ export default function ProfileDetail(props) {
             </Typography>
             <Grid container spacing={1}>
               {
-                profile.associatedFacilites.map((item) => (
-                  <Grid item><Chip variant="outlined" size="small" label={item.label} color="primary" /></Grid>
+                !_.isEmpty(profile) && !_.isEmpty(districtsList) && !_.isEmpty(shortFacilityList) && replaceIds(profile.associated_facilities, shortFacilityList).map((facility) => (
+                  <Grid item ><Chip variant="outlined" size="small" label={facility} color="primary" /></Grid>
                 ))
               }
             </Grid>

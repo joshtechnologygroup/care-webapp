@@ -2,7 +2,8 @@ import {
     GET_OWNERSHIP_TYPE_LIST,
     GET_DISTRICT_LIST,
     GET_CITIES_LIST,
-    GET_LOCAL_BODY_LIST
+    GET_LOCAL_BODY_LIST,
+    USER_TYPE_LIST
 } from "Reducers/Types";
 
 const districts = (state = {}, action) => {
@@ -45,4 +46,14 @@ const ownershipTypes = (state = {}, action) => {
     return state;
 };
 
-export {districts, ownershipTypes, cities, localBody};
+const userTypes = (state = {}, action) => {
+    if (action.type === USER_TYPE_LIST) {
+        return { 
+            ...state,
+            ...action.data 
+        };
+    }
+    return state;
+};
+
+export {districts, ownershipTypes, cities, localBody, userTypes};
