@@ -164,7 +164,7 @@ export function Form(props) {
                         size="medium"
                         className="btn py-5 ml-10"
                     >
-                        {i18n.t('Submit')}
+                        {i18n.t('Initiate Transfer')}
                     </Button>
                 </Grid>
             </Grid>

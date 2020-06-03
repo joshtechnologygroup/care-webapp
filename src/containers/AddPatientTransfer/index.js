@@ -6,18 +6,21 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Form from './form';
 import { connect } from 'react-redux';
-import { setAddTransferApiSuccess, addPatientTransfer } from "Actions/TransferAction";
+import { setAddTransferApiSuccess, addPatientTransfer, getTransferList } from "Actions/TransferAction";
 import { CLEAR_PATIENT } from "Reducers/Types";
 
 
 const PatientTransferForm = (props) => {
-    const { open, onClose, showSuccessToast, apiSuccess, setApiStatus, addPatientTransfer, addTransferErrors, clearPatient } = props;
+    const { open, onClose, showSuccessToast, apiSuccess, setApiStatus, addPatientTransfer, addTransferErrors, clearPatient, fetchTransferList } = props;
     const { i18n } = useTranslation();
     const submit = (data) => {
         addPatientTransfer(data);
     };
     useEffect(() => {
         if(apiSuccess) {
+            fetchTransferList({
+                'ordering': '-status_updated_at'
+            });
             showSuccessToast();
             handleClose();
         }
@@ -82,7 +85,10 @@ const mapDispatchToProps = dispatch => {
                 type: CLEAR_PATIENT,
                 data: {}
             });
-        }
+        },
+        fetchTransferList: params => {
+            dispatch(getTransferList(params));
+        },
     };
 };
   
