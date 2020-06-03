@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Radio from '@material-ui/core/Radio';
 import { TextField } from '@material-ui/core';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
 import AsyncSelect from 'react-select/async';
 
+import PersonalDetail from 'Components/Cards/PersonalDetail';
 import { useTranslation } from "react-i18next";
 import {
     Grid,
@@ -17,12 +14,12 @@ import Select from 'react-select'
 import useStyles from './styles';
 import { connect } from 'react-redux';
 import _ from 'underscore'
-import Filters from "Components/Filters";
 import * as CommonService from "Src/utils/services";
 import { GET } from "Src/constants";
 import { GET_PATIENT_URL } from 'Src/routes';
 import { TRANSFER_STATUS_CHOICES } from "Constants/app.const";
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { fetchPatient } from 'Actions/PatientsAction';
 
 function sleep(delay = 0) {
     return new Promise((resolve) => {
@@ -39,6 +36,8 @@ export function Form(props) {
         initialValues,
         addTransferErrors,
         errors,
+        patient,
+        getPatient
       } = props;
     const { i18n } = useTranslation();
     const [inputValue, setInputValue] = useState("");
@@ -83,6 +82,10 @@ export function Form(props) {
         setInputValue(newInputValue);
         return newInputValue;
     };
+
+    const showProfileCard = (val) => {
+        getPatient(val);
+    }
 
     return (
         <form onSubmit={handleSubmit}>
@@ -132,13 +135,24 @@ export function Form(props) {
                         loadOptions={loadOptions}
                         defaultOptions={[{}]}
                         onInputChange={handleInputChange}
-                        onChange={(val) => setFieldValue('patient', val.value)}
+                        onChange={(val) => {
+                            setFieldValue('patient', val.value);
+                            showProfileCard(val.value);
+                        }}
                     />
                     {
                     errors.patient && 
                     <FormControl component="fieldset" error={true}>
                         <FormHelperText className={classes.error}>{errors.patient}</FormHelperText>
                     </FormControl>
+                    }
+                    {!_.isEmpty(patient) && 
+                        <PersonalDetail
+                            profile={patient.personal_details[0]}
+                            medicationDetails={{}}
+                            handleEdit={() => {}}
+                            hideEdit={true}
+                        />
                     }
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -190,7 +204,16 @@ const mapStateToProps = (state) => ({
     inventoryList:state.inventory.results,
     inventoryTypesList: state.inventoryTypes.results,
     facilityList: state.shortFacilities,
-    count:state.inventory.count
+    count:state.inventory.count,
+    patient: state.patient
 });
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getPatient: (id) => {
+            dispatch(fetchPatient(id));
+        }
+    };
+};
   
-export default connect(mapStateToProps, null)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

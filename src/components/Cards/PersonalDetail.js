@@ -76,11 +76,13 @@ export default function PersonalDetail(props) {
           </Grid>
         </Grid>
       </CardContent>
-      <Tooltip title={i18n.t('Edit')}>
-        <IconButton className={classes.action} onClick={handleEdit}>
-          <EditOutlined fontSize="large"/>
-        </IconButton>
-      </Tooltip>
+      { !props.hideEdit &&
+          <Tooltip title={i18n.t('Edit')}>
+          <IconButton className={classes.action} onClick={handleEdit}>
+            <EditOutlined fontSize="large"/>
+          </IconButton>
+        </Tooltip>
+      }
     </Card>
   );
 }

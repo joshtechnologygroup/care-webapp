@@ -59,7 +59,6 @@ const PatientTransferForm = (props) => {
     );
 }
 
-
 const mapStateToProps = state => {
     return {
         apiSuccess: state.transfers.apiSuccess,
