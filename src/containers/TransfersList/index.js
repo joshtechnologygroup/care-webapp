@@ -297,7 +297,7 @@ const mapStateToProps = state => {
     return {
         transferList: transfers.results,
         count: transfers.count,
-        shortFacilityLists: shortFacilities,
+        shortFacilityLists: {...shortFacilities.results},
     };
 };
 

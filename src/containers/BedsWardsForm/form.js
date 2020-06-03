@@ -116,7 +116,6 @@ Form.defaultProps = {
 const mapStateToProps = (state) => ({
   inventoryList: state.inventory.results,
   inventoryTypesList: state.inventoryTypes,
-  shortFacilities: state.shortFacilities,
   count: state.inventory.count
 });
 
@@ -124,7 +123,6 @@ Form.propTypes = {
   profile: PropTypes.object.isRequired,
   inventoryList: PropTypes.array.isRequired,
   inventoryTypesList: PropTypes.array.isRequired,
-  shortFacilities: PropTypes.array.isRequired,
   handleEdit: PropTypes.func.isRequired
 };
 
