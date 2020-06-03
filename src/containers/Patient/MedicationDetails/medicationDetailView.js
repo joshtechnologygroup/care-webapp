@@ -24,13 +24,13 @@ export default function MedicationDetailView(props) {
         <Typography variant="h5" color="primary" className="d-flex">
           {i18n.t('COVID-19 Status')}
         </Typography>
-        <Chip label={profile.covid_status ? CovidStatusChoices[profile.covid_status].name : profile.covid_status} className={`mt-5 ${CovidStatusChoices[profile.covid_status].name  === 'Positive' ? 'danger' : 'success'}`} />
+        <Chip label={profile.covid_status ? CovidStatusChoices[profile.covid_status - 1].name : profile.covid_status} className={`mt-5 ${CovidStatusChoices[profile.covid_status - 1].name  === 'Positive' ? 'danger' : 'success'}`} />
       </Grid>
       <Grid item xs={12} className="pt-0">
         <Typography variant="h5" color="primary" className="d-flex">
           {i18n.t('Clinical Status')}
         </Typography>
-        <Chip label={profile.clinical_status ? clinicalStatusChoices[profile.clinical_status].name : profile.clinical_status} className={`mt-5 ${clinicalStatusChoices[profile.clinical_status].name === 'Mild symptoms' ? 'danger' : 'success'}`} />
+        <Chip label={profile.clinical_status ? clinicalStatusChoices[profile.clinical_status - 1].name : profile.clinical_status} className={`mt-5 ${clinicalStatusChoices[profile.clinical_status - 1].name === 'Mild symptoms' ? 'danger' : 'success'}`} />
       </Grid>
       {!_.isEmpty(profile.symptoms) &&
         <Grid item xs={12} className="pt-0">
@@ -39,7 +39,7 @@ export default function MedicationDetailView(props) {
           </Typography>
           {
             profile.symptoms.map((symptom, index) =>
-              <Chip key={index} label={symptomChoices[symptom].name} className="mr-5 mt-5 pinkGrad" />
+              <Chip key={index} label={symptomChoices[symptom - 1].name} className="mr-5 mt-5 pinkGrad" />
             )
           }
         </Grid>
