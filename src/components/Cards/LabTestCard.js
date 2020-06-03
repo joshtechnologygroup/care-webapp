@@ -14,7 +14,7 @@ import {
 
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { EditOutlined, EventOutlined } from '@material-ui/icons';
-
+import { DATE_FORMAT } from 'Src/constants';
 // Importing mock data
 import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
 
@@ -82,7 +82,7 @@ export default function LabTestCard(props) {
               <EventOutlined className="mr-5" />
               <Tooltip title={i18n.t('Sample collected on')}>
                 <span>
-                  {moment(details.date_of_sample).format('DD-MM-YYYY')}
+                  {moment(details.date_of_sample).format(DATE_FORMAT)}
                 </span>
               </Tooltip>
             </Typography>
@@ -94,7 +94,7 @@ export default function LabTestCard(props) {
               <EventOutlined className="mr-5" />
               <Tooltip title={i18n.t('Last Updated')}>
                 <span>
-                  {moment(details.status_updated_at).format('DD-MM-YYYY')}
+                  {moment(details.status_updated_at).format(DATE_FORMAT)}
                 </span>
               </Tooltip>
             </Typography>

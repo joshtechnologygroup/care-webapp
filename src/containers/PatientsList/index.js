@@ -47,8 +47,8 @@ export function PatientsList( props ) {
       'covid_status_list': [Routes.COVID_STATUS_LIST_URL, ReducerTypes.GET_COVID_STATUS_LIST],
       'facilities':[Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST],
       'ownership_types':[Routes.OWNERSHIP_TYPE_LIST_URL, ReducerTypes.GET_OWNERSHIP_TYPE_LIST],
-      'facility_types': [Routes.FACILITY_TYPE_LIST_URL, ReducerTypes.GET_FACILITY_TYPE_LIST]
-
+      'facility_types': [Routes.FACILITY_TYPE_LIST_URL, ReducerTypes.GET_FACILITY_TYPE_LIST],
+      'current_status': [Routes.PATIENT_STATUS_LIST_URL, ReducerTypes.GET_PATIENT_STATUS_LIST]
     }
 
     Object.keys(required).forEach((list) => {
@@ -71,7 +71,8 @@ export function PatientsList( props ) {
       patients,
       facilities,
       ownership_types,
-      facility_types
+      facility_types,
+      current_status,
     } = props
     if(
         districts_list &&
@@ -81,16 +82,18 @@ export function PatientsList( props ) {
         patients &&
         facilities &&
         ownership_types &&
-        facility_types
+        facility_types &&
+        current_status
     ){
       const joinById = {
         'clinical_status': clinical_status_list,
         'district': districts_list,
         'cluster_group': cluster_group_list,
-        'covid_status': covid_status_list
+        'covid_status': covid_status_list,
+        'patient_status': current_status,
       }
       let update_patients = Object.assign([], props.patients);
-
+      
       update_patients.forEach((attr) => {
         let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
         attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
@@ -100,7 +103,7 @@ export function PatientsList( props ) {
 
       Object.keys(joinById).forEach((id) => {
         update_patients.forEach(patient => joinById[id].forEach(value => {
-          if(value.id === patient[id]){
+          if(value.id === parseInt(patient[id])){
             patient[id] = value.name
           }
         }));
@@ -113,7 +116,8 @@ export function PatientsList( props ) {
         'updated_cluster_group_list':[],
         'updated_covid_status_list':[],
         'updated_ownership_types_list': [],
-        'updated_facility_types_list': []
+        'updated_facility_types_list': [],
+        'updated_current_status_list': [],
       }
       const props_list = {
         'updated_clinical_status_list': clinical_status_list,
@@ -122,7 +126,8 @@ export function PatientsList( props ) {
         'updated_cluster_group_list': cluster_group_list,
         'updated_covid_status_list': covid_status_list,
         'updated_ownership_types_list': ownership_types,
-        'updated_facility_types_list': facility_types
+        'updated_facility_types_list': facility_types,
+        'updated_current_status_list': current_status,
       }
       Object.keys(update_list).forEach((list_name) => {
         props_list[list_name].forEach((element)=>{
@@ -152,6 +157,9 @@ export function PatientsList( props ) {
         if(col.field === 'facility_type'){
           col.cellRendererParams.options = update_list['updated_facility_types_list']
         }
+        if(col.field === 'patient_status') {
+          col.cellRendererParams.options = update_list['updated_current_status_list']
+        }
       })
 
 
@@ -165,7 +173,8 @@ export function PatientsList( props ) {
     props.cluster_group_list,
     props.covid_status_list,
     props.patients,
-    props.facilities
+    props.facilities,
+    props.current_status,
   ]); // if the list changes then again set all the foreign keys
 
 
@@ -331,12 +340,14 @@ const mapStateToProps = (state) => ({
   districts_list: state.districts.results,
   clinical_status_list: state.clinicalStatus.results,
   cluster_group_list: state.clusterGroup.results,
-  covid_status_list: state.covidStatus.results
+  covid_status_list: state.covidStatus.results,
+  current_status: state.currentStatus.results,
 });
 
 PatientsList.propTypes = {
   facility_types: PropTypes.array.isRequired,
   ownership_types: PropTypes.array.isRequired,
+  current_status: PropTypes.array.isRequired,
   facilities: PropTypes.array.isRequired,
   patients: PropTypes.array.isRequired,
   count: PropTypes.number.isRequired,
