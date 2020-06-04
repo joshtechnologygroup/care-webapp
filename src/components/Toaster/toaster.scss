@@ -1,0 +1,70 @@
+@import '../../styles/import';
+
+@mixin toast-variation($color) {
+	border-color: $color;
+	background: lighten($color, 42%);
+	color: darken($color, 20%);
+}
+
+.toaster {
+	font-size: 14px;
+	box-sizing: border-box;
+	position: fixed;
+	z-index: 999999;
+	bottom: 12px;
+	right: 12px;
+	transition: transform .6s ease-in-out;
+	animation: toast-in-right .7s;
+}
+
+.toast {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+	width: 350px;
+	margin-bottom: 14px;
+	border-left: 3px $black solid;
+	padding: 7px 5px 7px 16px;
+	opacity: .9;
+	box-shadow: 0.2rem 0.2rem 0.3rem 0.1rem rgba($black, 0.16);
+	background: $white;
+	color: $black;
+	transition: transform .6s ease-in-out;
+	animation: toast-in-right .7s;
+	&:hover {
+		opacity: 1;
+	}
+	&__title {
+		line-height: 1;
+		margin-bottom: 2px;
+		color: inherit;
+	}
+	&__desc {
+		line-height: 1.2;
+		color: $black-light;
+	}
+	&--danger {
+		@include toast-variation($red);
+	}
+	&--success {
+		@include toast-variation($green);
+	}
+	&--warning {
+		@include toast-variation($orange);
+	}
+	&--info {
+		@include toast-variation($blue-primary);
+	}
+}
+
+@keyframes toast-in-right {
+	from {
+	  transform: translateX(100%);
+	  
+	}
+	to {
+	  transform: translateX(0);
+	}
+}
