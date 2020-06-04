@@ -13,6 +13,7 @@ import { symptomChoices } from 'Mockdata/symptomChoices.json';
 import { diseaseChoices } from 'Mockdata/diseaseChoices.json';
 import { booleanStatuses } from 'Constants/app.const';
 import { clinicalStatusChoices } from 'Mockdata/clinicalStatusChoices.json';
+import { CovidStatusChoices } from 'Mockdata/CovidStatusChoices.json';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -22,15 +23,19 @@ export default function Form(props) {
       covid_status,
       clinical_status,
       symptoms,
-      nonCovidDiseases,
+      diseases,
     },
     handleSubmit,
     setFieldValue,
     cancelCallback,
     editMode,
+    saveProfile,
   } = props;
 
   const setValue = (val, name) => {
+    if(saveProfile) {
+    saveProfile(name, val);
+    }
     setFieldValue(name, val);
   };
 
@@ -43,7 +48,8 @@ export default function Form(props) {
         </Typography>
         <SingleSelectChipsInput
           value={covid_status}
-          options={booleanStatuses.positiveNegative}
+          valueKey="id"
+          options={CovidStatusChoices}
           onChange={(val) => setValue(val, 'covid_status')}
         />
       </Grid>
@@ -54,6 +60,7 @@ export default function Form(props) {
         </Typography>
         <SingleSelectChipsInput
           value={clinical_status}
+          valueKey="id"
           options={clinicalStatusChoices}
           onChange={(val) => setValue(val, 'clinical_status')}
         />
@@ -77,8 +84,8 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={diseaseChoices}
-          value={nonCovidDiseases}
-          onChange={(val) => setValue(val, 'nonCovidDiseases')}
+          value={diseases}
+          onChange={(val) => setValue(val, 'diseases')}
           valueKey="id"
         />
       </Grid>

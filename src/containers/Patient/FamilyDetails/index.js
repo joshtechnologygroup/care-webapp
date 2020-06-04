@@ -35,7 +35,6 @@ export default function FamilyDetails(props) {
       profile[editable] = data;
       setEditable('');
     }
-    console.log('data subitted', data);
   };
 
   const cancel = () => {

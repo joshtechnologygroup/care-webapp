@@ -14,7 +14,7 @@ import MedicationUpdateForm from './MedicationUpdateForm';
 export default function MedicationDetail(props) {
   const { i18n } = useTranslation();
   
-  const { profile, editMode } = props;
+  const { profile, editMode, saveProfile } = props;
   const [editable, setEditable] = React.useState(editMode);
 
   const cancelEdit = () => {
@@ -54,7 +54,7 @@ export default function MedicationDetail(props) {
             <Grid container>
               {
                 editable ?
-                <MedicationUpdateForm editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} cancelCallback={cancelEdit} profile={profile} />
+                <MedicationUpdateForm editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={profile} />
                 :
                 <MedicationDetailView profile={profile} />
               }

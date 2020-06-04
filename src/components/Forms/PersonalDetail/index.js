@@ -17,8 +17,7 @@ export function PersonalDetailForm(props) {
     icmr_id: Yup.string().required(i18n.t('Please enter ICMR ID')),
     govt_id: Yup.string().required(i18n.t('Please enter Govt ID')),
     cluster_group: Yup.number().required(i18n.t('Please select Cluster group')),
-    clinical_status: Yup.string().required(i18n.t('Please select clinical status')),
-    covid_status: Yup.string().required(i18n.t('Please select COVID status')),
+    patient_status: Yup.number(),
   });
 
   const submit= (data) => {

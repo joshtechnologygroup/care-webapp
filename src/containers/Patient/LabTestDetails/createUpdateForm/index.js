@@ -3,21 +3,39 @@ import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography, Card, } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { PropTypes } from 'prop-types';  
 import Form from './form';
+import { createUpdateSampleTest }  from 'Actions/TestingLabsAction'
+import _ from 'underscore';
 
 export const CreateUpdateForm = (props) => {
-    const { editMode, details, handleSubmit, cancelCallback } = props;
+    let { patientId } = useParams();
+    const { editMode, details, handleSubmit, cancelCallback, saveLabDetails, testingLabs, createUpdateSampleTest } = props;
     const { i18n } = useTranslation();
 
     const validationSchema = Yup.object({
-        name: Yup.string().required(i18n.t('Please select Lab')),
+        testing_lab: Yup.string().required(i18n.t('Please select Lab')),
         result: Yup.number().required(i18n.t('Please select current test status')),
         date_of_sample: Yup.date().required(i18n.t('Please select date of sample collection')),
     });
 
-    const submit = (data) => {
+    const submit = async (data) => {
         handleSubmit(data);
-        console.log('data', data);
+        let initial = data;
+        let response;
+        if(editMode && !_.isEmpty(details)){
+            response = await createUpdateSampleTest(initial, details.id);
+        } else {
+            initial['patient'] = patientId;
+            response = await createUpdateSampleTest(initial);
+        }
+        if(response.status){
+            alert('created patient sample test');
+        } else {
+            alert(response.error);
+        }
     };
 
     return (
@@ -35,7 +53,7 @@ export const CreateUpdateForm = (props) => {
                         onSubmit={submit}
                     >
                         {
-                            props => <Form editMode={editMode} details={details} {...props} cancelCallback={cancelCallback} />
+                            props => <Form editMode={editMode}testingLabs={testingLabs} details={details}saveLabDetails={saveLabDetails} {...props} cancelCallback={cancelCallback} />
                         }
                     </Formik>
                 </Grid>
@@ -44,4 +62,15 @@ export const CreateUpdateForm = (props) => {
     );
 }
 
-export default CreateUpdateForm;
+
+CreateUpdateForm.propTypes = {
+  testingLabs: PropTypes.array.isRequired,
+  createUpdateSampleTest: PropTypes.func.isRequired,
+};
+  
+const mapStateToProps = (state) => ({
+  testingLabs: state.testingLabs.results
+});
+  
+  
+export default connect(mapStateToProps, { createUpdateSampleTest })(CreateUpdateForm);

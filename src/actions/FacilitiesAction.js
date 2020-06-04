@@ -85,4 +85,14 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     }
 };
 
-export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies, getProfileDependencies }
+
+const getShortFacilitiesList = () => async (dispatch) => {
+    dispatch(dispatchDependentActions(
+        [
+            [Routes.FACILITY_SHORT_LIST_URL, GET, {}, {}],
+        ],
+        [ReducerTypes.GET_SHORT_FACILITY_LIST]
+    ));
+}
+
+export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies,getProfileDependencies, getShortFacilitiesList }

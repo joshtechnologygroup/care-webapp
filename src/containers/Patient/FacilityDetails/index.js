@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
 import {
@@ -13,27 +13,32 @@ import nullImage from 'Assets/images/facility.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 import { connect } from 'react-redux';
 import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';
+import { getShortFacilitiesList } from 'Actions/FacilitiesAction'
 export function FacilityDetails(props) {
   const { i18n } = useTranslation();
-  const { profile, currentStatus } = props;
+  const { profile, currentStatus, saveFacilityDetails, getShortFacilitiesList, shortFacilities, editMode } = props;
 
-  let editableId;
-  const [editable, setEditable] = React.useState(editableId);
-  let status = true;
-  if (profile.length === 1 && facilityStatusChoices[profile[0].patient_status - 1].name === 'Home Isolation' || _.isEmpty(profile)) {
-    status = false;
+  const [editable, setEditable] = React.useState(editMode);
+  let status =false;
+  if(!profile){
+    status =true;
+  } else if(!profile.length){
+    status = true;
   }
 
   const add = () => {
-    setEditable('new');
+    setEditable(false);
   };
+  
+  useEffect(() => {
+    props.getShortFacilitiesList();
+  },[]);
 
   const handleSubmit = (data) => {
-    if (editable === 'new') {
+    if (editable === false) {
       profile.unshift(data);
-      setEditable('');
+      setEditable(true);
     }
-    console.log('data subitted', data);
   };
 
   const cancel = () => {
@@ -45,7 +50,7 @@ export function FacilityDetails(props) {
       <div className="section-header">
         <h4 className="heading--card">{i18n.t('Facility Details')}</h4>
         {
-          !profile.length &&
+          status && !editable &&
           <Button
             variant="contained"
             color="primary"
@@ -61,17 +66,19 @@ export function FacilityDetails(props) {
 
       <Grid container spacing={1}>
         {
-          editable === 'new' &&
+          editable && profile &&
           <Grid item xs={12}>
             <CreateUpdateForm
               handleSubmit={handleSubmit}
+              saveFacilityDetails={saveFacilityDetails}
               cancelCallback={cancel}
-              editMode={false}
-              details={{}}
+              editMode={profile.facility ? true : false}
+              shortFacilities={shortFacilities}
+              details={{'admitted_at':new Date(),'discharged_at':new Date()}}
             />
           </Grid>
         }
-        { status &&
+        { Array.isArray(profile) && profile && !editable && 
           profile.map((member, index) =>
             <Grid key={index} className="mb-0" item xs={12}>
               <FacilityDetailCard
@@ -81,7 +88,7 @@ export function FacilityDetails(props) {
           )
         }
         {
-          editable !== 'new' && !status &&
+          status && editable === false &&
           <Grid item xs={12} className="mb-0">
             <Card>
               <NullState img={nullImage} message={i18n.t('null_messages.facility')} />
@@ -97,6 +104,7 @@ FacilityDetails.propTypes = {
   profile: PropTypes.array.isRequired,
   handleEdit: PropTypes.func,
   currentStatus: PropTypes.array.isRequired,
+  getShortFacilitiesList: PropTypes.func.isRequired
 }
 
 FacilityDetails.defaultProps = {
@@ -105,7 +113,8 @@ FacilityDetails.defaultProps = {
 
 const mapStateToProps = (state) => ({
   currentStatus: state.currentStatus.results,
+  shortFacilities: state.shortFacilities.results
 });
 
 
-export default connect(mapStateToProps, null)(FacilityDetails);
+export default connect(mapStateToProps, { getShortFacilitiesList })(FacilityDetails);

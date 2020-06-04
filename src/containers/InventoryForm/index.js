@@ -21,78 +21,79 @@ export const InventoryForm = (props) => {
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
     const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList, index } = props;
-    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: ''})
+    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: '' })
 
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
-    
+
     useEffect(() => {
-        if(!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)){
-                    setError(true)
-         }
-         else{
+        if (!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)) {
+            setError(true)
+        }
+        else {
             setError(false)
-         }
-      }, [facilityList, inventoryTypesList]);
+        }
+    }, [facilityList, inventoryTypesList]);
 
     const createInventory = () => {
         let initial = inventoryData;
-        if(!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)){
-        if(initial && !data){    
-        Object.keys(facilityList).forEach((facility, index) =>{
-            if(initial.name.label === facilityList[facility].name){
-               initial['facility'] = facilityList[facility].id
-               return;
+        console.log(facilityList);
+        if (!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)) {
+            if (initial && !data) {
+                Object.keys(facilityList).forEach((facility, index) => {
+                    if (initial.name.label === facilityList[facility].name) {
+                        initial['facility'] = facilityList[facility].id
+                        return;
+                    }
+                });
+                Object.keys(inventoryTypesList).forEach((inventoryitem, index) => {
+                    if (initial.type.label === inventoryTypesList[inventoryitem].name) {
+                        initial['item'] = inventoryTypesList[inventoryitem].id
+                        return;
+                    }
+                });
             }
-        });
-        Object.keys(inventoryTypesList).forEach((inventoryitem, index) =>{
-             if(initial.type.label === inventoryTypesList[inventoryitem].name){
-                initial['item'] = inventoryTypesList[inventoryitem].id
-                return;
-             }
-        });
+            delete initial.name;
+            delete initial.type;
+            setInventoryData({ inventoryData: initial });
+            if (isAddAnother === false && data) {
+                createOrUpdateInventory(initial, data.id)
+            } else {
+                createOrUpdateInventory(initial)
+            }
         }
-        delete initial.name;
-        delete initial.type;
-        setInventoryData({inventoryData:initial});
-        if(isAddAnother === false && data){
-            createOrUpdateInventory(initial, data.id)
-        } else {
-             createOrUpdateInventory(initial)
-        }
-        }
-        if(!isAddAnother) {
+        if (!isAddAnother) {
             onClose();
         }
     }
-   
+
     const handleChange = (name, e) => {
-        if(typeof name === 'object') {
-            setInventoryData({...inventoryData, ...name});
+        if (typeof name === 'object') {
+            setInventoryData({ ...inventoryData, ...name });
         } else {
-            setInventoryData({...inventoryData, [name]: e});
+            setInventoryData({ ...inventoryData, [name]: e });
         }
         switch (name) {
             case 'required_quantity':
-              errors.required_quantity = e ? false : true;
-              break;
+                errors.required_quantity = e ? false : true;
+                break;
             case 'current_quantity':
-              errors.current_quantity = e ? false : true;
-              break;
+                errors.current_quantity = e ? false : true;
+                break;
             default: break;
-          }
-          setErrors(prevState =>({
-              ...prevState,
-             ...errors
-          }))
+        }
+        setErrors(prevState => ({
+            ...prevState,
+            ...errors
+        }))
     }
 
     const { i18n } = useTranslation();
 
     return (
         <CustomModal open={open} onClose={onClose} title={i18n.t('Inventory')}>
-             <Grid container spacing={3}>
+            <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Formik>
                         {
@@ -102,20 +103,20 @@ export const InventoryForm = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     {
-                    error === true && 
-                    <FormControl component="fieldset" error={true}>
-                        <FormHelperText className={classes.error}>Facility Name and Inventory Type not exists...</FormHelperText>
-                    </FormControl>
+                        error === true &&
+                        <FormControl component="fieldset" error={true}>
+                            <FormHelperText className={classes.error}>Facility Name and Inventory Type not exists...</FormHelperText>
+                        </FormControl>
                     }
                 </Grid>
                 <Grid item xs={12}>
-                    { !data &&
-                     <FormControlLabel
-                        value="end"
-                        control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
-                        label="Add Another"
-                        labelPlacement="end"
-                    />
+                    {!data &&
+                        <FormControlLabel
+                            value="end"
+                            control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
+                            label="Add Another"
+                            labelPlacement="end"
+                        />
                     }
                     <Button
                         className={classes.button}
@@ -134,18 +135,21 @@ export const InventoryForm = (props) => {
 }
 
 
-const mapStateToProps = (state) => ({
-    inventoryList:state.inventory.results,
-    inventoryTypesList: state.inventoryTypes,
-    facilityList: state.shortFacilities,
-    count:state.inventory.count
-  });
-  
-  InventoryForm.propTypes = {
+const mapStateToProps = (state) => {
+    const { inventory, inventoryTypes, shortFacilities } = state;
+    return {
+        inventoryList: inventory.results,
+        inventoryTypesList: inventoryTypes,
+        facilityList: {...shortFacilities.results},
+        count: state.inventory.count
+    };
+};
+
+InventoryForm.propTypes = {
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
     facilityList: PropTypes.array.isRequired,
     createOrUpdateInventory: PropTypes.func.isRequired,
 };
-  
+
 export default connect(mapStateToProps, { createOrUpdateInventory })(InventoryForm);

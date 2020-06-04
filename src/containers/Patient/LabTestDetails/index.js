@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
 import {
@@ -6,18 +6,22 @@ import {
   Button,
   Card,
 } from '@material-ui/core';
-
+import { connect } from 'react-redux';
 import LabTestCard from 'Components/Cards/LabTestCard';
 import NullState from 'Components/NullState';
 import nullImage from 'Assets/images/lab-null.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
-
-export default function LabTestDetail(props) {
+import { getTestingLabList } from 'Actions/PatientsAction';
+export function LabTestDetail(props) {
   const { i18n } = useTranslation();
-  const { profile } = props;
+  const { profile, saveLabDetails, getTestingLabList, testingLabs } = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
+
+  // useEffect(() => {
+  //   getTestingLabList();
+  // },[testingLabs]);
   
   const edit = (id) => {
     setEditable(id);
@@ -64,6 +68,7 @@ export default function LabTestDetail(props) {
             <CreateUpdateForm
               handleSubmit={handleSubmit}
               cancelCallback={cancel}
+              saveLabDetails={saveLabDetails}
               editMode={false}
               details={{}}
             />
@@ -76,8 +81,10 @@ export default function LabTestDetail(props) {
                 editable === index ?
                 <CreateUpdateForm
                   handleSubmit={handleSubmit}
+                  saveLabDetails={saveLabDetails}
                   cancelCallback={cancel}
                   editMode={true}
+                  testingLabs={testingLabs}
                   details={test}
                 />
                 :
@@ -105,8 +112,17 @@ export default function LabTestDetail(props) {
 
 LabTestDetail.propTypes = {
   profile: PropTypes.array.isRequired,
+  testingLabs: PropTypes.array.isRequired,
+  getTestingLabList: PropTypes.func.isRequired,
 };
 
 LabTestDetail.defaultProps = {
   profile: []
 };
+
+const mapStateToProps = (state) => ({
+  testingLabs: state.testingLabs.results
+});
+
+
+export default connect(mapStateToProps, { getTestingLabList })(LabTestDetail);

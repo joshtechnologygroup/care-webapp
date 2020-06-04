@@ -6,14 +6,14 @@ import { PropTypes } from 'prop-types';
 import * as Yup from 'yup';
 
 export default function MedicationDetailForm(props) {
-  const { profile, handleSubmit, cancelCallback, editMode } = props;
+  const { profile, handleSubmit, cancelCallback, editMode, saveProfile } = props;
   const { i18n } = useTranslation();
   
   const validationSchema = Yup.object({
     covid_status: Yup.string().required(i18n.t('Please select COVID status')),
     clinical_status: Yup.number().required(i18n.t('Please select clinical status')),
     symptoms: Yup.array().of(Yup.number()).min(1, i18n.t('Please select atleast one symptom')),
-    nonCovidDiseases: Yup.array().of(Yup.number()),
+    diseases: Yup.array().of(Yup.number()),
   });
   const submit= (data) => {
     console.log("abc")
@@ -26,7 +26,7 @@ export default function MedicationDetailForm(props) {
       onSubmit={submit}
     >
       {
-        props => <Form {...props} cancelCallback={cancelCallback} editMode={editMode} />
+        props => <Form {...props} cancelCallback={cancelCallback} saveProfile={saveProfile} editMode={editMode} />
       }
     </Formik>
   );

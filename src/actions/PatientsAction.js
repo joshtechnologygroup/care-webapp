@@ -3,6 +3,7 @@ import * as Routes from 'Src/routes';
 import { GET, POST, PUT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
+import * as HttpStatus from 'http-status-codes'
 
 const getPatientList = (url, params = {}) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  params)
@@ -79,4 +80,63 @@ const getPatientDetailsDependencies = required_data => async (dispatch) => {
     return await dispatch(dispatchDependentActions(...required_data));
 };
 
-export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies }
+/**
+ * 
+ * @param {Object} lab_data 
+ */
+const createPatientSampleTest = lab_data => async (dispatch) => {
+    const patient_test_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_SAMPLE_TEST_URL, POST, lab_data, {})
+    return patient_test_response.ok;
+};
+
+/**
+ * fetch the list of all testing labs
+ */
+const getTestingLabList = () => async (dispatch) => {
+    const testing_lab_response = await CommonService.makeAuthorizedApiCall(Routes.GET_TESTING_LAB_LIST_URL, GET, {}, {})
+    dispatch(dispatchAction(ReducerTypes.GET_TESTING_LABS_LIST, testing_lab_response));
+};
+
+/**
+ * 
+ * @param {object} body: contains details of the portie calling 
+ * @param {number} portieId: portie calling id exist only for updating portie
+ */
+const createUpdatePortieDetails = (body, portieId = null) => async (dispatch) => {
+    let url = Routes.PORTIE_CALLING_URL;
+    let method = POST;
+    if(portieId) {
+        method = PUT;
+        url += `${portieId}/`;
+    }
+    const portie_response = await CommonService.makeAuthorizedApiCall(url, method, body, {})
+    if(portie_response.ok) {
+       return { status: true};
+    } else if (portie_response.status === HttpStatus.BAD_REQUEST) {
+        const data = await portie_response.json();
+        return { status: false, error:"dummy error generated in UI"};
+    }
+};
+
+/**
+ * 
+ * @param {object} body: details of the patient family member 
+ * @param {number} familyMemberId: id of the family member only if already created 
+ */
+const createUpdatePatientFamilyDetails = (body, familyMemberId = null) => async (dispatch) => {
+    let url = Routes.PATIENT_FAMILY_MEMBER_URL;
+    let method = POST;
+    if(familyMemberId) {
+        method = PUT;
+        url += `${familyMemberId}/`;
+    }
+    const family_member_response = await CommonService.makeAuthorizedApiCall(url, method, body, {})
+    if(family_member_response.ok) {
+       return { status: true};
+    } else if (family_member_response.status === HttpStatus.BAD_REQUEST) {
+        const data = await family_member_response.json();
+        return { status: false, error:"dummy error generated in UI"};
+    }
+};
+
+export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies, createPatientSampleTest, getTestingLabList, createUpdatePortieDetails, createUpdatePatientFamilyDetails };
