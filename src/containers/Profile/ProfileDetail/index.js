@@ -43,6 +43,8 @@ export default function ProfileDetail(props) {
   const { i18n } = useTranslation();
 
   const { profile, handleEdit, districtsList, shortFacilityList, userTypes } = props;
+  const userType = (!_.isEmpty(userTypes) && !_.isEmpty(profile)) ? userTypes.find(type => type.id === profile.user_type) : null;
+  
   return (
     <Card className={classes.root} elevation={4}>
       <CardHeader
@@ -60,9 +62,7 @@ export default function ProfileDetail(props) {
               {profile.name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-            {
-                !_.isEmpty(userTypes) && !_.isEmpty(profile) && 
-                userTypes.find(type => type.id === profile.user_type) && userTypes.find(type => type.id === profile.user_type).name}
+            {userType && userType.name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
               {i18n.t('Email')}: {profile.email}
