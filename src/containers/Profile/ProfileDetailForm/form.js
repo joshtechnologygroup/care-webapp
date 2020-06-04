@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -12,33 +12,35 @@ import {
 import Select from 'react-select';
 import { PropTypes } from 'prop-types';
 import useStyles from './styles';
+import { replaceIds } from "Src/utils/listFilter";
+import _ from "underscore";
 
 export default function Form(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
   const {
     values: {
-      phone,
-      districtPreference,
-      name
+      phone_number,
+      name,
+      preferred_districts
     },
     errors,
     touched,
     handleSubmit,
-    handleChange,
     setFieldTouched,
+    setFieldValue,
     editMode,
+    districtPreference,
+    handleCancel,
   } = props;
-  
+
   const change = (name, e) => {
-    handleChange(e);
-    setFieldTouched(e.target.name, true, false);
-  };
+    setFieldTouched(e.target.name);
+    setFieldValue(name, e.target.value);
+};
   
-  const changeSelect = (name, e) => {
-    // handleChange(e);
-    // setFieldTouched(e.target.name, true, false);
-    console.log('-----', name, e)
+  const changeSelect = (name, val) => {
+    setFieldValue(name, val.map(item => item.value));
   };
 
   return (
@@ -62,14 +64,14 @@ export default function Form(props) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="phone"
+              name="phone_number"
               type="number"
               label={i18n.t('Phone Number')}
               fullWidth
-              value={phone}
-              onChange={change.bind(null, 'phone')}
-              helperText={touched.phone ? errors.phone : ""}
-              error={touched.phone && Boolean(errors.phone)}
+              value={phone_number}
+              onChange={change.bind(null, 'phone_number')}
+              helperText={touched.phone ? errors.phone_number : ""}
+              error={touched.phone && Boolean(errors.phone_number)}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -78,8 +80,8 @@ export default function Form(props) {
                 options={districtPreference}
                 placeholder={i18n.t("Select District")}
                 isMulti
-                defaultValue={[districtPreference[0]]}
-                onChange={changeSelect.bind(null, "districtPreference")}
+                defaultValue={districtPreference}
+                onChange={(val) => changeSelect('preferred_districts_id', val)}
               />
           </Grid>
           {
@@ -94,6 +96,21 @@ export default function Form(props) {
                 className="btn py-5"
               >
                 {i18n.t('Submit')}
+              </Button>
+            </Grid>
+          }
+          {
+            editMode &&
+            <Grid item xs={12} sm={3} className="ml-auto">
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                disableElevation
+                className="btn py-5"
+                onClick={handleCancel}
+              >
+                {i18n.t('Cancel')}
               </Button>
             </Grid>
           }

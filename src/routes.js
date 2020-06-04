@@ -48,7 +48,7 @@ export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/';
 export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/';
 export const CREATE_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
 export const ADD_PATIENT_TRANSFER_URL = SERVER + API_V1 + 'patients/patient-transfer/';
-export const GET_SHORT_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/short/'
+export const GET_SHORT_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/patients-short/'
 
 //patient dependencies
 export const PATIENT_STATUS_LIST_URL = SERVER + API_V1 + 'patients/current-status/'

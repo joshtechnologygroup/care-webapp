@@ -1,4 +1,5 @@
 import * as Constants from "Constants/app.const";
+import _ from 'underscore';
 
 const getDictNameToId = list => {
     const listMap = {};
@@ -124,5 +125,11 @@ export const fillBooleanFilterOptions = (columnDefs, requiredLists) => {
 };
 
 export const replaceIds = (IdList, mapList) => {
-    return IdList.map(id => mapList.find(item => item.id === id).name)
+    return IdList && mapList ? IdList.map(id => {
+        const element = mapList.find(item => item.id == id)
+        return {
+            'value': element.id,
+            'label': element.name
+        }
+    }) : []
 }
