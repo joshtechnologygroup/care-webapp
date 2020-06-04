@@ -34,7 +34,7 @@ const Toaster = (props) => {
 
   return (
     <>
-      <div className={`toaster toaster--${position}`}>{toastList.length}
+      <div className={`toaster toaster--${position}`}>
         {
           toastList.map((toast, i) =>
             <Toast deteleCallback={deleteToast} key={i} toast={toast} />
