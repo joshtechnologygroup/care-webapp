@@ -4,6 +4,7 @@ import {
 } from 'Components/CellRenderer';
 
 import { GRID_CONFIG } from 'Constants/app.const';
+import {ActionRenderer} from "./ActionRenderer";
 
 
 export const CONFIG = {
@@ -19,7 +20,8 @@ export const CONFIG = {
       isSortable: true,
       filterType: 'boolean',
       options: []
-    }}
+    }},
+    { headerName: 'Action', maxWidth: 100, field: 'action', cellRenderer: 'actionRenderer' }
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,
@@ -36,5 +38,6 @@ export const CONFIG = {
   frameworkComponents: {
     downloadIconRenderer: DownloadIconRenderer,
     dateRenderer: DateRenderer,
+    actionRenderer: ActionRenderer,
   }
 };

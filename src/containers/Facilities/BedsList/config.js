@@ -3,7 +3,7 @@ import {
   DateRenderer
 } from 'Components/CellRenderer';
 
-import {ActionRenderer} from './ActionRenderer';
+import {ActionRenderer} from 'Containers/Facilities/DoctorAttendantList/ActionRenderer';
 
 import { GRID_CONFIG } from 'Constants/app.const';
 
