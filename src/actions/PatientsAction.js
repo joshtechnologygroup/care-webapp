@@ -4,6 +4,7 @@ import { GET, POST, PUT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 import * as HttpStatus from 'http-status-codes'
+import * as patientDetailsService from "Src/services/patientDetailsService";
 
 const getPatientList = (url, params = {}) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  params)
@@ -40,7 +41,7 @@ const getProfileDependencies = (params) => async (dispatch) => {
 };
 
 /**
- * 
+ * create patient object
  * @param {object} state: body of the patient object to be created 
  */
 const createPatient = state => async (dispatch) => {
@@ -61,7 +62,7 @@ const fetchPatient = id => async (dispatch) => {
 }
 
 /**
- * 
+ * update the patient details 
  * @param {object} body: body of the patient details
  * @param {number} id: patient id required to update the patient details
  */
@@ -73,7 +74,7 @@ const updatePatientDetails = (body, id) => async (dispatch) => {
 }
 
 /**
- * 
+ * fetch the dependencies required for patient details
  * @param {list} required_data: contains the list for route with reducer types
  */
 const getPatientDetailsDependencies = required_data => async (dispatch) => {
@@ -81,8 +82,8 @@ const getPatientDetailsDependencies = required_data => async (dispatch) => {
 };
 
 /**
- * 
- * @param {Object} lab_data 
+ * create patient sample test associated with the patient
+ * @param {Object} lab_data: data of the sample test to be created of patient
  */
 const createPatientSampleTest = lab_data => async (dispatch) => {
     const patient_test_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_SAMPLE_TEST_URL, POST, lab_data, {})
@@ -98,18 +99,12 @@ const getTestingLabList = () => async (dispatch) => {
 };
 
 /**
- * 
+ * create or update the portie details associated with patient
  * @param {object} body: contains details of the portie calling 
  * @param {number} portieId: portie calling id exist only for updating portie
  */
 const createUpdatePortieDetails = (body, portieId = null) => async (dispatch) => {
-    let url = Routes.PORTIE_CALLING_URL;
-    let method = POST;
-    if(portieId) {
-        method = PUT;
-        url += `${portieId}/`;
-    }
-    const portie_response = await CommonService.makeAuthorizedApiCall(url, method, body, {})
+    const portie_response = await patientDetailsService.makeAuthorizedPatientDetailsApiCall(body, portieId)
     if(portie_response.ok) {
        return { status: true};
     } else if (portie_response.status === HttpStatus.BAD_REQUEST) {
@@ -119,18 +114,12 @@ const createUpdatePortieDetails = (body, portieId = null) => async (dispatch) =>
 };
 
 /**
- * 
+ * create or update the patient family member
  * @param {object} body: details of the patient family member 
  * @param {number} familyMemberId: id of the family member only if already created 
  */
 const createUpdatePatientFamilyDetails = (body, familyMemberId = null) => async (dispatch) => {
-    let url = Routes.PATIENT_FAMILY_MEMBER_URL;
-    let method = POST;
-    if(familyMemberId) {
-        method = PUT;
-        url += `${familyMemberId}/`;
-    }
-    const family_member_response = await CommonService.makeAuthorizedApiCall(url, method, body, {})
+    const family_member_response = await patientDetailsService.makeAuthorizedPatientDetailsApiCall(body, familyMemberId)
     if(family_member_response.ok) {
        return { status: true};
     } else if (family_member_response.status === HttpStatus.BAD_REQUEST) {
