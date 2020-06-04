@@ -5,11 +5,11 @@ import ProfileDetailForm from 'Containers/Profile/ProfileDetailForm';
 import ChangePassword from 'Containers/Profile/ChangePassword';
 
 // Importing mock data: Please remove upon integration
-import { profileDetails } from 'Mockdata/profileDetails.json';
 import _ from "underscore";
 import { connect } from 'react-redux';
-import { getUserProfile } from "Actions/UserProfileAction";
+import { getUserProfile, updateUserProfile, setUpdateProfileApiStatus } from "Actions/UserProfileAction";
 import { getProfileDependencies } from '../actions/FacilitiesAction';
+import { createToastNotification } from 'Actions/ToastAction';
 
 class Profile extends Component {
     constructor(props) {
@@ -33,6 +33,20 @@ class Profile extends Component {
         }
         this.props.fetchUserProfile();
     }
+    componentDidUpdate(prevProps) {
+        if(this.props.profile.apiSuccess) {
+            this.props.addToastNotification({
+                id: 1, 
+                title: "Toast title", 
+                desc: "Your action has been successfully committed.", 
+                severity: 'success'
+            })
+            this.props.setApiStatus({
+                apiSuccess: null,
+                update_profile_errors: {}
+            });
+        }
+    }
     setEditable = (key, value) => {
         this.setState({
             isEditing: {
@@ -52,6 +66,7 @@ class Profile extends Component {
                 [key]: false
             }
         })
+        this.props.updateProfile(data);
     }
     render() {
         const { formList, isEditing } = this.state;
@@ -63,9 +78,11 @@ class Profile extends Component {
                     {
                         isEditing[formList[0]] ?
                             <ProfileDetailForm
+                                districtsList={districtsList}
                                 profile={profile}
                                 handleSubmit={(data) => this.onSubmit(data, formList[0])}
                                 editMode={true}
+                                handleCancel={() => this.setEditable(formList[0], false)}
                             /> :
                             <ProfileDetail
                                 shortFacilityList={shortFacilityList}
@@ -75,7 +92,11 @@ class Profile extends Component {
                                 handleEdit={() => this.setEditable(formList[0], true)}
                             />
                     }
-                    <ChangePassword />
+                    <ChangePassword handleSubmit={
+                        (data) => {
+                            this.props.updateProfile(data)
+                        }
+                    } changePasswordErrors={profile.update_profile_errors} apiSuccess={profile.apiSuccess}/>
                 </div>
             </div>
         );
@@ -92,7 +113,8 @@ const mapStateToProps = (state) => {
         profile: profile,
         shortFacilityList: shortFacilityList,
         districtsList: districts.results,
-        userTypes: userTypes.results
+        userTypes: userTypes.results,
+        addToastNotification: state.addToastNotification
     }
 }
 
@@ -104,6 +126,13 @@ const mapDispatchToProps = dispatch => {
         fetchProfileDependencies: params => {
             dispatch(getProfileDependencies(params));
         },
+        updateProfile: params => {
+            dispatch(updateUserProfile(params));
+        },
+        setApiStatus: (data) => {
+            dispatch(setUpdateProfileApiStatus(data));
+        },
+        addToastNotification: (data) => { dispatch(createToastNotification(data)) }
     };
 };
   

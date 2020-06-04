@@ -55,7 +55,7 @@ const PatientTransferForm = (props) => {
                         validationSchema={validationSchema}
                         onSubmit={submit}>
                         {
-                            props => <Form {...props} addTransferErrors={addTransferErrors}/>
+                            props => <Form {...props} addTransferErrors={addTransferErrors} clearPatient={clearPatient}/>
                         }
                     </Formik>
                 </Grid>

@@ -48,7 +48,7 @@ export default function Form(props) {
         <Grid item sm={12} xs={12}>
             <Select
                 options={statusChoices}
-                defaultValue={statusChoices.find(choice => choice.value == initialValues.status)}
+                defaultValue={statusChoices.find(choice => choice.value === initialValues.status)}
                 name="status"
                 onChange={(val) => setFieldValue('status', val.value)}
                 error={update_transfer_errors && update_transfer_errors.status}

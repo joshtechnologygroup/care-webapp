@@ -16,15 +16,9 @@ import { connect } from 'react-redux';
 import _ from 'underscore'
 import * as CommonService from "Src/utils/services";
 import { GET } from "Src/constants";
-import { GET_SHORT_PATIENT_LIST_URL, GET_PATIENT_URL } from 'Src/routes';
+import { GET_SHORT_PATIENT_LIST_URL } from 'Src/routes';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { fetchPatient } from 'Actions/PatientsAction';
-
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
 
 export function Form(props) {
     const classes = useStyles();
@@ -37,6 +31,7 @@ export function Form(props) {
         errors,
         patient,
         getPatient,
+        clearPatient,
       } = props;
     const { i18n } = useTranslation();
     const [inputValue, setInputValue] = useState("");
@@ -53,7 +48,7 @@ export function Form(props) {
     }
 
     const filterPatients = async (inputValue) => {
-        const url = selectedFacility ? `${GET_PATIENT_URL}?limit=3&offset=0&name=${inputValue}&from_facility=${selectedFacility}` : `${GET_PATIENT_URL}?limit=3&offset=0&name=${inputValue}`
+        const url = selectedFacility ? `${GET_SHORT_PATIENT_LIST_URL}?limit=3&offset=0&name=${inputValue}&from_facility=${selectedFacility}` : `${GET_SHORT_PATIENT_LIST_URL}?limit=3&offset=0&name=${inputValue}`
         const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  {})
         const jsonResponse = await response.json();
         return jsonResponse.results;
@@ -102,6 +97,7 @@ export function Form(props) {
                         onChange={(val) => {
                             setFieldValue('from_facility', val.value);
                             setSelectedFacility(val.value);
+                            clearPatient();
                         }}
                         error={errors.from_facility}
                     />
@@ -115,7 +111,6 @@ export function Form(props) {
                 <Grid item sm={12} xs={12}>
                     <label className={classes.label}>{i18n.t('Patient')}</label>
                     <AsyncSelect
-                        cacheOptions
                         loadOptions={loadOptions}
                         defaultOptions={[{}]}
                         onInputChange={handleInputChange}
