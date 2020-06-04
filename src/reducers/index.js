@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { user, profile } from "Reducers/UserReducer";
-import { 
+import { toasts } from "Reducers/ToastReducer"
+import {
     patients, 
     clinicalStatus, 
     clusterGroup, 
@@ -54,5 +55,6 @@ export default combineReducers({
     localBody,
     facilityAdminstrators,
     profile,
-    userTypes
+    userTypes,
+    toasts,
 });
