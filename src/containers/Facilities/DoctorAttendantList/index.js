@@ -46,7 +46,7 @@ export function DoctorAttendantList(props) {
       ]
     ];
     const requiredDependencies = {
-      'facilities':[Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST ],
+      'facilities':[Routes.FACILITY_SHORT_LIST_URL, ReducerTypes.GET_SHORT_FACILITY_LIST ],
       'staffDesignationList':[Routes.STAFF_DESIGNATION_LIST_URL, ReducerTypes.GET_STAFF_DESIGNATION_LIST ],
     };
 
@@ -243,20 +243,20 @@ const mapStateToProps = (state) => ({
   nextPage: state.facilityStaff.next,
   prevPage: state.facilityStaff.previous,
   bedTypeList: state.bedType.results,
-  facilities: state.facilities.results,
+  facilities: state.shortFacilities.results,
   facilityStaffList: state.facilityStaff.results,
   staffDesignationList: state.staffDesignation.results
 });
 
 DoctorAttendantList.propTypes = {
-  facilityStaffList: PropTypes.array.isRequired,
-  staffDesignationList: PropTypes.array.isRequired,
-  count: PropTypes.number.isRequired,
-  nextPage: PropTypes.object.isRequired,
-  prevPage: PropTypes.object.isRequired,
-  facilities: PropTypes.array.isRequired,
-  getsFacilityStaffListDependencies: PropTypes.func.isRequired,
-  getStaffList: PropTypes.func.isRequired
+  facilityStaffList: PropTypes.array,
+  staffDesignationList: PropTypes.array,
+  count: PropTypes.number,
+  nextPage: PropTypes.object,
+  prevPage: PropTypes.object,
+  facilities: PropTypes.array,
+  getsFacilityStaffListDependencies: PropTypes.func,
+  getStaffList: PropTypes.func
 };
 
 export default connect(mapStateToProps, { getsFacilityStaffListDependencies, getStaffList })(DoctorAttendantList);

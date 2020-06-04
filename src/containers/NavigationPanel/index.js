@@ -150,7 +150,7 @@ export function NavigationPanel(props) {
             </Link>
           </li>
           <li className={getActivatedRoute('/logout') ? 'active' : ''}>
-            <Link to={'/login'} className="nav-link" onClick={() => props.logout()}>
+            <Link to={'/login'} className="nav-link" onClick={async () => await props.logout()}>
               <ExitToApp   />
               {i18n.t('Logout')}
             </Link>
