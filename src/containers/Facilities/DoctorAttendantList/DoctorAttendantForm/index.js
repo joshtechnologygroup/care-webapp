@@ -17,7 +17,9 @@ import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
 import {FACILITY_STAFF_UPDATE_URL, FACILITY_STAFF_CREATE_URL} from 'Src/routes';
 import * as StringUtils from 'Src/utils/stringformatting';
+import * as ToastUtils from 'Src/utils/toast';
 import {createToastNotification} from 'Actions/ToastAction';
+import {SUCCESS} from "Src/constants";
 
 export const DoctorAttendantForm = (props) => {
   const classes = useStyles();
@@ -75,21 +77,9 @@ export const DoctorAttendantForm = (props) => {
     let url = updateOperation ? StringUtils.formatVarString(FACILITY_STAFF_UPDATE_URL, [data.id]) : FACILITY_STAFF_CREATE_URL;
     const response = await props.updateCreateStaffList(url, updatedData, (updateOperation) ? PATCH : POST);
     if (response.status) {
-      if (updateOperation) {
-        props.createToastNotification({
-          id: 1,
-          title: "Updated",
-          desc: "Successfully updated " + updatedData.name,
-          severity: 'success'
-        });
-      } else {
-        props.createToastNotification({
-          id: 1,
-          title: "Created",
-          desc: "Successfully Added " + updatedData.name,
-          severity: 'success'
-        });
-      }
+      (updateOperation) ?
+        props.createToastNotification(ToastUtils.toastDict(1, "Updated", "Successfully updated " + updatedData.name, SUCCESS)) :
+        props.createToastNotification(ToastUtils.toastDict(1, "Created", "Successfully Added " + updatedData.name, SUCCESS))
       if (!isAddAnother) {
         onClose();
       }
