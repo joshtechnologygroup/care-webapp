@@ -2,7 +2,7 @@ import React from 'react';
 import AgProvider from 'Containers/AgProvider';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-import BedsForm from 'Containers/BedsForm';
+import DoctorAttendantForm from 'Containers/Facilities/DoctorAttendantList/DoctorAttendantForm';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -24,7 +24,7 @@ export const ActionRenderer = (item) => {
           <EditIcon color="primary" />
         </IconButton>
       </div>
-      <BedsForm data={data} open={open} onClose={handleClose} />
+      <DoctorAttendantForm data={data} open={open} onClose={handleClose} updateOperation={true} />
     </AgProvider>
   );
 };

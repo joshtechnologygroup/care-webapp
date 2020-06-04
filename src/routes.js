@@ -24,6 +24,8 @@ export const ROOM_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/room-type/';
 export const BED_TYPES_LIST_URL = SERVER + API_V1 + 'facilities/bed-type/';
 export const FACILITY_SHORT_LIST_URL = SERVER + API_V1 + 'facilities/facility/short/';
 export const FACILITY_STAFF_LIST_URL = SERVER + API_V1 + 'facilities/staffs/?limit={0}&offset={1}';
+export const FACILITY_STAFF_UPDATE_URL = SERVER + API_V1 + 'facilities/staffs/{0}/';
+export const FACILITY_STAFF_CREATE_URL = SERVER + API_V1 + 'facilities/staffs/';
 export const STAFF_DESIGNATION_LIST_URL = SERVER + API_V1 + 'facilities/staff-designation';
 export const FACILITY_ADMINSTRATORS_LIST_URL = SERVER + API_V1 + 'facilities/facility/{0}/managers'
 

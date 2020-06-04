@@ -5,6 +5,12 @@ export const PATCH = 'PATCH';
 export const PUT = 'PUT';
 export const GET = 'GET';
 
+// Severity
+export const SUCCESS = 'success';
+export const DANGER = 'danger';
+export const WARNING = 'warning';
+export const INFO = 'info';
+
 export const TOKEN = 'Token';
 export const USER_ID = 'user-id';
 export const APPLICATION_JSON = 'application/json';
