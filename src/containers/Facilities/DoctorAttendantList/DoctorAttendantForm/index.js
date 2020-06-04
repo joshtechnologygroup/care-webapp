@@ -17,6 +17,7 @@ import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
 import {FACILITY_STAFF_UPDATE_URL, FACILITY_STAFF_CREATE_URL} from 'Src/routes';
 import * as StringUtils from 'Src/utils/stringformatting';
+import {createToastNotification} from 'Actions/ToastAction';
 
 export const DoctorAttendantForm = (props) => {
   const classes = useStyles();
@@ -74,6 +75,21 @@ export const DoctorAttendantForm = (props) => {
     let url = updateOperation ? StringUtils.formatVarString(FACILITY_STAFF_UPDATE_URL, [data.id]) : FACILITY_STAFF_CREATE_URL;
     const response = await props.updateCreateStaffList(url, updatedData, (updateOperation) ? PATCH : POST);
     if (response.status) {
+      if (updateOperation) {
+        props.createToastNotification({
+          id: 1,
+          title: "Updated",
+          desc: "Successfully updated " + updatedData.name,
+          severity: 'success'
+        });
+      } else {
+        props.createToastNotification({
+          id: 1,
+          title: "Created",
+          desc: "Successfully Added " + updatedData.name,
+          severity: 'success'
+        });
+      }
       if (!isAddAnother) {
         onClose();
       }
@@ -129,10 +145,10 @@ export const DoctorAttendantForm = (props) => {
           </Formik>
         </Grid>
         <Grid item xs={12}>
-          { error &&
-            <FormControl component="fieldset" error={true}>
-              <FormHelperText className={classes.error}>{errors.detail}</FormHelperText>
-            </FormControl>
+          {error &&
+          <FormControl component="fieldset" error={true}>
+            <FormHelperText className={classes.error}>{errors.detail}</FormHelperText>
+          </FormControl>
           }
         </Grid>
         <Grid item xs={12}>
@@ -173,7 +189,8 @@ const mapStateToProps = (state) => ({
 DoctorAttendantForm.propTypes = {
   updateCreateStaffList: PropTypes.func,
   facilityList: PropTypes.array,
-  designationList: PropTypes.array
+  designationList: PropTypes.array,
+  createToastNotification: PropTypes.func
 };
 
-export default connect(mapStateToProps, {updateCreateStaffList})(DoctorAttendantForm);
+export default connect(mapStateToProps, {updateCreateStaffList, createToastNotification})(DoctorAttendantForm);
