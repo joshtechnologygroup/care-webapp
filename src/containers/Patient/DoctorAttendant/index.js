@@ -10,7 +10,6 @@ import {
 import DoctorCard from 'Components/Cards/DoctorCard';
 import NullState from 'Components/NullState';
 import imgNull from 'Assets/images/doctor-attendant.jpg';
-import nullImage from 'Assets/images/family-null.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 
 export default function DoctorAttendant(props) {
@@ -55,7 +54,7 @@ export default function DoctorAttendant(props) {
           className="btn"
           onClick={add}
         >
-          + {i18n.t('Add doctor/attendant')}
+          + {i18n.t('Add Doctor/Attendant')}
         </Button>
       </div>
       <Grid container spacing={1}>

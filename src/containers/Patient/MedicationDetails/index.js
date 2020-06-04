@@ -28,7 +28,7 @@ export default function MedicationDetail(props) {
 
   const handleSubmit = (data) => {
     cancelEdit();
-    profile = data;
+    console.log('Data', data);
   };
 
   return (
@@ -54,7 +54,7 @@ export default function MedicationDetail(props) {
             <Grid container>
               {
                 editable ?
-                <MedicationUpdateForm editMode={true} handleSubmit={handleSubmit} cancelCallback={cancelEdit} profile={profile} />
+                <MedicationUpdateForm editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} cancelCallback={cancelEdit} profile={profile} />
                 :
                 <MedicationDetailView profile={profile} />
               }

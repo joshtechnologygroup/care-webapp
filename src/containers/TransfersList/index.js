@@ -236,7 +236,7 @@ export function TransfersList(props) {
                     <Grid item xs={12} sm={5}>
                         <PaginationController
                             resultsShown={Math.ceil(
-                                (offset + transferList.length) / itemsPerPage
+                                (offset + itemsPerPage) / itemsPerPage
                             )}
                             totalResults={Math.ceil(count / itemsPerPage)}
                             onFirst={() => {

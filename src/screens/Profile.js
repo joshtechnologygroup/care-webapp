@@ -6,6 +6,10 @@ import ChangePassword from 'Containers/Profile/ChangePassword';
 
 // Importing mock data: Please remove upon integration
 import { profileDetails } from 'Mockdata/profileDetails.json';
+import _ from "underscore";
+import { connect } from 'react-redux';
+import { getUserProfile } from "Actions/UserProfileAction";
+import { getProfileDependencies } from '../actions/FacilitiesAction';
 
 class Profile extends Component {
     constructor(props) {
@@ -19,9 +23,15 @@ class Profile extends Component {
                 personal: false,
                 contact: false
             },
-            profile: profileDetails
+            profile: props.profile
         }
         this.setEditable = this.setEditable.bind(this);
+    }
+    componentDidMount(){
+        if(!this.props.districtsList || !this.props.shortFacility) {
+            this.props.fetchProfileDependencies();
+        }
+        this.props.fetchUserProfile();
     }
     setEditable = (key, value) => {
         this.setState({
@@ -32,7 +42,6 @@ class Profile extends Component {
         });
     }
     onSubmit = (data, key) => {
-        console.log("submit", key, data);
         this.setState({
             profile: {
                 ...this.state.profile,
@@ -45,8 +54,8 @@ class Profile extends Component {
         })
     }
     render() {
-        const { formList, isEditing, profile } = this.state;
-        const { t } = this.props;
+        const { formList, isEditing } = this.state;
+        const { t, profile, shortFacilityList, districtsList, userTypes } = this.props;
         return (
             <div>
                 <h2 className="page-header header-container">{t('Profile')}</h2>
@@ -54,12 +63,15 @@ class Profile extends Component {
                     {
                         isEditing[formList[0]] ?
                             <ProfileDetailForm
-                                profile={profile.contact}
+                                profile={profile}
                                 handleSubmit={(data) => this.onSubmit(data, formList[0])}
                                 editMode={true}
                             /> :
                             <ProfileDetail
-                                profile={profile.contact}
+                                shortFacilityList={shortFacilityList}
+                                districtsList={districtsList}
+                                userTypes={userTypes}
+                                profile={profile}
                                 handleEdit={() => this.setEditable(formList[0], true)}
                             />
                     }
@@ -70,4 +82,29 @@ class Profile extends Component {
     }
 }
 
-export default withTranslation()(Profile);
+const mapStateToProps = (state) => {
+    const { profile, shortFacilities, districts, userTypes } = state
+    const shortFacilityList = [];
+    Object.keys(shortFacilities).map((facility, index) => {
+        shortFacilityList.push(shortFacilities[facility])
+    })
+    return {
+        profile: profile,
+        shortFacilityList: shortFacilityList,
+        districtsList: districts.results,
+        userTypes: userTypes.results
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchUserProfile: () => {
+            dispatch(getUserProfile());
+        },
+        fetchProfileDependencies: params => {
+            dispatch(getProfileDependencies(params));
+        },
+    };
+};
+  
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation() (Profile));

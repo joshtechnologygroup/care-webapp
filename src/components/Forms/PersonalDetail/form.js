@@ -126,6 +126,10 @@ export default function Form(props) {
   };
   return (
   <form onSubmit={handleSubmit}>
+    <div className="section-header mt-0">
+      <h4 className="heading--card">{i18n.t('Personal Details')}</h4>
+    </div>
+
     <Card className={classes.root} elevation={4}>
       <CardContent>
         <Grid container spacing={4}>
@@ -182,7 +186,7 @@ export default function Form(props) {
                   required
                 />
               </Grid>
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   name="icmr_id"
                   label={i18n.t('ICMR ID')}
@@ -193,7 +197,7 @@ export default function Form(props) {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   name="govt_id"
                   label={i18n.t('Govt ID')}
@@ -245,7 +249,7 @@ export default function Form(props) {
               }
             </TextField>
           </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={6}>
             <TextField
               select
               name="cluster_group"

@@ -37,6 +37,7 @@ const login = (email, password) => async (dispatch) => {
     const data = await response.json();
     if (response.status === HttpStatus.OK) {
         CookieService.setTokenCookie(data.token);
+        CookieService.setUserId(data.id);
         dispatch({
             type: SET_USER,
             data: data

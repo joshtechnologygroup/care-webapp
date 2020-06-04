@@ -123,11 +123,12 @@ function AddPatient(props) {
             handleError={handleError}
           />
           <MedicationDetails
+            editMode={true}
             profile={profile[formList[2]]}
           />
-          <DoctorAttendant
+          {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}
-          />
+          /> */}
           <FacilityDetails
             profile={profile[formList[3]]}
           />

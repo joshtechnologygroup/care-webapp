@@ -121,7 +121,15 @@ export const booleanStatuses = {
     {
       value: 2,
       name: 'Negative'
-    }
+    },
+    {
+      value: 3,
+      name: 'Result awaited'
+    },
+    {
+      value: 4,
+      name: 'Not tested Yet'
+    },
   ]
 }
 

@@ -2,19 +2,35 @@
   "clinicalStatusChoices": [
     {
       "id": 1,
-      "name": "Low"
+      "name": "Asymptomatic"
     },
     {
       "id": 2,
-      "name": "Mild"
+      "name": "Mild symptoms"
     },
     {
       "id": 3,
-      "name": "High"
+      "name": "severe symptoms"
     },
     {
       "id": 4,
-      "name": "Risk"
+      "name": "inward without oxygen"
+    },
+    {
+      "id": 5,
+      "name": "inward with oxygen"
+    },
+    {
+      "id": 6,
+      "name": "ICU without ventilator"
+    },
+    {
+      "id": 7,
+      "name": "ICU with ventilator"
+    },
+    {
+      "id": 8,
+      "name": "Other"
     }
   ]
 }

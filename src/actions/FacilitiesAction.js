@@ -46,6 +46,18 @@ const getTransferDependencies = (params) => async (dispatch) => {
     ));
 };
 
+const getProfileDependencies = (params) => async (dispatch) => {
+    dispatch(dispatchDependentActions(
+        [
+            [Routes.FACILITY_SHORT_LIST_URL, GET, {}, params],
+            [Routes.DISTRICT_LIST_URL, GET, {}, params],
+            [Routes.USER_TYPE_URL, GET, {}, params],
+        ],
+        [ReducerTypes.GET_SHORT_FACILITY_LIST, ReducerTypes.GET_DISTRICT_LIST, ReducerTypes.USER_TYPE_LIST]
+    ));
+};
+
+
 /**
  * Creating or Updating the Inventory 
  * @param {object} state: Body of inventory object
@@ -73,4 +85,4 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     }
 };
 
-export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies }
+export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies, getProfileDependencies }

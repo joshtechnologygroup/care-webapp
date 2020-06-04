@@ -4,7 +4,7 @@ import {
 } from 'Components/CellRenderer';
 
 import { GRID_CONFIG } from 'Constants/app.const';
-import {ActionRenderer} from "./ActionRenderer";
+import {ActionRenderer} from './ActionRenderer';
 
 
 export const CONFIG = {

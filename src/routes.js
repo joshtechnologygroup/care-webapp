@@ -10,6 +10,8 @@ export const DISTRICT_LIST_URL = SERVER + API_V1 + 'accounts/districts/';
 export const CITIES_LIST_URL = SERVER + API_V1 + 'accounts/cities/';
 export const STATE_LIST_URL = SERVER + API_V1 + 'accounts/states/'
 export const LOCAL_BODY_URL = SERVER + API_V1 + 'accounts/local-body/'
+export const USER_PROFILE_URL = SERVER + API_V1 + 'accounts/users/';
+export const USER_TYPE_URL = SERVER + API_V1 + 'accounts/user-types/';
 
 // Facilities
 export const FACILITY_LIST_URL = SERVER + API_V1 + 'facilities/facility';
@@ -45,6 +47,8 @@ export const GET_PATIENT_URL = SERVER + API_V1 + 'patients/'
 export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/';
 export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/';
 export const CREATE_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/'
+export const ADD_PATIENT_TRANSFER_URL = SERVER + API_V1 + 'patients/patient-transfer/';
+export const GET_SHORT_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/short/'
 
 //patient dependencies
 export const PATIENT_STATUS_LIST_URL = SERVER + API_V1 + 'patients/current-status/'

@@ -30,6 +30,7 @@ import ErrorPage from 'Screens/ErrorPage';
 import NavigationPanel from 'Containers/NavigationPanel';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from 'Assets/images/logo.svg';
+import Toaster from 'Components/Toaster';
 
 function Home() {
   const [open, setOpen] = React.useState(false);
@@ -87,6 +88,7 @@ function Home() {
                     </Switch>
                 </Grid>
             </Grid>
+            <Toaster />
         </React.Fragment>
     );
 }

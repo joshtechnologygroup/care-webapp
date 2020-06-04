@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import Form from './form';
 import { PropTypes } from 'prop-types';
@@ -6,18 +7,18 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { getProfileDependencies } from 'Actions/PatientsAction';
 export function PersonalDetailForm(props) {
-
+  const { i18n } = useTranslation();
   const { profile, editMode, handleSave, handleError, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus, medicationDetails } = props;
   const validationSchema = Yup.object({
-    name: Yup.string("Please enter name").required('Patient Name is required'),
-    month: Yup.number("Please enter months").required('Months is required').max(12, "Max value for months is 12"),
-    year: Yup.number("Please enter years").required('Years is required').min(0, "Invalid value for age"),
-    gender: Yup.number("Please enter gender").required('Gender is required'),
-    icmr_id: Yup.string("Please enter ICMR ID"),
-    govt_id: Yup.string("Please enter Govt. ID").required('Govt ID is required'),
-    cluster_group: Yup.number("Please enter Cluster group"),
-    clinical_status: Yup.string("Please enter clinical status").required('Clinical status is required'),
-    covid_status:  Yup.string("Please enter covid status").required('covid status is required'),
+    name: Yup.string().required(i18n.t('Please enter Patient Name')),
+    month: Yup.number().required(i18n.t('Please enter age in months')).max(11, i18n.t('Max value for months is 11')),
+    year: Yup.number().required(i18n.t('Please enter age in years')).min(0, i18n.t('Invalid value for age')),
+    gender: Yup.number(i18n.t('Please enter gender')).required(i18n.t('Gender is required')),
+    icmr_id: Yup.string().required(i18n.t('Please enter ICMR ID')),
+    govt_id: Yup.string().required(i18n.t('Please enter Govt ID')),
+    cluster_group: Yup.number().required(i18n.t('Please select Cluster group')),
+    clinical_status: Yup.string().required(i18n.t('Please select clinical status')),
+    covid_status: Yup.string().required(i18n.t('Please select COVID status')),
   });
 
   const submit= (data) => {

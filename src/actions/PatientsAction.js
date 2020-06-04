@@ -71,5 +71,12 @@ const updatePatientDetails = (body, id) => async (dispatch) => {
     }
 }
 
+/**
+ * 
+ * @param {list} required_data: contains the list for route with reducer types
+ */
+const getPatientDetailsDependencies = required_data => async (dispatch) => {
+    return await dispatch(dispatchDependentActions(...required_data));
+};
 
-export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails }
+export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies }

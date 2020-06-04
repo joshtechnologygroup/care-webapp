@@ -80,7 +80,7 @@ export const BedsWardsForm = (props) => {
   ]);
 
   const handleChange = (name, e) => {
-    if ((typeof e) === (typeof {})) {
+    if ((typeof e) === 'object') {
       selectedData[name] = e.value;
     } else {
       selectedData[name] = e;
