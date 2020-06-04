@@ -175,7 +175,7 @@ Form.defaultProps = {
 const mapStateToProps = (state) => ({
     inventoryList:state.inventory.results,
     inventoryTypesList: state.inventoryTypes.results,
-    facilityList: state.shortFacilities,
+    facilityList: state.shortFacilities.results,
     count:state.inventory.count,
     patient: state.patient
 });

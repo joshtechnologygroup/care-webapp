@@ -191,9 +191,10 @@ export function TransfersList(props) {
                                 [field]: value
                             })
                         }}
-                        handleApplyFilter={() =>
-                        { applyFilter();}
-                        }
+                        handleApplyFilter={() => { 
+                            applyFilter();
+                            setShowOverlay(false);
+                        }}
                         handleBooleanCallBack={val =>
                             handleBooleanCallBack(val)
                         }

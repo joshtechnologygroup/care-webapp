@@ -37,8 +37,8 @@ class Profile extends Component {
         if(this.props.profile.apiSuccess) {
             this.props.addToastNotification({
                 id: 1, 
-                title: "Toast title", 
-                desc: "Your action has been successfully committed.", 
+                title: "Profile Updated", 
+                desc: "Your Profile has been successfully updated.", 
                 severity: 'success'
             })
             this.props.setApiStatus({
