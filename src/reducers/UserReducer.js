@@ -3,7 +3,7 @@ import {
     CLEAR_USER,
     GET_USER_PROFILE,
 } from 'Reducers/Types';
-import { UPDATE_USER_PROFILE_ERROR, SET_UPATE_USER_PROFILE_API_STATE } from './Types';
+import { UPDATE_USER_PROFILE_ERROR, SET_UPATE_USER_PROFILE_API_STATE, UPDATE_USER_PROFILE } from './Types';
 
 const initialState = {
   id: null
@@ -29,6 +29,11 @@ const profile = (state = {apiSuccess: null}, action) => {
     switch (action.type) {
 
         case GET_USER_PROFILE:
+            return { 
+                ...state,
+                ...action.data,
+            };
+        case UPDATE_USER_PROFILE:
             return { 
                 ...state,
                 ...action.data,

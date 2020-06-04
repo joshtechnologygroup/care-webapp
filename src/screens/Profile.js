@@ -9,6 +9,7 @@ import _ from "underscore";
 import { connect } from 'react-redux';
 import { getUserProfile, updateUserProfile, setUpdateProfileApiStatus } from "Actions/UserProfileAction";
 import { getProfileDependencies } from '../actions/FacilitiesAction';
+import { createToastNotification } from 'Actions/ToastAction';
 
 class Profile extends Component {
     constructor(props) {
@@ -34,7 +35,12 @@ class Profile extends Component {
     }
     componentDidUpdate(prevProps) {
         if(this.props.profile.apiSuccess) {
-            alert('Successfully Updated');
+            this.props.addToastNotification({
+                id: 1, 
+                title: "Toast title", 
+                desc: "Your action has been successfully committed.", 
+                severity: 'success'
+            })
             this.props.setApiStatus({
                 apiSuccess: null,
                 update_profile_errors: {}
@@ -107,7 +113,8 @@ const mapStateToProps = (state) => {
         profile: profile,
         shortFacilityList: shortFacilityList,
         districtsList: districts.results,
-        userTypes: userTypes.results
+        userTypes: userTypes.results,
+        addToastNotification: state.addToastNotification
     }
 }
 
@@ -125,6 +132,7 @@ const mapDispatchToProps = dispatch => {
         setApiStatus: (data) => {
             dispatch(setUpdateProfileApiStatus(data));
         },
+        addToastNotification: (data) => { dispatch(createToastNotification(data)) }
     };
 };
   

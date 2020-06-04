@@ -77,7 +77,7 @@ export default function ProfileDetail(props) {
             </Typography>
             <Grid container spacing={1}>
               {
-                !_.isEmpty(profile) && !_.isEmpty(districtsList) && replaceIds(profile.preferred_districts, districtsList).map((district) => (
+                profile && districtsList && replaceIds(profile.preferred_districts, districtsList).map((district) => (
                   <Grid item ><Chip variant="outlined" size="small" label={district.label} color="primary" /></Grid>
                 ))
               }
@@ -87,7 +87,7 @@ export default function ProfileDetail(props) {
             </Typography>
             <Grid container spacing={1}>
               {
-                !_.isEmpty(profile) && !_.isEmpty(shortFacilityList) && replaceIds(profile.associated_facilities, shortFacilityList).map((facility) => (
+                profile && shortFacilityList && replaceIds(profile.associated_facilities, shortFacilityList[0]).map((facility) => (
                   <Grid item ><Chip variant="outlined" size="small" label={facility.label} color="primary" /></Grid>
                 ))
               }
