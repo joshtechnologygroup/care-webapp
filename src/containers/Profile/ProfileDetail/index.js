@@ -43,7 +43,6 @@ export default function ProfileDetail(props) {
   const { i18n } = useTranslation();
 
   const { profile, handleEdit, districtsList, shortFacilityList, userTypes } = props;
-  console.log(userTypes, profile.user_type);
   return (
     <Card className={classes.root} elevation={4}>
       <CardHeader
@@ -61,7 +60,9 @@ export default function ProfileDetail(props) {
               {profile.name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
-            {!_.isEmpty(userTypes) && !_.isEmpty(profile) && userTypes.find(type => type.id === profile.user_type).name}
+            {
+                !_.isEmpty(userTypes) && !_.isEmpty(profile) && 
+                userTypes.find(type => type.id === profile.user_type) && userTypes.find(type => type.id === profile.user_type).name}
             </Typography>
             <Typography variant="h6" color="textSecondary">
               {i18n.t('Email')}: {profile.email}
@@ -76,8 +77,8 @@ export default function ProfileDetail(props) {
             </Typography>
             <Grid container spacing={1}>
               {
-                !_.isEmpty(profile) && !_.isEmpty(districtsList) && !_.isEmpty(shortFacilityList) && replaceIds(profile.preferred_districts, districtsList).map((district) => (
-                  <Grid item ><Chip variant="outlined" size="small" label={district} color="primary" /></Grid>
+                !_.isEmpty(profile) && !_.isEmpty(districtsList) && replaceIds(profile.preferred_districts, districtsList).map((district) => (
+                  <Grid item ><Chip variant="outlined" size="small" label={district.label} color="primary" /></Grid>
                 ))
               }
             </Grid>
@@ -86,8 +87,8 @@ export default function ProfileDetail(props) {
             </Typography>
             <Grid container spacing={1}>
               {
-                !_.isEmpty(profile) && !_.isEmpty(districtsList) && !_.isEmpty(shortFacilityList) && replaceIds(profile.associated_facilities, shortFacilityList).map((facility) => (
-                  <Grid item ><Chip variant="outlined" size="small" label={facility} color="primary" /></Grid>
+                !_.isEmpty(profile) && !_.isEmpty(shortFacilityList) && replaceIds(profile.associated_facilities, shortFacilityList).map((facility) => (
+                  <Grid item ><Chip variant="outlined" size="small" label={facility.label} color="primary" /></Grid>
                 ))
               }
             </Grid>

@@ -6,41 +6,51 @@ import {
     Button
 } from '@material-ui/core';
 
-export default function Form() {
+export default function Form(props) {
+    const { handleSubmit, setFieldValue, errors } = props
     const { i18n } = useTranslation();
     
     const changeText = (name, e) => {
-        console.log(name, e.target.value);
+        setFieldValue(name, e.target.value);
     };
 
     return (
-        <form className="change-password-form">
+        <form className="change-password-form" onSubmit={handleSubmit}>
             <Grid item container spacing={2}>
                 <Grid item sm={12} xs={12}>
                     <TextField
-                        name="currentPassword"
+                        name="current_password"
                         label={i18n.t('Current Password')}
                         fullWidth
-                        onChange={changeText.bind(null, "currentPassword")}
+                        onChange={changeText.bind(null, "current_password")}
                         variant="outlined"
+                        type="password"
+                        helperText={errors.current_password}
+                        error={errors.current_password}
                     />
                 </Grid>
                 <Grid item sm={12} xs={12}>
                     <TextField
-                        name="newPassword"
+                        name="password_1"
                         label={i18n.t('New Password')}
                         fullWidth
-                        onChange={changeText.bind(null, "newPassword")}
+                        onChange={changeText.bind(null, "password_1")}
                         variant="outlined"
+                        type="password"
+                        helperText={errors.password_1}
+                        error={errors.password_1}
                     />
                 </Grid>
                 <Grid item sm={12} xs={12}>
                     <TextField
-                        name="confirmPassword"
+                        name="password_2"
                         label={i18n.t('Confirm Password')}
                         fullWidth
-                        onChange={changeText.bind(null, "confirmPassword")}
+                        onChange={changeText.bind(null, "password_2")}
                         variant="outlined"
+                        type="password"
+                        helperText={errors.password_2}
+                        error={errors.password_2}
                     />
                 </Grid>
                 <Grid item xs={12} sm={3} className="ml-auto">

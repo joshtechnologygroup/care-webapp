@@ -124,5 +124,11 @@ export const fillBooleanFilterOptions = (columnDefs, requiredLists) => {
 };
 
 export const replaceIds = (IdList, mapList) => {
-    return IdList.map(id => mapList.find(item => item.id === id).name)
+    return IdList ? IdList.map(id => {
+        const element = mapList.find(item => item.id === id)
+        return {
+            'value': element.id,
+            'label': element.name
+        } 
+    }) : []
 }
