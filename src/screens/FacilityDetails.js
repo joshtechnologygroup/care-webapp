@@ -141,15 +141,15 @@ const mapStateToProps = (state) => ({
 });
 
 PatientsList.propTypes = {
-  facilityAdminstrators: PropTypes.array.isRequired,
-  ownershipType: PropTypes.array.isRequired,
-  facilityTypes: PropTypes.array.isRequired,
-  localBody: PropTypes.array.isRequired,
-  cities: PropTypes.array.isRequired,
-  states: PropTypes.array.isRequired,
-  district_list: PropTypes.array.isRequired,
-  facilities: PropTypes.array.isRequired,
-  getsFacilityDetailDependencies: PropTypes.func.isRequired
+  facilityAdminstrators: PropTypes.array,
+  ownershipType: PropTypes.array,
+  facilityTypes: PropTypes.array,
+  localBody: PropTypes.array,
+  cities: PropTypes.array,
+  states: PropTypes.array,
+  district_list: PropTypes.array,
+  facilities: PropTypes.array,
+  getsFacilityDetailDependencies: PropTypes.func
 };
 
 export default connect(mapStateToProps, {getsFacilityDetailDependencies})(FacilityDetails);

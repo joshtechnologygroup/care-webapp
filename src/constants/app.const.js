@@ -63,7 +63,8 @@ export const TRANSFER_STATUS_CHOICES = {
 }
 
 export const regex = {
-  email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i // eslint-disable-line
+  email: /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, // eslint-disable-line
+  phone_number: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im // eslint-disable-line
 }
 
 // range filter constants
@@ -120,7 +121,15 @@ export const booleanStatuses = {
     {
       value: 2,
       name: 'Negative'
-    }
+    },
+    {
+      value: 3,
+      name: 'Result awaited'
+    },
+    {
+      value: 4,
+      name: 'Not tested Yet'
+    },
   ]
 }
 

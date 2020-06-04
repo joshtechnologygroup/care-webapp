@@ -1,36 +1,67 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
-import { timeline } from 'Mockdata/timeline.json';
+import { PropTypes } from 'prop-types';
+import {
+  Grid,
+  Card,
+  Typography,
+} from '@material-ui/core';
+import NullState from 'Components/NullState';
+import imgNull from 'Assets/images/timeline.jpg';
+import { EventOutlined, AccessTime } from '@material-ui/icons';
 import moment from 'moment';
 import './Timeline.scss';
-
-export default function Timeline() {
+import { DATE_FORMAT } from 'Src/constants';
+export default function Timeline(props) {
   const { i18n } = useTranslation();
+  const { timeline } = props;
   return (
     <>
       <div className="section-header">
         <h4 className="heading--card">{i18n.t('Patient Timeline')}</h4>
       </div>
-      <Card elevation={4}>
+      {
+        Boolean(timeline.length) &&
+        <Card elevation={4}>
+          <Grid
+            container
+            direction="column-reverse"
+            justify="flex-end"
+            alignItems="stretch"
+            className="timeline_wrap"
+          >
+            {timeline.map((item, index) => (
+              <div key={index} className={`item`}>
+                <span className="date"> {moment(item.date).format(DATE_FORMAT)}</span>
+                {/* <span className={`pointer __${item.type} __${item.risk}`} /> */}
+                <span className={`pointer __admission __normal`} />
+                {/* <p className="title">{item.title}</p> */}
+                <p className="desc">{item.description}</p>
+                {/* <span className="date">{moment.unix(item.date).format("DD-MMM-YYYY")}</span> */}
+              </div>
+            ))}
+          </Grid>
+        </Card>
+      }
+      {
+        !timeline.length > 0 && 
         <Grid
-          container
-          direction="column-reverse"
-          justify="flex-end"
-          alignItems="stretch"
-          className="timeline_wrap"
-        >
-          {timeline.map(item => (
-            <div key={item.id} className={`item`}>
-              <span className={`pointer __${item.type} __${item.risk}`} />
-              <p className="title">{item.title}</p>
-              <p className="desc">{item.description}</p>
-              <span className="date">{moment.unix(item.date).format("DD-MMM-YYYY")}</span>
-            </div>
-          ))}
+            item
+            xs={12}
+          >
+          <Card>
+            <NullState img={imgNull} message={i18n.t('null_messages.timeline')} />
+          </Card>
         </Grid>
-      </Card>
+     }
     </>
   );
 }
+
+Timeline.propTypes = {
+  timeline: PropTypes.array.isRequired,
+}
+
+Timeline.defaultProps = {
+  timeline: []
+};

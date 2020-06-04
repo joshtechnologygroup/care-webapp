@@ -54,7 +54,7 @@ export default function DoctorAttendant(props) {
           className="btn"
           onClick={add}
         >
-          + {i18n.t('Add doctor/attendant')}
+          + {i18n.t('Add Doctor/Attendant')}
         </Button>
       </div>
       <Grid container spacing={1}>

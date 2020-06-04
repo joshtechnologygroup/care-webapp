@@ -25,7 +25,7 @@ export const CreateUpdateForm = (props) => {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Typography variant="h5">
-                        {editMode ? i18n.t('Edit Family member') : i18n.t('Add Family member') }
+                        {editMode ? i18n.t('Edit Lab test') : i18n.t('Add Lab test') }
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>

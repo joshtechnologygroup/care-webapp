@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { user, profile } from "Reducers/UserReducer";
-import { 
+import { toasts } from "Reducers/ToastReducer"
+import {
     patients, 
     clinicalStatus, 
     clusterGroup, 
@@ -21,7 +22,8 @@ import {
     roomType,
     bedType,
     facilityStaff,
-    staffDesignation
+    staffDesignation,
+    ownerships
 } from "Reducers/FacilityReducer";
 import {ownershipTypes, districts, cities, localBody, userTypes} from "Reducers/MiscReducer";
 import { transfers } from "Reducers/TransferReducer";
@@ -53,5 +55,6 @@ export default combineReducers({
     localBody,
     facilityAdminstrators,
     profile,
-    userTypes
+    userTypes,
+    toasts,
 });

@@ -93,7 +93,7 @@ export default function Form(props) {
 
         <Grid className="pb-0 mb-10" item xs={12}>
           <Typography variant="h6">
-            {i18n.t('result')}
+            {i18n.t('Result')}
           </Typography>
           <SingleSelectChipsInput
             value={result}

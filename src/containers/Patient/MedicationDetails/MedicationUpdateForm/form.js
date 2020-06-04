@@ -19,8 +19,8 @@ export default function Form(props) {
 
   const {
     values: {
-      covidStatus,
-      clinicalStatus,
+      covid_status,
+      clinical_status,
       symptoms,
       nonCovidDiseases,
     },
@@ -42,9 +42,9 @@ export default function Form(props) {
           {i18n.t('COVID-19 Status')}
         </Typography>
         <SingleSelectChipsInput
-          value={covidStatus}
+          value={covid_status}
           options={booleanStatuses.positiveNegative}
-          onChange={(val) => setValue(val, 'covidStatus')}
+          onChange={(val) => setValue(val, 'covid_status')}
         />
       </Grid>
 
@@ -53,9 +53,9 @@ export default function Form(props) {
           {i18n.t('Clinical Status')}
         </Typography>
         <SingleSelectChipsInput
-          value={clinicalStatus}
+          value={clinical_status}
           options={clinicalStatusChoices}
-          onChange={(val) => setValue(val, 'clinicalStatus')}
+          onChange={(val) => setValue(val, 'clinical_status')}
         />
       </Grid>
 
@@ -67,6 +67,7 @@ export default function Form(props) {
           options={symptomChoices}
           value={symptoms}
           onChange={(val) => setValue(val, 'symptoms')}
+          valueKey="id"
         />
       </Grid>
 
@@ -78,6 +79,7 @@ export default function Form(props) {
           options={diseaseChoices}
           value={nonCovidDiseases}
           onChange={(val) => setValue(val, 'nonCovidDiseases')}
+          valueKey="id"
         />
       </Grid>
       {
