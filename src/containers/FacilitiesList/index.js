@@ -17,6 +17,7 @@ import {
     multiSelectBooleanFilterCallback,
     multiSelectNumberFilterCallback,
 } from "Src/utils/listFilter";
+import {PAGINATION_LIMIT} from 'Src/constants';
 
 export function FacilitiesList(props) {
     const {
@@ -29,7 +30,7 @@ export function FacilitiesList(props) {
         facilityTypesList,
         count,
     } = props;
-    const itemsPerPage = 4;
+    const itemsPerPage = PAGINATION_LIMIT;
 
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
     const [offset, setOffset] = useState(0);
@@ -112,9 +113,20 @@ export function FacilitiesList(props) {
         } else {
             setOrderingParam(null);
         }
-    }, [ordering, sortType]);
+    }, [ordering, sortType]); 
 
     useEffect(() => {
+        const options = {
+            ...queryParams,
+            offset: offset,
+        };
+        if (orderingParam) {
+            options.ordering = orderingParam;
+        }
+        fetchFacilityList(options);
+    }, [queryParams, offset, fetchFacilityList, orderingParam]);
+
+    const applyFilter = () => {
         const options = {
             ...queryParams,
             ...selectedParams,
@@ -124,7 +136,7 @@ export function FacilitiesList(props) {
             options.ordering = orderingParam;
         }
         fetchFacilityList(options);
-    }, [queryParams, offset, fetchFacilityList, orderingParam, selectedParams]);
+    }
 
     const sortByValue = val => {
         setOrdering(val);
@@ -182,6 +194,11 @@ export function FacilitiesList(props) {
                                 ),
                             })
                         }
+                        handleApplyFilter={() => { 
+                            applyFilter();
+                            setShowOverlay(false);
+                        }}
+                        handleReset={() => setSelectedParams({})}
                     />
                 </Grid>
             </Grid>

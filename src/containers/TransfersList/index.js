@@ -27,6 +27,8 @@ import {
 } from "Constants/app.const";
 import { DATE_FORMAT } from 'Src/constants';
 import { multiSelectDateCallBack } from "../../utils/listFilter";
+import {PAGINATION_LIMIT} from 'Src/constants';
+
 export function TransfersList(props) {
     const { 
         fetchTransferList, 
@@ -36,7 +38,7 @@ export function TransfersList(props) {
         queryParams, 
         count 
     } = props;
-    const itemsPerPage = 100;
+    const itemsPerPage = PAGINATION_LIMIT;
 
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
@@ -69,15 +71,9 @@ export function TransfersList(props) {
                 const updatedObj = { ...transferObj };
                 updatedObj.status = TRANSFER_STATUS_CHOICES[transferObj.status];
                 if(updatedObj.status_updated_at) {
-                    updatedObj.status_updated_at = moment
-                    .utc(transferObj.status_updated_at, DATE_FORMAT)
-                    .local()
-                    .format(DATE_FORMAT);
+                    updatedObj.status_updated_at = moment(transferObj.status_updated_at).format(DATE_FORMAT);
                 }
-                updatedObj.requested_at = moment
-                    .utc(transferObj.requested_at, DATE_FORMAT)
-                    .local()
-                    .format(DATE_FORMAT);
+                updatedObj.requested_at = moment(transferObj.requested_at).format(DATE_FORMAT)
                 updatedObj.gender = GENDER_CHOICES[transferObj.gender];
                 updatedTransferList.push(updatedObj);
                 return updatedObj;
