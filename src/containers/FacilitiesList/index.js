@@ -17,6 +17,7 @@ import {
     multiSelectBooleanFilterCallback,
     multiSelectNumberFilterCallback,
 } from "Src/utils/listFilter";
+import {PAGINATION_LIMIT} from "Src/constants";
 
 export function FacilitiesList(props) {
     const {
@@ -29,7 +30,7 @@ export function FacilitiesList(props) {
         facilityTypesList,
         count,
     } = props;
-    const itemsPerPage = 4;
+    const itemsPerPage = PAGINATION_LIMIT;
 
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
     const [offset, setOffset] = useState(0);
@@ -146,7 +147,7 @@ export function FacilitiesList(props) {
 
     useEffect(() => {
         if (districtsList) {
-            CONFIG.columnDefs[3].cellRendererParams.options = districtsList.map(
+            CONFIG.columnDefs[2].cellRendererParams.options = districtsList.map(
                 district => district.name
             );
         }

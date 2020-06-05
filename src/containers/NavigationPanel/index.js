@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  Link
+  Link,
+  withRouter,
+  useHistory
 } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Grid from '@material-ui/core/Grid';
-import { withRouter } from 'react-router-dom';
 import {
   Dashboard,
   // SettingsOutlined,
@@ -28,6 +29,7 @@ export function NavigationPanel(props) {
     setData("lang", e.target.value || 'en');
     i18n.changeLanguage(e.target.value || 'en');
   };
+  const history = useHistory();
   function getActivatedRoute(path) {
     return path === props.location.pathname;
   }
@@ -150,7 +152,7 @@ export function NavigationPanel(props) {
             </Link>
           </li>
           <li className={getActivatedRoute('/logout') ? 'active' : ''}>
-            <Link to={'/login'} className="nav-link" onClick={async () => await props.logout()}>
+            <Link className="nav-link" onClick={() => props.logout(history)}>
               <ExitToApp   />
               {i18n.t('Logout')}
             </Link>

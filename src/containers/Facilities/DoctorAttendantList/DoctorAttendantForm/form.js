@@ -14,9 +14,9 @@ export function Form(props) {
   const {i18n} = useTranslation();
   const {data, handleChange, updateOperation} = props;
   const [errors, setErrors] = useState({
-    name: !updateOperation,
-    phone_number: !updateOperation,
-    email: !updateOperation,
+    name: false,
+    phone_number: false,
+    email: false,
     form: ''
   })
 

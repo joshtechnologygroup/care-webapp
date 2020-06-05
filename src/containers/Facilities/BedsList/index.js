@@ -124,6 +124,13 @@ export function BedsList(props) {
 
       setTotalPages(Math.ceil(props.count / PAGINATION_LIMIT))
       setFacilityInfrastructureList(update_facilityInfrastructureList);
+    } else if (
+      facilityInfrastructureList ||
+      facilities ||
+      roomTypeList ||
+      bedTypeList
+    ) {
+      setFacilityInfrastructureList([]);
     }
   }, [
     props.facilityInfrastructureList,
