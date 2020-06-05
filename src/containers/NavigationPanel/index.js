@@ -66,7 +66,7 @@ export function NavigationPanel(props) {
               {i18n.t('Dashboard')}
             </Link>
           </li>
-          {Constants.NAVIGATION_PERMISSION.some((value, index, array) => props.userType === value) &&
+          {Constants.NAVIGATION_PERMISSION.indexOf(props.userType) >= 0 &&
           <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
             <Link to={'/transfer'} className="nav-link">
               <SyncAlt/>
@@ -107,7 +107,7 @@ export function NavigationPanel(props) {
             {/*</li>*/}
             {/*</ul>*/}
           </li>
-          {Constants.NAVIGATION_PERMISSION.some((value, index, array) => props.userType === value) &&
+          {Constants.NAVIGATION_PERMISSION.indexOf(props.userType) >= 0 &&
           <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
             <Link to={'/inventory'} className="nav-link">
               <ListAlt/>
@@ -115,7 +115,7 @@ export function NavigationPanel(props) {
             </Link>
           </li>
           }
-          {Constants.NAVIGATION_PERMISSION.some((value, index, array) => props.userType === value) &&
+          {Constants.NAVIGATION_PERMISSION.indexOf(props.userType) >= 0 &&
           <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
             <Link to={'/facilities'} className="nav-link">
               <LocationCity/>

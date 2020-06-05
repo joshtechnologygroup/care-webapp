@@ -2,31 +2,45 @@ import {
   FacilityTypeRenderer,
   OperationStatusRenderer,
 } from 'Components/CellRenderer';
-import { PatientRenderer } from 'Components/CellRenderer/PatientRenderer'
-import { GRID_CONFIG } from 'Constants/app.const';
+import {PatientRenderer} from 'Components/CellRenderer/PatientRenderer'
+import {GRID_CONFIG} from 'Constants/app.const';
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: { isSortable: true }, hide: true },
-    { headerName: 'Govt. ID', field: 'govt_id', cellRenderer: 'PatientRenderer', cellRendererParams: { isSortable: true } },
-    { headerName: 'Patient Name', cellRenderer: 'PatientRenderer', field: 'name', minWidth: 120 },
+    {headerName: 'ICMR ID', field: 'icmr_id', cellRendererParams: {isSortable: true}, hide: true},
+    {headerName: 'Govt. ID', field: 'govt_id', cellRenderer: 'PatientRenderer', cellRendererParams: {isSortable: true}},
+    {headerName: 'Patient Name', cellRenderer: 'PatientRenderer', field: 'name', minWidth: 120},
     {
       headerName: 'Facility Name', field: 'facility_name', minWidth: 120, cellRendererParams: {
         filterType: 'boolean',
         options: []
       },
     },
-    { headerName: 'Gender', field: 'gender', cellRendererParams: { filterType: 'boolean', options: ['Male', 'Female', 'Others'] } },
-    { headerName: 'Age(Years)', field: 'year', minWidth: 100, cellRendererParams: { isSortable: true, filterType: 'number' } },
-    { headerName: 'Age(Months)', field: 'month', minWidth: 110, cellRendererParams: { filterType: 'number' } },
-    { headerName: 'Contact Number', field: 'phone_number', minWidth: 130 },
-    { headerName: 'Address', field: 'address', },
-    { headerName: 'Address District', field: 'district', minWidth: 140, cellRendererParams: { filterType: 'boolean', options: [] } },
+    {
+      headerName: 'Gender',
+      field: 'gender',
+      cellRendererParams: {filterType: 'boolean', options: ['Male', 'Female', 'Others']}
+    },
+    {
+      headerName: 'Age(Years)',
+      field: 'year',
+      minWidth: 100,
+      cellRendererParams: {isSortable: true, filterType: 'number'}
+    },
+    {headerName: 'Age(Months)', field: 'month', minWidth: 110, cellRendererParams: {filterType: 'number'}},
+    {headerName: 'Contact Number', field: 'phone_number', minWidth: 130},
+    {headerName: 'Address', field: 'address',},
+    {
+      headerName: 'Address District',
+      field: 'district',
+      minWidth: 140,
+      cellRendererParams: {filterType: 'boolean', options: []}
+    },
     {
       headerName: 'Cluster Group',
       field: 'cluster_group',
       minWidth: 120,
-      cellRendererParams: { filterType: 'boolean', options: [] },
+      cellRendererParams: {filterType: 'boolean', options: []},
       hide: true
     },
     {
@@ -64,7 +78,10 @@ export const CONFIG = {
       }
     },
     {
-      headerName: 'Clinical Status updated At', field: 'clinical_status_updated_at', minWidth: 180, cellRendererParams: {
+      headerName: 'Clinical Status updated At',
+      field: 'clinical_status_updated_at',
+      minWidth: 180,
+      cellRendererParams: {
         filterType: 'date'
       },
       hide: true
@@ -75,9 +92,13 @@ export const CONFIG = {
       }, hide: true
     },
     {
-      headerName: 'Portea Able to contact Patient/Relative', field: 'portea_able_to_connect', minWidth: 250, cellRendererParams: {
+      headerName: 'Portea Able to contact Patient/Relative',
+      field: 'portea_able_to_connect',
+      minWidth: 250,
+      cellRendererParams: {
         filterType: 'boolean'
-      }, hide: true
+      },
+      hide: true
     },
     {
       headerName: 'Facility District', field: 'facility_district', minWidth: 120, cellRendererParams: {

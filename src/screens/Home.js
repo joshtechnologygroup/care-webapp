@@ -35,77 +35,81 @@ import logo from 'Assets/images/logo.svg';
 import Toaster from 'Components/Toaster';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import { getUserProfile } from "Actions/UserProfileAction";
+import {getUserProfile} from "Actions/UserProfileAction";
 
 function Home(props) {
   const history = useHistory();
 
-  useEffect(  () => {
-    props.getUserProfile().then((response) =>{if(response.status !== HttpStatus.OK){history.push('/login')}});
-  }, [ ]);
+  useEffect(() => {
+    props.getUserProfile().then((response) => {
+      if (response.status !== HttpStatus.OK) {
+        history.push('/login')
+      }
+    });
+  }, []);
 
   const [open, setOpen] = React.useState(false);
 
-    const toggleDrawer = (isOpen) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setOpen(isOpen);
-    };
-    return (
-        <React.Fragment>
-            <Hidden mdUp>
-                <div className="mob-header">
-                        <Button onClick={toggleDrawer(true)}><MenuIcon /></Button>
-                        <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-                            <NavigationPanel />
-                        </Drawer>
-                        <img className="mob-logo" src={logo} alt="covid care" />
-                </div>
-            </Hidden>
-            <Grid container className="container-wrap">
-                <Grid item md={2} className="container-wrap__navigation">
-                    <Hidden smDown>
-                        <NavigationPanel />
-                    </Hidden>
-                </Grid>
-                <Grid item xs={12} md={10} className="full-heigh-container">
-                    <Switch>
-                        <Route exact path={`/`} component={DashboardPage} />
-                        <Route path={`/dashboard`} component={DashboardPage} />
-                        <Route path={`/facilities/beds`} component={Beds} />
-                        <Route path={`/facilities/doctor-attendant`} component={DoctorAttendant} />
-                        <Route path={`/facilities/manage-users`} component={ManageUsers} />
-                        <Route path={`/facilities/facility-details/:facilityId`} component={FacilityDetails} />
-                        <Route path={`/facilities`} component={Facilities} />
-                        <Route exact path={`/patients`} component={Patients} />
-                        <Route path={`/patients/add`} component={AddPatient} />
-                        <Route path={`/patients/hospitals`} component={Hospitals} />
-                        <Route path={`/patients/hcc`} component={Hcc} />
-                        <Route path={`/patients/care-centers`} component={CareCenters} />
-                        <Route path={`/patients/private-quarantine`} component={PrivateQuarantine} />
-                        <Route path={`/patients/:patientId`} component={PatientDetail} />
-                        <Route path={`/transfer`} component={Transfer} />
-                        <Route path={`/reports`} component={Reports} />
-                        <Route path={`/settings`} component={Settings} />
-                        <Route path={`/profile`} component={Profile} />
-                        <Route path={`/inventory`} component={Inventory} />
-                        <Route path={`/error/:errorCode`}>
-                            <ErrorPage text="Oops! Error occured." />
-                        </Route>
-                        <Route path='*' exact={true}>
-                            <ErrorPage title={404} text="Page Not Found!" />
-                        </Route>
-                    </Switch>
-                </Grid>
-            </Grid>
-            <Toaster />
-        </React.Fragment>
-    );
+  const toggleDrawer = (isOpen) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setOpen(isOpen);
+  };
+  return (
+    <React.Fragment>
+      <Hidden mdUp>
+        <div className="mob-header">
+          <Button onClick={toggleDrawer(true)}><MenuIcon/></Button>
+          <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
+            <NavigationPanel/>
+          </Drawer>
+          <img className="mob-logo" src={logo} alt="covid care"/>
+        </div>
+      </Hidden>
+      <Grid container className="container-wrap">
+        <Grid item md={2} className="container-wrap__navigation">
+          <Hidden smDown>
+            <NavigationPanel/>
+          </Hidden>
+        </Grid>
+        <Grid item xs={12} md={10} className="full-heigh-container">
+          <Switch>
+            <Route exact path={`/`} component={DashboardPage}/>
+            <Route path={`/dashboard`} component={DashboardPage}/>
+            <Route path={`/facilities/beds`} component={Beds}/>
+            <Route path={`/facilities/doctor-attendant`} component={DoctorAttendant}/>
+            <Route path={`/facilities/manage-users`} component={ManageUsers}/>
+            <Route path={`/facilities/facility-details/:facilityId`} component={FacilityDetails}/>
+            <Route path={`/facilities`} component={Facilities}/>
+            <Route exact path={`/patients`} component={Patients}/>
+            <Route path={`/patients/add`} component={AddPatient}/>
+            <Route path={`/patients/hospitals`} component={Hospitals}/>
+            <Route path={`/patients/hcc`} component={Hcc}/>
+            <Route path={`/patients/care-centers`} component={CareCenters}/>
+            <Route path={`/patients/private-quarantine`} component={PrivateQuarantine}/>
+            <Route path={`/patients/:patientId`} component={PatientDetail}/>
+            <Route path={`/transfer`} component={Transfer}/>
+            <Route path={`/reports`} component={Reports}/>
+            <Route path={`/settings`} component={Settings}/>
+            <Route path={`/profile`} component={Profile}/>
+            <Route path={`/inventory`} component={Inventory}/>
+            <Route path={`/error/:errorCode`}>
+              <ErrorPage text="Oops! Error occured."/>
+            </Route>
+            <Route path='*' exact={true}>
+              <ErrorPage title={404} text="Page Not Found!"/>
+            </Route>
+          </Switch>
+        </Grid>
+      </Grid>
+      <Toaster/>
+    </React.Fragment>
+  );
 }
 
 Home.propTypes = {
   getUserProfile: PropTypes.func
 };
 
-export default connect(null, { getUserProfile })(Home);
+export default connect(null, {getUserProfile})(Home);
