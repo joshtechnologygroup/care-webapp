@@ -103,8 +103,8 @@ export function FacilityDetails(props) {
 FacilityDetails.propTypes = {
   profile: PropTypes.array.isRequired,
   handleEdit: PropTypes.func,
-  currentStatus: PropTypes.array.isRequired,
-  getShortFacilitiesList: PropTypes.func.isRequired
+  currentStatus: PropTypes.array,
+  getShortFacilitiesList: PropTypes.func
 }
 
 FacilityDetails.defaultProps = {

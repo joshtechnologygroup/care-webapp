@@ -4,17 +4,13 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography, Card, } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { useParams } from "react-router-dom";
 import { PropTypes } from 'prop-types';  
 import Form from './form';
-import { createUpdateSampleTest }  from 'Actions/TestingLabsAction'
 import _ from 'underscore';
 
 export const CreateUpdateForm = (props) => {
-    let { patientId } = useParams();
-    const { editMode, details, handleSubmit, cancelCallback, saveLabDetails, testingLabs, createUpdateSampleTest } = props;
+    const { editMode, details, handleSubmit, cancelCallback, saveLabDetails, testingLabs, } = props;
     const { i18n } = useTranslation();
-
     const validationSchema = Yup.object({
         testing_lab: Yup.string().required(i18n.t('Please select Lab')),
         result: Yup.number().required(i18n.t('Please select current test status')),
@@ -23,19 +19,6 @@ export const CreateUpdateForm = (props) => {
 
     const submit = async (data) => {
         handleSubmit(data);
-        let initial = data;
-        let response;
-        if(editMode && !_.isEmpty(details)){
-            response = await createUpdateSampleTest(initial, details.id);
-        } else {
-            initial['patient'] = patientId;
-            response = await createUpdateSampleTest(initial);
-        }
-        if(response.status){
-            alert('created patient sample test');
-        } else {
-            alert(response.error);
-        }
     };
 
     return (
@@ -65,12 +48,10 @@ export const CreateUpdateForm = (props) => {
 
 CreateUpdateForm.propTypes = {
   testingLabs: PropTypes.array.isRequired,
-  createUpdateSampleTest: PropTypes.func.isRequired,
 };
   
 const mapStateToProps = (state) => ({
-  testingLabs: state.testingLabs.results
 });
   
   
-export default connect(mapStateToProps, { createUpdateSampleTest })(CreateUpdateForm);
+export default connect(mapStateToProps, null)(CreateUpdateForm);

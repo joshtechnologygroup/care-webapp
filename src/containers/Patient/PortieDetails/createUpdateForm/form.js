@@ -26,8 +26,8 @@ export default function Form(props) {
       status,
       name,
       portie_phone_number,
-      patient_relation,
-      dateTime,
+      relation,
+      called_at,
       comments
     },
     errors,
@@ -44,7 +44,7 @@ export default function Form(props) {
 
   const setDateTime = (e) => {
     console.log('e', e)
-    setFieldValue('dateTime', e);
+    setFieldValue('called_at', e);
   };
 
   return (
@@ -69,10 +69,10 @@ export default function Form(props) {
             <DateTimePicker
               label={i18n.t('Date time')}
               inputVariant="outlined"
-              value={dateTime}
+              value={called_at}
               onChange={setDateTime}
               className="field"
-              name="dateTime"
+              name="called_at"
               disableFuture
               format="dd/MM/yyyy hh:mm a"
               InputProps={{
@@ -113,15 +113,15 @@ export default function Form(props) {
         <Grid item xs={12} sm={6}>
           <TextField 
             select
-            name="patient_relation"
-            defaultValue={patient_relation}
+            name="relation"
+            defaultValue={relation}
             label={i18n.t('Patient relation')}
             fullWidth
-            onChange={changeText.bind(null, "patient_relation")}
+            onChange={changeText.bind(null, "relation")}
             className="field"
             variant="outlined"
-            helperText={errors.patient_relation}
-            error={Boolean(errors.patient_relation)}
+            helperText={errors.relation}
+            error={Boolean(errors.relation)}
           >
             {
             relationshipChoices.map((option) => (

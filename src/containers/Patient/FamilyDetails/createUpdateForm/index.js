@@ -7,12 +7,11 @@ import Form from './form';
 import { createUpdatePatientFamilyDetails } from 'Actions/PatientsAction';
 import { connect } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { PropTypes } from 'prop-types';  
+import { PropTypes } from 'prop-types';
 import _ from 'underscore';
 
 export const CreateUpdateForm = (props) => {
-    let { patientId } = useParams();
-    const { editMode, details, handleSubmit, cancelCallback, createUpdatePatientFamilyDetails } = props;
+    const { editMode, details, handleSubmit, cancelCallback } = props;
     const { i18n } = useTranslation();
 
     const validationSchema = Yup.object({
@@ -26,19 +25,6 @@ export const CreateUpdateForm = (props) => {
 
     const submit = async (data) => {
         handleSubmit(data);
-        let initial = data;
-        let response;
-        if(editMode && !_.isEmpty(details)){
-            response = await createUpdatePatientFamilyDetails(initial, details.id);
-        } else {
-            initial['patient'] = patientId;
-            response = await createUpdatePatientFamilyDetails(initial);
-        }
-        if(response.status){
-            alert('created patient sample test');
-        } else {
-            alert(response.error);
-        }
     };
 
     return (
@@ -46,7 +32,7 @@ export const CreateUpdateForm = (props) => {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Typography variant="h5">
-                        {editMode ? i18n.t('Edit Family member') : i18n.t('Add Family member') }
+                        {editMode ? i18n.t('Edit Family member') : i18n.t('Add Family member')}
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -66,12 +52,11 @@ export const CreateUpdateForm = (props) => {
 }
 
 CreateUpdateForm.propTypes = {
-    createUpdatePatientFamilyDetails: PropTypes.func.isRequired,
-  };
-    
+};
+
 const mapStateToProps = (state) => ({
 });
-    
-    
-  export default connect(mapStateToProps, { createUpdatePatientFamilyDetails })(CreateUpdateForm);
-  
+
+
+export default connect(mapStateToProps, null)(CreateUpdateForm);
+

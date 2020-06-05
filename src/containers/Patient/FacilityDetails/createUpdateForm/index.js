@@ -8,7 +8,6 @@ import Form from './form';
 export const CreateUpdateForm = (props) => {
     const { editMode, details, handleSubmit, cancelCallback, saveFacilityDetails, shortFacilities } = props;
     const { i18n } = useTranslation();
-
     const validationSchema = Yup.object({
         facility: Yup.number().required(i18n.t('Please select facility')),
         patient_status: Yup.number().required(i18n.t('Please select current status')),

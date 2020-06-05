@@ -96,7 +96,7 @@ const testingLabs = (state = {}, action) => {
         case GET_TESTING_LABS_LIST:
             return {
                 ...state,
-                ...action.data
+                results: [...action.data]
             }
         default:
             return state;

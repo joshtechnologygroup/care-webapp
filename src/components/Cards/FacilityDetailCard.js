@@ -142,10 +142,10 @@ export function FacilityDetailCard(props) {
 
 FacilityDetailCard.propTypes = {
   details: PropTypes.object.isRequired,
-  facilityTypesList: PropTypes.array.isRequired,
-  ownershipTypesList: PropTypes.array.isRequired,
-  districtsList: PropTypes.array.isRequired,
-  currentStatus: PropTypes.array.isRequired,
+  facilityTypesList: PropTypes.array,
+  ownershipTypesList: PropTypes.array,
+  districtsList: PropTypes.array,
+  currentStatus: PropTypes.array,
 };
 
 FacilityDetailCard.defaultProps = {

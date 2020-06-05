@@ -64,13 +64,14 @@ export default function Form(props) {
 
         <Grid className="pb-0" item xs={12} sm={6}>
           <Autocomplete
-            options={labs}
+            options={testingLabs}
             getOptionLabel={(option) => option.name}
             onChange={(event, value) => onSelectLab(event, value)}
             renderInput={(params) => 
             <TextField
               {...params}
               name="testing_lab"
+              value={testing_lab}
               label={i18n.t('Testing Lab name')}
               fullWidth
               value={testing_lab}

@@ -98,34 +98,4 @@ const getTestingLabList = () => async (dispatch) => {
     dispatch(dispatchAction(ReducerTypes.GET_TESTING_LABS_LIST, testing_lab_response));
 };
 
-/**
- * create or update the portie details associated with patient
- * @param {object} body: contains details of the portie calling 
- * @param {number} portieId: portie calling id exist only for updating portie
- */
-const createUpdatePortieDetails = (body, portieId = null) => async (dispatch) => {
-    const portie_response = await patientDetailsService.makeAuthorizedPatientDetailsApiCall(body, portieId)
-    if(portie_response.ok) {
-       return { status: true};
-    } else if (portie_response.status === HttpStatus.BAD_REQUEST) {
-        const data = await portie_response.json();
-        return { status: false, error:"dummy error generated in UI"};
-    }
-};
-
-/**
- * create or update the patient family member
- * @param {object} body: details of the patient family member 
- * @param {number} familyMemberId: id of the family member only if already created 
- */
-const createUpdatePatientFamilyDetails = (body, familyMemberId = null) => async (dispatch) => {
-    const family_member_response = await patientDetailsService.makeAuthorizedPatientDetailsApiCall(body, familyMemberId)
-    if(family_member_response.ok) {
-       return { status: true};
-    } else if (family_member_response.status === HttpStatus.BAD_REQUEST) {
-        const data = await family_member_response.json();
-        return { status: false, error:"dummy error generated in UI"};
-    }
-};
-
-export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies, createPatientSampleTest, getTestingLabList, createUpdatePortieDetails, createUpdatePatientFamilyDetails };
+export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies, createPatientSampleTest, getTestingLabList };

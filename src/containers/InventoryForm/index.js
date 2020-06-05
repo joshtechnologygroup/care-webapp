@@ -38,7 +38,6 @@ export const InventoryForm = (props) => {
 
     const createInventory = () => {
         let initial = inventoryData;
-        console.log(facilityList);
         if (!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)) {
             if (initial && !data) {
                 Object.keys(facilityList).forEach((facility, index) => {
@@ -140,7 +139,7 @@ const mapStateToProps = (state) => {
     return {
         inventoryList: inventory.results,
         inventoryTypesList: inventoryTypes,
-        facilityList: {...shortFacilities.results},
+        facilityList: shortFacilities.results,
         count: state.inventory.count
     };
 };

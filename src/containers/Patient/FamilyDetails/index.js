@@ -11,14 +11,18 @@ import FamilyMemberCard from 'Components/Cards/FamilyMemberCard';
 import NullState from 'Components/NullState';
 import nullImage from 'Assets/images/family-null.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
+import { createPatientFamilyDetails, updatePatientFamilyDetails } from 'Actions/PatientFamilyAction';
+import { connect } from 'react-redux';
+import { useParams } from "react-router-dom";
 
-export default function FamilyDetails(props) {
+export function FamilyDetails(props) {
+  let { patientId } = useParams();
   const { i18n } = useTranslation();
-  const { profile } = props;
+  const { profile, createPatientFamilyDetails, updatePatientFamilyDetails } = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
-  
+
   const edit = (id) => {
     setEditable(id);
   };
@@ -26,14 +30,29 @@ export default function FamilyDetails(props) {
     setEditable('new');
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
+    let initial = data;
+    let response;
+    initial['patient'] = patientId;
     if (editable === 'new') {
-      profile.unshift(data);
       setEditable('');
+      response = await createPatientFamilyDetails(initial);
+      if (response.status) {
+        profile.unshift(data);
+        alert('created family member successfully');
+      } else {
+        alert(response.error);
+      }
     }
     else {
       profile[editable] = data;
       setEditable('');
+      response = await updatePatientFamilyDetails(initial, data.id);
+      if (response.status) {
+        alert('updated family member successfully');
+      } else {
+        alert(response.error);
+      }
     }
   };
 
@@ -73,23 +92,23 @@ export default function FamilyDetails(props) {
             <Grid key={index} className="mb-0" item xs={12}>
               {
                 editable === index ?
-                <CreateUpdateForm
-                  handleSubmit={handleSubmit}
-                  cancelCallback={cancel}
-                  editMode={true}
-                  details={member}
-                />
-                :
-                <FamilyMemberCard
-                  details={member}
-                  editCallback={() => edit(index)}
-                />
+                  <CreateUpdateForm
+                    handleSubmit={handleSubmit}
+                    cancelCallback={cancel}
+                    editMode={true}
+                    details={member}
+                  />
+                  :
+                  <FamilyMemberCard
+                    details={member}
+                    editCallback={() => edit(index)}
+                  />
               }
             </Grid>
           )
         }
         {
-          !profile.length && editable !=='new' &&
+          !profile.length && editable !== 'new' &&
           <Grid item xs={12}>
             <Card>
               <NullState img={nullImage} message={i18n.t('null_messages.family')} />
@@ -103,9 +122,16 @@ export default function FamilyDetails(props) {
 
 FamilyDetails.propTypes = {
   profile: PropTypes.array.isRequired,
-  handleEdit: PropTypes.func
+  handleEdit: PropTypes.func,
+  createPatientFamilyDetails: PropTypes.func,
+  updatePatientFamilyDetails: PropTypes.func,
 };
 
 FamilyDetails.defaultProps = {
   profile: []
 };
+
+const mapStateToProps = (state) => ({
+});
+
+export default connect(mapStateToProps, { createPatientFamilyDetails, updatePatientFamilyDetails })(FamilyDetails);
