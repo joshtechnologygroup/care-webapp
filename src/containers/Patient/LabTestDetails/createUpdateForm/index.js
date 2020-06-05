@@ -15,13 +15,14 @@ export const CreateUpdateForm = (props) => {
         testing_lab: Yup.string().required(i18n.t('Please select Lab')),
         result: Yup.number().required(i18n.t('Please select current test status')),
         date_of_sample: Yup.date().required(i18n.t('Please select date of sample collection')),
+        date_of_result: Yup
+        .date()
+        .when("date_of_sample", (date_of_sample, yup) => date_of_sample && yup.min(date_of_sample, "Date of Result should be greater than Date of Sample")),
     });
 
     const submit = async (data) => {
         handleSubmit(data);
     };
-
-    console.log(details);
 
     return (
         <Card className="add-placeholder mb-5">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
 import {
@@ -34,13 +34,24 @@ export default function Form(props) {
     cancelCallback,
     saveLabDetails,
     testingLabs,
-    touched
+    touched,
+    values
   } = props;
 
   const changeText = (name, e) => {
     setFieldTouched(e.target.name);
     setFieldValue(name, e.target.value);
   };
+
+  const [completed, setCompeleted] = React.useState(false);
+
+  useEffect(() => {
+    if(values.result && (values.result === 3 || values.result === 4)) {
+        setCompeleted(true)
+    } else {
+        setCompeleted(false);
+    }
+  }, [values.result])
 
   console.log(errors);
 
@@ -75,7 +86,7 @@ export default function Form(props) {
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DateTimePicker
-              label={i18n.t('Date time')}
+              label={i18n.t('Date of Sample')}
               inputVariant="outlined"
               value={date_of_sample}
               onChange={(val) => setFieldValue('date_of_sample', val)}
@@ -112,6 +123,32 @@ export default function Form(props) {
             {touched.result && errors.result}
           </h5>
         </Grid>
+
+        {
+            completed &&
+            <Grid item xs={12} sm={6}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DateTimePicker
+                label={i18n.t('Date of Result')}
+                inputVariant="outlined"
+                value={date_of_sample}
+                onChange={(val) => setFieldValue('date_of_result', val)}
+                className="field"
+                name="date_of_result"
+                disableFuture
+                format="dd/MM/yyyy"
+                InputProps={{
+                    endAdornment: (
+                    <InputAdornment><Event /></InputAdornment>
+                    ),
+                }}
+                fullWidth
+                helperText={touched.testing_lab && errors.testing_lab}
+                error={touched.testing_lab && Boolean(errors.testing_lab)}
+                />
+            </MuiPickersUtilsProvider>
+            </Grid>
+        }
 
         <Grid container justify="flex-end" className="mt-10" item xs={12}>
           <Button

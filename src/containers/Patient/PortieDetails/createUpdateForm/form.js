@@ -40,7 +40,9 @@ export default function Form(props) {
     setFieldValue,
     setFieldTouched,
     cancelCallback,
-    touched
+    touched,
+    createPortieErrors,
+    updatePortieErrors
   } = props;
 
   console.log(errors);
@@ -67,6 +69,18 @@ export default function Form(props) {
 
   return (
     <form onSubmit={handleSubmit}>
+        {
+        createPortieErrors && createPortieErrors.patient && 
+        <FormControl component="fieldset" error={true}>
+            <FormHelperText >{createPortieErrors.patient}</FormHelperText>
+        </FormControl>
+        }
+        {
+        updatePortieErrors && updatePortieErrors.patient && 
+        <FormControl component="fieldset" error={true}>
+            <FormHelperText >{updatePortieErrors.patient}</FormHelperText>
+        </FormControl>
+        }
       <Grid container spacing={2}>
         <Grid item xs={12} className="mb-10">
           <Typography variant="h6">

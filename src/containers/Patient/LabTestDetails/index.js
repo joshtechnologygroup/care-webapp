@@ -56,7 +56,7 @@ export function LabTestDetail(props) {
         )
       } else {
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
+            ToastUtils.toastDict((new Date()).getTime(), "Error", "Some Error Occurred", DANGER)
         )
       }
     }
@@ -70,7 +70,7 @@ export function LabTestDetail(props) {
         )
       } else {
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Updated", "Some Error Occurred", DANGER)
+            ToastUtils.toastDict((new Date()).getTime(), "Error", "Some Error Occurred", DANGER)
         )
       }
     }
@@ -127,6 +127,7 @@ export function LabTestDetail(props) {
                   <LabTestCard
                     className="mb-0"
                     details={test}
+                    testingLabs={testingLabs}
                     editCallback={() => edit(index)}
                   />
               }

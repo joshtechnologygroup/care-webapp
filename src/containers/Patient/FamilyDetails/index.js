@@ -14,11 +14,15 @@ import { CreateUpdateForm } from './createUpdateForm';
 import { createPatientFamilyDetails, updatePatientFamilyDetails } from 'Actions/PatientFamilyAction';
 import { connect } from 'react-redux';
 import { useParams } from "react-router-dom";
+import { fetchPatient } from 'Actions/PatientsAction';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import {SUCCESS, DANGER} from "Src/constants";
 
 export function FamilyDetails(props) {
   let { patientId } = useParams();
   const { i18n } = useTranslation();
-  const { profile, createPatientFamilyDetails, updatePatientFamilyDetails } = props;
+  const { profile, createPatientFamilyDetails, updatePatientFamilyDetails, fetchPatient, createToastNotification } = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
@@ -31,6 +35,7 @@ export function FamilyDetails(props) {
   };
 
   const handleSubmit = async (data) => {
+    data['patient'] = patientId;
     let initial = data;
     let response;
     initial['patient'] = patientId;
@@ -39,9 +44,13 @@ export function FamilyDetails(props) {
       response = await createPatientFamilyDetails(initial);
       if (response.status) {
         profile.unshift(data);
-        alert('created family member successfully');
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Family member Successfully added", SUCCESS)
+        )
       } else {
-        alert(response.error);
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Error", "Some Error occurred", DANGER)
+        )
       }
     }
     else {
@@ -49,11 +58,16 @@ export function FamilyDetails(props) {
       setEditable('');
       response = await updatePatientFamilyDetails(initial, data.id);
       if (response.status) {
-        alert('updated family member successfully');
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Updated", "Family member Successfully updated", SUCCESS)
+        )
       } else {
-        alert(response.error);
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Error", "Some Error occurred", DANGER)
+        )
       }
     }
+    fetchPatient(patientId);
   };
 
   const cancel = () => {
@@ -134,4 +148,9 @@ FamilyDetails.defaultProps = {
 const mapStateToProps = (state) => ({
 });
 
-export default connect(mapStateToProps, { createPatientFamilyDetails, updatePatientFamilyDetails })(FamilyDetails);
+export default connect(mapStateToProps, { 
+    createPatientFamilyDetails, 
+    updatePatientFamilyDetails, 
+    fetchPatient, 
+    createToastNotification,
+})(FamilyDetails);
