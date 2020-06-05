@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  DateTimePicker
 } from '@material-ui/pickers';
 import { Grid } from "@material-ui/core";
 import moment from "moment";
@@ -95,7 +96,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field, re
           <MenuItem value="" onClick={handleOpen}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <Grid container justify="space-around">
-                <KeyboardDatePicker
+                <DateTimePicker
                   fullWidth
                   disableToolbar
                   variant="inline"
@@ -117,7 +118,7 @@ export default function MultiSelectDateDropdown({ onSelect, fieldName, field, re
             <MenuItem value="" onClick={handleOpen}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
-                  <KeyboardDatePicker
+                  <DateTimePicker
                     fullWidth
                     disableToolbar
                     variant="inline"

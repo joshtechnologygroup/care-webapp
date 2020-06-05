@@ -3,6 +3,8 @@ import * as Routes from 'Src/routes';
 import { GET, POST, PUT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
+import * as HttpStatus from 'http-status-codes'
+import * as patientDetailsService from "Src/services/patientDetailsService";
 
 const getPatientList = (url, params = {}) => async (dispatch) => {
     const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  params)
@@ -39,12 +41,18 @@ const getProfileDependencies = (params) => async (dispatch) => {
 };
 
 /**
- * 
+ * create patient object
  * @param {object} state: body of the patient object to be created 
  */
 const createPatient = state => async (dispatch) => {
     const create_patient_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_LIST_URL, POST, state, {})
-    return create_patient_response.ok;
+    const patient_data = await create_patient_response.json();
+    if(create_patient_response.ok) {
+        return {status: true, patientId: patient_data.personal_details[0].id};
+    } else if(create_patient_response.status === HttpStatus.BAD_REQUEST) {
+    return {status:false, error: "patient with this govt id or icmr id already exists"}
+    }
+    return {status:false, error: "error occurs"}
 }
 
 
@@ -60,7 +68,7 @@ const fetchPatient = id => async (dispatch) => {
 }
 
 /**
- * 
+ * update the patient details 
  * @param {object} body: body of the patient details
  * @param {number} id: patient id required to update the patient details
  */
@@ -72,11 +80,28 @@ const updatePatientDetails = (body, id) => async (dispatch) => {
 }
 
 /**
- * 
+ * fetch the dependencies required for patient details
  * @param {list} required_data: contains the list for route with reducer types
  */
 const getPatientDetailsDependencies = required_data => async (dispatch) => {
     return await dispatch(dispatchDependentActions(...required_data));
 };
 
-export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies }
+/**
+ * create patient sample test associated with the patient
+ * @param {Object} lab_data: data of the sample test to be created of patient
+ */
+const createPatientSampleTest = lab_data => async (dispatch) => {
+    const patient_test_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_SAMPLE_TEST_URL, POST, lab_data, {})
+    return patient_test_response.ok;
+};
+
+/**
+ * fetch the list of all testing labs
+ */
+const getTestingLabList = () => async (dispatch) => {
+    const testing_lab_response = await CommonService.makeAuthorizedApiCall(Routes.GET_TESTING_LAB_LIST_URL, GET, {}, {})
+    dispatch(dispatchAction(ReducerTypes.GET_TESTING_LABS_LIST, testing_lab_response));
+};
+
+export { getPatientList, getsPatientDependencies, getProfileDependencies, createPatient, fetchPatient, updatePatientDetails, getPatientDetailsDependencies, createPatientSampleTest, getTestingLabList };

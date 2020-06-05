@@ -34,8 +34,10 @@ export const PAGINATION_LIMIT = 50;
 export const INITIAL_PAGE = 1;
 export const OFFSET = 0;
 
-
-export const TOTAL_PROFILE_FIELDS = 15;
+export const FACILITY_EXISTS_ID = 4;
+export const TOTAL_PATIENT_FIELDS = 16;
+export const TOTAL_PROFILE_FIELDS = 11;
+export const TOTAL_FACILITY_FIELDS = 5;
 export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
 

@@ -6,7 +6,8 @@ import {
     GET_PATIENT_STATUS_LIST,
     GET_STATE_LIST,
     SET_CURRENT_PATIENT,
-    CLEAR_PATIENT
+    CLEAR_PATIENT,
+    GET_TESTING_LABS_LIST
 } from "Reducers/Types";
 
 const initialState = {};
@@ -90,4 +91,16 @@ const patient = (state = {}, action) => {
     }
 };
 
-export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states, patient };
+const testingLabs = (state = {}, action) => {
+    switch(action.type){
+        case GET_TESTING_LABS_LIST:
+            return {
+                ...state,
+                results: [...action.data]
+            }
+        default:
+            return state;
+    }
+};
+
+export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states, patient, testingLabs };

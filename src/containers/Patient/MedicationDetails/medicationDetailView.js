@@ -51,7 +51,7 @@ export default function MedicationDetailView(props) {
           </Typography>
           {
             profile.diseases.map((disease, index) =>
-              <Chip key={index} label={diseaseChoices[disease].name} className="mr-5 mt-5 blueGrad" />
+              <Chip key={index} label={diseaseChoices[disease-1].name} className="mr-5 mt-5 blueGrad" />
             )
           }
         </Grid>

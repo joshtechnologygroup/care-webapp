@@ -9,18 +9,21 @@ import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
-
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from 'Containers/Header';
 import { Button } from '@material-ui/core';
-import { createPatient } from 'Actions/PatientsAction';
+import { createPatient, createPatientSampleTest } from 'Actions/PatientsAction';
 import MuiAlert from "@material-ui/lab/Alert";
-import { TOTAL_PROFILE_FIELDS } from 'Src/constants';
-
+import { TOTAL_PROFILE_FIELDS, TOTAL_FACILITY_FIELDS, FACILITY_EXISTS_ID } from 'Src/constants';
+import _ from 'underscore';
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
-  const [profile, setProfile] = useState({
+  const [profile, setProfile] = useState({year:1,month:1});
+  let history = useHistory();
+  const [hideFacilityDetails, setHideFacilityDetails] = useState(true);
+  const [patient, setPatient] = useState({
     personal: {},
     contact:  {},
     medication: {
@@ -35,12 +38,14 @@ function AddPatient(props) {
     portie_calling_details: [],
     patient_family_details: [],
   });
-  const [error, setError] = useState(null)
+  const [labDetails, setLabDetails] = useState({});
+  const [facilityDetails, setFacilityDetails] = useState({});
+  const [error, setError] = useState(null);
   const [formError, setFormError] = useState(false);
-  const [open, setOpen] = useState(false)
-
-  const saveProfile = (name, value) =>{
-    setProfile(prevState => ({
+  const [open, setOpen] = useState(false);
+  
+  const saveLabDetails = (name, value) =>{
+    setLabDetails(prevState => ({
       ...prevState,
       [name]:value
    }));
@@ -48,6 +53,27 @@ function AddPatient(props) {
      setFormError(true)
    }
   }
+
+  const saveFacilityDetails = (name, value) =>{
+    setFacilityDetails(prevState => ({
+      ...prevState,
+      [name]:value
+   }));
+  }
+
+  const saveProfile = (name, value) =>{
+    setProfile(prevState => ({
+      ...prevState,
+      [name]:value
+   }));
+   if(value === "") {
+     setFormError(true);
+   }
+   if(name  === 'facilityExists'){
+    setHideFacilityDetails(!value);
+   }
+  }
+
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
@@ -57,40 +83,61 @@ function AddPatient(props) {
   }
 
   const handleSave = async () => { //calling save profile api
-    let totalFields = Object.keys(profile).length;
-    if(profile['native_state']){
+    let initial_profile = {...profile};
+    let patient_facility = {...facilityDetails};
+    delete initial_profile.facilityExists;
+    if(!patient_facility['admitted_at']) {
+      patient_facility['admitted_at'] =  new Date()
+    }
+    if(!patient_facility['discharged_at']) {
+      patient_facility['discharged_at'] =  new Date()
+    }
+    let totalFields = Object.keys(initial_profile).length;
+    if(initial_profile['native_state']) {
       totalFields = totalFields - 1;
     }
-    if(profile['native_country'])
-    {
+    if(initial_profile['native_country']) {
       totalFields = totalFields - 1;
     }
-    if((profile['home_isolation'] === false && profile['facility'] === null) || totalFields !== TOTAL_PROFILE_FIELDS){
+    if(initial_profile['patient_status'] === FACILITY_EXISTS_ID && _.isEmpty(patient_facility)) {
       setOpen(true);
-      setFormError(true);
+      setFormError("please fill either facility details or select patient status");
+      return;
+    }
+    if(TOTAL_PROFILE_FIELDS > totalFields) {
+      setOpen(true);
+      setFormError("please fill required details before submitting the form");
+      return;
+    }
+    if(initial_profile['patient_status'] === FACILITY_EXISTS_ID && !_.isEmpty(patient_facility)){
+      initial_profile['patient_facility'] = patient_facility;
+    }
+    let totalPatientFacilityFields = Object.keys(patient_facility).length;
+    if(!_.isEmpty(patient_facility) && totalPatientFacilityFields !== TOTAL_FACILITY_FIELDS && initial_profile['patient_status'] === FACILITY_EXISTS_ID) {
+      setOpen(true);
+      setFormError("please fill all the facilties details");
       return;
     }
     if(formError) {
       setOpen(true);
+      setFormError("please fill required details before submitting the form");
       return;
     }
-    if(totalFields === TOTAL_PROFILE_FIELDS) {
-      const response = await props.createPatient(profile)
-    if(response) {
-      setError(true)
-    } else {
-      setError(false)
-    }
-    setOpen(true)
-    } else {
-      setOpen(true);
-      setFormError(true);
-    }
+      const response = await props.createPatient(profile);
+      if(response.status) {
+        setOpen(true);
+        setError(true);
+        history.push(`/patients/${response.patientId}`);
+      } else{
+        setOpen(true);
+        setFormError(response.error);
+      }
   };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
+    setFormError(false);
     setOpen(false);
     setError(null);
   };
@@ -116,6 +163,13 @@ function AddPatient(props) {
             handleSave={handleSave}
             handleError={handleError}
           />
+            { !hideFacilityDetails && 
+          <FacilityDetails
+            editMode={true}
+            profile={profile[formList[3]]}
+            saveFacilityDetails={saveFacilityDetails}
+          />
+          }
           <ContactDetailForm
             profile={profile}
             saveProfile={saveProfile}
@@ -124,15 +178,14 @@ function AddPatient(props) {
           />
           <MedicationDetails
             editMode={true}
+            saveProfile={saveProfile}
             profile={profile[formList[2]]}
           />
           {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}
           /> */}
-          <FacilityDetails
-            profile={profile[formList[3]]}
-          />
-          <LabTestDetails
+          {/* <LabTestDetails
+            saveLabDetails={saveLabDetails}
             profile={profile[formList[4]]}
           />
           <PortieDetails
@@ -140,7 +193,7 @@ function AddPatient(props) {
           />
           <FamilyDetails
             profile={profile[formList[6]]}
-          />
+          /> */}
           <Grid container justify="space-between">
             <h2>{i18n.t('*Required fields')}</h2>
             <Button
@@ -167,7 +220,7 @@ function AddPatient(props) {
               {error===false && "Error occured!"}
             </div>
           }
-          {error === null && <div>Please fill all the fields first!</div>}
+          {formError && error === null && <div>{formError}</div>}
           </Alert>
         </Snackbar>
       </>
@@ -180,7 +233,8 @@ const mapStateToProps = state => {
 
 AddPatient.propTypes = {
   createPatient: PropTypes.func.isRequired,
+  createPatientSampleTest: PropTypes.func.isRequired
 };
 
 
-export default connect(mapStateToProps, {createPatient})(AddPatient);
+export default connect(mapStateToProps, {createPatient, createPatientSampleTest})(AddPatient);

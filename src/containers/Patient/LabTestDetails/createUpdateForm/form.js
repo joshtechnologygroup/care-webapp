@@ -9,7 +9,7 @@ import {
   InputAdornment,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Event } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -23,7 +23,7 @@ export default function Form(props) {
   const { i18n } = useTranslation();
   const {
     details: {
-      name,
+      testing_lab,
       date_of_sample,
       result
     },
@@ -32,16 +32,30 @@ export default function Form(props) {
     setFieldValue,
     setFieldTouched,
     cancelCallback,
+    saveLabDetails,
+    testingLabs,
   } = props;
-
-  const changeText = (name, e) => {
-    setFieldTouched(e.target.name);
-    setFieldValue(name, e.target.value);
-  };
 
   const setDate = (e) => {
     setFieldValue('date_of_sample', e);
     setFieldTouched('date_of_sample');
+    if(saveLabDetails) {
+      saveLabDetails('date_of_sample', e);
+    }
+  }
+
+  const setStatus = (name, val) =>{
+    setFieldValue(name, val);
+    if(saveLabDetails){ 
+      saveLabDetails(name, val);
+    }
+  }
+
+  const onSelectLab = (event, value) => {
+    setFieldValue("testing_lab", value.id);
+    if(saveLabDetails){ 
+      saveLabDetails("testing_lab", value.id);
+    }
   }
 
   return (
@@ -50,20 +64,21 @@ export default function Form(props) {
 
         <Grid className="pb-0" item xs={12} sm={6}>
           <Autocomplete
-            options={labs}
+            options={testingLabs}
             getOptionLabel={(option) => option.name}
+            onChange={(event, value) => onSelectLab(event, value)}
             renderInput={(params) => 
             <TextField
               {...params}
-              name="name"
-              label={i18n.t('Lab name')}
+              name="testing_lab"
+              value={testing_lab}
+              label={i18n.t('Testing Lab name')}
               fullWidth
-              value={name}
-              onChange={changeText.bind(null, "name")}
+              value={testing_lab}
               className="field"
               variant="outlined"
-              helperText={errors.name}
-              error={Boolean(errors.name)}
+              helperText={errors.testing_lab}
+              error={Boolean(errors.testing_lab)}
             />
           }
           />
@@ -71,7 +86,7 @@ export default function Form(props) {
 
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DatePicker
+            <DateTimePicker
               label={i18n.t('Date time')}
               inputVariant="outlined"
               value={date_of_sample}
@@ -98,7 +113,7 @@ export default function Form(props) {
           <SingleSelectChipsInput
             value={result}
             options={labTestStatusChoices}
-            onChange={(val) => setFieldValue('result', val)}
+            onChange={(val) => setStatus('result', val)}
             valueKey="id"
           />
           <h5 className="text--error">

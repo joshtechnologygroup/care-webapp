@@ -8,11 +8,13 @@ import {
   Button,
   makeStyles,
   createStyles,
+  Chip,
 } from '@material-ui/core';
 import patientMale from 'Assets/images/patient-male.svg';
 import patientFemale from 'Assets/images/patient-female.svg';
 import { PropTypes } from 'prop-types';
-import { GENDER_CHOICES } from 'Constants/app.const';
+import { GENDER_CHOICES, FACILITY_EXISTS_ID } from 'Constants/app.const';
+import { patient_facility_status_choices } from 'Mockdata/PatientFacilityStatusChoices.json';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -39,24 +41,23 @@ export default function PersonalDetail(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
 
-  const { profile, handleEdit, medicationDetails } = props;
-  
+  const { profile, handleEdit } = props;
   return (
     <>
       {
         !props.hideEdit &&
         <div className="section-header mt-0">
           <h4 className="heading--card">{i18n.t('Personal Details')}</h4>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              size="medium"
-              className="btn"
-              onClick={handleEdit}
-            >
-              {i18n.t('Edit')}
-            </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            size="medium"
+            className="btn"
+            onClick={handleEdit}
+          >
+            {i18n.t('Edit')}
+          </Button>
         </div>
       }
 
@@ -65,7 +66,7 @@ export default function PersonalDetail(props) {
           <Grid container spacing={4}>
             <Grid item xs={12} sm={`auto`} className="p-0">
               <div className={`${classes.image} flex-center`}>
-                <img className={`${classes.img} + ${profile.imageSrc ? '' : classes.imgNull}`} src={profile.imageSrc ? profile.imageSrc : GENDER_CHOICES[profile.gender] === 'Male' ? patientMale: patientFemale} alt={profile.name} />
+                <img className={`${classes.img} + ${profile.imageSrc ? '' : classes.imgNull}`} src={profile.imageSrc ? profile.imageSrc : GENDER_CHOICES[profile.gender] === 'Male' ? patientMale : patientFemale} alt={profile.name} />
               </div>
             </Grid>
             <Grid item>
@@ -73,7 +74,7 @@ export default function PersonalDetail(props) {
                 {profile.name}
               </Typography>
               <Typography variant="h6" color="textSecondary">
-                {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.age_years ? profile.age_years + ' ' + i18n.t('years'): '' } {profile.ageMonths? profile.ageMonths + ' ' + i18n.t('months'): '' }
+                {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.age_years ? profile.age_years + ' ' + i18n.t('years') : ''} {profile.ageMonths ? profile.ageMonths + ' ' + i18n.t('months') : ''}
               </Typography>
               <Typography variant="h6" color="textSecondary">
                 {i18n.t('Govt ID')}: {profile.govt_id}
@@ -81,9 +82,25 @@ export default function PersonalDetail(props) {
               <Typography variant="h6" color="textSecondary">
                 {i18n.t('ICMR ID')}: {profile.icmr_id}
               </Typography>
-              <Typography variant="h6" color="textSecondary">
-                {i18n.t('Cluster group')}: {medicationDetails.cluster_group}
-              </Typography>
+              { profile.cluster_group && 
+                <Typography variant="h6" color="textSecondary">
+                  {i18n.t('Cluster group')}: {profile.cluster_group}
+                </Typography>
+              }
+            </Grid>
+            <Grid item xs={12} sm={3} className="ml-auto text-right">
+              <Chip
+                label={
+                  patient_facility_status_choices.map(choice => {
+                    return choice.id === parseInt(profile.patient_status) ? choice.name : ''
+                  })
+                }
+                className={
+                  patient_facility_status_choices.map(choice => {
+                    return choice.id === parseInt(profile.patient_status) ? `${classes.chip} ${choice.theme}` : ''
+                  }).join(' ')
+                }
+              />
             </Grid>
           </Grid>
         </CardContent>

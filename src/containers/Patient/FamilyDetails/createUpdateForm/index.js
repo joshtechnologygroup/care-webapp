@@ -4,6 +4,11 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Grid, Typography, Card, } from '@material-ui/core';
 import Form from './form';
+import { createUpdatePatientFamilyDetails } from 'Actions/PatientsAction';
+import { connect } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { PropTypes } from 'prop-types';
+import _ from 'underscore';
 
 export const CreateUpdateForm = (props) => {
     const { editMode, details, handleSubmit, cancelCallback } = props;
@@ -18,9 +23,8 @@ export const CreateUpdateForm = (props) => {
         gender: Yup.number().required(i18n.t('Please choose gender')),
     });
 
-    const submit = (data) => {
+    const submit = async (data) => {
         handleSubmit(data);
-        console.log('data', data);
     };
 
     return (
@@ -28,7 +32,7 @@ export const CreateUpdateForm = (props) => {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Typography variant="h5">
-                        {editMode ? i18n.t('Edit Family member') : i18n.t('Add Family member') }
+                        {editMode ? i18n.t('Edit Family member') : i18n.t('Add Family member')}
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -47,4 +51,12 @@ export const CreateUpdateForm = (props) => {
     );
 }
 
-export default CreateUpdateForm;
+CreateUpdateForm.propTypes = {
+};
+
+const mapStateToProps = (state) => ({
+});
+
+
+export default connect(mapStateToProps, null)(CreateUpdateForm);
+

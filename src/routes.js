@@ -43,6 +43,9 @@ export const CLUSTER_GROUP_LIST_URL = SERVER + API_V1 + 'patients/patient-groups
 export const COVID_STATUS_LIST_URL = SERVER + API_V1 + 'patients/covid-status/';
 export const GET_PATIENT_URL = SERVER + API_V1 + 'patients/'
 
+//patient sample test
+export const CREATE_PATIENT_SAMPLE_TEST_URL = SERVER + API_V1 + 'patients/sample-tests/'
+
 //Patient Transfers
 export const TRANSFER_LIST_URL = SERVER + API_V1 + 'patients/patient-transfer/';
 export const TRANSFER_UPDATE_URL = SERVER + API_V1 + 'patients/patient-transfer/';
@@ -53,6 +56,14 @@ export const GET_SHORT_PATIENT_LIST_URL = SERVER + API_V1 + 'patients/patients-s
 //patient dependencies
 export const PATIENT_STATUS_LIST_URL = SERVER + API_V1 + 'patients/current-status/'
 
+//testing labs
+export const GET_TESTING_LAB_LIST_URL = SERVER + API_V1 + 'facilities/testing-labs/'
+
+//portie calling 
+export const PORTIE_CALLING_URL = SERVER + API_V1 + 'patients/daily-callers/'
 
 // Relative paths to pages
 export const RELATIVE_PATH_FACILITY_DETAIL = '/facilities/facility-details/{0}'
+
+// patient family member
+export const PATIENT_FAMILY_MEMBER_URL = SERVER + API_V1 + 'patients/family-members/'

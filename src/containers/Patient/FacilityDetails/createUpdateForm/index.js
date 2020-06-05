@@ -6,17 +6,16 @@ import { Grid, Typography, Card, } from '@material-ui/core';
 import Form from './form';
 
 export const CreateUpdateForm = (props) => {
-    const { editMode, details, handleSubmit, cancelCallback } = props;
+    const { editMode, details, handleSubmit, cancelCallback, saveFacilityDetails, shortFacilities } = props;
     const { i18n } = useTranslation();
-
     const validationSchema = Yup.object({
-        name: Yup.string().required(i18n.t('Please select Lab')),
-        status: Yup.number().required(i18n.t('Please select current status')),
+        facility: Yup.number().required(i18n.t('Please select facility')),
+        patient_status: Yup.number().required(i18n.t('Please select current status')),
+        patient_facility_id:  Yup.number().required(i18n.t('Please input patient facility id')),
     });
 
     const submit = (data) => {
         handleSubmit(data);
-        console.log('data', data);
     };
 
     return (
@@ -34,7 +33,7 @@ export const CreateUpdateForm = (props) => {
                         onSubmit={submit}
                     >
                         {
-                            props => <Form editMode={editMode} details={details} {...props} cancelCallback={cancelCallback} />
+                            props => <Form editMode={editMode} details={details} shortFacilities={shortFacilities} saveFacilityDetails={saveFacilityDetails} {...props} cancelCallback={cancelCallback} />
                         }
                     </Formik>
                 </Grid>

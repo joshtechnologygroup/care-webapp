@@ -16,32 +16,54 @@ import DateFnsUtils from '@date-io/date-fns';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
 // Importing mock data
-import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';
+import { facility_status_choices } from 'Mockdata/facility_status_choices.json';
 import { labs } from 'Mockdata/labs.json';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
   const {
     details: {
-      name,
-      admitted_date_time,
-      status
+      facility,
+      patient_facility_id,
+      admitted_at,
+      patient_status,
+      discharged_at
     },
     errors,
     handleSubmit,
     setFieldValue,
     setFieldTouched,
     cancelCallback,
+    saveFacilityDetails,
+    shortFacilities,
+    editMode,
   } = props;
+  const onSelectFacility = (event, value) => {
+    const name = "facility"
+    setFieldTouched(name);
+    setFieldValue(name, value.id);
+    saveFacilityDetails(name, value.id);
+  }
 
-  const changeText = (name, e) => {
-    setFieldTouched(e.target.name);
-    setFieldValue(name, e.target.value);
-  };
+  const setDateTime = (name, value) => {
+    setFieldValue(name, value);
+    setFieldTouched(name);
+    saveFacilityDetails(name, value);
+  }
 
-  const setDateTime = (e) => {
-    setFieldValue('admitted_date_time', e);
-    setFieldTouched('admitted_date_time');
+  const setStatus = (name, val) => {
+    setFieldValue(name, val);
+    saveFacilityDetails(name, val);
+  }
+
+  const setFacilityId = (event) => {
+    const { name, value } = event.target;
+    setFieldValue(name, value);
+    setFieldTouched(name, true, false);
+    if (value) {
+      setFieldTouched(name, false, true);
+    }
+    saveFacilityDetails(name, value);
   }
 
   return (
@@ -50,22 +72,35 @@ export default function Form(props) {
 
         <Grid className="pb-0" item xs={12} sm={6}>
           <Autocomplete
-            options={labs}
+            options={shortFacilities}
             getOptionLabel={(option) => option.name}
-            renderInput={(params) => 
-            <TextField
-              {...params}
-              value={name}
-              name="name"
-              label={i18n.t('Select Facility')}
-              fullWidth
-              onChange={changeText.bind(null, "name")}
-              className="field"
-              variant="outlined"
-              helperText={errors.name}
-              error={Boolean(errors.name)}
-            />
-          }
+            onChange={onSelectFacility}
+            renderInput={(params) =>
+              <TextField
+                {...params}
+                value={facility}
+                name="facility"
+                label={i18n.t('Select Facility')}
+                fullWidth
+                className="field"
+                variant="outlined"
+                helperText={errors.facility}
+                error={Boolean(errors.facility)}
+              />
+
+            }
+          />
+          <TextField
+            name="patient_facility_id"
+            label={i18n.t('Patient facility id')}
+            value={patient_facility_id}
+            onChange={setFacilityId}
+            helperText={errors.patient_facility_id ? errors.patient_facility_id : ""}
+            error={errors.patient_facility_id && Boolean(errors.patient_facility_id)}
+            fullWidth
+            className="field"
+            variant="outlined"
+            type="number"
           />
         </Grid>
 
@@ -74,10 +109,28 @@ export default function Form(props) {
             <DateTimePicker
               label={i18n.t('Admitted Date/time')}
               inputVariant="outlined"
-              value={admitted_date_time}
-              onChange={setDateTime}
+              value={admitted_at}
+              onChange={(val) => setDateTime("admitted_at", val)}
               className="field"
-              name="admitted_date_time"
+              name="admitted_at"
+              disableFuture
+              format="dd/MM/yyyy"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment><Event /></InputAdornment>
+                ),
+              }}
+              fullWidth
+            />
+          </MuiPickersUtilsProvider>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DateTimePicker
+              label={i18n.t('Discharged Date/time')}
+              inputVariant="outlined"
+              value={discharged_at}
+              onChange={(val) => setDateTime("discharged_at", val)}
+              className="field"
+              name="discharged_at"
               disableFuture
               format="dd/MM/yyyy"
               InputProps={{
@@ -96,47 +149,48 @@ export default function Form(props) {
             {i18n.t('status')}
           </Typography>
           <SingleSelectChipsInput
-            value={status}
-            options={facilityStatusChoices}
-            onChange={(val) => setFieldValue('status', val)}
+            value={patient_status}
+            options={facility_status_choices}
+            onChange={(val) => setStatus('patient_status', val)}
             valueKey="id"
           />
           <h5 className="text--error">
-            {errors.status}
+            {errors.patient_status}
           </h5>
         </Grid>
-
-        <Grid container justify="flex-end" className="mt-10" item xs={12}>
-          <Button
-            variant="contained"
-            disableElevation
-            size="medium"
-            className="btn py-5"
-            onClick={cancelCallback}
-          >
-            {i18n.t('Cancel')}
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disableElevation
-            size="medium"
-            className="btn py-5 ml-10"
-          >
-            {i18n.t('Save')}
-          </Button>
-        </Grid>
+        { editMode &&
+          <Grid container justify="flex-end" className="mt-10" item xs={12}>
+            <Button
+              variant="contained"
+              disableElevation
+              size="medium"
+              className="btn py-5"
+              onClick={cancelCallback}
+            >
+              {i18n.t('Cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disableElevation
+              size="medium"
+              className="btn py-5 ml-10"
+            >
+              {i18n.t('Save')}
+            </Button>
+          </Grid>
+        }
       </Grid>
     </form>
   );
 }
 
 Form.propTypes = {
-    details: PropTypes.object.isRequired,
-    handleEdit: PropTypes.func
+  details: PropTypes.object.isRequired,
+  handleEdit: PropTypes.func
 }
 
 Form.defaultProps = {
-    details: {}
+  details: {}
 }

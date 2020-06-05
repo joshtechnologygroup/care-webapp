@@ -63,14 +63,8 @@ const getProfileDependencies = (params) => async (dispatch) => {
  * @param {object} state: Body of inventory object
  * @param {number} id: id of current inventory object clicked
  */
-const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
-    let url = Routes.CREATE_INVENTORY_URL;
-    let method = POST;
-    if(id !== 0) {
-        method = PUT;
-        url += `${id}/`;
-    }
-    const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(url, method, state, {})
+const createOrUpdateInventory = (state, id = null) => async (dispatch) => {
+    const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(state, id)
     if(inventory_response.ok) {
         dispatch({
             type: ReducerTypes.SET_ERROR_CREATE_INVENTORY,
@@ -85,4 +79,14 @@ const createOrUpdateInventory = (state, id = 0) => async (dispatch) => {
     }
 };
 
-export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies, getProfileDependencies }
+
+const getShortFacilitiesList = () => async (dispatch) => {
+    dispatch(dispatchDependentActions(
+        [
+            [Routes.FACILITY_SHORT_LIST_URL, GET, {}, {}],
+        ],
+        [ReducerTypes.GET_SHORT_FACILITY_LIST]
+    ));
+}
+
+export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies,getProfileDependencies, getShortFacilitiesList }

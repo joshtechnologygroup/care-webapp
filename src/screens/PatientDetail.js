@@ -113,7 +113,6 @@ class PatientDetail extends Component {
                 /> :
                 <PersonalDetail
                   profile={this.props.patient.personal_details[0]}
-                  medicationDetails={this.props.patient.medication_details[0]}
                   handleEdit={() => this.setEditable(formList[0], true)}
                 />
             }
