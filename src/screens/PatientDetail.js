@@ -15,6 +15,7 @@ import FamilyDetails from 'Containers/Patient/FamilyDetails';
 
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails } from 'Actions/PatientDetailsAction';
 
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
@@ -82,8 +83,17 @@ class PatientDetail extends Component {
       this.props.getPatientDetailsDependencies(required_data);
     }
   }
-  onSubmit = (data, key) => {
-    this.props.updatePatientDetails(data);
+  onSubmit = async(data, key) => {
+    let patientId = this.props.match.params.patientId;
+    let response;
+    console.log(patientId,data,key)
+    if(key === 'personal') {
+      response =await this.props.updatePatientPersonalDetails(data, patientId);
+    } else if(key === 'contact') {
+      response =await this.props.updatePatientContactDetails(data, patientId);
+    } else if(key === 'medication') {
+      response =await this.props.updatePatientMedicationDetails(data, patientId);
+    }
     this.setState({
       profile: {
         ...this.state.profile,
@@ -181,6 +191,9 @@ PatientDetail.propTypes = {
   fetchPatient: PropTypes.func.isRequired,
   updatePatientDetails: PropTypes.func.isRequired,
   getPatientDetailsDependencies: PropTypes.func.isRequired,
+  updatePatientPersonalDetails: PropTypes.func.isRequired,
+  updatePatientContactDetails: PropTypes.func.isRequired,
+  updatePatientMedicationDetails: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { fetchPatient, updatePatientDetails, getPatientDetailsDependencies })(PatientDetail);
+export default connect(mapStateToProps, { fetchPatient, updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, getPatientDetailsDependencies })(PatientDetail);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
 import {
@@ -15,9 +15,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { facility_status_choices } from 'Mockdata/facility_status_choices.json';
-import { labs } from 'Mockdata/labs.json';
+import { facility_status_choices } from 'Constants/app.const';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -37,7 +35,17 @@ export default function Form(props) {
     saveFacilityDetails,
     shortFacilities,
     editMode,
+    setFormB,
+    validateForm,
+    fieldErrorDict
   } = props;
+console.log(errors,"cfcfcfgcvgvfgvhybjn", fieldErrorDict);
+  useEffect(()=>{
+    if(setFormB) {
+    setFormB(validateForm);
+    }
+  },[])
+
   const onSelectFacility = (event, value) => {
     const name = "facility"
     setFieldTouched(name);
@@ -65,7 +73,6 @@ export default function Form(props) {
     }
     saveFacilityDetails(name, value);
   }
-
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
@@ -85,8 +92,8 @@ export default function Form(props) {
                 className="field"
                 variant="outlined"
                 helperText={errors.facility}
-                error={Boolean(errors.facility)}
-              />
+                error={Boolean(errors.facility) ||(fieldErrorDict ? fieldErrorDict.facility : "")}
+               />
 
             }
           />
@@ -96,7 +103,7 @@ export default function Form(props) {
             value={patient_facility_id}
             onChange={setFacilityId}
             helperText={errors.patient_facility_id ? errors.patient_facility_id : ""}
-            error={errors.patient_facility_id && Boolean(errors.patient_facility_id)}
+            error={errors.patient_facility_id && Boolean(errors.patient_facility_id) }
             fullWidth
             className="field"
             variant="outlined"

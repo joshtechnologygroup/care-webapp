@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { connect } from 'react-redux';
 import {
@@ -16,10 +16,7 @@ import { PropTypes } from 'prop-types';
 import useStyles from './styles';
 import { TOTAL_CONTACT_DETAILS_FIELDS } from 'Src/constants';
 
-// IMORTING MOCKDATA
-import { countryChoices } from 'Mockdata/countryChoices.json';
-import { stateChoices } from 'Mockdata/stateChoices.json';
-import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
+import { countryChoices, stateChoices, relationshipChoices  } from 'Constants/app.const';
 
 export function Form(props) {
   const classes = useStyles();
@@ -46,7 +43,17 @@ export function Form(props) {
     districts,
     states,
     handleError,
+    setFormC,
+    validateForm,
+    fieldErrorDict,
   } = props;
+
+  useEffect(()=>{
+    if(setFormC) {
+    setFormC(validateForm);
+    }
+  },[])
+
   const [values, setValues] = React.useState({
     nativeCountryExist: Boolean(native_country),
     nativeStateExist: Boolean(native_state),
@@ -102,7 +109,8 @@ export function Form(props) {
 
   return (
   <form onSubmit={handleSubmit}>
-    <div className="section-header">
+    {console.log(fieldErrorDict,"---------")}
+    <div className="section-header" onClick={handleSubmit}>
       <h4 className="heading--card">{i18n.t('Contact Details')}</h4>
     </div>
     <Card className={classes.root} elevation={4}>
@@ -117,8 +125,8 @@ export function Form(props) {
               fullWidth
               value={phone_number}
               onChange={handleChange}
-              helperText={touched.phone_number ? errors.phone_number : ""}
-              error={touched.phone_number && Boolean(errors.phone_number)}
+              helperText={touched.phone_number ? errors.phone_number : "" ||(fieldErrorDict ? fieldErrorDict.phone_number : "")}
+              error={touched.phone_number && Boolean(errors.phone_number) ||(fieldErrorDict ? fieldErrorDict.phone_number : "")}
             />
           </Grid>
 
@@ -129,8 +137,8 @@ export function Form(props) {
               label={i18n.t('Contact Number belongs to')}
               value={phone_number_belongs_to}
               onChange={handleChange}
-              helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : ""}
-              error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to)}
+              helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : "" ||(fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "")}
+              error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to) ||(fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "")}
               fullWidth
               required
             >

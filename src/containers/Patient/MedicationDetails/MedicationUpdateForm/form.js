@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Grid,
@@ -8,13 +8,7 @@ import {
 import { MultiSelectChipsInput, SingleSelectChipsInput } from 'Components/Inputs';
 import { PropTypes } from 'prop-types';
 
-// IMPORTING MOCK CHOICES
-import { symptomChoices } from 'Mockdata/symptomChoices.json';
-import { diseaseChoices } from 'Mockdata/diseaseChoices.json';
-import { booleanStatuses } from 'Constants/app.const';
-import { clinicalStatusChoices } from 'Mockdata/clinicalStatusChoices.json';
-import { CovidStatusChoices } from 'Mockdata/CovidStatusChoices.json';
-
+import { clinicalStatusChoices, CovidStatusChoices, symptomChoices, diseaseChoices } from 'Constants/app.const';
 export default function Form(props) {
   const { i18n } = useTranslation();
 
@@ -30,7 +24,17 @@ export default function Form(props) {
     cancelCallback,
     editMode,
     saveProfile,
+    setFormD,
+    validateForm,
+    fieldErrorDict,
+    errors,
   } = props;
+
+  useEffect(()=>{
+    if(setFormD) {
+    props.setFormD(validateForm);
+    }
+  },[])
 
   const setValue = (val, name) => {
     if(saveProfile) {
@@ -52,6 +56,9 @@ export default function Form(props) {
           options={CovidStatusChoices}
           onChange={(val) => setValue(val, 'covid_status')}
         />
+          <h5 className="text--error">
+            {errors.covid_status}
+          </h5>
       </Grid>
 
       <Grid item xs={12} className="pt-0">
@@ -61,9 +68,12 @@ export default function Form(props) {
         <SingleSelectChipsInput
           value={clinical_status}
           valueKey="id"
-          options={clinicalStatusChoices}
+          options={CovidStatusChoices}
           onChange={(val) => setValue(val, 'clinical_status')}
         />
+        <h5 className="text--error">
+            {errors.clinical_status}
+          </h5>
       </Grid>
 
       <Grid item xs={12} className="pt-0">
@@ -121,7 +131,8 @@ export default function Form(props) {
 Form.propTypes = {
   profile: PropTypes.object.isRequired,
   cancelCallback: PropTypes.func,
-  editMode: PropTypes.bool
+  editMode: PropTypes.bool,
+  // setFormD: PropTypes.func
 }
 
 Form.defaultProps = {

@@ -12,12 +12,11 @@ import NullState from 'Components/NullState';
 import nullImage from 'Assets/images/facility.jpg';
 import { CreateUpdateForm } from './createUpdateForm';
 import { connect } from 'react-redux';
-import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';
 import { getShortFacilitiesList } from 'Actions/FacilitiesAction'
 export function FacilityDetails(props) {
   const { i18n } = useTranslation();
-  const { profile, currentStatus, saveFacilityDetails, getShortFacilitiesList, shortFacilities, editMode } = props;
-
+  const { profile, fieldErrorDict, saveFacilityDetails, setFormB, shortFacilities, editMode } = props;
+console.log(props)
   const [editable, setEditable] = React.useState(editMode);
   let status =false;
   if(!profile){
@@ -72,6 +71,8 @@ export function FacilityDetails(props) {
               handleSubmit={handleSubmit}
               saveFacilityDetails={saveFacilityDetails}
               cancelCallback={cancel}
+              fieldErrorDict={fieldErrorDict}
+              setFormB={setFormB}
               editMode={profile.facility ? true : false}
               shortFacilities={shortFacilities}
               details={{'admitted_at':new Date(),'discharged_at':new Date()}}

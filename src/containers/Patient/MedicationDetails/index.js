@@ -7,18 +7,19 @@ import {
   CardContent,
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-
+import { useParams } from "react-router-dom";
 import MedicationDetailView from './medicationDetailView';
 import MedicationUpdateForm from './MedicationUpdateForm';
+import { connect } from 'react-redux';
+import { updatePatientMedicationDetails } from 'Actions/PatientDetailsAction';
 
-export default function MedicationDetail(props) {
+export function MedicationDetail(props) {
   const { i18n } = useTranslation();
-  
-  const { profile, editMode, saveProfile } = props;
+  let { patientId } = useParams();
+  const { profile, editMode, saveProfile, setFormD, fieldErrorDict, updatePatientMedicationDetails } = props;
   const [editable, setEditable] = React.useState(editMode);
 
   const cancelEdit = () => {
-    console.log("reached", editable)
     setEditable(false);
   };
 
@@ -26,9 +27,19 @@ export default function MedicationDetail(props) {
     setEditable(true);
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
     cancelEdit();
-    console.log('Data', data);
+    let response;
+    let initial = data;
+    initial['patient'] = patientId;
+    if (editable === true) {
+      response = await updatePatientMedicationDetails(initial, patientId);
+      if (response.status) {
+        alert('updated medication details successfully');
+      } else {
+        alert(response.error);
+      }
+    }
   };
 
   return (
@@ -54,7 +65,7 @@ export default function MedicationDetail(props) {
             <Grid container>
               {
                 editable ?
-                <MedicationUpdateForm editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={profile} />
+                <MedicationUpdateForm setFormD={setFormD} fieldErrorDict={fieldErrorDict} editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={profile} />
                 :
                 <MedicationDetailView profile={profile} />
               }
@@ -67,9 +78,15 @@ export default function MedicationDetail(props) {
 
 MedicationDetail.propTypes = {
   profile: PropTypes.object.isRequired,
-  editMode: PropTypes.bool
+  editMode: PropTypes.bool,
+  updatePatientMedicationDetails: PropTypes.func
 }
 
 MedicationDetail.defaultProps = {
   profile: {}
 }
+
+const mapStateToProps = (state) => ({
+});
+
+export default connect(mapStateToProps, { updatePatientMedicationDetails })(MedicationDetail);

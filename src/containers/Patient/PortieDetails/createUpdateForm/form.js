@@ -15,9 +15,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
-import { reachableStatus } from 'Constants/app.const';
+import { reachableStatus, relationshipChoices } from 'Constants/app.const';
 
 export default function Form(props) {
   const { i18n } = useTranslation();

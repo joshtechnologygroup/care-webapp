@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { getProfileDependencies } from 'Actions/PatientsAction';
 export function PersonalDetailForm(props) {
   const { i18n } = useTranslation();
-  const { profile, editMode, handleSave, handleError, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus, medicationDetails } = props;
+  const { profile, editMode, setFormA, handleError, fieldErrorDict, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus, medicationDetails } = props;
   const validationSchema = Yup.object({
     name: Yup.string().required(i18n.t('Please enter Patient Name')),
     month: Yup.number().required(i18n.t('Please enter age in months')).max(11, i18n.t('Max value for months is 11')),
@@ -16,12 +16,13 @@ export function PersonalDetailForm(props) {
     gender: Yup.number(i18n.t('Please enter gender')).required(i18n.t('Gender is required')),
     icmr_id: Yup.string().required(i18n.t('Please enter ICMR ID')),
     govt_id: Yup.string().required(i18n.t('Please enter Govt ID')),
-    cluster_group: Yup.number().required(i18n.t('Please select Cluster group')),
+    cluster_group: Yup.number(),
     patient_status: Yup.number(),
   });
 
   const submit= (data) => {
     props.handleSubmit(data);
+    console.log('aaaaaaaaaaa');
   };
   
   useEffect(() => {
@@ -35,9 +36,9 @@ export function PersonalDetailForm(props) {
       validationSchema={validationSchema}
       onSubmit={submit}
       >
-      {
-        props => <Form editMode={editMode} facilityList={facilityList} clusterGroup={clusterGroup} medicationDetails={medicationDetails} handleError={handleError} covidStatus={covidStatus} clinicalStatus={clinicalStatus} currentStatus={currentStatus} saveProfile={saveProfile}{...props} />
-      }
+         {(props) => (
+       <Form editMode={editMode} fieldErrorDict={fieldErrorDict} setFormA={setFormA} facilityList={facilityList} clusterGroup={clusterGroup} medicationDetails={medicationDetails} handleError={handleError} covidStatus={covidStatus} clinicalStatus={clinicalStatus} currentStatus={currentStatus} saveProfile={saveProfile}{...props} />
+      )}
     </Formik>
   );
 }

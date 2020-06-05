@@ -15,9 +15,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
-import { labs } from 'Mockdata/labs.json';
+import { labTestStatusChoices } from 'Constants/app.const';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -34,6 +32,7 @@ export default function Form(props) {
     cancelCallback,
     saveLabDetails,
     testingLabs,
+    touched,
   } = props;
 
   const setDate = (e) => {
@@ -77,8 +76,8 @@ export default function Form(props) {
               value={testing_lab}
               className="field"
               variant="outlined"
-              helperText={errors.testing_lab}
-              error={Boolean(errors.testing_lab)}
+              helperText={errors.testing_lab && touched.testing_lab}
+              error={Boolean(errors.testing_lab) && touched.testing_lab}
             />
           }
           />

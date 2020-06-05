@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -22,8 +22,7 @@ import { GENDER_MAPPING_PROPS } from 'Constants/app.const.js';
 import { TOTAL_PERSONEL_DETAILS_FIELDS } from 'Src/constants';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { patient_status_choices } from 'Mockdata/PatientStatusChoices.json';
+import { patient_status_choices } from 'Constants/app.const';
 
 export default function Form(props) {
   const classes = useStyles();
@@ -52,7 +51,17 @@ export default function Form(props) {
     clusterGroup,
     handleError,
     handleSubmit,
+    validateForm,
+    fieldErrorDict,
+    setFormA,
   } = props;
+
+  useEffect(() => {
+    if(setFormA) {
+    setFormA(validateForm);
+    }
+    console.log(touched,errors)
+  }, []);
 
   const [values, setValues] = React.useState({
     facilityExists: Boolean(facility),
@@ -62,7 +71,7 @@ export default function Form(props) {
     const { name, value } = event.target;
     setFieldValue(name, value);
     if (saveProfile) {
-      saveProfile(name, value)
+      saveProfile(name, value);
     }
     setFieldTouched(name, true, false);
     if (value) {
@@ -110,6 +119,7 @@ export default function Form(props) {
   };
   return (
     <form onSubmit={handleSubmit}>
+       {console.log(fieldErrorDict,"-------personal--")}
       <div className="section-header mt-0">
         <h4 className="heading--card">{i18n.t('Personal Details')}</h4>
       </div>
@@ -134,8 +144,8 @@ export default function Form(props) {
                     fullWidth
                     value={name}
                     onChange={change}
-                    helperText={touched.name ? errors.name : ""}
-                    error={touched.name && Boolean(errors.name)}
+                    helperText={touched.name ? errors.name : "" }
+                    error={touched.name && Boolean(errors.name) ||(fieldErrorDict ? fieldErrorDict.name : "")}
                     required
                   />
                 </Grid>
@@ -148,8 +158,8 @@ export default function Form(props) {
                     label={i18n.t('Age in years')}
                     value={year}
                     onChange={change}
-                    helperText={touched.year ? errors.year : ""}
-                    error={touched.year && Boolean(errors.year)}
+                    helperText={touched.year ? errors.year : "" || (fieldErrorDict ? fieldErrorDict.year : "")}
+                    error={touched.year && Boolean(errors.year) ||(fieldErrorDict ? fieldErrorDict.year : "")}
                     fullWidth
                     type="number"
                     required
@@ -161,7 +171,7 @@ export default function Form(props) {
                     label={i18n.t('Age in Months')}
                     value={month}
                     onChange={change}
-                    helperText={touched.month ? errors.month : ""}
+                    helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "")}
                     error={touched.month && Boolean(errors.month)}
                     fullWidth
                     type="number"
@@ -186,7 +196,7 @@ export default function Form(props) {
                     value={govt_id}
                     onChange={change}
                     helperText={touched.govt_id ? errors.govt_id : ""}
-                    error={touched.govt_id && Boolean(errors.govt_id)}
+                    error={touched.govt_id && Boolean(errors.govt_id) || fieldErrorDict ? fieldErrorDict.govt_id : ""}
                     fullWidth
                     required
                   />
@@ -198,6 +208,7 @@ export default function Form(props) {
                     label={i18n.t('Cluster group of patient')}
                     value={cluster_group}
                     onChange={change}
+                    type="number"
                     helperText={touched.cluster_group ? errors.cluster_group : ""}
                     error={touched.cluster_group && Boolean(errors.cluster_group)}
                     fullWidth
@@ -210,21 +221,21 @@ export default function Form(props) {
                     }
                   </TextField>
                 </Grid>
-                  <Grid className="pb-0 mb-10" item xs={12}>
-                    <Typography variant="h6">
-                      {i18n.t('Patient status')}
-                    </Typography>
-                    <SingleSelectChipsInput
-                      value={patient_status}
-                      options={patient_status_choices}
-                      onChange={(val) => setStatus('patient_status', val)}
-                      valueKey="id"
-                      unselectable={true}
-                    />
-                    <h5 className="text--error">
-                      {errors.patient_status}
-                    </h5>
-                  </Grid>
+                <Grid className="pb-0 mb-10" item xs={12}>
+                  <Typography variant="h6">
+                    {i18n.t('Patient status')}
+                  </Typography>
+                  <SingleSelectChipsInput
+                    value={patient_status}
+                    options={patient_status_choices}
+                    onChange={(val) => setStatus('patient_status', val)}
+                    valueKey="id"
+                    unselectable={true}
+                  />
+                  <h5 className="text--error">
+                    {errors.patient_status}
+                  </h5>
+                </Grid>
                 {
                   editMode &&
                   <Grid item xs={12} sm={3} className="ml-auto">
