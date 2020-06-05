@@ -15,6 +15,8 @@ import {
   SyncAlt,
   LocationCity,
   AccountCircle,
+  AirlineSeatIndividualSuiteOutlined,
+  LocalHospitalOutlined,
   ListAlt } from '@material-ui/icons';
 import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
@@ -22,6 +24,7 @@ import { logout } from 'Actions/AuthAction';
 import { setData, getData } from 'Utils/local-storage';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { TextField, MenuItem } from '@material-ui/core';
 
 export function NavigationPanel(props) {
   const { i18n } = useTranslation();
@@ -105,11 +108,13 @@ export function NavigationPanel(props) {
             <ul className="navbar-nav sub-nav clearfix">
               <li className={getActivatedRoute('/facilities/beds') ? 'active' : ''}>
                 <Link to={'/facilities/beds'} className="nav-link">
+                  <AirlineSeatIndividualSuiteOutlined />
                   {i18n.t('Wards / Beds')}
                 </Link>
               </li>
               <li className={getActivatedRoute('/facilities/doctor-attendant') ? 'active' : ''}>
                 <Link to={'/facilities/doctor-attendant'} className="nav-link">
+                  <LocalHospitalOutlined />
                   {i18n.t('Doctor / Attendant')}
                 </Link>
               </li>
@@ -159,10 +164,18 @@ export function NavigationPanel(props) {
           </li>
         </ul>
         <div className="lang-wrap">
-          <select onChange={changeLang} defaultValue={getData("lang") || "en"}>
-            <option value="en">English</option>
-            <option value="hn">Hindi</option>
-          </select>
+        <h6 className="heading--sub">{i18n.t('Change language')}</h6>
+          <TextField
+            select
+            onChange={changeLang}
+            defaultValue={getData("lang") || "en"}
+            fullWidth
+            variant="outlined"
+            className="field text-center"
+          >
+            <MenuItem value="en">English</MenuItem>
+            <MenuItem value="hn">Hindi</MenuItem>
+          </TextField>
         </div>
       </div>
     </Grid>
