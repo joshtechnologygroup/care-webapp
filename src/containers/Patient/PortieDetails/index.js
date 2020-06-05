@@ -62,7 +62,7 @@ export function PortieDetails(props) {
     <div className="mb-20">
       <div className="section-header">
         <h4 className="heading--card">
-          {i18n.t('Portie Details')}
+          {i18n.t('Portie Calling Details')}
         </h4>
         <Button
           variant="contained"
