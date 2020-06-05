@@ -182,7 +182,10 @@ export function BedsList(props) {
             onSeeMore={() => {
               setShowOverlay(!showOverlay);
             }}
-            handleApplyFilter={() => props.getBedsList(currentUrl, selectedParams)}
+            handleApplyFilter={() => {
+                setShowOverlay(false);
+                props.getBedsList(currentUrl, selectedParams)
+            }}
             handleBooleanCallBack={val => handleBooleanCallBack(val)}
             handleNumberCallBack={(val) => handleNumberCallBack(val)}
             handleReset={() => {

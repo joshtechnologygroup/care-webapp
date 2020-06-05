@@ -36,7 +36,7 @@ export function TransfersList(props) {
         queryParams, 
         count 
     } = props;
-    const itemsPerPage = 4;
+    const itemsPerPage = 100;
 
     const [showColumnsPanel, setShowColumnsPanel] = useState(false);
     const [showOverlay, setShowOverlay] = useState(false);
@@ -191,9 +191,10 @@ export function TransfersList(props) {
                                 [field]: value
                             })
                         }}
-                        handleApplyFilter={() =>
-                        { applyFilter();}
-                        }
+                        handleApplyFilter={() => { 
+                            applyFilter();
+                            setShowOverlay(false);
+                        }}
                         handleBooleanCallBack={val =>
                             handleBooleanCallBack(val)
                         }
