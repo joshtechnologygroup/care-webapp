@@ -67,5 +67,17 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .lang-wrap {
-  float: right;
+  padding: 0 12px 16px;
+  h6 {
+    text-transform: none;
+  }
+  .field {
+    &.MuiFormControl-root {
+      min-height: auto;
+    }
+    min-height: auto;
+    .MuiSelect-root.MuiSelect-select {
+      padding: 5px;
+    }
+  }
 }

@@ -60,7 +60,7 @@ $risks: (
         color: $timeline_gray;
         position: absolute;
         left: -11rem;
-        top: 6px;
+        top: 2px;
     }
 }
 @each $name, $color in $types {

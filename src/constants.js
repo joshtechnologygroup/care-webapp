@@ -11,6 +11,14 @@ export const DANGER = 'danger';
 export const WARNING = 'warning';
 export const INFO = 'info';
 
+// User Types
+export const DISTRICT_MANAGER = 3
+export const PORTIA = 2
+export const FACILITY_MANAGER = 1
+
+export const NAVIGATION_PERMISSION = [DISTRICT_MANAGER, FACILITY_MANAGER]
+
+
 export const TOKEN = 'Token';
 export const USER_ID = 'user-id';
 export const APPLICATION_JSON = 'application/json';
@@ -42,3 +50,5 @@ export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
 
 export const DATE_FORMAT = "MM/DD/YYYY hh:mm A";
+export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
+export const TIME_FORMAT = "hh:mm A";

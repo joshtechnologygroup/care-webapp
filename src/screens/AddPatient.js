@@ -20,7 +20,12 @@ import { TOTAL_PROFILE_FIELDS, TOTAL_FACILITY_FIELDS, FACILITY_EXISTS_ID } from 
 import _ from 'underscore';
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
-  const [profile, setProfile] = useState({year:1,month:1});
+  const [profile, setProfile] = useState({
+    year: 1,
+    month: 1,
+    symptoms: [],
+    diseases: [],
+  });
   let history = useHistory();
   const [formA, setFormA] = useState({});
   const [formB, setFormB] = useState({});
@@ -217,6 +222,13 @@ function AddPatient(props) {
             handleError={handleError}
             setFormA={setFormA}
           />
+           <FacilityDetails
+            editMode={true}
+            profile={profile}
+            fieldErrorDict={fieldErrorDict}
+            saveFacilityDetails={saveFacilityDetails}
+            setFormB={setFormB}
+          />
            <ContactDetailForm
             profile={profile}
             fieldErrorDict={fieldErrorDict}
@@ -225,21 +237,12 @@ function AddPatient(props) {
             handleError={handleError}
             setFormC={setFormC}
           />
-           {console.log(fieldErrorDict)}
           <MedicationDetails
             editMode={true}
             fieldErrorDict={fieldErrorDict}
             saveProfile={saveProfile}
             profile={profile[formList[2]]}
             setFormD={setFormD}
-          />
-          {console.log(fieldErrorDict)}
-          <FacilityDetails
-            editMode={true}
-            profile={profile[formList[3]]}
-            fieldErrorDict={fieldErrorDict}
-            saveFacilityDetails={saveFacilityDetails}
-            setFormB={setFormB}
           />
           {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}

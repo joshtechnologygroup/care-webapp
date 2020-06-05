@@ -104,23 +104,27 @@ export function Form(props) {
                     />
                 </Grid>
                 <Grid item sm={6} xs={12}>
+                    <label className={classes.label}>{i18n.t('Required Number')}</label>
                     <TextField 
                         name="required_quantity"
                         type="number"
-                        label={i18n.t('Required Number')}
+                        variant="outlined"
                         fullWidth
                         onChange={changeText.bind(null, "required_quantity")}
                         error={errors.required_quantity}
+                        className={classes.field}
                     />
                 </Grid>
                 <Grid item sm={6} xs={12}>
-                    <TextField 
+                    <label className={classes.label}>{i18n.t('Current Number')}</label>
+                    <TextField
                         name="current_quantity"
                         type="number"
-                        label={i18n.t('Current Number')}
+                        variant="outlined"
                         fullWidth
                         onChange={changeText.bind(null, "current_quantity")}
                         error={errors.current_quantity}
+                        className={classes.field}
                     />
                 </Grid>
             </Grid>

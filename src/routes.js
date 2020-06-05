@@ -64,6 +64,7 @@ export const PORTIE_CALLING_URL = SERVER + API_V1 + 'patients/daily-callers/'
 
 // Relative paths to pages
 export const RELATIVE_PATH_FACILITY_DETAIL = '/facilities/facility-details/{0}'
+export const RELATIVE_LOGIN = '/login';
 
 // patient family member
 export const PATIENT_FAMILY_MEMBER_URL = SERVER + API_V1 + 'patients/family-members/'

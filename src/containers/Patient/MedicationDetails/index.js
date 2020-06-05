@@ -12,6 +12,9 @@ import MedicationDetailView from './medicationDetailView';
 import MedicationUpdateForm from './MedicationUpdateForm';
 import { connect } from 'react-redux';
 import { updatePatientMedicationDetails } from 'Actions/PatientDetailsAction';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import {SUCCESS, DANGER} from "Src/constants";
 
 export function MedicationDetail(props) {
   const { i18n } = useTranslation();
@@ -36,8 +39,14 @@ export function MedicationDetail(props) {
       response = await updatePatientMedicationDetails(initial, patientId);
       if (response.status) {
         alert('updated medication details successfully');
+        createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+      )
       } else {
         alert(response.error);
+        createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
+      )
       }
     }
   };
