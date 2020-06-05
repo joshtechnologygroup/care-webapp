@@ -20,7 +20,12 @@ import { TOTAL_PROFILE_FIELDS, TOTAL_FACILITY_FIELDS, FACILITY_EXISTS_ID } from 
 import _ from 'underscore';
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
-  const [profile, setProfile] = useState({year:1,month:1});
+  const [profile, setProfile] = useState({
+    year: 1,
+    month: 1,
+    symptoms: [],
+    diseases: [],
+  });
   let history = useHistory();
   const [patient, setPatient] = useState({
     personal: {},
@@ -173,7 +178,7 @@ function AddPatient(props) {
           <MedicationDetails
             editMode={true}
             saveProfile={saveProfile}
-            profile={profile[formList[2]]}
+            profile={profile}
           />
           {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}
