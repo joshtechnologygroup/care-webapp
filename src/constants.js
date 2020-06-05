@@ -11,6 +11,14 @@ export const DANGER = 'danger';
 export const WARNING = 'warning';
 export const INFO = 'info';
 
+// User Types
+export const DISTRICT_MANAGER = 1
+export const PORTIA = 2
+export const FACILITY_MANAGER = 3
+
+export const NAVIGATION_PERMISSION = [DISTRICT_MANAGER, FACILITY_MANAGER]
+
+
 export const TOKEN = 'Token';
 export const USER_ID = 'user-id';
 export const APPLICATION_JSON = 'application/json';

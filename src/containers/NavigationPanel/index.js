@@ -4,7 +4,7 @@ import {
   withRouter,
   useHistory
 } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import Grid from '@material-ui/core/Grid';
 import {
   Dashboard,
@@ -17,25 +17,36 @@ import {
   AccountCircle,
   AirlineSeatIndividualSuiteOutlined,
   LocalHospitalOutlined,
-  ListAlt } from '@material-ui/icons';
+  ListAlt
+} from '@material-ui/icons';
 import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
-import { logout } from 'Actions/AuthAction';
-import { setData, getData } from 'Utils/local-storage';
+import {logout} from 'Actions/AuthAction';
+import {setData, getData} from 'Utils/local-storage';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { TextField, MenuItem } from '@material-ui/core';
+import {connect} from 'react-redux';
+import * as Routes from 'Src/routes'
+import * as Constants from 'Src/constants'
+import {TextField, MenuItem} from '@material-ui/core';
 
 export function NavigationPanel(props) {
-  const { i18n } = useTranslation();
+  const {i18n} = useTranslation();
+  const history = useHistory();
+
+  const handleLogOut = async () => {
+    const response = await props.logout();
+    history.push(Routes.RELATIVE_LOGIN);
+  }
+
   function changeLang(e) {
     setData("lang", e.target.value || 'en');
     i18n.changeLanguage(e.target.value || 'en');
   };
-  const history = useHistory();
+
   function getActivatedRoute(path) {
     return path === props.location.pathname;
   }
+
   return (
     <Grid
       container
@@ -46,75 +57,80 @@ export function NavigationPanel(props) {
     >
       <div>
         <Link to={'/'} className="nav-logo">
-          <img src={logo} alt="covid care" />
+          <img src={logo} alt="covid care"/>
         </Link>
         <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/dashboard') ? 'active' : ''}>
             <Link to={'/dashboard'} className="nav-link">
-              <Dashboard />
+              <Dashboard/>
               {i18n.t('Dashboard')}
             </Link>
           </li>
+          {Constants.NAVIGATION_PERMISSION.indexOf(props.userType) >= 0 &&
           <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
             <Link to={'/transfer'} className="nav-link">
-              <SyncAlt />
+              <SyncAlt/>
               {i18n.t('Transfer')}
             </Link>
           </li>
+          }
           <li className={getActivatedRoute('/patients') ? 'active' : ''}>
             <Link to={'/patients'} className="nav-link">
-              <People />
+              <People/>
               {i18n.t('Patients')}
             </Link>
             {/*<ul className="navbar-nav sub-nav clearfix">*/}
-              {/*<li className={getActivatedRoute('/patients/add') ? 'active' : ''}>*/}
-              {/*  <Link to={'/patients/add'} className="nav-link">*/}
-              {/*    {i18n.t('Add Patient')}*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
-              {/*<li className={getActivatedRoute('/patients/hospitals') ? 'active' : ''}>*/}
-              {/*  <Link to={'/patients/hospitals'} className="nav-link">*/}
-              {/*    {i18n.t('Hospitals')}*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
-              {/*<li className={getActivatedRoute('/patients/hcc') ? 'active' : ''}>*/}
-              {/*  <Link to={'/patients/hcc'} className="nav-link">*/}
-              {/*    {i18n.t('HCC')}*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
-              {/*<li className={getActivatedRoute('/patients/care-centers') ? 'active' : ''}>*/}
-              {/*  <Link to={'/patients/care-centers'} className="nav-link">*/}
-              {/*    {i18n.t('Care Centers')}*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
-              {/*<li className={getActivatedRoute('/patients/private-quarantine') ? 'active' : ''}>*/}
-              {/*  <Link to={'/patients/private-quarantine'} className="nav-link">*/}
-              {/*    {i18n.t('Private Quarantine')}*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
+            {/*<li className={getActivatedRoute('/patients/add') ? 'active' : ''}>*/}
+            {/*  <Link to={'/patients/add'} className="nav-link">*/}
+            {/*    {i18n.t('Add Patient')}*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
+            {/*<li className={getActivatedRoute('/patients/hospitals') ? 'active' : ''}>*/}
+            {/*  <Link to={'/patients/hospitals'} className="nav-link">*/}
+            {/*    {i18n.t('Hospitals')}*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
+            {/*<li className={getActivatedRoute('/patients/hcc') ? 'active' : ''}>*/}
+            {/*  <Link to={'/patients/hcc'} className="nav-link">*/}
+            {/*    {i18n.t('HCC')}*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
+            {/*<li className={getActivatedRoute('/patients/care-centers') ? 'active' : ''}>*/}
+            {/*  <Link to={'/patients/care-centers'} className="nav-link">*/}
+            {/*    {i18n.t('Care Centers')}*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
+            {/*<li className={getActivatedRoute('/patients/private-quarantine') ? 'active' : ''}>*/}
+            {/*  <Link to={'/patients/private-quarantine'} className="nav-link">*/}
+            {/*    {i18n.t('Private Quarantine')}*/}
+            {/*  </Link>*/}
+            {/*</li>*/}
             {/*</ul>*/}
           </li>
+          {Constants.NAVIGATION_PERMISSION.indexOf(props.userType) >= 0 &&
           <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
             <Link to={'/inventory'} className="nav-link">
-              <ListAlt />
+              <ListAlt/>
               {i18n.t('Inventory')}
             </Link>
           </li>
+          }
+          {Constants.NAVIGATION_PERMISSION.indexOf(props.userType) >= 0 &&
           <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
             <Link to={'/facilities'} className="nav-link">
-              <LocationCity />
+              <LocationCity/>
               {i18n.t('Facilities')}
             </Link>
             <ul className="navbar-nav sub-nav clearfix">
               <li className={getActivatedRoute('/facilities/beds') ? 'active' : ''}>
                 <Link to={'/facilities/beds'} className="nav-link">
-                  <AirlineSeatIndividualSuiteOutlined />
+                  <AirlineSeatIndividualSuiteOutlined/>
                   {i18n.t('Wards / Beds')}
                 </Link>
               </li>
               <li className={getActivatedRoute('/facilities/doctor-attendant') ? 'active' : ''}>
                 <Link to={'/facilities/doctor-attendant'} className="nav-link">
-                  <LocalHospitalOutlined />
+                  <LocalHospitalOutlined/>
                   {i18n.t('Doctor / Attendant')}
                 </Link>
               </li>
@@ -130,6 +146,7 @@ export function NavigationPanel(props) {
               {/*</li>*/}
             </ul>
           </li>
+          }
         </ul>
       </div>
       <div>
@@ -152,19 +169,19 @@ export function NavigationPanel(props) {
         <ul className="navbar-nav clearfix">
           <li className={getActivatedRoute('/profile') ? 'active' : ''}>
             <Link to={'/profile'} className="nav-link">
-              <AccountCircle />
+              <AccountCircle/>
               {i18n.t('Profile')}
             </Link>
           </li>
           <li className={getActivatedRoute('/logout') ? 'active' : ''}>
-            <Link className="nav-link" onClick={() => props.logout(history)}>
-              <ExitToApp   />
+            <Link className="nav-link" onClick={handleLogOut}>
+              <ExitToApp/>
               {i18n.t('Logout')}
             </Link>
           </li>
         </ul>
         <div className="lang-wrap">
-        <h6 className="heading--sub">{i18n.t('Change language')}</h6>
+          <h6 className="heading--sub">{i18n.t('Change language')}</h6>
           <TextField
             select
             onChange={changeLang}
@@ -183,11 +200,13 @@ export function NavigationPanel(props) {
 }
 
 const mapStateToProps = (state) => ({
+  userType: state.profile.user_type
 });
 
 NavigationPanel.propTypes = {
-  logout: PropTypes.func.isRequired,
+  userType: PropTypes.number,
+  logout: PropTypes.func,
 };
 
 
-export default connect(mapStateToProps, { logout })(withRouter(NavigationPanel));
+export default connect(mapStateToProps, {logout})(withRouter(NavigationPanel));
