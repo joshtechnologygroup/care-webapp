@@ -34,7 +34,7 @@ export function PatientsList( props ) {
   const [ patients, setPatients ] = useState(null);
   const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
   const [ selectedParams, setSelectedParams ] = useState({});
-  const [ ordering, setOrdering ] = useState('none');
+  const [ ordering, setOrdering ] = useState({field: null, ordering: 'none'});
 
   // getting all the denpendencies related to patient list
   useEffect(() => {
@@ -194,14 +194,11 @@ export function PatientsList( props ) {
   useEffect(() => {
       handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), INITIAL_PAGE);
       //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ selectedParams, ordering ]);
+  }, [ ordering ]);
 
-  const handleApiCall = async (url, next_page) => {
-    let params = Object.assign({}, selectedParams);
-    if(ordering === 'desc') {
-      Object.keys(params).forEach(param => {
-        params[param] = '-' + params[param]
-      })
+  const handleApiCall = async (url, next_page, params = {...selectedParams}) => {
+    if(ordering.field){
+      params['ordering'] = (ordering.ordering === 'desc') ? '-' + ordering.field : ordering.field
     }
     props.getPatientList( url, params );
     setPage(next_page);
@@ -283,6 +280,11 @@ export function PatientsList( props ) {
           <Filters
             options={CONFIG.columnDefs}
             onSeeMore={() => setShowOverlay(!showOverlay)}
+            handleApplyFilter={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), INITIAL_PAGE)}
+            handleReset={() => {
+              handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL,[ PAGINATION_LIMIT, 0 ]), INITIAL_PAGE, {});
+              setSelectedParams({});
+            }}
             handleBooleanCallBack={val => handleBooleanCallBack(val)}
             handleNumberCallBack={val => handleNumberCallBack(val)}
             handleDateCallBack={val => handleDateCallBack(val)}/>
@@ -299,9 +301,9 @@ export function PatientsList( props ) {
         >
           <Grid item xs={12} sm={4} >
             <Sort
-              onSelect={val =>   setSelectedParams({ 'ordering' : [ val ] })}
+              onSelect={val =>   {setOrdering(prevState => ({...prevState, field: val}))}}
               options={CONFIG.columnDefs}
-              onToggleSort={toggleVal => setOrdering(toggleVal)} />
+              onToggleSort={toggleVal => setOrdering( prevState => ({...prevState, ordering: toggleVal}))} />
           </Grid>
           <Grid item xs={12} sm={5} >
             <PaginationController
