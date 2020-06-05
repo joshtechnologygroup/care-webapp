@@ -65,10 +65,12 @@ export function Form(props) {
         </Grid>
 
         <Grid item sm={6} xs={12}>
+          <label className={classes.label}>{i18n.t('Name')}</label>
           <TextField
             name="name"
             type="text"
-            label={i18n.t('Name')}
+            variant="outlined"
+            className={classes.field}
             id={"standard-error-helper-text"}
             defaultValue={data && data.name}
             helperText={props.errorString.name.reduce((total, value, index, array) => total + ' ' + value)}
@@ -79,11 +81,13 @@ export function Form(props) {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
+          <label className={classes.label}>{i18n.t('Phone Number')}</label>
           <TextField
             name="phone_number"
             type="number"
             helperText={props.errorString.phone_number.reduce((total, value, index, array) => total + ' ' + value)}
-            label={i18n.t('Phone Number')}
+            variant="outlined"
+            className={classes.field}
             defaultValue={data && data.phone_number}
             fullWidth
             onChange={changeText.bind(null, "phone_number")}
@@ -91,10 +95,12 @@ export function Form(props) {
           />
         </Grid>
         <Grid item sm={6} xs={12}>
+          <label className={classes.label}>{i18n.t('Email')}</label>
           <TextField
             name="email"
             type="email"
-            label={i18n.t('Email')}
+            variant="outlined"
+            className={classes.field}
             helperText={props.errorString.email.reduce((total, value, index, array) => total + ' ' + value)}
             defaultValue={data && data.email}
             fullWidth
