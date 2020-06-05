@@ -43,10 +43,14 @@ export default function Form(props) {
     setFieldValue(name, val.map(item => item.value));
   };
 
+  React.useEffect(() => {
+    changeSelect('preferred_districts_id', preferred_districts)
+  }, [preferred_districts]);
+
   return (
   <form onSubmit={handleSubmit}>
     <Card className={classes.root} elevation={4}>
-      <CardHeader className="pb-0"
+      <CardHeader
         title={i18n.t('Profile Details')}
       />
       <CardContent>
@@ -75,44 +79,42 @@ export default function Form(props) {
             />
           </Grid>
           <Grid item xs={12} sm={12}>
-              <Typography variant="h6">{i18n.t("Select District")}</Typography>
+            <Typography variant="h6">{i18n.t("Select District")}</Typography>
+            {
+              districtPreference.length > 0 && preferred_districts.length > 0 &&
               <Select
+                name="preferred_districts_id"
                 options={districtPreference}
                 placeholder={i18n.t("Select District")}
                 isMulti
-                defaultValue={districtPreference}
+                defaultValue={districtPreference.filter((district) => preferred_districts.includes(district.value))}
                 onChange={(val) => changeSelect('preferred_districts_id', val)}
               />
+            }
           </Grid>
           {
             editMode &&
-            <Grid item xs={12} sm={3} className="ml-auto">
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-                disableElevation
-                className="btn py-5"
-              >
-                {i18n.t('Submit')}
-              </Button>
-            </Grid>
-          }
-          {
-            editMode &&
-            <Grid item xs={12} sm={3} className="ml-auto">
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                disableElevation
-                className="btn py-5"
-                onClick={handleCancel}
-              >
-                {i18n.t('Cancel')}
-              </Button>
-            </Grid>
+            <>
+              <Grid item xs={12} className="text-right">
+                <Button
+                  variant="contained"
+                  disableElevation
+                  className="btn py-5"
+                  onClick={handleCancel}
+                >
+                  {i18n.t('Cancel')}
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disableElevation
+                  className="btn py-5 ml-10"
+                >
+                  {i18n.t('Submit')}
+                </Button>
+              </Grid>
+            </>
           }
         </Grid>
       </CardContent>
