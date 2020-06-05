@@ -22,7 +22,6 @@ function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
   const [profile, setProfile] = useState({year:1,month:1});
   let history = useHistory();
-  const [hideFacilityDetails, setHideFacilityDetails] = useState(true);
   const [patient, setPatient] = useState({
     personal: {},
     contact:  {},
@@ -68,9 +67,6 @@ function AddPatient(props) {
    }));
    if(value === "") {
      setFormError(true);
-   }
-   if(name  === 'facilityExists'){
-    setHideFacilityDetails(!value);
    }
   }
 
@@ -163,13 +159,11 @@ function AddPatient(props) {
             handleSave={handleSave}
             handleError={handleError}
           />
-            { !hideFacilityDetails && 
           <FacilityDetails
             editMode={true}
             profile={profile[formList[3]]}
             saveFacilityDetails={saveFacilityDetails}
           />
-          }
           <ContactDetailForm
             profile={profile}
             saveProfile={saveProfile}

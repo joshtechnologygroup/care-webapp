@@ -30,6 +30,11 @@
         text-decoration: none;
         word-break: break-word;
     }
+    &--link-sm {
+        color: $blue-primary;
+        text-decoration: underline;
+        cursor: pointer;
+    }
     &--gray {
         color: $grey;
     }

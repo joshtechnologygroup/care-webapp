@@ -4,7 +4,7 @@ import {
   withRouter,
   useHistory
 } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import Grid from '@material-ui/core/Grid';
 import {
   Dashboard,
@@ -15,15 +15,19 @@ import {
   SyncAlt,
   LocationCity,
   AccountCircle,
-  ListAlt } from '@material-ui/icons';
+  AirlineSeatIndividualSuiteOutlined,
+  LocalHospitalOutlined,
+  ListAlt
+} from '@material-ui/icons';
 import './NavigationPanel.scss';
 import logo from 'Assets/images/logo.svg';
-import { logout } from 'Actions/AuthAction';
-import { setData, getData } from 'Utils/local-storage';
+import {logout} from 'Actions/AuthAction';
+import {setData, getData} from 'Utils/local-storage';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import * as Routes from 'Src/routes'
 import * as Constants from 'Src/constants'
+import {TextField, MenuItem} from '@material-ui/core';
 
 export function NavigationPanel(props) {
   const {i18n} = useTranslation();
@@ -63,12 +67,12 @@ export function NavigationPanel(props) {
             </Link>
           </li>
           {Constants.NAVIGATION_PERMISSION.some((value, index, array) => props.userType === value) &&
-            <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
-              <Link to={'/transfer'} className="nav-link">
-                <SyncAlt/>
-                {i18n.t('Transfer')}
-              </Link>
-            </li>
+          <li className={getActivatedRoute('/transfer') ? 'active' : ''}>
+            <Link to={'/transfer'} className="nav-link">
+              <SyncAlt/>
+              {i18n.t('Transfer')}
+            </Link>
+          </li>
           }
           <li className={getActivatedRoute('/patients') ? 'active' : ''}>
             <Link to={'/patients'} className="nav-link">
@@ -104,42 +108,44 @@ export function NavigationPanel(props) {
             {/*</ul>*/}
           </li>
           {Constants.NAVIGATION_PERMISSION.some((value, index, array) => props.userType === value) &&
-            <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
-              <Link to={'/inventory'} className="nav-link">
-                <ListAlt/>
-                {i18n.t('Inventory')}
-              </Link>
-            </li>
+          <li className={getActivatedRoute('/inventory') ? 'active' : ''}>
+            <Link to={'/inventory'} className="nav-link">
+              <ListAlt/>
+              {i18n.t('Inventory')}
+            </Link>
+          </li>
           }
           {Constants.NAVIGATION_PERMISSION.some((value, index, array) => props.userType === value) &&
-            <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
-              <Link to={'/facilities'} className="nav-link">
-                <LocationCity/>
-                {i18n.t('Facilities')}
-              </Link>
-              <ul className="navbar-nav sub-nav clearfix">
-                <li className={getActivatedRoute('/facilities/beds') ? 'active' : ''}>
-                  <Link to={'/facilities/beds'} className="nav-link">
-                    {i18n.t('Wards / Beds')}
-                  </Link>
-                </li>
-                <li className={getActivatedRoute('/facilities/doctor-attendant') ? 'active' : ''}>
-                  <Link to={'/facilities/doctor-attendant'} className="nav-link">
-                    {i18n.t('Doctor / Attendant')}
-                  </Link>
-                </li>
-                {/*<li className={getActivatedRoute('/facilities/manage-users') ? 'active' : ''}>*/}
-                {/*  <Link to={'/facilities/manage-users'} className="nav-link">*/}
-                {/*    {i18n.t('Manage Users')}*/}
-                {/*  </Link>*/}
-                {/*</li>*/}
-                {/*<li className={getActivatedRoute('/facilities/facility-details') ? 'active' : ''}>*/}
-                {/*  <Link to={'/facilities/facility-details'} className="nav-link">*/}
-                {/*    {i18n.t('Facility Details')}*/}
-                {/*  </Link>*/}
-                {/*</li>*/}
-              </ul>
-            </li>
+          <li className={getActivatedRoute('/facilities') ? 'active' : ''}>
+            <Link to={'/facilities'} className="nav-link">
+              <LocationCity/>
+              {i18n.t('Facilities')}
+            </Link>
+            <ul className="navbar-nav sub-nav clearfix">
+              <li className={getActivatedRoute('/facilities/beds') ? 'active' : ''}>
+                <Link to={'/facilities/beds'} className="nav-link">
+                  <AirlineSeatIndividualSuiteOutlined/>
+                  {i18n.t('Wards / Beds')}
+                </Link>
+              </li>
+              <li className={getActivatedRoute('/facilities/doctor-attendant') ? 'active' : ''}>
+                <Link to={'/facilities/doctor-attendant'} className="nav-link">
+                  <LocalHospitalOutlined/>
+                  {i18n.t('Doctor / Attendant')}
+                </Link>
+              </li>
+              {/*<li className={getActivatedRoute('/facilities/manage-users') ? 'active' : ''}>*/}
+              {/*  <Link to={'/facilities/manage-users'} className="nav-link">*/}
+              {/*    {i18n.t('Manage Users')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+              {/*<li className={getActivatedRoute('/facilities/facility-details') ? 'active' : ''}>*/}
+              {/*  <Link to={'/facilities/facility-details'} className="nav-link">*/}
+              {/*    {i18n.t('Facility Details')}*/}
+              {/*  </Link>*/}
+              {/*</li>*/}
+            </ul>
+          </li>
           }
         </ul>
       </div>
@@ -175,10 +181,18 @@ export function NavigationPanel(props) {
           </li>
         </ul>
         <div className="lang-wrap">
-          <select onChange={changeLang} defaultValue={getData("lang") || "en"}>
-            <option value="en">English</option>
-            <option value="hn">Hindi</option>
-          </select>
+          <h6 className="heading--sub">{i18n.t('Change language')}</h6>
+          <TextField
+            select
+            onChange={changeLang}
+            defaultValue={getData("lang") || "en"}
+            fullWidth
+            variant="outlined"
+            className="field text-center"
+          >
+            <MenuItem value="en">English</MenuItem>
+            <MenuItem value="hn">Hindi</MenuItem>
+          </TextField>
         </div>
       </div>
     </Grid>

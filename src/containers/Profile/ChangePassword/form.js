@@ -3,11 +3,13 @@ import { useTranslation } from "react-i18next";
 import {
     Grid,
     TextField,
-    Button
+    Button,
+    FormControl,
+    FormHelperText,
 } from '@material-ui/core';
 
 export default function Form(props) {
-    const { handleSubmit, setFieldValue, errors, setFieldTouched, touched } = props
+    const { handleSubmit, setFieldValue, errors, setFieldTouched, touched, nonFieldError } = props
     const { i18n } = useTranslation();
     
     const changeText = (name, e) => {
@@ -54,6 +56,13 @@ export default function Form(props) {
                         error={touched.password_2 && errors.password_2}
                     />
                 </Grid>
+                {
+                    nonFieldError &&
+                    <FormControl component="fieldset" error={true}>
+                        <FormHelperText className="ml-10">{nonFieldError.non_field_errors}</FormHelperText>
+                    </FormControl>
+                }
+
                 <Grid item xs={12} sm={3} className="ml-auto">
                     <Button
                         fullWidth

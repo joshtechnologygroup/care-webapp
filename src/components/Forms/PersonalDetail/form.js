@@ -58,20 +58,6 @@ export default function Form(props) {
     facilityExists: Boolean(facility),
   })
 
-  const setIsolationFacility = (event) => {
-    if (event.target.name === 'facilityExists') {
-      if (saveProfile) {
-        saveProfile("facilityExists", event.target.checked);
-        if(event.target.checked) {
-          saveProfile("patient_status", 4);
-        }
-      }
-      setFieldValue('homeIsolationExist', '');
-      setValues({
-        [event.target.name]: event.target.checked
-      });
-    }
-  };
   const change = (event) => {
     const { name, value } = event.target;
     setFieldValue(name, value);
@@ -190,7 +176,6 @@ export default function Form(props) {
                     onChange={change}
                     helperText={touched.icmr_id ? errors.icmr_id : ""}
                     error={touched.icmr_id && Boolean(errors.icmr_id)}
-                    type="number"
                     fullWidth
                   />
                 </Grid>
@@ -225,7 +210,6 @@ export default function Form(props) {
                     }
                   </TextField>
                 </Grid>
-                { !Boolean(values.facilityExists) &&
                   <Grid className="pb-0 mb-10" item xs={12}>
                     <Typography variant="h6">
                       {i18n.t('Patient status')}
@@ -241,27 +225,6 @@ export default function Form(props) {
                       {errors.patient_status}
                     </h5>
                   </Grid>
-                }
-
-                <Grid container item xs={12}>
-                  <Grid item xs={12} sm={6}>
-                    <FormControlLabel className={classes.checkboxWrap}
-                      control={
-                        <Checkbox
-                          checked={values.facilityExists}
-                          onChange={setIsolationFacility}
-                          name="facilityExists"
-                          color="primary"
-                        />
-                      }
-                      label={
-                        <Typography variant="h5">
-                          {i18n.t('Patient associated With facility')}
-                        </Typography>
-                      }
-                    />
-                  </Grid>
-                </Grid>
                 {
                   editMode &&
                   <Grid item xs={12} sm={3} className="ml-auto">
