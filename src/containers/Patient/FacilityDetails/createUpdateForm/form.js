@@ -92,7 +92,7 @@ export default function Form(props) {
           />
           <TextField
             name="patient_facility_id"
-            label={i18n.t('patient facility id')}
+            label={i18n.t('Patient facility id')}
             value={patient_facility_id}
             onChange={setFacilityId}
             helperText={errors.patient_facility_id ? errors.patient_facility_id : ""}

@@ -9,7 +9,7 @@ import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
-
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from 'Containers/Header';
@@ -21,6 +21,7 @@ import _ from 'underscore';
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
   const [profile, setProfile] = useState({year:1,month:1});
+  let history = useHistory();
   const [hideFacilityDetails, setHideFacilityDetails] = useState(true);
   const [patient, setPatient] = useState({
     personal: {},
@@ -123,12 +124,13 @@ function AddPatient(props) {
       return;
     }
       const response = await props.createPatient(profile);
-      if(response) {
+      if(response.status) {
         setOpen(true);
         setError(true);
+        history.push(`/patients/${response.patientId}`);
       } else{
         setOpen(true);
-        setFormError("some error occurs");
+        setFormError(response.error);
       }
   };
   const handleClose = (event, reason) => {
@@ -161,6 +163,13 @@ function AddPatient(props) {
             handleSave={handleSave}
             handleError={handleError}
           />
+            { !hideFacilityDetails && 
+          <FacilityDetails
+            editMode={true}
+            profile={profile[formList[3]]}
+            saveFacilityDetails={saveFacilityDetails}
+          />
+          }
           <ContactDetailForm
             profile={profile}
             saveProfile={saveProfile}
@@ -175,13 +184,6 @@ function AddPatient(props) {
           {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}
           /> */}
-          { !hideFacilityDetails && 
-          <FacilityDetails
-            editMode={true}
-            profile={profile[formList[3]]}
-            saveFacilityDetails={saveFacilityDetails}
-          />
-          }
           {/* <LabTestDetails
             saveLabDetails={saveLabDetails}
             profile={profile[formList[4]]}

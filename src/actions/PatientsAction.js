@@ -46,7 +46,13 @@ const getProfileDependencies = (params) => async (dispatch) => {
  */
 const createPatient = state => async (dispatch) => {
     const create_patient_response = await CommonService.makeAuthorizedApiCall(Routes.CREATE_PATIENT_LIST_URL, POST, state, {})
-    return create_patient_response.ok;
+    const patient_data = await create_patient_response.json();
+    if(create_patient_response.ok) {
+        return {status: true, patientId: patient_data.personal_details[0].id};
+    } else if(create_patient_response.status === HttpStatus.BAD_REQUEST) {
+    return {status:false, error: "patient with this govt id or icmr id already exists"}
+    }
+    return {status:false, error: "error occurs"}
 }
 
 
