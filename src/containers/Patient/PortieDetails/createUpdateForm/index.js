@@ -15,7 +15,7 @@ export const CreateUpdatePortieDetails = (props) => {
     const validationSchema = Yup.object({
         status: Yup.boolean().required(i18n.t('Please select contact status')),
         name: Yup.string().required(i18n.t('Please enter Portie name')),
-        portie_phone_number: Yup.number().required(i18n.t('Please enter Portie contact number')).min(10, i18n.t('Please enter a valid contact number')),
+        patient_phone_number: Yup.number().required(i18n.t('Please enter Portie contact number')).min(10, i18n.t('Please enter a valid contact number')),
         relation: Yup.string().required(i18n.t('Please choose relation of Patient with the person')),
     });
 
