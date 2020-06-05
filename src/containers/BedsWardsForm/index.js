@@ -108,7 +108,7 @@ export const BedsWardsForm = (props) => {
   }
 
   return (
-    <CustomModal open={open} onClose={onClose} title={i18n.t('Inventory')}>
+    <CustomModal open={open} onClose={onClose} title={i18n.t('Add new Beds/Wards')}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Formik>
