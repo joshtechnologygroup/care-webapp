@@ -4,14 +4,13 @@ import { PropTypes } from 'prop-types';
 import {
   Grid,
   Card,
-  Typography,
 } from '@material-ui/core';
 import NullState from 'Components/NullState';
 import imgNull from 'Assets/images/timeline.jpg';
 import { EventOutlined, AccessTime } from '@material-ui/icons';
 import moment from 'moment';
 import './Timeline.scss';
-import { DATE_FORMAT } from 'Src/constants';
+import { DATE_ONLY_FORMAT, TIME_FORMAT } from 'Src/constants';
 export default function Timeline(props) {
   const { i18n } = useTranslation();
   const { timeline } = props;
@@ -32,7 +31,16 @@ export default function Timeline(props) {
           >
             {timeline.map((item, index) => (
               <div key={index} className={`item`}>
-                <span className="date"> {moment(item.date).format(DATE_FORMAT)}</span>
+                <div className="date">
+                  <p className="align-items-center">
+                    <EventOutlined className="mr-5" />
+                    {moment(item.date).format(DATE_ONLY_FORMAT)}
+                  </p>
+                  <p className="align-items-center">
+                    <AccessTime className="mr-5" />
+                    {moment(item.date).format(TIME_FORMAT)}
+                  </p>
+                </div>
                 {/* <span className={`pointer __${item.type} __${item.risk}`} /> */}
                 <span className={`pointer __admission __normal`} />
                 {/* <p className="title">{item.title}</p> */}

@@ -65,6 +65,7 @@ export const GET_PORTEA_USERS = SERVER + API_V1 + 'accounts/users/portea/'
 
 // Relative paths to pages
 export const RELATIVE_PATH_FACILITY_DETAIL = '/facilities/facility-details/{0}'
+export const RELATIVE_LOGIN = '/login';
 
 // patient family member
 export const PATIENT_FAMILY_MEMBER_URL = SERVER + API_V1 + 'patients/family-members/'

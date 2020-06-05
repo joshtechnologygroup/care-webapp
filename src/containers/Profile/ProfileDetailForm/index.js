@@ -30,7 +30,10 @@ export default function ProfileDetailForm(props) {
 
   return (
     <Formik
-    initialValues={profile}
+    initialValues={{
+      ...profile,
+      preferred_districts_id: districtPreference.filter((district) => profile.preferred_districts.includes(district.value))
+    }}
     validationSchema={validationSchema}
     onSubmit={submit}
     >
