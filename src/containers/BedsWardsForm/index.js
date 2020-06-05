@@ -13,6 +13,7 @@ import {createUpdateFacilityInfrastructure} from 'Actions/BedsListAction'
 import {Formik} from 'formik';
 import Form from './form';
 import useStyles from './styles';
+import * as Constants from 'Src/constants'
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -48,12 +49,19 @@ export const BedsWardsForm = (props) => {
   }
 
   useEffect(() => {
-    const {facilities, roomTypes, bedTypes} = props
-    if (facilities && roomTypes && bedTypes) {
+    const {facilities, roomTypes, bedTypes, userType, associatedFacilities} = props
+    if (facilities && roomTypes && bedTypes && userType && associatedFacilities && userType) {
       let update_facility = [];
-      facilities.forEach((row) => {
-        update_facility.push({'value': row.id, 'label': row.name});
-      });
+      if (userType === Constants.FACILITY_MANAGER && associatedFacilities) {
+        update_facility = associatedFacilities.map((id) => {
+          const facility = facilities.find((value, index, array) => value.id === id);
+          return {'value': facility.id, 'label': facility.name}
+        });
+      } else {
+        facilities.forEach((row) => {
+          update_facility.push({'value': row.id, 'label': row.name});
+        });
+      }
       let update_roomtype = [];
       roomTypes.forEach((row) => {
         update_roomtype.push({'value': row.id, 'label': row.name});
@@ -76,7 +84,9 @@ export const BedsWardsForm = (props) => {
   }, [
     props.facilities,
     props.bedTypes,
-    props.roomTypes
+    props.roomTypes,
+    props.associatedFacilities,
+    props.userType
   ]);
 
   const handleChange = (name, e) => {
@@ -170,13 +180,17 @@ const mapStateToProps = (state) => ({
   facilities: state.shortFacilities.results,
   roomTypes: state.roomType.results,
   bedTypes: state.bedType.results,
+  userType: state.profile.user_type,
+  associatedFacilities: state.profile.associated_facilities,
 });
 
 BedsWardsForm.propTypes = {
-  facilities: PropTypes.array.isRequired,
-  roomTypes: PropTypes.array.isRequired,
-  bedTypes: PropTypes.array.isRequired,
-  createUpdateFacilityInfrastructure: PropTypes.func.isRequired
+  userType: PropTypes.number,
+  associatedFacilities: PropTypes.array,
+  facilities: PropTypes.array,
+  roomTypes: PropTypes.array,
+  bedTypes: PropTypes.array,
+  createUpdateFacilityInfrastructure: PropTypes.func
 };
 
 export default connect(mapStateToProps, {createUpdateFacilityInfrastructure})(BedsWardsForm);

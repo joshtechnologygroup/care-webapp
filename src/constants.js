@@ -12,9 +12,9 @@ export const WARNING = 'warning';
 export const INFO = 'info';
 
 // User Types
-export const DISTRICT_MANAGER = 1
+export const DISTRICT_MANAGER = 3
 export const PORTIA = 2
-export const FACILITY_MANAGER = 3
+export const FACILITY_MANAGER = 1
 
 export const NAVIGATION_PERMISSION = [DISTRICT_MANAGER, FACILITY_MANAGER]
 
