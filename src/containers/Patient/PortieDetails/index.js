@@ -1,23 +1,26 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Card,
   Button,
 } from '@material-ui/core';
-
+import { useParams } from "react-router-dom";
 import NullState from 'Components/NullState';
 import PortieNull from 'Assets/images/portie_null.jpg';
 import PortieDetailCard from 'Components/Cards/PortieDetailCard';
 import CreateUpdatePortieDetails from './createUpdateForm';
+import { createPortieDetails, updatePortieDetails } from 'Actions/PortieAction';
 
-export default function PortieDetails(props) {
+export function PortieDetails(props) {
+  let { patientId } = useParams();
   const { i18n } = useTranslation();
-  const { profile } = props;
+  const { profile, createPortieDetails, updatePortieDetails } = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
-  
+
   const edit = (id) => {
     setEditable(id);
   };
@@ -25,16 +28,30 @@ export default function PortieDetails(props) {
     setEditable('new');
   };
 
-  const handleSubmit = (data) => {
+  const handleSubmit = async (data) => {
+    let initial = data;
+    let portie_response;
+    initial['patient'] = patientId;
     if (editable === 'new') {
-      profile.unshift(data);
       setEditable('');
+      portie_response = await createPortieDetails(initial);
+      if (portie_response.status) {
+        profile.unshift(data);
+        alert('updated');
+      } else {
+        alert(portie_response.error);
+      }
     }
     else {
       profile[editable] = data;
       setEditable('');
+      portie_response = await updatePortieDetails(initial, data.id);
+      if (portie_response.status) {
+        alert('updated');
+      } else {
+        alert(portie_response.error);
+      }
     }
-    console.log('data subitted', data);
   };
 
   const cancel = () => {
@@ -83,7 +100,7 @@ export default function PortieDetails(props) {
               editMode={true}
               details={details}
             />
-          }
+        }
         )
       }
       {
@@ -98,8 +115,11 @@ export default function PortieDetails(props) {
 
 PortieDetails.propTypes = {
   profile: PropTypes.array.isRequired,
+  createPortieDetails: PropTypes.func,
+  updatePortieDetails: PropTypes.func,
 };
 
-PortieDetails.defaultProps = {
-  profile: []
+PortieDetails.propTypes = {
 };
+  
+export default connect(null, { createPortieDetails, updatePortieDetails })(PortieDetails);

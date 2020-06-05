@@ -61,7 +61,11 @@ export default function ChangePassword(props) {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
             <Formik
-                initialValues={{}}
+                initialValues={{
+                    current_password: "",
+                    password_1: "",
+                    password_2: ""
+                }}
                 validationSchema={validationSchema}
                 onSubmit={submit}
                 >

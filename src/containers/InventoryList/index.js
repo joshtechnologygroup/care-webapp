@@ -251,7 +251,7 @@ const mapStateToProps = state => {
         inventoryList: inventory.results,
         count: inventory.count,
         inventoryTypesList: inventoryTypes,
-        shortFacilityLists: {...shortFacilities.results},
+        shortFacilityLists: shortFacilities.results,
         error: createInventory.error,
     };
 };

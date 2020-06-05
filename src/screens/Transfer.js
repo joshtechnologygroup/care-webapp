@@ -5,9 +5,14 @@ import { useTranslation } from "react-i18next";
 import Header from 'Containers/Header';
 import TransfersList from 'Containers/TransfersList';
 import PatientTransferForm from '../containers/AddPatientTransfer';
+import * as ToastUtils from 'Src/utils/toast';
+import {createToastNotification} from 'Actions/ToastAction';
+import {SUCCESS} from "Src/constants";
+import { connect } from 'react-redux';
 
-const Transfer = () => {
+const Transfer = (props) => {
     const [open, setOpen] = React.useState(false);
+    const { addToastNotification } = props;
 
     const handleClick = () => {
         setOpen(true);
@@ -18,7 +23,9 @@ const Transfer = () => {
     }
 
     const showSuccessToast = () => {
-        alert('Successfully Updated');
+        addToastNotification(
+            ToastUtils.toastDict(1, "Added", "Patient Transfer successfully added", SUCCESS)
+        )
     };
 
     const { i18n } = useTranslation();
@@ -51,4 +58,11 @@ const Transfer = () => {
     );
 }
 
-export default Transfer;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addToastNotification: (data) => { dispatch(createToastNotification(data)) }
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Transfer);

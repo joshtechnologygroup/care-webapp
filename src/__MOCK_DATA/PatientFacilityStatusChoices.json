@@ -1,0 +1,24 @@
+{
+    "patient_facility_status_choices": [
+        {
+            "id": 1,
+            "name": "Home Isolation",
+            "theme": "warning"
+        },
+        {
+            "id": 2,
+            "name": "Recovered",
+            "theme": "success"
+        },
+        {
+            "id": 3,
+            "name": "Dead",
+            "theme": "danger"
+        },
+        {
+            "id": 4,
+            "name": "Facility exists",
+            "theme": "success"
+        }
+    ]
+}

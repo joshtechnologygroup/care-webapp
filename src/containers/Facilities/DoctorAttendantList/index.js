@@ -159,7 +159,10 @@ export function DoctorAttendantList(props) {
             onSeeMore={() => {
               setShowOverlay(!showOverlay);
             }}
-            handleApplyFilter={() => props.getStaffList(currentUrl, selectedParams)}
+            handleApplyFilter={() => {
+                props.getStaffList(currentUrl, selectedParams)
+                setShowOverlay(false);
+            }}
             handleReset={() => {
               props.getStaffList(currentUrl, {});
               setSelectedParams({});

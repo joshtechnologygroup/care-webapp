@@ -135,11 +135,13 @@ export const booleanStatuses = {
 
 export const reachableStatus = [
   {
+    id: 1,
     value: true,
     name: 'Contacted',
     theme: 'success'
   },
   {
+    id: 2,
     value: false,
     name: 'Not Reachable',
     theme: 'danger'

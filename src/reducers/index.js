@@ -8,7 +8,8 @@ import {
     covidStatus,
     currentStatus, 
     states, 
-    patient
+    patient,
+    testingLabs
 } from "Reducers/PatientReducer";
 import {
     facilities,
@@ -57,4 +58,5 @@ export default combineReducers({
     profile,
     userTypes,
     toasts,
+    testingLabs,
 });

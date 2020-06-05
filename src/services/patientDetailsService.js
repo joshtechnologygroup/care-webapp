@@ -3,12 +3,12 @@ import * as Routes from 'Src/routes';
 import { POST, PUT } from "Src/constants";
 
 /**
- * service for create or update inventory object
+ * common service for portie and family members to create or update object
  * @param {object} body: details regarding portie or family member associated with patient 
  * @param {id} id: only when details required to be updated 
  */
-async function makeAuthorizedFacilityApiCall(body, id = null) {
-    let url = Routes.CREATE_INVENTORY_URL;
+async function makeAuthorizedPatientDetailsApiCall(body, id = null) {
+    let url = Routes.PATIENT_FAMILY_MEMBER_URL;
     let method = POST;
     if(id) {
         method = PUT;
@@ -17,4 +17,4 @@ async function makeAuthorizedFacilityApiCall(body, id = null) {
     return  CommonService.makeAuthorizedApiCall(url, method, body, {}, {})
 }
 
-export { makeAuthorizedFacilityApiCall };
+export { makeAuthorizedPatientDetailsApiCall };

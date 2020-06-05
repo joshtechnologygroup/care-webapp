@@ -23,14 +23,21 @@ export default function SingleSelectChipsInput(props) {
     options,
     value,
     onChange,
-    valueKey
+    valueKey,
+    unselectable
   } = props;
 
   const [val, setVal] = useState(value);
 
   const change = (e, option) => {
-    setVal(valueKey ? option[valueKey] : option.name);
-    onChange && onChange(valueKey ? option[valueKey] : option.name);
+    console.log(e, e.target.checked, option);
+    if(unselectable && !e.target.checked) {
+      setVal('');
+      onChange && onChange('');
+    } else {
+      setVal(valueKey ? option[valueKey] : option.name);
+      onChange && onChange(valueKey ? option[valueKey] : option.name);
+    }
   };
   return (
     options.length && options.map((option, index) =>

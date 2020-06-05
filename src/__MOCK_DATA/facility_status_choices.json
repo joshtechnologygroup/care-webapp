@@ -1,0 +1,19 @@
+{
+    "facility_status_choices": [
+        {
+            "id": 2,
+            "name": "Admitted to Facility",
+            "theme": "danger"
+        },
+        {
+            "id": 3,
+            "name": "Transferred to another Facility",
+            "theme": "warning"
+        },
+        {
+            "id": 4,
+            "name": "Discharged",
+            "theme": "success"
+        }
+    ]
+}
