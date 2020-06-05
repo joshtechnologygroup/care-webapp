@@ -9,7 +9,8 @@ import {CONFIG} from './config';
 import {
   multiSelectBooleanFilterCallback
 } from "Src/utils/listFilter";
-import {PAGINATION_LIMIT, INITIAL_PAGE, OFFSET, DATE_FORMAT} from 'Src/constants';
+// import {PAGINATION_LIMIT, INITIAL_PAGE, OFFSET, DATE_FORMAT} from 'Src/constants';
+import * as Constants from 'Src/constants';
 import moment from "moment";
 import {mappingIdWithNames} from 'Src/utils/mapping-functions'
 import PaginationController from 'Components/PaginationController';
@@ -24,9 +25,9 @@ export function BedsList(props) {
   const [selectedParams, setSelectedParams] = useState({});
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [facilityInfrastructureList, setFacilityInfrastructureList] = useState(props.facilityInfrastructureList);
-  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
-  const [currentUrl, setCurrentUrl] = useState(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
-  const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
+  const [currentPage, setCurrentPage] = useState(Constants.INITIAL_PAGE);
+  const [currentUrl, setCurrentUrl] = useState(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [Constants.PAGINATION_LIMIT, Constants.OFFSET]));
+  const [totalPages, setTotalPages] = useState(Constants.INITIAL_PAGE);
   const [ordering, setOrdering] = useState({});
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -68,8 +69,10 @@ export function BedsList(props) {
   }, [currentUrl, ordering]);
 
   useEffect(() => {
-    const {facilityInfrastructureList, facilities, roomTypeList, bedTypeList} = props;
+    const {associatedFacilities, userType, facilityInfrastructureList, facilities, roomTypeList, bedTypeList} = props;
     if (
+      associatedFacilities &&
+      userType &&
       facilityInfrastructureList &&
       facilities &&
       roomTypeList &&
@@ -78,7 +81,7 @@ export function BedsList(props) {
 
       let update_facilityInfrastructureList = new Array(...props.facilityInfrastructureList);
       update_facilityInfrastructureList.forEach((row, index) => {
-        row.updated_at = moment(row.updated_at).format(DATE_FORMAT);
+        row.updated_at = moment(row.updated_at).format(Constants.DATE_FORMAT);
       });
 
       const list = [
@@ -109,6 +112,13 @@ export function BedsList(props) {
         })
       });
 
+      if (userType === Constants.FACILITY_MANAGER) {
+        update_list['updated_facility_list'] = associatedFacilities.map((id) => {
+          const facility = facilities.find((value, index, array) => value.id === id);
+          return facility.name
+        });
+      }
+
       CONFIG.columnDefs.forEach((col) => {
         if (col.field === 'facility') {
           col.cellRendererParams.options = update_list['updated_facility_list']
@@ -121,8 +131,7 @@ export function BedsList(props) {
         }
       });
 
-
-      setTotalPages(Math.ceil(props.count / PAGINATION_LIMIT))
+      setTotalPages(Math.ceil(props.count / Constants.PAGINATION_LIMIT))
       setFacilityInfrastructureList(update_facilityInfrastructureList);
     } else if (
       facilityInfrastructureList ||
@@ -135,7 +144,9 @@ export function BedsList(props) {
   }, [
     props.facilityInfrastructureList,
     props.facilities,
-    props.roomTypeList
+    props.roomTypeList,
+    props.associatedFacilities,
+    props.userType
   ]);
 
   const handleBooleanCallBack = (val) => {
@@ -190,8 +201,8 @@ export function BedsList(props) {
               setShowOverlay(!showOverlay);
             }}
             handleApplyFilter={() => {
-                setShowOverlay(false);
-                props.getBedsList(currentUrl, selectedParams)
+              setShowOverlay(false);
+              props.getBedsList(currentUrl, selectedParams)
             }}
             handleBooleanCallBack={val => handleBooleanCallBack(val)}
             handleNumberCallBack={(val) => handleNumberCallBack(val)}
@@ -230,8 +241,8 @@ export function BedsList(props) {
               resultsShown={currentPage}
               totalResults={totalPages}
               onFirst={() => {
-                setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
-                setCurrentPage(INITIAL_PAGE)
+                setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [Constants.PAGINATION_LIMIT, Constants.OFFSET]));
+                setCurrentPage(Constants.INITIAL_PAGE)
               }}
               onPrevious={() => {
                 if (props.prevPage) {
@@ -246,7 +257,7 @@ export function BedsList(props) {
                 }
               }}
               onLast={() => {
-                setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1)]));
+                setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [Constants.PAGINATION_LIMIT, Constants.PAGINATION_LIMIT * (totalPages - 1)]));
                 setCurrentPage(totalPages);
               }}
               onShowList={() => {
@@ -287,18 +298,22 @@ const mapStateToProps = (state) => ({
   bedTypeList: state.bedType.results,
   facilities: state.shortFacilities.results,
   roomTypeList: state.roomType.results,
+  userType: state.profile.user_type,
+  associatedFacilities: state.profile.associated_facilities,
 });
 
 BedsList.propTypes = {
-  getBedsList: PropTypes.func.isRequired,
-  facilityInfrastructureList: PropTypes.array.isRequired,
-  count: PropTypes.number.isRequired,
-  nextPage: PropTypes.object.isRequired,
-  prevPage: PropTypes.object.isRequired,
-  bedTypeList: PropTypes.array.isRequired,
-  facilities: PropTypes.array.isRequired,
-  roomTypeList: PropTypes.array.isRequired,
-  getBedsListDependencies: PropTypes.func.isRequired
+  userType: PropTypes.number,
+  associatedFacilities: PropTypes.array,
+  getBedsList: PropTypes.func,
+  facilityInfrastructureList: PropTypes.array,
+  count: PropTypes.number,
+  nextPage: PropTypes.object,
+  prevPage: PropTypes.object,
+  bedTypeList: PropTypes.array,
+  facilities: PropTypes.array,
+  roomTypeList: PropTypes.array,
+  getBedsListDependencies: PropTypes.func
 };
 
 export default connect(mapStateToProps, {getBedsListDependencies, getBedsList})(BedsList);

@@ -11,8 +11,6 @@ import Form from './form';
 import './style.scss';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 
 export default function ChangePassword(props) {
   const { i18n } = useTranslation();
@@ -70,15 +68,9 @@ export default function ChangePassword(props) {
                 onSubmit={submit}
                 >
                 {
-                    props => <Form {...props}/>
+                  props => <Form nonFieldError={changePasswordErrors} {...props}/>
                 }
             </Formik>
-            {
-            changePasswordErrors && changePasswordErrors && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText>{changePasswordErrors.non_field_errors}</FormHelperText>
-            </FormControl>
-            }
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </React.Fragment>
