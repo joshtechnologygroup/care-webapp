@@ -75,7 +75,7 @@ export function PortieDetails(props) {
         )
       } else {
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
+            ToastUtils.toastDict((new Date()).getTime(), "Updated", "Some Error Occurred", DANGER)
         )
       }
     }
@@ -156,4 +156,10 @@ const mapStateToProps = (state) => ({
     porteaUsers: state.porteaUsers
 });
 
-export default connect(mapStateToProps, { createPortieDetails, updatePortieDetails, getPorteaUsers, fetchPatient, createToastNotification })(PortieDetails);
+export default connect(mapStateToProps, { 
+    createPortieDetails, 
+    updatePortieDetails, 
+    getPorteaUsers, 
+    fetchPatient, 
+    createToastNotification 
+})(PortieDetails);

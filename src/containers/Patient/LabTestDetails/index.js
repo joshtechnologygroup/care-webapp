@@ -15,11 +15,18 @@ import { getTestingLabList } from 'Actions/PatientsAction';
 import { createSampleTest, updateSampleTest } from 'Actions/TestingLabsAction'
 import { useParams } from "react-router-dom";
 import _ from 'underscore';
+import { fetchPatient } from 'Actions/PatientsAction';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import {SUCCESS, DANGER} from "Src/constants";
 
 export function LabTestDetail(props) {
   let { patientId } = useParams();
   const { i18n } = useTranslation();
-  const { profile, saveLabDetails, getTestingLabList, testingLabs, createSampleTest, updateSampleTest } = props;
+  const { 
+    profile, saveLabDetails, getTestingLabList, testingLabs, 
+    createSampleTest, updateSampleTest, fetchPatient, createToastNotification 
+} = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
@@ -44,9 +51,13 @@ export function LabTestDetail(props) {
       response = await createSampleTest(initial);
       if (response.status) {
         profile.unshift(data);
-        alert('created patient sample test successfully');
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added Lab Test", SUCCESS)
+        )
       } else {
-        alert(response.error);
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
+        )
       }
     }
     else {
@@ -54,11 +65,16 @@ export function LabTestDetail(props) {
       setEditable('');
       response = await updateSampleTest(initial, data.id);
       if (response.status) {
-        alert('updated patient sample test successfully');
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated", SUCCESS)
+        )
       } else {
-        alert(response.error);
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Updated", "Some Error Occurred", DANGER)
+        )
       }
     }
+    fetchPatient(patientId);
   };
 
   const cancel = () => {
@@ -147,4 +163,6 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { getTestingLabList, createSampleTest, updateSampleTest })(LabTestDetail);
+export default connect(mapStateToProps, { 
+    getTestingLabList, createSampleTest, updateSampleTest, fetchPatient, createToastNotification 
+ })(LabTestDetail);

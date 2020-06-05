@@ -34,29 +34,15 @@ export default function Form(props) {
     cancelCallback,
     saveLabDetails,
     testingLabs,
+    touched
   } = props;
 
-  const setDate = (e) => {
-    setFieldValue('date_of_sample', e);
-    setFieldTouched('date_of_sample');
-    if(saveLabDetails) {
-      saveLabDetails('date_of_sample', e);
-    }
-  }
+  const changeText = (name, e) => {
+    setFieldTouched(e.target.name);
+    setFieldValue(name, e.target.value);
+  };
 
-  const setStatus = (name, val) =>{
-    setFieldValue(name, val);
-    if(saveLabDetails){ 
-      saveLabDetails(name, val);
-    }
-  }
-
-  const onSelectLab = (event, value) => {
-    setFieldValue("testing_lab", value.id);
-    if(saveLabDetails){ 
-      saveLabDetails("testing_lab", value.id);
-    }
-  }
+  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -66,19 +52,21 @@ export default function Form(props) {
           <Autocomplete
             options={testingLabs}
             getOptionLabel={(option) => option.name}
-            onChange={(event, value) => onSelectLab(event, value)}
+            name="testing_lab"
+            onChange={(event, val) => {
+                setFieldTouched('testing_lab');
+                setFieldValue('testing_lab', val.id);
+            }}
             renderInput={(params) => 
             <TextField
               {...params}
-              name="testing_lab"
               value={testing_lab}
               label={i18n.t('Testing Lab name')}
               fullWidth
-              value={testing_lab}
               className="field"
               variant="outlined"
-              helperText={errors.testing_lab}
-              error={Boolean(errors.testing_lab)}
+              helperText={touched.testing_lab && errors.testing_lab}
+              error={touched.testing_lab && Boolean(errors.testing_lab)}
             />
           }
           />
@@ -90,7 +78,7 @@ export default function Form(props) {
               label={i18n.t('Date time')}
               inputVariant="outlined"
               value={date_of_sample}
-              onChange={setDate}
+              onChange={(val) => setFieldValue('date_of_sample', val)}
               className="field"
               name="date_of_sample"
               disableFuture
@@ -111,13 +99,17 @@ export default function Form(props) {
             {i18n.t('Result')}
           </Typography>
           <SingleSelectChipsInput
-            value={result}
+            value={result || ""}
+            name="result"
             options={labTestStatusChoices}
-            onChange={(val) => setStatus('result', val)}
+            onChange={(val) => {
+                setFieldTouched('result');
+                setFieldValue('result', val);
+            }}
             valueKey="id"
           />
           <h5 className="text--error">
-            {errors.result}
+            {touched.result && errors.result}
           </h5>
         </Grid>
 

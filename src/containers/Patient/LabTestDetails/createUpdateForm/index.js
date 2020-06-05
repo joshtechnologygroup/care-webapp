@@ -21,6 +21,8 @@ export const CreateUpdateForm = (props) => {
         handleSubmit(data);
     };
 
+    console.log(details);
+
     return (
         <Card className="add-placeholder mb-5">
             <Grid container spacing={3}>
@@ -31,7 +33,9 @@ export const CreateUpdateForm = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Formik
-                        initialValues={details}
+                        initialValues={details && !_.isEmpty(details) ? details : {
+                            'date_of_sample': new Date()
+                        }}
                         validationSchema={validationSchema}
                         onSubmit={submit}
                     >
