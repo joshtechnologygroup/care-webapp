@@ -50,3 +50,5 @@ export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
 
 export const DATE_FORMAT = "MM/DD/YYYY hh:mm A";
+export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
+export const TIME_FORMAT = "hh:mm A";

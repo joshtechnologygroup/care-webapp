@@ -24,6 +24,7 @@ export default function MultiSelectChipsInput(props) {
     value,
     valueKey,
     onChange,
+    name,
   } = props;
 
   const change = (e, option) => {
@@ -41,7 +42,7 @@ export default function MultiSelectChipsInput(props) {
   return (
       options.length && options.map((option, index) =>
         <Checkbox key={index}
-          name={option.name}
+          name={`${option.name}__${name}`}
           className={`mr-5 mt-5 p-0 ${classes.root}`}
           checked={value.indexOf(valueKey ? option[valueKey] : option.name) > -1}
           onChange={(e) => change(e, option)}
@@ -61,8 +62,8 @@ export default function MultiSelectChipsInput(props) {
 MultiSelectChipsInput.propTypes = {
   options: PropTypes.array.isRequired,
   value: PropTypes.array.isRequired,
-  value: PropTypes.string,
   onChange: PropTypes.func,
+  name: PropTypes.string.isRequired,
 }
 
 MultiSelectChipsInput.defaultProps = {
