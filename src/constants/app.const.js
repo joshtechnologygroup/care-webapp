@@ -80,19 +80,19 @@ export const genderChoices = [
         id: 1,
         name: 'Male',
         title: 'Male',
-        value: 'Male',
+        value: 1,
     },
     {
         id: 2,
         name: 'Female',
         title: 'Female',
-        value: 'Female',
+        value: 2,
     },
     {
         id: 3,
         name: 'Others',
         title: 'Others',
-        value: 'Others',
+        value: 3,
     },
 ];
 
