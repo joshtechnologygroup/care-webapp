@@ -72,8 +72,8 @@ const logout = (history) => async (dispatch) => {
         dispatch({
             type: CLEAR_USER
         });
-        history.push('/login');
     }
+    return response;
 };
 
 const reset_password = (method, user_id, token, body = null) => async (dispatch) => {

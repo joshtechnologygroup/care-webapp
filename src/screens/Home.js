@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import * as HttpStatus from 'http-status-codes'
 import {
   Switch,
-  Route
+  Route,
+  useHistory
 } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Drawer from '@material-ui/core/Drawer';
@@ -31,8 +33,17 @@ import NavigationPanel from 'Containers/NavigationPanel';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from 'Assets/images/logo.svg';
 import Toaster from 'Components/Toaster';
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import { getUserProfile } from "Actions/UserProfileAction";
 
-function Home() {
+function Home(props) {
+  const history = useHistory();
+
+  useEffect(  () => {
+    props.getUserProfile().then((response) =>{if(response.status !== HttpStatus.OK){history.push('/login')}});
+  }, [ ]);
+
   const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (isOpen) => (event) => {
@@ -93,4 +104,8 @@ function Home() {
     );
 }
 
-export default Home;
+Home.propTypes = {
+  getUserProfile: PropTypes.func
+};
+
+export default connect(null, { getUserProfile })(Home);
