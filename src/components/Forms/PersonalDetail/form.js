@@ -112,7 +112,6 @@ export default function Form(props) {
   }
 
   const setStatus = (name, val) => {
-    console.log(name, val, "-----------")
     setFieldValue(name, val);
     if (saveProfile) {
       saveProfile(name, val)
