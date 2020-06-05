@@ -61,6 +61,7 @@ export const GET_TESTING_LAB_LIST_URL = SERVER + API_V1 + 'facilities/testing-la
 
 //portie calling 
 export const PORTIE_CALLING_URL = SERVER + API_V1 + 'patients/daily-callers/'
+export const GET_PORTEA_USERS = SERVER + API_V1 + 'accounts/users/portea/'
 
 // Relative paths to pages
 export const RELATIVE_PATH_FACILITY_DETAIL = '/facilities/facility-details/{0}'

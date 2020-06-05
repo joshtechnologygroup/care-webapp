@@ -3,7 +3,7 @@ import {
     CLEAR_USER,
     GET_USER_PROFILE,
 } from 'Reducers/Types';
-import { UPDATE_USER_PROFILE_ERROR, SET_UPATE_USER_PROFILE_API_STATE, UPDATE_USER_PROFILE } from './Types';
+import { UPDATE_USER_PROFILE_ERROR, SET_UPATE_USER_PROFILE_API_STATE, UPDATE_USER_PROFILE, GET_PORTEA_USERS } from './Types';
 
 const initialState = {
   id: null
@@ -56,4 +56,17 @@ const profile = (state = {apiSuccess: null}, action) => {
     }
 }
 
-export { user, profile };
+const porteaUsers = (state = {}, action) => {
+    switch (action.type) {
+
+        case GET_PORTEA_USERS:
+            return { 
+                ...state,
+                ...action.data,
+            };
+        default:
+            return state;
+    }
+} 
+
+export { user, profile, porteaUsers };
