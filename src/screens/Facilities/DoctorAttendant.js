@@ -41,7 +41,7 @@ export const DoctorAttendant = () => {
             </Button>
           </div>
         </Header>
-        <div className="table-container">
+        <div className="main-container">
           <DoctorAttendantList/>
         </div>
           <DoctorAttendantForm open={open} onClose={handleClose} updateOperation={false} />

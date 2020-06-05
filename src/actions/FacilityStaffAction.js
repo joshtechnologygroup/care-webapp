@@ -15,7 +15,7 @@ const updateCreateStaffList = (url, body, method) => async (dispatch) => {
   const response = await CommonService.makeAuthorizedApiCall(url, method, body);
   const data = await response.json();
   if (response.ok) {
-    dispatch(getStaffList(StringUtils.formatVarString(FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, OFFSET])));
+    dispatch(getStaffList(StringUtils.formatVarString(FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, OFFSET]), {ordering: '-updated_at'}));
     return {status: true};
   } else {
     return {status: false, ...data}

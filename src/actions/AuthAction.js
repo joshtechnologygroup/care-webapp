@@ -59,7 +59,7 @@ const forgot_password = (email) => async (dispatch) => {
     return response.status
 }
 
-const logout = () => async (dispatch) => {
+const logout = (history) => async (dispatch) => {
     const headers = {
         'Content-Type': APPLICATION_JSON,
         'Authorization': `Token ${ CookieService.getTokenCookie() }`,
@@ -67,10 +67,12 @@ const logout = () => async (dispatch) => {
     const body = {}
     const response = await CommonServiceUtils.makeApiCall(LOGOUT_URL, DELETE, body, headers);
     CookieService.deleteTokenCookie();
+    CookieService.deleteUserId();
     if (response.status === HttpStatus.NO_CONTENT) {
         dispatch({
             type: CLEAR_USER
         });
+        history.push('/login');
     }
 };
 
