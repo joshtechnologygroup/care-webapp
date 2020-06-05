@@ -368,20 +368,20 @@ const mapStateToProps = (state) => ({
 });
 
 PatientsList.propTypes = {
-  facility_types: PropTypes.array.isRequired,
-  ownership_types: PropTypes.array.isRequired,
-  current_status: PropTypes.array.isRequired,
-  facilities: PropTypes.array.isRequired,
-  patients: PropTypes.array.isRequired,
-  count: PropTypes.number.isRequired,
-  next: PropTypes.string.isRequired,
-  prev: PropTypes.string.isRequired,
-  districts_list: PropTypes.array.isRequired,
-  clinical_status_list: PropTypes.array.isRequired,
-  cluster_group_list: PropTypes.array.isRequired,
-  covid_status_list: PropTypes.array.isRequired,
-  getPatientList: PropTypes.func.isRequired,
-  getsPatientDependencies: PropTypes.func.isRequired
+  facility_types: PropTypes.array,
+  ownership_types: PropTypes.array,
+  current_status: PropTypes.array,
+  facilities: PropTypes.array,
+  patients: PropTypes.array,
+  count: PropTypes.number,
+  next: PropTypes.string,
+  prev: PropTypes.string,
+  districts_list: PropTypes.array,
+  clinical_status_list: PropTypes.array,
+  cluster_group_list: PropTypes.array,
+  covid_status_list: PropTypes.array,
+  getPatientList: PropTypes.func,
+  getsPatientDependencies: PropTypes.func
 };
 
 export default connect(mapStateToProps, {getPatientList, getsPatientDependencies})(PatientsList);
