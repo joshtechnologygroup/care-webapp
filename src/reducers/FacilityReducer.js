@@ -66,9 +66,8 @@ const facilityInfrastructure = (state = initialState, action) => {
 };
 
 const shortFacilities = (state = {}, action) => {
-
     if (action.type === GET_SHORT_FACILITY_LIST) {
-        return { 
+        return {
             ...state,
             results: [...action.data]
         };

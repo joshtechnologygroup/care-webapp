@@ -14,7 +14,10 @@ import { createUpdateFacilityInfrastructure } from 'Actions/BedsListAction';
 import { PropTypes } from 'prop-types';
 import { FACILITY_INFRASTRUCTURE_UPDATE_URL, FACILITY_INFRASTRUCTURE_LIST_URL } from 'Src/routes';
 import { connect } from 'react-redux';
-import * as StringUtil from 'Src/utils/stringformatting'
+import * as StringUtil from 'Src/utils/stringformatting';
+import {createToastNotification} from 'Actions/ToastAction';
+import {SUCCESS} from "Src/constants";
+import * as ToastUtils from 'Src/utils/toast';
 
 export const BedsForm = (props) => {
     const classes = useStyles();
@@ -27,11 +30,13 @@ export const BedsForm = (props) => {
         setIsAddAnother(event.target.checked)
     }
 
-    const updateFacilityInfrastructure = () => {
-        const response = props.createUpdateFacilityInfrastructure(updatedData, StringUtil.formatVarString(FACILITY_INFRASTRUCTURE_UPDATE_URL, [ data.id ]), 'PATCH')
+    const updateFacilityInfrastructure = async () => {
+        const response = await props.createUpdateFacilityInfrastructure(updatedData, StringUtil.formatVarString(FACILITY_INFRASTRUCTURE_UPDATE_URL, [ data.id ]), 'PATCH')
         if(!response.status){
           setError(true);
           setErrors({...errors, form: response.detail})
+        } else {
+          props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated " , SUCCESS))
         }
     }
     const handleChange = (name, e) => {
@@ -106,7 +111,8 @@ const mapStateToProps = (state) => ({
   });
 
 BedsForm.propTypes = {
-  createUpdateFacilityInfrastructure: PropTypes.func.isRequired
+  createUpdateFacilityInfrastructure: PropTypes.func.isRequired,
+  createToastNotification: PropTypes.func
 };
   
-export default connect(mapStateToProps, { createUpdateFacilityInfrastructure })(BedsForm);
+export default connect(mapStateToProps, { createUpdateFacilityInfrastructure, createToastNotification })(BedsForm);

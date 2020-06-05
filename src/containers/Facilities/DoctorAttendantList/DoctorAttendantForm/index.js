@@ -78,8 +78,8 @@ export const DoctorAttendantForm = (props) => {
     const response = await props.updateCreateStaffList(url, updatedData, (updateOperation) ? PATCH : POST);
     if (response.status) {
       (updateOperation) ?
-        props.createToastNotification(ToastUtils.toastDict(1, "Updated", "Successfully updated " + updatedData.name, SUCCESS)) :
-        props.createToastNotification(ToastUtils.toastDict(1, "Created", "Successfully Added " + updatedData.name, SUCCESS))
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated " , SUCCESS)) :
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Created", "Successfully Added ", SUCCESS))
       if (!isAddAnother) {
         onClose();
       }

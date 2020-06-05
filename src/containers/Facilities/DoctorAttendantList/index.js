@@ -109,6 +109,12 @@ export function DoctorAttendantList(props) {
 
       setTotalPages(Math.ceil(props.count/PAGINATION_LIMIT))
       setFacilityInfrastructureList(update_facilityStaffList);
+    } else if(
+      facilities ||
+      facilityStaffList ||
+      staffDesignationList
+    ) {
+      setFacilityInfrastructureList([]);
     }
   }, [
     props.facilities,

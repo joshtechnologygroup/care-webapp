@@ -13,7 +13,7 @@ const createUpdateFacilityInfrastructure = (body, url, method = PATCH) => async 
   const response = await CommonService.makeAuthorizedApiCall(url, method, body,  {});
   const data = await response.json();
   if( response.ok ){
-    dispatch(getBedsList(FACILITY_INFRASTRUCTURE_LIST_URL));
+    dispatch(getBedsList(FACILITY_INFRASTRUCTURE_LIST_URL, {ordering: '-updated_at'}));
     return { status: true };
   } else {
     return { status: false, detail: data.detail };

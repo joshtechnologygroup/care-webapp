@@ -165,6 +165,18 @@ export function PatientsList( props ) {
 
       setTotalPages(Math.ceil(props.count/PAGINATION_LIMIT))
       setPatients(update_patients);
+    } else if(
+      districts_list ||
+      clinical_status_list ||
+      cluster_group_list ||
+      covid_status_list ||
+      patients ||
+      facilities ||
+      ownership_types ||
+      facility_types ||
+      current_status
+    ) {
+      setPatients([]);
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
