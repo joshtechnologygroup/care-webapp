@@ -7,10 +7,11 @@ import {
 } from '@material-ui/core';
 
 export default function Form(props) {
-    const { handleSubmit, setFieldValue, errors } = props
+    const { handleSubmit, setFieldValue, errors, setFieldTouched, touched } = props
     const { i18n } = useTranslation();
     
     const changeText = (name, e) => {
+        setFieldTouched(e.target.name);
         setFieldValue(name, e.target.value);
     };
 
@@ -25,8 +26,8 @@ export default function Form(props) {
                         onChange={changeText.bind(null, "current_password")}
                         variant="outlined"
                         type="password"
-                        helperText={errors.current_password}
-                        error={errors.current_password}
+                        helperText={touched.current_password && errors.current_password}
+                        error={touched.current_password && Boolean(errors.current_password)}
                     />
                 </Grid>
                 <Grid item sm={12} xs={12}>
@@ -37,8 +38,8 @@ export default function Form(props) {
                         onChange={changeText.bind(null, "password_1")}
                         variant="outlined"
                         type="password"
-                        helperText={errors.password_1}
-                        error={errors.password_1}
+                        helperText={touched.password_1 && errors.password_1}
+                        error={touched.password_1 && errors.password_1}
                     />
                 </Grid>
                 <Grid item sm={12} xs={12}>
@@ -49,8 +50,8 @@ export default function Form(props) {
                         onChange={changeText.bind(null, "password_2")}
                         variant="outlined"
                         type="password"
-                        helperText={errors.password_2}
-                        error={errors.password_2}
+                        helperText={touched.password_2 && errors.password_2}
+                        error={touched.password_2 && errors.password_2}
                     />
                 </Grid>
                 <Grid item xs={12} sm={3} className="ml-auto">

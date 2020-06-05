@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import Header from 'Containers/Header';
 import TransfersList from 'Containers/TransfersList';
 import PatientTransferForm from '../containers/AddPatientTransfer';
-import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import {createToastNotification} from 'Actions/ToastAction';
+import {SUCCESS} from "Src/constants";
 import { connect } from 'react-redux';
 
 const Transfer = (props) => {
@@ -21,12 +23,9 @@ const Transfer = (props) => {
     }
 
     const showSuccessToast = () => {
-        addToastNotification({
-            id: 1, 
-            title: "Successfully Updated", 
-            desc: "Status has been successfully updated.", 
-            severity: 'success'
-        })
+        addToastNotification(
+            ToastUtils.toastDict(1, "Added", "Patient Transfer successfully added", SUCCESS)
+        )
     };
 
     const { i18n } = useTranslation();

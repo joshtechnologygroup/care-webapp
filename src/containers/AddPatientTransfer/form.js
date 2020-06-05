@@ -32,6 +32,7 @@ export function Form(props) {
         patient,
         getPatient,
         clearPatient,
+        touched,
       } = props;
     const { i18n } = useTranslation();
     const [inputValue, setInputValue] = useState("");
@@ -102,7 +103,7 @@ export function Form(props) {
                         error={errors.from_facility}
                     />
                     {
-                    errors.from_facility && 
+                    touched.from_facility && errors.from_facility && 
                     <FormControl component="fieldset" error={true}>
                         <FormHelperText className={classes.error}>{errors.from_facility}</FormHelperText>
                     </FormControl>
@@ -120,7 +121,7 @@ export function Form(props) {
                         }}
                     />
                     {
-                    errors.patient && 
+                    touched.patient && errors.patient && 
                     <FormControl component="fieldset" error={true}>
                         <FormHelperText className={classes.error}>{errors.patient}</FormHelperText>
                     </FormControl>
@@ -144,7 +145,7 @@ export function Form(props) {
                         error={errors.to_facility}
                     />
                     {
-                    errors.to_facility && 
+                    touched.to_facility && errors.to_facility && 
                     <FormControl component="fieldset" error={true}>
                         <FormHelperText className={classes.error}>{errors.to_facility}</FormHelperText>
                     </FormControl>

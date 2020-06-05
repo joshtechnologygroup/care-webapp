@@ -3,7 +3,9 @@ import AgProvider from "Containers/AgProvider";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import TransferUpdateForm from "Containers/TransferUpdateForm";
+import * as ToastUtils from 'Src/utils/toast';
 import { createToastNotification } from 'Actions/ToastAction';
+import { SUCCESS } from "Src/constants";
 import { connect } from 'react-redux';
 
 export const ActionRenderer = item => {
@@ -19,12 +21,7 @@ export const ActionRenderer = item => {
     };
 
     const showSuccessToast = () => {
-        addToastNotification({
-            id: 1, 
-            title: "Toast title",
-            desc: "Your action has been successfully committed.", 
-            severity: 'warning'
-        })
+        addToastNotification(ToastUtils.toastDict(1, "Updated", "Status Successfully updated ", SUCCESS)) 
     };
 
     return (
