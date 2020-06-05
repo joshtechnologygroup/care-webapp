@@ -25,7 +25,7 @@ export default function Form(props) {
     details: {
       status,
       name,
-      portie_phone_number,
+      patient_phone_number,
       relation,
       called_at,
       comments
@@ -99,15 +99,15 @@ export default function Form(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
-            name="portie_phone_number"
-            defaultValue={portie_phone_number}
-            label={i18n.t('Portie contact number')}
+            name="patient_phone_number"
+            defaultValue={patient_phone_number}
+            label={i18n.t('Patient contact number')}
             fullWidth
-            onChange={changeText.bind(null, "portie_phone_number")}
+            onChange={changeText.bind(null, "patient_phone_number")}
             className="field"
             variant="outlined"
-            helperText={errors.portie_phone_number}
-            error={Boolean(errors.portie_phone_number)}
+            helperText={errors.patient_phone_number}
+            error={Boolean(errors.patient_phone_number)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
