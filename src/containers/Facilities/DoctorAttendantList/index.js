@@ -9,7 +9,7 @@ import { CONFIG } from './config';
 import {
   multiSelectBooleanFilterCallback
 } from "Src/utils/listFilter";
-import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET } from 'Src/constants';
+import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET, FACILITY_MANAGER } from 'Src/constants';
 import { mappingIdWithNames } from 'Src/utils/mapping-functions'
 import PaginationController from 'Components/PaginationController';
 import Sort from 'Components/Sort';
@@ -64,11 +64,13 @@ export function DoctorAttendantList(props) {
   }, [ currentUrl, ordering ]);
 
   useEffect(() => {
-    const { facilities, facilityStaffList, staffDesignationList } = props;
+    const { facilities, facilityStaffList, staffDesignationList, userType, associatedFacilities } = props;
     if(
       facilities &&
       facilityStaffList &&
-      staffDesignationList
+      staffDesignationList &&
+      userType &&
+      associatedFacilities
     ){
       let update_facilityStaffList = new Array(...facilityStaffList);
 
@@ -97,6 +99,13 @@ export function DoctorAttendantList(props) {
         })
       });
 
+      if (userType !== FACILITY_MANAGER) {
+        update_list['updated_facility_list'] = associatedFacilities.map((id) => {
+          const facility = facilities.find((value, index, array) => value.id === id);
+          return facility.name
+        });
+      }
+
       CONFIG.columnDefs.forEach((col) => {
         if(col.field === 'facility') {
           col.cellRendererParams.options = update_list['updated_facility_list']
@@ -105,7 +114,6 @@ export function DoctorAttendantList(props) {
           col.cellRendererParams.options = update_list['updated_designation_list']
         }
       });
-
 
       setTotalPages(Math.ceil(props.count/PAGINATION_LIMIT))
       setFacilityInfrastructureList(update_facilityStaffList);
@@ -254,10 +262,14 @@ const mapStateToProps = (state) => ({
   bedTypeList: state.bedType.results,
   facilities: state.shortFacilities.results,
   facilityStaffList: state.facilityStaff.results,
-  staffDesignationList: state.staffDesignation.results
+  staffDesignationList: state.staffDesignation.results,
+  userType: state.profile.user_type,
+  associatedFacilities: state.profile.associated_facilities,
 });
 
 DoctorAttendantList.propTypes = {
+  userType: PropTypes.number,
+  associatedFacilities: PropTypes.array,
   facilityStaffList: PropTypes.array,
   staffDesignationList: PropTypes.array,
   count: PropTypes.number,
