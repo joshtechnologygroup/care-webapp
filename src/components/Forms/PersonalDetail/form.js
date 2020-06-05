@@ -176,7 +176,6 @@ export default function Form(props) {
                     onChange={change}
                     helperText={touched.icmr_id ? errors.icmr_id : ""}
                     error={touched.icmr_id && Boolean(errors.icmr_id)}
-                    type="number"
                     fullWidth
                   />
                 </Grid>
