@@ -36,6 +36,7 @@ import Toaster from 'Components/Toaster';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {getUserProfile} from "Actions/UserProfileAction";
+import * as CookieService from 'Services/CookieService'
 
 function Home(props) {
   const history = useHistory();
@@ -43,7 +44,9 @@ function Home(props) {
   useEffect(() => {
     props.getUserProfile().then((response) => {
       if (response.status !== HttpStatus.OK) {
-        history.push('/login')
+        CookieService.deleteUserId();
+        CookieService.deleteTokenCookie();
+        history.push('/login');
       }
     });
   }, []);

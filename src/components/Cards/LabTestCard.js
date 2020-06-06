@@ -94,7 +94,7 @@ export default function LabTestCard(props) {
               {moment(details.status_updated_at).format(EASY_DATE_FORMAT)}
             </Typography>
             <Typography variant="h6" className="d-flex">
-              <EventOutlined className="mr-5" />
+              <AccessTime className="mr-5" />
               {moment(details.status_updated_at).format(TIME_FORMAT)}
             </Typography>
           </Grid>
