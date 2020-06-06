@@ -16,7 +16,7 @@ import _ from 'underscore';
 import { fetchPatient } from 'Actions/PatientsAction';
 import { createToastNotification } from 'Actions/ToastAction';
 import * as ToastUtils from 'Src/utils/toast';
-import {SUCCESS, DANGER} from "Src/constants";
+import {SUCCESS, DANGER, HOME_ISOLATION_STATUS} from "Src/constants";
 
 export function PortieDetails(props) {
   let { patientId } = useParams();
@@ -28,7 +28,8 @@ export function PortieDetails(props) {
     porteaUsers, 
     getPorteaUsers, 
     fetchPatient,
-    createToastNotification 
+    createToastNotification ,
+    patientStatus
 } = props;
 
   let editableId;
@@ -90,16 +91,20 @@ export function PortieDetails(props) {
         <h4 className="heading--card">
           {i18n.t('Portie Calling Details')}
         </h4>
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          size="medium"
-          className="btn"
-          onClick={add}
-        >
-          + {i18n.t('Add new')}
-        </Button>
+
+        {
+            patientStatus === HOME_ISOLATION_STATUS && 
+            <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            size="medium"
+            className="btn"
+            onClick={add}
+            >
+            + {i18n.t('Add new')}
+            </Button>
+        }
       </div>
       {
         editable === 'new' &&
