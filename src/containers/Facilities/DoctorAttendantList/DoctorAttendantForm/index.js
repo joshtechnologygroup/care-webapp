@@ -19,7 +19,8 @@ import {FACILITY_STAFF_UPDATE_URL, FACILITY_STAFF_CREATE_URL} from 'Src/routes';
 import * as StringUtils from 'Src/utils/stringformatting';
 import * as ToastUtils from 'Src/utils/toast';
 import {createToastNotification} from 'Actions/ToastAction';
-import {SUCCESS} from "Src/constants";
+import {SUCCESS, FACILITY_MANAGER} from "Src/constants";
+import * as utils from 'Src/utils/utils';
 
 export const DoctorAttendantForm = (props) => {
   const classes = useStyles();
@@ -45,11 +46,12 @@ export const DoctorAttendantForm = (props) => {
   };
 
   useEffect(() => {
-    const {designationList, facilityList} = props
+    const {designationList, facilityList, userType, associatedFacilities} = props
     let update_designation_list = [], update_facility_list = [];
     if (updateOperation && designationList) {
-      update_facility_list.push({label: data.facility});
-      designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}))
+      // update_facility_list.push({label: data.facility});
+      update_facility_list.push(utils.dropDownDict(data.facility));
+      designationList.forEach((row) => update_designation_list.push(utils.dropDownDict(row.name, row.id)));
       setUpdateData((prevState) => ({
         ...prevState,
         designation: update_designation_list[0].value,
@@ -60,9 +62,15 @@ export const DoctorAttendantForm = (props) => {
         phone_number: false,
         email: false,
       }))
-    } else if (designationList && facilityList) {
-      facilityList.forEach((row) => update_facility_list.push({value: row.id, label: row.name}))
-      designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}))
+    } else if (designationList && facilityList && userType && associatedFacilities) {
+      facilityList.forEach((row) => update_facility_list.push(utils.dropDownDict(row.name, row.id)))
+      if (userType === FACILITY_MANAGER) {
+        update_facility_list = associatedFacilities.map((id) => {
+          const facility = facilityList.find((value, index, array) => value.id === id);
+          return utils.dropDownDict(facility.name, facility.id);
+        });
+      }
+      designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}));
       setUpdateData((prevState) => ({
         ...prevState,
         facility: update_facility_list[0].value,
@@ -71,14 +79,14 @@ export const DoctorAttendantForm = (props) => {
     }
     setDesignation(update_designation_list);
     setFacility(update_facility_list);
-  }, [props.designationList, props.facilityList])
+  }, [props.designationList, props.facilityList, props.userType, props.associatedFacilities])
 
   const updateFacilityStaff = async () => {
     let url = updateOperation ? StringUtils.formatVarString(FACILITY_STAFF_UPDATE_URL, [data.id]) : FACILITY_STAFF_CREATE_URL;
     const response = await props.updateCreateStaffList(url, updatedData, (updateOperation) ? PATCH : POST);
     if (response.status) {
       (updateOperation) ?
-        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated " , SUCCESS)) :
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated ", SUCCESS)) :
         props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Created", "Successfully Added ", SUCCESS))
       if (!isAddAnother) {
         onClose();
@@ -173,10 +181,14 @@ export const DoctorAttendantForm = (props) => {
 
 const mapStateToProps = (state) => ({
   designationList: state.staffDesignation.results,
-  facilityList: state.shortFacilities.results
+  facilityList: state.shortFacilities.results,
+  userType: state.profile.user_type,
+  associatedFacilities: state.profile.associated_facilities,
 });
 
 DoctorAttendantForm.propTypes = {
+  userType: PropTypes.number,
+  associatedFacilities: PropTypes.array,
   updateCreateStaffList: PropTypes.func,
   facilityList: PropTypes.array,
   designationList: PropTypes.array,
