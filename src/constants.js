@@ -49,7 +49,9 @@ export const TOTAL_FACILITY_FIELDS = 5;
 export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
 
-export const DATE_FORMAT = "MM/DD/YYYY hh:mm A";
+export const DATE_FORMAT = "DD/MM/YYYY hh:mm A";
+export const DATE_TIME_FORMAT="dd/MM/yyyy hh:mm a";
+
 export const RELATIONSHIP_OPTIONS = [
     {
         "value": 1,
@@ -120,7 +122,8 @@ export const labTestStatusChoices = [
         "theme": "primary"
     }
   ];
-export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
+export const DATE_ONLY_FORMAT = "DD/MM/YYYY";
+export const EASY_DATE_FORMAT = "DD-MMM-YYYY"
 export const TIME_FORMAT = "hh:mm A";
 
 export const FACILITY_DEFAULT = '---------------';

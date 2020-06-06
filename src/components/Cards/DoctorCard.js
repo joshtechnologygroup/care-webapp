@@ -61,7 +61,7 @@ export default function DoctorCard(props) {
 
           <Grid className="py-0 text-center" item xs={12} sm={2}>
               <span className="heading--sub">{i18n.t('Date attended')}</span>
-              <Chip label={moment(details.date).format('DD-MM-YYYY')} />
+              <Chip label={moment(details.date).format('DD-MMM-YYYY')} />
           </Grid>
 
         </Grid>

@@ -35,7 +35,10 @@ export const CreateUpdateForm = (props) => {
                 <Grid item xs={12}>
                     <Formik
                         initialValues={details && !_.isEmpty(details) ? details : {
-                            'date_of_sample': new Date()
+                            'date_of_sample': new Date(),
+                            'testing_lab': '',
+                            'result': '',
+                            'date_of_result': ''
                         }}
                         validationSchema={validationSchema}
                         onSubmit={submit}

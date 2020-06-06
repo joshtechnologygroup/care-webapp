@@ -52,7 +52,7 @@ export default function Form(props) {
     setFieldValue(name, e.target.value);
   };
 
-  const [date, setDate] = React.useState(called_at ? called_at : null)
+  const [date, setDate] = React.useState(called_at);
   const setDateTime = (e) => {
     console.log('e', e)
     setDate(e);
