@@ -118,7 +118,7 @@ export default function Form(props) {
             </Grid>
             <Grid item xs={12} sm={10}>
               <Grid item container spacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={8}>
                   <TextField
                     name="name"
                     label={i18n.t('Patient name')}
@@ -130,10 +130,7 @@ export default function Form(props) {
                     required
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <ButtonToggle restrictUnselect={true} defaultSelected={gender} data={genderChoices} onChange={(data) => setProfileFields("gender", data) } />
-                </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={2}>
                   <TextField
                     name="year"
                     label={i18n.t('Age in years')}
@@ -146,7 +143,7 @@ export default function Form(props) {
                     required
                   />
                 </Grid>
-                <Grid item xs={6} sm={3}>
+                <Grid item xs={6} sm={2}>
                   <TextField
                     name="month"
                     label={i18n.t('Age in Months')}
@@ -159,7 +156,7 @@ export default function Form(props) {
                     required
                   />
                 </Grid>
-                <Grid item xs={6} sm={6}>
+                <Grid item xs={12} sm={4}>
                   <TextField
                     name="icmr_id"
                     label={i18n.t('ICMR ID')}
@@ -170,7 +167,7 @@ export default function Form(props) {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={6} sm={6}>
+                <Grid item xs={12} sm={4}>
                   <TextField
                     name="govt_id"
                     label={i18n.t('Govt ID')}
@@ -182,7 +179,7 @@ export default function Form(props) {
                     required
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                   <TextField
                     select
                     name="cluster_group"
@@ -201,10 +198,18 @@ export default function Form(props) {
                     }
                   </TextField>
                 </Grid>
-                <Grid className="pb-0 mb-10" item xs={12}>
-                  <Typography variant="h6">
-                    {i18n.t('Patient status')}
-                  </Typography>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6">{i18n.t('Gender')}</Typography>
+                  <SingleSelectChipsInput
+                    value={gender}
+                    options={genderChoices}
+                    onChange={(data) => setProfileFields("gender", data)}
+                    valueKey="id"
+                  />
+                  <h5 className="text--error">{Boolean(touched.gender) && errors.gender}</h5>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h6">{i18n.t('Patient status')}</Typography>
                   <SingleSelectChipsInput
                     value={patient_status}
                     options={patient_status_choices}
@@ -212,9 +217,7 @@ export default function Form(props) {
                     valueKey="id"
                     unselectable={true}
                   />
-                  <h5 className="text--error">
-                    {errors.patient_status}
-                  </h5>
+                  <h5 className="text--error">{errors.patient_status}</h5>
                 </Grid>
                 {
                   editMode &&

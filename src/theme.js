@@ -92,6 +92,10 @@ export const theme = createMuiTheme({
     },
     MuiFormControl: {
       root: {
+        '& .MuiFormHelperText-root': {
+          fontSize: '1.2rem',
+          margin: 0,
+        },
         '&.field': {
           minHeight: '6.6rem',
           '& .MuiInputBase-root': {

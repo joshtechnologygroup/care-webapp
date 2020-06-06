@@ -37,8 +37,7 @@ export const CreateUpdateForm = (props) => {
                         initialValues={details && !_.isEmpty(details) ? details : {
                             'date_of_sample': new Date(),
                             'testing_lab': '',
-                            'result': '',
-                            'date_of_result': ''
+                            'result': ''
                         }}
                         validationSchema={validationSchema}
                         onSubmit={submit}
