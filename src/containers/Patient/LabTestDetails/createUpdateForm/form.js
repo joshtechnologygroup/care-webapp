@@ -46,14 +46,12 @@ export default function Form(props) {
   const [completed, setCompeleted] = React.useState(false);
 
   useEffect(() => {
-    if(values.result && (values.result === 3 || values.result === 4)) {
+    if(values.result && [3, 4].indexOf(values.result) >= 0) {
         setCompeleted(true)
     } else {
         setCompeleted(false);
     }
   }, [values.result])
-
-  console.log(errors);
 
   return (
     <form onSubmit={handleSubmit}>
