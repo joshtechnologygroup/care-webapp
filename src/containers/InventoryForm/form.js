@@ -54,10 +54,10 @@ export function Form(props) {
   const changeText = (name, e) => {
     switch (name) {
       case 'required_quantity':
-        errors.required_quantity = e.target.value ? false : true;
+        errors.required_quantity = !e.target.value;
         break;
       case 'current_quantity':
-        errors.current_quantity = e.target.value ? false : true;
+        errors.current_quantity = !e.target.value;
         break;
       default:
         break;
