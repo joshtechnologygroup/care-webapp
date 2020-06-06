@@ -16,26 +16,34 @@ import DateFnsUtils from '@date-io/date-fns';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
 // Importing mock data
-import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
 import { reachableStatus } from 'Constants/app.const';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from 'react-select'
+import _ from 'underscore';
+import { RELATIONSHIP_OPTIONS } from "Src/constants/"
 
 export default function Form(props) {
   const { i18n } = useTranslation();
   const {
     details: {
-      status,
-      name,
+      able_to_connect,
+      portie,
       patient_phone_number,
       relation,
       called_at,
-      comments
+      comments,
     },
+    porteaUsers,
     errors,
     handleSubmit,
     setFieldValue,
     setFieldTouched,
     cancelCallback,
+    touched
   } = props;
+
+  console.log(errors);
 
   const changeText = (name, e) => {
     setFieldTouched(e.target.name);
@@ -47,6 +55,16 @@ export default function Form(props) {
     setFieldValue('called_at', e);
   };
 
+  const porteaOptions = [];
+  if(porteaUsers && !_.isEmpty(porteaUsers)) {
+    Object.keys(porteaUsers).forEach((portea, index) =>{
+        porteaOptions.push({
+            'value': porteaUsers[portea].id,
+            'label': porteaUsers[portea].name
+        })
+    })
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
@@ -55,13 +73,16 @@ export default function Form(props) {
             {i18n.t('Contact status')}
           </Typography>
           <SingleSelectChipsInput
-            value={status}
             options={reachableStatus}
-            onChange={(val) => setFieldValue('status', val)}
+            name="able_to_connect"
+            onChange={(val) => {
+                setFieldValue('able_to_connect', val);
+            }}
             valueKey="value"
+            value={able_to_connect}
           />
           <h5 className="text--error">
-            {errors.status}
+            {touched.able_to_connect && errors.able_to_connect}
           </h5>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -85,17 +106,22 @@ export default function Form(props) {
           </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            name="name"
-            label={i18n.t('Portie Name')}
-            fullWidth
-            defaultValue={name}
-            onChange={changeText.bind(null, "name")}
-            className="field"
-            variant="outlined"
-            helperText={errors.name}
-            error={Boolean(errors.name)}
-          />
+            <Select
+                options={porteaOptions}
+                name="portie"
+                defaultValue={portie || ""}
+                onChange={(val) => {
+                    setFieldTouched('portie');
+                    setFieldValue('portie', val.value);
+                }}
+                error={touched.portie && Boolean(errors.portie)}
+            />
+            {
+            touched.portie && errors.portie && 
+            <FormControl component="fieldset" error={true}>
+                <FormHelperText >{errors.portie}</FormHelperText>
+            </FormControl>
+            }
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
@@ -106,30 +132,27 @@ export default function Form(props) {
             onChange={changeText.bind(null, "patient_phone_number")}
             className="field"
             variant="outlined"
-            helperText={errors.patient_phone_number}
-            error={Boolean(errors.patient_phone_number)}
+            helperText={touched.patient_phone_number && errors.patient_phone_number}
+            error={touched.patient_phone_number && Boolean(errors.patient_phone_number)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField 
-            select
-            name="relation"
-            defaultValue={relation}
-            label={i18n.t('Patient relation')}
-            fullWidth
-            onChange={changeText.bind(null, "relation")}
-            className="field"
-            variant="outlined"
-            helperText={errors.relation}
-            error={Boolean(errors.relation)}
-          >
+            <Select
+                options={RELATIONSHIP_OPTIONS}
+                defaultValue={""}
+                name="relation"
+                onChange={(val) => {
+                    setFieldTouched('relation');
+                    setFieldValue('relation', val.value);
+                }}
+                error={touched.relation && Boolean(errors.relation)}
+            />
             {
-            relationshipChoices.map((option) => (
-              <MenuItem key={option.id} value={option.name}>
-                {option.name}
-              </MenuItem>))
+            touched.relation && errors.relation && 
+            <FormControl component="fieldset" error={true}>
+                <FormHelperText >{errors.relation}</FormHelperText>
+            </FormControl>
             }
-          </TextField>
         </Grid>
         <Grid item xs={12}>
           <TextField 
@@ -141,8 +164,8 @@ export default function Form(props) {
             onChange={changeText.bind(null, "comments")}
             className="field"
             variant="outlined"
-            helperText={errors.comments}
-            error={Boolean(errors.comments)}
+            helperText={touched.comments && errors.comments}
+            error={touched.comments && Boolean(errors.comments)}
           />
         </Grid>
         <Grid container justify="flex-end" className="mt-10" item xs={12}>

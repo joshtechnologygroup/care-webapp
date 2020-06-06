@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { user, profile } from "Reducers/UserReducer";
+import { user, profile, porteaUsers } from "Reducers/UserReducer";
 import { toasts } from "Reducers/ToastReducer"
 import {
     patients, 
@@ -59,4 +59,5 @@ export default combineReducers({
     userTypes,
     toasts,
     testingLabs,
+    porteaUsers,
 });

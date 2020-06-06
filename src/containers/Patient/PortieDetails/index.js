@@ -11,12 +11,25 @@ import NullState from 'Components/NullState';
 import PortieNull from 'Assets/images/portie_null.jpg';
 import PortieDetailCard from 'Components/Cards/PortieDetailCard';
 import CreateUpdatePortieDetails from './createUpdateForm';
-import { createPortieDetails, updatePortieDetails } from 'Actions/PortieAction';
+import { createPortieDetails, updatePortieDetails, getPorteaUsers } from 'Actions/PortieAction';
+import _ from 'underscore';
+import { fetchPatient } from 'Actions/PatientsAction';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import {SUCCESS, DANGER} from "Src/constants";
 
 export function PortieDetails(props) {
   let { patientId } = useParams();
   const { i18n } = useTranslation();
-  const { profile, createPortieDetails, updatePortieDetails } = props;
+  const { 
+    profile,
+    createPortieDetails, 
+    updatePortieDetails, 
+    porteaUsers, 
+    getPorteaUsers, 
+    fetchPatient,
+    createToastNotification 
+} = props;
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
@@ -28,6 +41,12 @@ export function PortieDetails(props) {
     setEditable('new');
   };
 
+  React.useEffect(() => {
+    if(_.isEmpty(porteaUsers)) {
+        getPorteaUsers();
+    } 
+  }, [porteaUsers])
+
   const handleSubmit = async (data) => {
     let initial = data;
     let portie_response;
@@ -37,9 +56,13 @@ export function PortieDetails(props) {
       portie_response = await createPortieDetails(initial);
       if (portie_response.status) {
         profile.unshift(data);
-        alert('updated');
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+        )
       } else {
-        alert(portie_response.error);
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
+        )
       }
     }
     else {
@@ -47,11 +70,16 @@ export function PortieDetails(props) {
       setEditable('');
       portie_response = await updatePortieDetails(initial, data.id);
       if (portie_response.status) {
-        alert('updated');
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+        )
       } else {
-        alert(portie_response.error);
+        createToastNotification(
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
+        )
       }
     }
+    fetchPatient(patientId);
   };
 
   const cancel = () => {
@@ -82,6 +110,7 @@ export function PortieDetails(props) {
           cancelCallback={cancel}
           editMode={false}
           details={{}}
+          porteaUsers={porteaUsers}
         />
       }
       {
@@ -99,6 +128,7 @@ export function PortieDetails(props) {
               cancelCallback={cancel}
               editMode={true}
               details={details}
+              porteaUsers={porteaUsers}
             />
         }
         )
@@ -122,4 +152,8 @@ PortieDetails.propTypes = {
 PortieDetails.propTypes = {
 };
   
-export default connect(null, { createPortieDetails, updatePortieDetails })(PortieDetails);
+const mapStateToProps = (state) => ({
+    porteaUsers: state.porteaUsers
+});
+
+export default connect(mapStateToProps, { createPortieDetails, updatePortieDetails, getPorteaUsers, fetchPatient, createToastNotification })(PortieDetails);
