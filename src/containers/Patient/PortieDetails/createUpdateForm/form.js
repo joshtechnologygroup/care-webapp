@@ -81,6 +81,18 @@ export default function Form(props) {
             <FormHelperText >{updatePortieErrors.patient}</FormHelperText>
         </FormControl>
         }
+        {
+        createPortieErrors && createPortieErrors.non_field_errors && 
+        <FormControl component="fieldset" error={true}>
+            <FormHelperText >{createPortieErrors.non_field_errors}</FormHelperText>
+        </FormControl>
+        }
+        {
+        updatePortieErrors && updatePortieErrors.non_field_errors && 
+        <FormControl component="fieldset" error={true}>
+            <FormHelperText >{updatePortieErrors.non_field_errors}</FormHelperText>
+        </FormControl>
+        }
       <Grid container spacing={2}>
         <Grid item xs={12} className="mb-10">
           <Typography variant="h6">
@@ -97,6 +109,8 @@ export default function Form(props) {
           />
           <h5 className="text--error">
             {touched.able_to_connect && errors.able_to_connect}
+            {createPortieErrors && createPortieErrors.able_to_connect}
+            {updatePortieErrors && updatePortieErrors.able_to_connect}
           </h5>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -136,6 +150,18 @@ export default function Form(props) {
                 <FormHelperText >{errors.portie}</FormHelperText>
             </FormControl>
             }
+            {
+            createPortieErrors && createPortieErrors.portie && 
+            <FormControl component="fieldset" error={true}>
+                <FormHelperText >{createPortieErrors.portie}</FormHelperText>
+            </FormControl>
+            }
+            {
+            updatePortieErrors && updatePortieErrors.portie && 
+            <FormControl component="fieldset" error={true}>
+                <FormHelperText >{updatePortieErrors.portie}</FormHelperText>
+            </FormControl>
+            }
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
@@ -165,6 +191,18 @@ export default function Form(props) {
             touched.relation && errors.relation && 
             <FormControl component="fieldset" error={true}>
                 <FormHelperText >{errors.relation}</FormHelperText>
+            </FormControl>
+            }
+            {
+            createPortieErrors && createPortieErrors.relation && 
+            <FormControl component="fieldset" error={true}>
+                <FormHelperText >{createPortieErrors.relation}</FormHelperText>
+            </FormControl>
+            }
+            {
+            updatePortieErrors && updatePortieErrors.relation && 
+            <FormControl component="fieldset" error={true}>
+                <FormHelperText >{updatePortieErrors.relation}</FormHelperText>
             </FormControl>
             }
         </Grid>

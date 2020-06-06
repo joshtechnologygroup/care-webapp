@@ -52,7 +52,7 @@ export function LabTestDetail(props) {
       if (response.status) {
         profile.unshift(data);
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added Lab Test", SUCCESS)
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Lab Test Successfully added", SUCCESS)
         )
       } else {
         createToastNotification(
@@ -66,7 +66,7 @@ export function LabTestDetail(props) {
       response = await updateSampleTest(initial, data.id);
       if (response.status) {
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated", SUCCESS)
+            ToastUtils.toastDict((new Date()).getTime(), "Updated", "Lab Test Successfully updated", SUCCESS)
         )
       } else {
         createToastNotification(
