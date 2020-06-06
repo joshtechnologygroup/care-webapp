@@ -15,14 +15,6 @@ import {getPatientList, getsPatientDependencies} from 'Actions/PatientsAction';
 import Sort from 'Components/Sort';
 import Filters from 'Components/Filters';
 import PaginationController from 'Components/PaginationController';
-
-import {
-  PAGINATION_LIMIT,
-  CLINICAL_STATUS_UPDATED_AT,
-  PORTEA_CALLED_AT,
-  INITIAL_PAGE,
-} from 'Src/constants'
-
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Constants from 'Src/constants';
@@ -31,9 +23,9 @@ import * as Constants from 'Src/constants';
 export function PatientsList(props) {
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
-  const [page, setPage] = useState(INITIAL_PAGE);
+  const [page, setPage] = useState(Constants.INITIAL_PAGE);
   const [patients, setPatients] = useState(null);
-  const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
+  const [totalPages, setTotalPages] = useState(Constants.INITIAL_PAGE);
   const [selectedParams, setSelectedParams] = useState({});
   const [ordering, setOrdering] = useState({field: null, ordering: 'none'});
   const [defaultSelected, setDefaultSelected] = useState({});
@@ -100,10 +92,10 @@ export function PatientsList(props) {
       let update_patients = Object.assign([], props.patients);
 
       update_patients.forEach((attr) => {
-        let date = new Date(attr[CLINICAL_STATUS_UPDATED_AT])
-        attr[CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
-        date = new Date(attr[PORTEA_CALLED_AT])
-        attr[PORTEA_CALLED_AT] = moment(date).format(DATE_FORMAT);
+        let date = new Date(attr[Constants.CLINICAL_STATUS_UPDATED_AT])
+        attr[Constants.CLINICAL_STATUS_UPDATED_AT] = moment(date).format(DATE_FORMAT);
+        date = new Date(attr[Constants.PORTEA_CALLED_AT])
+        attr[Constants.PORTEA_CALLED_AT] = moment(date).format(DATE_FORMAT);
         ;
       });
 
@@ -165,9 +157,8 @@ export function PatientsList(props) {
         }
       });
 
-      setTotalPages(Math.ceil(props.count / PAGINATION_LIMIT))
+      setTotalPages(Math.ceil(props.count / Constants.PAGINATION_LIMIT))
       setPatients(update_patients);
-      // handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE);
     } else if (
       districts_list ||
       clinical_status_list ||
@@ -214,7 +205,7 @@ export function PatientsList(props) {
         setDefaultSelected({district: update_preferred_districts});
       }
     }
-    handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE, {district: preferred_districts});
+    handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [Constants.PAGINATION_LIMIT, 0]), Constants.INITIAL_PAGE, {district: preferred_districts});
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ordering, props.user_type, props.preferred_districts, props.districts_list]);
 
@@ -304,9 +295,9 @@ export function PatientsList(props) {
             options={CONFIG.columnDefs}
             defaultSelected={defaultSelected}
             onSeeMore={() => setShowOverlay(!showOverlay)}
-            handleApplyFilter={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE)}
+            handleApplyFilter={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [Constants.PAGINATION_LIMIT, 0]), Constants.INITIAL_PAGE)}
             handleReset={() => {
-              handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE, {});
+              handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [Constants.PAGINATION_LIMIT, 0]), Constants.INITIAL_PAGE, {});
               setSelectedParams({});
               setDefaultSelected({});
             }}
@@ -337,8 +328,8 @@ export function PatientsList(props) {
             <PaginationController
               resultsShown={page}
               totalResults={totalPages}
-              onFirst={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]),
-                INITIAL_PAGE
+              onFirst={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [Constants.PAGINATION_LIMIT, 0]),
+                Constants.INITIAL_PAGE
               )}
               onNext={() => {
                 if (props.next) handleApiCall(props.next, page + 1,)
@@ -346,7 +337,7 @@ export function PatientsList(props) {
               onPrevious={() => {
                 if (props.prev) handleApiCall(props.prev, page - 1,)
               }}
-              onLast={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1)]),
+              onLast={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [Constants.PAGINATION_LIMIT, Constants.PAGINATION_LIMIT * (totalPages - 1)]),
                 totalPages
               )}
               onShowList={() => {
