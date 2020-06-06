@@ -15,6 +15,7 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import { createToastNotification } from 'Actions/ToastAction';
+import * as Constants from 'Src/constants';
 import * as ToastUtils from 'Src/utils/toast';
 import { SUCCESS, DANGER } from "Src/constants";
 
@@ -24,7 +25,7 @@ export const InventoryForm = (props) => {
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
     const { open, data, onClose, createInventories, updateInventories, facilityList, inventoryTypesList, index } = props;
-    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: '' })
+    const [errors, setErrors] = useState({name: true,type: true, required_quantity: true, current_quantity: true, form: '' })
 
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
@@ -89,18 +90,24 @@ export const InventoryForm = (props) => {
         }
     }
 
-    const handleChange = (name, e) => {
+    const handleChange = (name, event) => {
         if (typeof name === 'object') {
             setInventoryData({ ...inventoryData, ...name });
         } else {
-            setInventoryData({ ...inventoryData, [name]: e });
+            setInventoryData({ ...inventoryData, [name]: event });
         }
         switch (name) {
+            case 'name':
+                errors.name = Constants.FACILITY_DEFAULT === event.label;
+                break;
+            case 'type':
+                errors.type = Constants.FACILITY_DEFAULT === event.label;
+                break;
             case 'required_quantity':
-                errors.required_quantity = e ? false : true;
+                errors.required_quantity = !event;
                 break;
             case 'current_quantity':
-                errors.current_quantity = e ? false : true;
+                errors.current_quantity = !event;
                 break;
             default: break;
         }
@@ -145,7 +152,7 @@ export const InventoryForm = (props) => {
                         color="primary"
                         size="medium"
                         onClick={createInventory}
-                        disabled={errors.required_quantity || errors.current_quantity}
+                        disabled={errors.required_quantity || errors.current_quantity || errors.name || errors.type}
                     >
                         {i18n.t('Ok')}
                     </Button>
