@@ -90,7 +90,7 @@ export function FacilityDetailCard(props) {
                 </Typography>
               </Grid>
               {details.admitted_at &&
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={`auto`}>
                   <h6 className="heading--sub">{i18n.t('Admitted date/time')}</h6>
                   <Typography variant="h6" className="d-flex">
                     <EventOutlined className="mr-5" />
@@ -104,7 +104,7 @@ export function FacilityDetailCard(props) {
               }
               {
                 Boolean(details.discharged_at) &&
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={`auto`}>
                   <h6 className="heading--sub">{i18n.t('Discharged on')}</h6>
                   <Typography variant="h6" className="d-flex">
                     <EventOutlined className="mr-5" />
