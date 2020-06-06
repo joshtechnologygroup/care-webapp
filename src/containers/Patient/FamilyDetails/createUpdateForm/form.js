@@ -31,6 +31,7 @@ export default function Form(props) {
     setFieldValue,
     setFieldTouched,
     cancelCallback,
+    touched
   } = props;
 
   const changeText = (name, e) => {
@@ -51,8 +52,8 @@ export default function Form(props) {
             onChange={changeText.bind(null, "name")}
             className="field"
             variant="outlined"
-            helperText={errors.name}
-            error={Boolean(errors.name)}
+            helperText={touched.name && errors.name}
+            error={touched.name && Boolean(errors.name)}
           />
         </Grid>
 
@@ -65,8 +66,8 @@ export default function Form(props) {
             onChange={changeText.bind(null, "phone_number")}
             className="field"
             variant="outlined"
-            helperText={errors.phone_number}
-            error={Boolean(errors.phone_number)}
+            helperText={touched.phone_number && errors.phone_number}
+            error={touched.phone_number && Boolean(errors.phone_number)}
           />
         </Grid>
         <Grid className="pb-0" item xs={12} sm={6}>
@@ -79,8 +80,8 @@ export default function Form(props) {
             onChange={changeText.bind(null, "relation")}
             className="field"
             variant="outlined"
-            helperText={errors.relation}
-            error={Boolean(errors.relation)}
+            helperText={touched.relation && errors.relation}
+            error={touched.relation && Boolean(errors.relation)}
           >
             {
             relationshipChoices.map((option) => (
@@ -100,8 +101,8 @@ export default function Form(props) {
             onChange={changeText.bind(null, "age_year")}
             className="field"
             variant="outlined"
-            helperText={errors.age_year}
-            error={Boolean(errors.age_year)}
+            helperText={touched.age_year && errors.age_year}
+            error={touched.age_year && Boolean(errors.age_year)}
           />
         </Grid>
 
@@ -114,8 +115,8 @@ export default function Form(props) {
             onChange={changeText.bind(null, "age_month")}
             className="field"
             variant="outlined"
-            helperText={errors.age_month}
-            error={Boolean(errors.age_month)}
+            helperText={touched.age_month && errors.age_month}
+            error={touched.age_month && Boolean(errors.age_month)}
           />
         </Grid>
 
@@ -126,11 +127,14 @@ export default function Form(props) {
           <SingleSelectChipsInput
             value={gender}
             options={GENDER_LIST_MAPPING}
-            onChange={(val) => setFieldValue('gender', val)}
+            onChange={(val) => {
+                setFieldTouched('gender')
+                setFieldValue('gender', val)
+            }}
             valueKey="id"
           />
           <h5 className="text--error">
-            {errors.gender}
+            {touched.gender && errors.gender}
           </h5>
         </Grid>
 

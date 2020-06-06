@@ -63,7 +63,7 @@ export default function PortieDetailCard(props) {
           </Grid>
           <Grid item xs={12} sm={3} md={2} className="ml-md-auto">
             <Chip
-              className={`${classes.chip} ${details.able_to_connect ? 'selected' : 'danger'}`}
+              className={`${classes.chip} ${details.able_to_connect ? 'success' : 'danger'}`}
               label={details.able_to_connect ? i18n.t('Contacted') : i18n.t('Not reachable')}
             />
             <Typography variant="h6" className="d-flex mt-5">

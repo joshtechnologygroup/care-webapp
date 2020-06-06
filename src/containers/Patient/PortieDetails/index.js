@@ -33,6 +33,8 @@ export function PortieDetails(props) {
 
   let editableId;
   const [editable, setEditable] = React.useState(editableId);
+  const [createPortieErrors, setCreatePortieErrors] = React.useState({});
+  const [updatePortieErrors, setUpdatePortieErrors] = React.useState({})
 
   const edit = (id) => {
     setEditable(id);
@@ -52,31 +54,27 @@ export function PortieDetails(props) {
     let portie_response;
     initial['patient'] = patientId;
     if (editable === 'new') {
-      setEditable('');
       portie_response = await createPortieDetails(initial);
       if (portie_response.status) {
+        setEditable('');
         profile.unshift(data);
         createToastNotification(
             ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
         )
       } else {
-        createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
-        )
+        setCreatePortieErrors(portie_response.errors);
       }
     }
     else {
       profile[editable] = data;
-      setEditable('');
       portie_response = await updatePortieDetails(initial, data.id);
       if (portie_response.status) {
+        setEditable('');
         createToastNotification(
             ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
         )
       } else {
-        createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
-        )
+        setUpdatePortieErrors(portie_response.errors);
       }
     }
     fetchPatient(patientId);
@@ -111,6 +109,7 @@ export function PortieDetails(props) {
           editMode={false}
           details={{}}
           porteaUsers={porteaUsers}
+          createPortieErrors={createPortieErrors}
         />
       }
       {
@@ -129,6 +128,7 @@ export function PortieDetails(props) {
               editMode={true}
               details={details}
               porteaUsers={porteaUsers}
+              updatePortieErrors={updatePortieErrors}
             />
         }
         )
@@ -156,4 +156,10 @@ const mapStateToProps = (state) => ({
     porteaUsers: state.porteaUsers
 });
 
-export default connect(mapStateToProps, { createPortieDetails, updatePortieDetails, getPorteaUsers, fetchPatient, createToastNotification })(PortieDetails);
+export default connect(mapStateToProps, { 
+    createPortieDetails, 
+    updatePortieDetails, 
+    getPorteaUsers, 
+    fetchPatient, 
+    createToastNotification,
+})(PortieDetails);
