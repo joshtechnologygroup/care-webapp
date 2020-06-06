@@ -80,6 +80,7 @@ function AddPatient(props) {
     });
     if(profile['phone_number'] && !(regex.phone_number).test(profile['phone_number'])) {
       e['phone_number'] = "please enter valid phone number"
+      flag = false;
     }
 
     setFieldErrorDict(e);
