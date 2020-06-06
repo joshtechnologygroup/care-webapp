@@ -26,8 +26,9 @@ function AddPatient(props) {
   const [profile, setProfile] = useState({
     year: 1,
     month: 1,
-    symptoms: [],
-    diseases: [],
+    patient_symptoms: [],
+    patient_diseases: [],
+    state: 1,
   });
   let history = useHistory();
   const [personalForm, setPersonalForm] = useState({});

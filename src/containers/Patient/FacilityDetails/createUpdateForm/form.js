@@ -54,7 +54,7 @@ export default function Form(props) {
     saveFacilityDetails(name, value.id);
   }
 
-  const [admitted, setAdmitted] = React.useState(admitted_at ? admitted_at : null);
+  const [admitted, setAdmitted] = React.useState(admitted_at);
   const [discharged, setDischarged] = React.useState(discharged_at ? discharged_at : null);
   const setDateTime = (name, value) => {
     name = "admitted_at" ? setAdmitted(value) : setDischarged(value);

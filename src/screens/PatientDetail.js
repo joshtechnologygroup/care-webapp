@@ -88,7 +88,7 @@ class PatientDetail extends Component {
     }
   }
 
-  componentDidUpdate(prevProps ,prevState) {
+  componentDidUpdate(prevProps, prevState) {
     // Typical usage (don't forget to compare props):
     if(this.state.isEditing !== prevState.isEditing){
       const patientId = this.props.match.params.patientId;
@@ -103,8 +103,6 @@ class PatientDetail extends Component {
       response = await this.props.updatePatientPersonalDetails(data, patientId);
     } else if (key === 'contact') {
       response = await this.props.updatePatientContactDetails(data, patientId);
-    } else if (key === 'medication') {
-      response = await this.props.updatePatientMedicationDetails(data, patientId);
     }
     if (response.status === true) {
       this.props.createToastNotification(

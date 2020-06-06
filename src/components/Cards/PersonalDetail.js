@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Grid,
@@ -14,6 +14,8 @@ import patientMale from 'Assets/images/patient-male.svg';
 import patientFemale from 'Assets/images/patient-female.svg';
 import { PropTypes } from 'prop-types';
 import { GENDER_CHOICES, FACILITY_EXISTS_ID, patient_facility_status_choices } from 'Constants/app.const';
+import { connect } from 'react-redux';
+import { fetchClusterGroup } from 'Actions/PatientDetailsAction';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -36,11 +38,18 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-export default function PersonalDetail(props) {
+export const PersonalDetail = (props) => {
   const classes = useStyles();
   const { i18n } = useTranslation();
 
-  const { profile, handleEdit } = props;
+  const { profile, handleEdit, fetchClusterGroup, clusterGroup  } = props;
+
+  useEffect(() => {
+    if (!clusterGroup) {
+      fetchClusterGroup();
+    }
+  }, [clusterGroup]);
+
   return (
     <>
       {
@@ -81,9 +90,9 @@ export default function PersonalDetail(props) {
               <Typography variant="h6" color="textSecondary">
                 {i18n.t('ICMR ID')}: {profile.icmr_id}
               </Typography>
-              {profile.cluster_group &&
+              {profile.cluster_group && clusterGroup && 
                 <Typography variant="h6" color="textSecondary">
-                  {i18n.t('Cluster group')}: {profile.cluster_group}
+                  {i18n.t('Cluster group')}: {clusterGroup.find(group => group.id == profile.cluster_group).name}
                 </Typography>
               }
             </Grid>
@@ -96,7 +105,7 @@ export default function PersonalDetail(props) {
                 }
                 className={
                   patient_facility_status_choices.map(choice => {
-                    return choice.id === parseInt(profile.patient_status) ? `${classes.chip} ${choice.theme}` : ''
+                    return choice.id === parseInt(profile.patient_status) ? `${classes.chip} ${choice.theme} ` : ''
                   }).join(' ')
                 }
               />
@@ -111,9 +120,20 @@ export default function PersonalDetail(props) {
 
 PersonalDetail.propTypes = {
   profile: PropTypes.object.isRequired,
-  handleEdit: PropTypes.func
+  handleEdit: PropTypes.func,
+  fetchClusterGroup: PropTypes.func
 }
 
 PersonalDetail.defaultProps = {
   profile: {}
 }
+
+
+const mapStateToProps = state => {
+  const {  clusterGroup } = state;
+  return {
+      clusterGroup: clusterGroup.results
+  };
+};
+
+export default connect(mapStateToProps, {fetchClusterGroup})(PersonalDetail);

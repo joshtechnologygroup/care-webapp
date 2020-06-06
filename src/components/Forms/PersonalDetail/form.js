@@ -206,7 +206,7 @@ export default function Form(props) {
                     onChange={(data) => setProfileFields("gender", data)}
                     valueKey="id"
                   />
-                  <h5 className="text--error">{Boolean(touched.gender) && errors.gender}</h5>
+                  <h5 className="text--error">{Boolean(touched.gender) && errors.gender || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "") && errors.gender}</h5>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h6">{i18n.t('Patient status')}</Typography>
