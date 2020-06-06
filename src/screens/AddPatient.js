@@ -54,10 +54,16 @@ function AddPatient(props) {
   }
 
   const saveProfile = (name, value) => {
+    if(value){
     setProfile(prevState => ({
       ...prevState,
       [name]: value
     }));
+  } else {
+    let initial = {...profile};
+    delete initial.name;
+    setProfile(initial);
+  }
   }
 
   function Alert(props) {
@@ -71,7 +77,8 @@ function AddPatient(props) {
     let patientfacilitiesDetails = await patientFacilityForm;
     let medicationDetails = await medicationForm;
     let e = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
-
+    console.log(e);
+    console.log(profile);
     Object.keys(e).forEach((key, value) => {
       if (profile[key] || facilityDetails[key]) {
         e[key] = "";
@@ -85,8 +92,9 @@ function AddPatient(props) {
     }
 
     setFieldErrorDict(e);
-    if (flag === true) {
+    if (flag) {
       let initial_profile = { ...profile };
+      delete initial_profile.icmr_id;
       let patient_facility = { ...facilityDetails };
       if (!patient_facility['admitted_at']) {
         patient_facility['admitted_at'] = new Date()

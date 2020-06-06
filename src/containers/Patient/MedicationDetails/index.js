@@ -38,7 +38,7 @@ export function MedicationDetail(props) {
     let response;
     let initial = data;
     initial['patient'] = patientId;
-    if (editable === true) {
+    if (editable === true && !saveProfile) {
       response = await updatePatientMedicationDetails(initial, patientId);
       if (response.status) {
         setData(data);
