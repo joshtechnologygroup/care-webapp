@@ -209,7 +209,7 @@ export function DoctorAttendantList(props) {
           <Grid item xs={12} sm={4}>
 
             <PaginationController
-              resultsShown={(totalPages === 0) ? 0 : currentPage}
+              resultsShown={totalPages && currentPage}
               totalResults={totalPages}
               onFirst={() => {
                 setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, OFFSET]));

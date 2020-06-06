@@ -25,8 +25,8 @@ export function Form(props) {
     facilityName.push(utils.dropDownDict(updateData.facility, `facility-type-0`));
     inventoryType.push(utils.dropDownDict(updateData.item, `inventory-name-0`))
   } else {
-    facilityName.push(utils.dropDownDict('---------------', `facility-name--`));
-    inventoryType.push(utils.dropDownDict('---------------', `inventory-name--`));
+    facilityName.push(utils.dropDownDict(Constants.FACILITY_DEFAULT, `facility-name--`));
+    inventoryType.push(utils.dropDownDict(Constants.FACILITY_DEFAULT, `inventory-name--`));
     if (props.userType !== Constants.FACILITY_MANAGER && !_.isEmpty(props.shortFacilities)) {
       Object.keys(props.shortFacilities).forEach((facility, index) => {
         facilityName.push(utils.dropDownDict(props.shortFacilities[facility].name, `facility-type-${index}`));

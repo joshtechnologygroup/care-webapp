@@ -90,3 +90,5 @@ export const RELATIONSHIP_OPTIONS = [
 ]
 export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
 export const TIME_FORMAT = "hh:mm A";
+
+export const FACILITY_DEFAULT = '---------------';

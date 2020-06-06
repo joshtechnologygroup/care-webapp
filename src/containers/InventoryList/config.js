@@ -37,9 +37,6 @@ export const CONFIG = {
       minWidth: 80,
       editable: true,
       cellRendererParams: {isSortable: true, filterType: 'number', filterPriority: true},
-      onCellValueChanged: (data) => {
-        console.log('on cell change', data)
-      }
     },
     {
       headerName: 'Updated At',
