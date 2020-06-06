@@ -50,3 +50,43 @@ export const TOTAL_PERSONEL_DETAILS_FIELDS = 11;
 export const TOTAL_CONTACT_DETAILS_FIELDS = 5;
 
 export const DATE_FORMAT = "MM/DD/YYYY hh:mm A";
+export const RELATIONSHIP_OPTIONS = [
+    {
+        "value": 1,
+        "label": "Self"
+    },
+    {
+        "value": 2,
+        "label": "Father"
+    },
+    {
+        "value": 3,
+        "label": "Mother"
+    },
+    {
+        "value": 4,
+        "label": "Sibling"
+    },
+    {
+        "value": 5,
+        "label": "Spouse"
+    },
+    {
+        "value": 6,
+        "label": "Son"
+    },
+    {
+        "value": 7,
+        "label": "Daughter"
+    },
+    {
+        "value": 8,
+        "label": "Friend"
+    },
+    {
+        "value": 9,
+        "label": "Other relative"
+    }
+  ]
+export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
+export const TIME_FORMAT = "hh:mm A";

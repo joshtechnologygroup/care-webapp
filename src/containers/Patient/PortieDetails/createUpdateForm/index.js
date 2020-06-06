@@ -7,21 +7,25 @@ import Form from './form';
 import _ from 'underscore';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { reachableStatus } from 'Constants/app.const';
 
 export const CreateUpdatePortieDetails = (props) => {
-    const { editMode, details, handleSubmit, cancelCallback, } = props;
+    const { editMode, details, handleSubmit, cancelCallback, porteaUsers } = props;
     const { i18n } = useTranslation();
 
     const validationSchema = Yup.object({
-        status: Yup.boolean().required(i18n.t('Please select contact status')),
-        name: Yup.string().required(i18n.t('Please enter Portie name')),
+        able_to_connect: Yup.boolean().required(i18n.t('Please select contact status')),
+        portie: Yup.number().required(i18n.t('Please enter Portie name')),
         patient_phone_number: Yup.number().required(i18n.t('Please enter Portie contact number')).min(10, i18n.t('Please enter a valid contact number')),
         relation: Yup.string().required(i18n.t('Please choose relation of Patient with the person')),
     });
 
     const submit = async (data) => {
+        console.log(data);
         handleSubmit(data);
     };
+    console.log(details);
+
 
     return (
         <Card className="mb-10 add-placeholder">
@@ -33,12 +37,18 @@ export const CreateUpdatePortieDetails = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Formik
-                        initialValues={details}
+                        initialValues={editMode ? details : {
+                            'relation': "",
+                            "portie": "",
+                            "patient_phone_number": "",
+                            "able_to_connect": false,
+                            "called_at": new Date(),
+                        }}
                         validationSchema={validationSchema}
                         onSubmit={submit}
                     >
                         {
-                            props => <Form editMode={editMode} details={details} {...props} cancelCallback={cancelCallback} />
+                            props => <Form editMode={editMode} porteaUsers={porteaUsers} details={details} {...props} cancelCallback={cancelCallback}/>
                         }
                     </Formik>
                 </Grid>
@@ -52,9 +62,8 @@ CreateUpdatePortieDetails.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    testingLabs: state.testingLabs.results
+    testingLabs: state.testingLabs.results,
 });
-
 
 export default connect(mapStateToProps, null)(CreateUpdatePortieDetails);
 

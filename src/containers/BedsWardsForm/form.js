@@ -61,37 +61,45 @@ export function Form(props) {
         </Grid>
 
         <Grid item sm={6} xs={12}>
+          <label className={classes.label}>{i18n.t('Total beds')}</label>
           <TextField
             name="total_beds"
             type="number"
             defaultValue={data.total_beds}
+            variant="outlined"
             label={i18n.t('Total beds')}
             fullWidth
             onChange={changeText.bind(null, "total_bed")}
             error={errors.total_bed}
+            className={classes.field}
           />
         </Grid>
 
         <Grid item sm={6} xs={12}>
+          <label className={classes.label}>{i18n.t('Occupied beds')}</label>
           <TextField
             name="occupied_beds"
             type="number"
+            variant="outlined"            
             label={i18n.t('Occupied beds')}
             defaultValue={data.occupied_bed}
             fullWidth
             onChange={changeText.bind(null, "occupied_bed")}
             error={errors.occupied_bed}
+            className={classes.field}
           />
         </Grid>
 
         <Grid item sm={6} xs={12}>
+          <label className={classes.label}>{i18n.t('Available beds')}</label>
           <TextField
             name="available_beds"
             type="number"
-            label={i18n.t('Available beds')}
+            variant="outlined"
             fullWidth
             onChange={changeText.bind(null, "available_bed")}
             error={errors.available_bed}
+            className={classes.field}
           />
         </Grid>
       </Grid>

@@ -12,6 +12,7 @@ import {
   Fab,
 } from '@material-ui/core';
 import { PhoneOutlined, EventOutlined, AccessTime, EditOutlined } from '@material-ui/icons';
+import { RELATIONSHIP_OPTIONS } from "Src/constants/"
 
 const useStyles = makeStyles(theme =>
     createStyles({
@@ -52,16 +53,18 @@ export default function PortieDetailCard(props) {
           </Grid>
           <Grid item xs={12} sm={4} md={5}>
             <h6 className="heading--sub">{i18n.t('Contacted whom')}</h6>
-            <h4 className="heading--md text--gray">{details.patient_relation}</h4>
+            <h4 className="heading--md text--gray">{
+                RELATIONSHIP_OPTIONS.find(relation => relation.value == details.relation).label
+            }</h4>
             <Typography variant="h6" className="d-flex">
               <PhoneOutlined className="mr-5" />
-              {details.patient_contact_number}
+              {details.patient_phone_number}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={3} md={2} className="ml-md-auto">
             <Chip
-              className={`${classes.chip} ${details.status ? 'selected' : 'danger'}`}
-              label={details.status ? i18n.t('Contacted') : i18n.t('Not reachable')}
+              className={`${classes.chip} ${details.able_to_connect ? 'selected' : 'danger'}`}
+              label={details.able_to_connect ? i18n.t('Contacted') : i18n.t('Not reachable')}
             />
             <Typography variant="h6" className="d-flex mt-5">
               <EventOutlined className="mr-5" />

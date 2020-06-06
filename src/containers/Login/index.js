@@ -44,7 +44,8 @@ class Login extends Component {
     });
   }
 
-  async handleSubmit () {
+  async handleSubmit (e) {
+    e.preventDefault();
     let emailError =false,
         passwordError = false;
     if (!this.state.email) {
@@ -62,20 +63,20 @@ class Login extends Component {
         }
       });
     }
-    else {    
-        const { email, password, errors } = { ...this.state };
-        const { login, history } = { ...this.props }
-        const response = await login(email, password);
-        if(response.status){
-            history.push('/')
-        } else {
-            this.setState({
-                errors: {
-                    ...errors,
-                    form: this.props.t(response.error_message)
-                }
-            });
-        }
+    else {
+      const { email, password, errors } = { ...this.state };
+      const { login, history } = { ...this.props }
+      const response = await login(email, password);
+      if(response.status){
+          history.push('/')
+      } else {
+        this.setState({
+          errors: {
+            ...errors,
+            form: this.props.t(response.error_message)
+          }
+        });
+      }
     }
   }
 
@@ -83,7 +84,7 @@ class Login extends Component {
     const { email, password, errors } = this.state;
     const { t } = this.props;
     return (
-      <div className="login__content">
+      <form className="login__content" onSubmit={this.handleSubmit}>
         {
           errors.form &&
           <Typography className="mt-24" variant="h5" color="error">
@@ -111,12 +112,12 @@ class Login extends Component {
           error={errors.password}
         />
         <Button
+          type="submit"
           variant="contained"
           color="primary"
           disableElevation
           size="medium"
           className="btn"
-          onClick={this.handleSubmit}
           disabled={errors.email || errors.password}
         >
           {t('LOG IN')}
@@ -129,7 +130,7 @@ class Login extends Component {
         >
           {t('Forgot Password?')}
         </Link>
-      </div>
+      </form>
     );
   }
 }

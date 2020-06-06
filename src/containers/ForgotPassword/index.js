@@ -39,7 +39,8 @@ class ForgotPassword extends Component {
     });
   }
 
-  async handleSubmit () {
+  async handleSubmit (e) {
+    e.preventDefault();
     if (!this.state.email) {
       this.setState({
         errors: {
@@ -70,7 +71,7 @@ class ForgotPassword extends Component {
     const { email, errors, success } = this.state;
     const { t } = this.props;
     return (
-      <div className="login__content">
+      <form className="login__content" onSubmit={this.handleSubmit}>
         <Typography variant="h5" className="mt-24">
           {t('enter_email_text')}
         </Typography>
@@ -85,11 +86,11 @@ class ForgotPassword extends Component {
           error={errors.email}
         />
         <Button
+          type="submit"
           variant="contained"
           color="primary"
           disableElevation
           className="btn"
-          onClick={this.handleSubmit}
         >
           {t('SUBMIT')
         }</Button>
@@ -113,7 +114,7 @@ class ForgotPassword extends Component {
           success &&
           <p className="success-box">{success}</p>
         }
-      </div>
+      </form>
     );
   }
 }
