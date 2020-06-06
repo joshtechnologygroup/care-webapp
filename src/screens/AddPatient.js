@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import i18n from "i18next";
-import {Grid, Snackbar} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import PersonalDetailForm from 'Components/Forms/PersonalDetail';
 import ContactDetailForm from 'Components/Forms/ContactDetail';
 import MedicationDetails from 'Containers/Patient/MedicationDetails';
@@ -16,10 +16,13 @@ import Header from 'Containers/Header';
 import { Button } from '@material-ui/core';
 import { createPatient, createPatientSampleTest } from 'Actions/PatientsAction';
 import MuiAlert from "@material-ui/lab/Alert";
-import { TOTAL_PROFILE_FIELDS, TOTAL_FACILITY_FIELDS, FACILITY_EXISTS_ID } from 'Src/constants';
 import _ from 'underscore';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import { SUCCESS, DANGER } from "Src/constants";
+import {regex} from 'Constants/app.const';
 function AddPatient(props) {
-  const [formList, setFormList] = useState(['personal','contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
+  const [formList, setFormList] = useState(['personal', 'contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
   const [profile, setProfile] = useState({
     year: 1,
     month: 1,
@@ -27,163 +30,131 @@ function AddPatient(props) {
     diseases: [],
   });
   let history = useHistory();
-  const [patient, setPatient] = useState({
-    personal: {},
-    contact:  {},
-    medication: {
-      clinicalStatus: '',
-      covidStatus: '',
-      symptoms: [],
-      nonCovidDiseases: [],
-      attendant: [],
-    },
-    facility_details: [],
-    patient_lab_details: [],
-    portie_calling_details: [],
-    patient_family_details: [],
-  });
+  const [personalForm, setPersonalForm] = useState({});
+  const [contactForm, setContactForm] = useState({});
+  const [patientFacilityForm, setPatientFacilityForm] = useState({});
+  const [medicationForm, setMedicationForm] = useState({});
   const [labDetails, setLabDetails] = useState({});
   const [facilityDetails, setFacilityDetails] = useState({});
-  const [error, setError] = useState(null);
-  const [formError, setFormError] = useState(false);
-  const [open, setOpen] = useState(false);
-  
-  const saveLabDetails = (name, value) =>{
+  const [fieldErrorDict, setFieldErrorDict] = useState({});
+
+  const saveLabDetails = (name, value) => {
     setLabDetails(prevState => ({
       ...prevState,
-      [name]:value
-   }));
-   if(value === ""){
-     setFormError(true)
-   }
+      [name]: value
+    }));
   }
 
-  const saveFacilityDetails = (name, value) =>{
+  const saveFacilityDetails = (name, value) => {
     setFacilityDetails(prevState => ({
       ...prevState,
-      [name]:value
-   }));
+      [name]: value
+    }));
   }
 
-  const saveProfile = (name, value) =>{
+  const saveProfile = (name, value) => {
     setProfile(prevState => ({
       ...prevState,
-      [name]:value
-   }));
-   if(value === "") {
-     setFormError(true);
-   }
+      [name]: value
+    }));
   }
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-  
-  const handleError = (value) =>{
-    setFormError(value)
-  }
 
   const handleSave = async () => { //calling save profile api
-    let initial_profile = {...profile};
-    let patient_facility = {...facilityDetails};
-    delete initial_profile.facilityExists;
-    if(!patient_facility['admitted_at']) {
-      patient_facility['admitted_at'] =  new Date()
-    }
-    if(!patient_facility['discharged_at']) {
-      patient_facility['discharged_at'] =  new Date()
-    }
-    let totalFields = Object.keys(initial_profile).length;
-    if(initial_profile['native_state']) {
-      totalFields = totalFields - 1;
-    }
-    if(initial_profile['native_country']) {
-      totalFields = totalFields - 1;
-    }
-    if(initial_profile['patient_status'] === FACILITY_EXISTS_ID && _.isEmpty(patient_facility)) {
-      setOpen(true);
-      setFormError("please fill either facility details or select patient status");
-      return;
-    }
-    if(TOTAL_PROFILE_FIELDS > totalFields) {
-      setOpen(true);
-      setFormError("please fill required details before submitting the form");
-      return;
-    }
-    if(initial_profile['patient_status'] === FACILITY_EXISTS_ID && !_.isEmpty(patient_facility)){
-      initial_profile['patient_facility'] = patient_facility;
-    }
-    let totalPatientFacilityFields = Object.keys(patient_facility).length;
-    if(!_.isEmpty(patient_facility) && totalPatientFacilityFields !== TOTAL_FACILITY_FIELDS && initial_profile['patient_status'] === FACILITY_EXISTS_ID) {
-      setOpen(true);
-      setFormError("please fill all the facilties details");
-      return;
-    }
-    if(formError) {
-      setOpen(true);
-      setFormError("please fill required details before submitting the form");
-      return;
-    }
-      const response = await props.createPatient(profile);
-      if(response.status) {
-        setOpen(true);
-        setError(true);
-        history.push(`/patients/${response.patientId}`);
-      } else{
-        setOpen(true);
-        setFormError(response.error);
+    let flag = true;
+    let personalDetails = await personalForm;
+    let contactDetails = await contactForm;
+    let patientfacilitiesDetails = await patientFacilityForm;
+    let medicationDetails = await medicationForm;
+    let e = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
+
+    Object.keys(e).forEach((key, value) => {
+      if (profile[key] || facilityDetails[key]) {
+        e[key] = "";
+      } else {
+        flag = false;
       }
-  };
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+    });
+    if(profile['phone_number'] && !(regex.phone_number).test(profile['phone_number'])) {
+      e['phone_number'] = "please enter valid phone number"
+      flag = false;
     }
-    setFormError(false);
-    setOpen(false);
-    setError(null);
+
+    setFieldErrorDict(e);
+    if (flag === true) {
+      let initial_profile = { ...profile };
+      let patient_facility = { ...facilityDetails };
+      if (!patient_facility['admitted_at']) {
+        patient_facility['admitted_at'] = new Date()
+      }
+      if (!patient_facility['discharged_at']) {
+        patient_facility['discharged_at'] = new Date()
+      }
+      initial_profile['patient_facility'] = patient_facility;
+      const response = await props.createPatient(initial_profile);
+      if (response.status) {
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS))
+        history.push(`/patients/${response.patientId}`);
+      } else {
+        props.createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER))
+      }
+    } else {
+      props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "Added", "please fill the required details", DANGER))
+    }
   };
 
-    return (
-      <>
-        <Header>
-          <h2>{i18n.t('Add Patient')}</h2>
-          <Button
-            variant="contained"
-            color="primary"
-            disableElevation
-            className="btn py-5 ml-auto"
-            onClick={handleSave}
-          >
-            {i18n.t('Save')}
-          </Button>
-        </Header>
-        <div className="page-container">
-          <PersonalDetailForm
-            profile={profile}
-            saveProfile={saveProfile}
-            handleSave={handleSave}
-            handleError={handleError}
-          />
-          <FacilityDetails
-            editMode={true}
-            profile={profile[formList[3]]}
-            saveFacilityDetails={saveFacilityDetails}
-          />
-          <ContactDetailForm
-            profile={profile}
-            saveProfile={saveProfile}
-            handleSave={handleSave}
-            handleError={handleError}
-          />
-          <MedicationDetails
-            editMode={true}
-            saveProfile={saveProfile}
-            profile={profile}
-          />
-          {/* <DoctorAttendant
+  return (
+    <>
+      <Header>
+        <h2>{i18n.t('Add Patient')}</h2>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          className="btn py-5 ml-auto"
+          onClick={handleSave}
+        >
+          {i18n.t('Save')}
+        </Button>
+      </Header>
+      <div className="page-container">
+        <PersonalDetailForm
+          profile={profile}
+          saveProfile={saveProfile}
+          handleSave={handleSave}
+          fieldErrorDict={fieldErrorDict}
+          setPersonalForm={setPersonalForm}
+        />
+        <FacilityDetails
+          editMode={true}
+          profile={profile}
+          fieldErrorDict={fieldErrorDict}
+          saveFacilityDetails={saveFacilityDetails}
+          setPatientFacilityForm={setPatientFacilityForm}
+        />
+        <ContactDetailForm
+          profile={profile}
+          fieldErrorDict={fieldErrorDict}
+          saveProfile={saveProfile}
+          handleSave={handleSave}
+          setContactForm={setContactForm}
+        />
+        <MedicationDetails
+          editMode={true}
+          fieldErrorDict={fieldErrorDict}
+          saveProfile={saveProfile}
+          profile={profile}
+          setMedicationForm={setMedicationForm}
+        />
+        {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}
           /> */}
-          {/* <LabTestDetails
+        {/* <LabTestDetails
             saveLabDetails={saveLabDetails}
             profile={profile[formList[4]]}
           />
@@ -193,37 +164,21 @@ function AddPatient(props) {
           <FamilyDetails
             profile={profile[formList[6]]}
           /> */}
-          <Grid container justify="space-between">
-            <h2>{i18n.t('*Required fields')}</h2>
-            <Button
-              variant="contained"
-              color="primary"
-              disableElevation
-              className="btn py-5 ml-auto"
-              onClick={handleSave}
-            >
-              {i18n.t('Save')}
-            </Button>
-          </Grid>
-        </div>
-        
-        <Snackbar
-          open={open}
-          autoHideDuration={5000}
-          onClose={handleClose}
-        >
-          <Alert onClose={handleClose} severity={error==true ? "success":"error"}>
-          {error &&
-            <div>
-              {error===true && "Successfully created!"}
-              {error===false && "Error occured!"}
-            </div>
-          }
-          {formError && error === null && <div>{formError}</div>}
-          </Alert>
-        </Snackbar>
-      </>
-    );
+        <Grid container justify="space-between">
+          <h2>{i18n.t('*Required fields')}</h2>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className="btn py-5 ml-auto"
+            onClick={handleSave}
+          >
+            {i18n.t('Save')}
+          </Button>
+        </Grid>
+      </div>
+    </>
+  );
 }
 
 
@@ -232,8 +187,9 @@ const mapStateToProps = state => {
 
 AddPatient.propTypes = {
   createPatient: PropTypes.func.isRequired,
-  createPatientSampleTest: PropTypes.func.isRequired
+  createPatientSampleTest: PropTypes.func.isRequired,
+  createToastNotification: PropTypes.func
 };
 
 
-export default connect(mapStateToProps, {createPatient, createPatientSampleTest})(AddPatient);
+export default connect(mapStateToProps, { createPatient, createPatientSampleTest, createToastNotification })(AddPatient);

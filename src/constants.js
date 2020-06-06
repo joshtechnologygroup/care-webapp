@@ -12,9 +12,9 @@ export const WARNING = 'warning';
 export const INFO = 'info';
 
 // User Types
-export const DISTRICT_MANAGER = 3
-export const PORTIA = 2
-export const FACILITY_MANAGER = 1
+export const DISTRICT_MANAGER = 3;
+export const PORTIA = 2;
+export const FACILITY_MANAGER = 1;
 
 export const NAVIGATION_PERMISSION = [DISTRICT_MANAGER, FACILITY_MANAGER]
 
@@ -28,15 +28,15 @@ export const CLINICAL_STATUS_UPDATED_AT = 'clinical_status_updated_at'
 export const PORTEA_CALLED_AT = 'portea_called_at'
 export const ORDERING_KEY = 'ordering';
 export const MAPPING_INVENTORY_ATTRIBUTES = {
-    'facility':'facilityName',
-    'facility_id':'facility_id',
-    'item':'type',
-    'required_quantity':'requiredNo',
-    'current_quantity':'currentNo',
-    'created_by':'createdBy',
-    'updated_at':'updatedAt',
+  'facility': 'facilityName',
+  'facility_id': 'facility_id',
+  'item': 'type',
+  'required_quantity': 'requiredNo',
+  'current_quantity': 'currentNo',
+  'created_by': 'createdBy',
+  'updated_at': 'updatedAt',
 };
-export const UPDATED_AT='updated_at';
+export const UPDATED_AT = 'updated_at';
 
 export const PAGINATION_LIMIT = 50;
 export const INITIAL_PAGE = 1;
@@ -123,3 +123,5 @@ export const labTestStatusChoices = [
 export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
 export const TIME_FORMAT = "hh:mm A";
 export const HOME_ISOLATION_STATUS = "home-isolation";
+
+export const FACILITY_DEFAULT = '---------------';

@@ -13,8 +13,7 @@ import {
 import patientMale from 'Assets/images/patient-male.svg';
 import patientFemale from 'Assets/images/patient-female.svg';
 import { PropTypes } from 'prop-types';
-import { GENDER_CHOICES, FACILITY_EXISTS_ID } from 'Constants/app.const';
-import { patient_facility_status_choices } from 'Mockdata/PatientFacilityStatusChoices.json';
+import { GENDER_CHOICES, FACILITY_EXISTS_ID, patient_facility_status_choices } from 'Constants/app.const';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -74,7 +73,7 @@ export default function PersonalDetail(props) {
                 {profile.name}
               </Typography>
               <Typography variant="h6" color="textSecondary">
-                {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.age_years ? profile.age_years + ' ' + i18n.t('years') : ''} {profile.ageMonths ? profile.ageMonths + ' ' + i18n.t('months') : ''}
+                {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.year ? profile.year + ' ' + i18n.t('years') : ''} {profile.month ? profile.month + ' ' + i18n.t('months') : ''}
               </Typography>
               <Typography variant="h6" color="textSecondary">
                 {i18n.t('Govt ID')}: {profile.govt_id}
@@ -82,7 +81,7 @@ export default function PersonalDetail(props) {
               <Typography variant="h6" color="textSecondary">
                 {i18n.t('ICMR ID')}: {profile.icmr_id}
               </Typography>
-              { profile.cluster_group && 
+              {profile.cluster_group &&
                 <Typography variant="h6" color="textSecondary">
                   {i18n.t('Cluster group')}: {profile.cluster_group}
                 </Typography>

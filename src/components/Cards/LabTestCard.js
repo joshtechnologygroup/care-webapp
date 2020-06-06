@@ -15,8 +15,8 @@ import {
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { EditOutlined, EventOutlined } from '@material-ui/icons';
 import { DATE_FORMAT } from 'Src/constants';
-// Importing mock data
-import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
+
+import { labTestStatusChoices } from 'Constants/app.const';
 
 const useStyles = makeStyles(theme =>
   createStyles({

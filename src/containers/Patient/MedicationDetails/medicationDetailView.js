@@ -7,11 +7,7 @@ import {
 } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
 import Styles from './styles';
-import { symptomChoices } from 'Mockdata/symptomChoices.json';
-import { diseaseChoices } from 'Mockdata/diseaseChoices.json';
-import { booleanStatuses } from 'Constants/app.const';
-import { clinicalStatusChoices } from 'Mockdata/clinicalStatusChoices.json';
-import { CovidStatusChoices } from 'Mockdata/CovidStatusChoices.json';
+import { clinicalStatusChoices, CovidStatusChoices, symptomChoices, diseaseChoices } from 'Constants/app.const';
 import _ from 'underscore';
 export default function MedicationDetailView(props) {
   const classes = Styles();
