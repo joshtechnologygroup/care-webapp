@@ -10,11 +10,7 @@ import {
 import { EditOutlined, PhoneOutlined, RoomOutlined, HomeOutlined } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
-
-// IMORTING MOCKCHOICES
-import { countryChoices } from 'Mockdata/countryChoices.json';
-import { stateChoices } from 'Mockdata/stateChoices.json';
-import { relationshipChoices } from 'Mockdata/relationshipChoices.json';
+import { countryChoices, stateChoices, relationshipChoices } from 'Constants/app.const';
 
 const useStyles = makeStyles(theme =>
   createStyles({

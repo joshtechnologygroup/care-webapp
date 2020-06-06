@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Grid,
@@ -8,13 +8,7 @@ import {
 import { MultiSelectChipsInput, SingleSelectChipsInput } from 'Components/Inputs';
 import { PropTypes } from 'prop-types';
 
-// IMPORTING MOCK CHOICES
-import { symptomChoices } from 'Mockdata/symptomChoices.json';
-import { diseaseChoices } from 'Mockdata/diseaseChoices.json';
-import { booleanStatuses } from 'Constants/app.const';
-import { clinicalStatusChoices } from 'Mockdata/clinicalStatusChoices.json';
-import { CovidStatusChoices } from 'Mockdata/CovidStatusChoices.json';
-
+import { clinicalStatusChoices, CovidStatusChoices, symptomChoices, diseaseChoices } from 'Constants/app.const';
 export default function Form(props) {
   const { i18n } = useTranslation();
 
@@ -22,15 +16,26 @@ export default function Form(props) {
     values: {
       covid_status,
       clinical_status,
-      symptoms,
-      diseases,
+      patient_symptoms,
+      patient_diseases,
     },
     handleSubmit,
     setFieldValue,
     cancelCallback,
     editMode,
     saveProfile,
+    setMedicationForm,
+    validateForm,
+    fieldErrorDict,
+    errors,
+    touched,
   } = props;
+
+  useEffect(()=>{
+    if(setMedicationForm) {
+    props.setMedicationForm(validateForm);
+    }
+  },[])
 
   const setValue = (val, name) => {
     if(saveProfile) {
@@ -52,6 +57,9 @@ export default function Form(props) {
           options={CovidStatusChoices}
           onChange={(val) => setValue(val, 'covid_status')}
         />
+          <h5 className="text--error">
+            {touched.covid_status && Boolean(errors.covid_status) || (fieldErrorDict ? fieldErrorDict.covid_status : "") && errors.covid_status && errors.covid_status}
+          </h5>
       </Grid>
 
       <Grid item xs={12} className="pt-0">
@@ -64,6 +72,9 @@ export default function Form(props) {
           options={clinicalStatusChoices}
           onChange={(val) => setValue(val, 'clinical_status')}
         />
+        <h5 className="text--error">
+            {touched.clinical_status && Boolean(errors.clinical_status) || (fieldErrorDict ? fieldErrorDict.clinical_status : "") && errors.clinical_status}
+          </h5>
       </Grid>
 
       <Grid item xs={12} className="pt-0">
@@ -72,8 +83,8 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={symptomChoices}
-          value={symptoms}
-          onChange={(val) => setValue(val, 'symptoms')}
+          value={patient_symptoms}
+          onChange={(val) => setValue(val, 'patient_symptoms')}
           valueKey="id"
         />
       </Grid>
@@ -84,8 +95,8 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={diseaseChoices}
-          value={diseases}
-          onChange={(val) => setValue(val, 'diseases')}
+          value={patient_diseases}
+          onChange={(val) => setValue(val, 'patient_diseases')}
           valueKey="id"
         />
       </Grid>
@@ -121,7 +132,8 @@ export default function Form(props) {
 Form.propTypes = {
   profile: PropTypes.object.isRequired,
   cancelCallback: PropTypes.func,
-  editMode: PropTypes.bool
+  editMode: PropTypes.bool,
+  // setFormD: PropTypes.func
 }
 
 Form.defaultProps = {

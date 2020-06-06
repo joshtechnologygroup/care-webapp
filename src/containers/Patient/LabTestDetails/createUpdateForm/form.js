@@ -15,9 +15,7 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
-import { labs } from 'Mockdata/labs.json';
+import { labTestStatusChoices } from 'Constants/app.const';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -74,8 +72,8 @@ export default function Form(props) {
               fullWidth
               className="field"
               variant="outlined"
-              helperText={touched.testing_lab && errors.testing_lab}
-              error={touched.testing_lab && Boolean(errors.testing_lab)}
+              helperText={errors.testing_lab && touched.testing_lab}
+              error={Boolean(errors.testing_lab) && touched.testing_lab}
             />
           }
           />

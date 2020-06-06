@@ -15,8 +15,8 @@ import { EventOutlined, AccessTime } from '@material-ui/icons';
 import { DATE_FORMAT } from 'Src/constants';
 import { connect } from 'react-redux';
 import _ from "underscore";
-// IMPORTING MOCK CHOICES
-import { facilityStatusChoices } from 'Mockdata/facilityStatusChoices.json';
+
+import { facilityStatusChoices } from 'Constants/app.const';
 
 const useStyles = makeStyles(theme =>
   createStyles({

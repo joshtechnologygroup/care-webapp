@@ -69,3 +69,12 @@ export const RELATIVE_LOGIN = '/login';
 
 // patient family member
 export const PATIENT_FAMILY_MEMBER_URL = SERVER + API_V1 + 'patients/family-members/'
+
+//patient personal details
+export const PERSONAL_DETAILS_URL  =  SERVER + API_V1 + 'patients/personal-details/'
+
+//patient medication details
+export const MEDICATION_DETAILS_URL = SERVER + API_V1 + 'patients/medication-details/'
+
+//patient contact details
+export const CONTACT_DETAILS_URL = SERVER + API_V1 + 'patients/contact-details/'
