@@ -64,6 +64,7 @@ export function Form(props) {
           <TextField
             name="total_beds"
             type="number"
+            defaultValue={data.total_beds}
             label={i18n.t('Total beds')}
             fullWidth
             onChange={changeText.bind(null, "total_bed")}
@@ -76,6 +77,7 @@ export function Form(props) {
             name="occupied_beds"
             type="number"
             label={i18n.t('Occupied beds')}
+            defaultValue={data.occupied_bed}
             fullWidth
             onChange={changeText.bind(null, "occupied_bed")}
             error={errors.occupied_bed}

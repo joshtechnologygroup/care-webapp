@@ -20,6 +20,7 @@ import * as StringUtils from 'Src/utils/stringformatting';
 import * as ToastUtils from 'Src/utils/toast';
 import {createToastNotification} from 'Actions/ToastAction';
 import {SUCCESS, FACILITY_MANAGER} from "Src/constants";
+import * as utils from 'Src/utils/utils';
 
 export const DoctorAttendantForm = (props) => {
   const classes = useStyles();
@@ -48,8 +49,9 @@ export const DoctorAttendantForm = (props) => {
     const {designationList, facilityList, userType, associatedFacilities} = props
     let update_designation_list = [], update_facility_list = [];
     if (updateOperation && designationList) {
-      update_facility_list.push({label: data.facility});
-      designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}))
+      // update_facility_list.push({label: data.facility});
+      update_facility_list.push(utils.dropDownDict(data.facility));
+      designationList.forEach((row) => update_designation_list.push(utils.dropDownDict(row.name, row.id)));
       setUpdateData((prevState) => ({
         ...prevState,
         designation: update_designation_list[0].value,
@@ -61,11 +63,12 @@ export const DoctorAttendantForm = (props) => {
         email: false,
       }))
     } else if (designationList && facilityList && userType && associatedFacilities) {
-      facilityList.forEach((row) => update_facility_list.push({value: row.id, label: row.name}))
-      if (userType !== FACILITY_MANAGER) {
+      facilityList.forEach((row) => update_facility_list.push(utils.dropDownDict(row.name, row.id)))
+      if (userType === FACILITY_MANAGER) {
         update_facility_list = associatedFacilities.map((id) => {
           const facility = facilityList.find((value, index, array) => value.id === id);
-          return {'value': facility.id, 'label': facility.name}
+          return utils.dropDownDict(facility.name, facility.id);
+          // return {'value': facility.id, 'label': facility.name}
         });
       }
       designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}));

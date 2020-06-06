@@ -238,7 +238,7 @@ export function BedsList(props) {
           <Grid item xs={12} sm={4}>
 
             <PaginationController
-              resultsShown={currentPage}
+              resultsShown={(totalPages === 0) ? 0 : currentPage}
               totalResults={totalPages}
               onFirst={() => {
                 setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_INFRASTRUCTURE_LIST_URL, [Constants.PAGINATION_LIMIT, Constants.OFFSET]));
