@@ -4,17 +4,50 @@ import {
 
 import {ActionRenderer} from './ActionRenderer';
 
-import { GRID_CONFIG } from 'Constants/app.const';
+import {GRID_CONFIG} from 'Constants/app.const';
 
 
 export const CONFIG = {
   columnDefs: [
-    { headerName: 'Faciltiy Name', field: 'facility', minWidth: 200, cellRendererParams: { isSortable: false, filterType: 'boolean', options: [] } },
-    { headerName: 'Type', field: 'item', minWidth: 150, cellRendererParams: { isSortable: true, filterType: 'boolean', options: [] }, },
-    { headerName: 'Required #', field: 'required_quantity', minWidth: 80, editable: true, cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true  },  onCellValueChanged: (data)=>{console.log('on cell change', data)} },
-    { headerName: 'Current #', field: 'current_quantity', minWidth: 80, editable: true, cellRendererParams: { isSortable: true, filterType: 'number', filterPriority: true  },  onCellValueChanged: (data)=>{console.log('on cell change', data)} },
-    { headerName: 'Updated At', field: 'updated_at', minWidth: 150, cellRendererParams: { isSortable: true, filterType: 'date', filterPriority: true } },
-    { headerName: '', field: 'action', maxWidth: 50, cellRenderer: 'actionRenderer' },
+    {
+      headerName: 'Faciltiy Name',
+      field: 'facility',
+      minWidth: 200,
+      cellRendererParams: {isSortable: false, filterType: 'boolean', options: []}
+    },
+    {
+      headerName: 'Type',
+      field: 'item',
+      minWidth: 150,
+      cellRendererParams: {isSortable: true, filterType: 'boolean', options: []},
+    },
+    {
+      headerName: 'Required #',
+      field: 'required_quantity',
+      minWidth: 80,
+      editable: true,
+      cellRendererParams: {isSortable: true, filterType: 'number', filterPriority: true},
+      onCellValueChanged: (data) => {
+        console.log('on cell change', data)
+      }
+    },
+    {
+      headerName: 'Current #',
+      field: 'current_quantity',
+      minWidth: 80,
+      editable: true,
+      cellRendererParams: {isSortable: true, filterType: 'number', filterPriority: true},
+      onCellValueChanged: (data) => {
+        console.log('on cell change', data)
+      }
+    },
+    {
+      headerName: 'Updated At',
+      field: 'updated_at',
+      minWidth: 150,
+      cellRendererParams: {isSortable: true, filterType: 'date', filterPriority: true}
+    },
+    {headerName: 'Action', field: 'action', maxWidth: 100, cellRenderer: 'actionRenderer'},
   ],
   defaultColDef: {
     editable: GRID_CONFIG.editable,

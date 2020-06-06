@@ -68,7 +68,6 @@ export const DoctorAttendantForm = (props) => {
         update_facility_list = associatedFacilities.map((id) => {
           const facility = facilityList.find((value, index, array) => value.id === id);
           return utils.dropDownDict(facility.name, facility.id);
-          // return {'value': facility.id, 'label': facility.name}
         });
       }
       designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}));
