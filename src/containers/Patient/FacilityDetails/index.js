@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { getShortFacilitiesList } from 'Actions/FacilitiesAction'
 export function FacilityDetails(props) {
   const { i18n } = useTranslation();
-  const { profile, fieldErrorDict, saveFacilityDetails, setFormB, shortFacilities, editMode } = props;
+  const { profile, fieldErrorDict, saveFacilityDetails, setPatientFacilityForm, shortFacilities, editMode } = props;
 
   const [editable, setEditable] = React.useState(editMode);
   let status =false;
@@ -72,7 +72,7 @@ export function FacilityDetails(props) {
               saveFacilityDetails={saveFacilityDetails}
               cancelCallback={cancel}
               fieldErrorDict={fieldErrorDict}
-              setFormB={setFormB}
+              setPatientFacilityForm={setPatientFacilityForm}
               editMode={profile.facility ? true : false}
               shortFacilities={shortFacilities}
               details={{'admitted_at':new Date(),'discharged_at':new Date()}}

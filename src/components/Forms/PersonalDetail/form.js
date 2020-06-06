@@ -52,12 +52,12 @@ export default function Form(props) {
     handleSubmit,
     validateForm,
     fieldErrorDict,
-    setFormA,
+    setPersonalForm,
   } = props;
 
   useEffect(() => {
-    if(setFormA) {
-    setFormA(validateForm);
+    if(setPersonalForm) {
+      setPersonalForm(validateForm);
     }
   }, []);
 
@@ -111,7 +111,7 @@ export default function Form(props) {
             <Grid item className="p-0 bg-gray text-center" xs={12} sm={2}>
               <ProfileImageInput
                 altText={i18n.t('Click to change photo')}
-                defaultImage={(gender === 1 || !gender) ? patientMale : patientFemale}
+                defaultImage={(gender === GENDER_MAPPING_PROPS['Male'] || !gender) ? patientMale : patientFemale}
                 imageSrc={imageSrc}
                 handleChange={(file, image) => setProfileImage(file, image)}
               />

@@ -35,15 +35,15 @@ export default function Form(props) {
     saveFacilityDetails,
     shortFacilities,
     editMode,
-    setFormB,
+    setPatientFacilityForm,
     validateForm,
     fieldErrorDict,
     touched,
   } = props;
 
   useEffect(()=>{
-    if(setFormB) {
-    setFormB(validateForm);
+    if(setPatientFacilityForm) {
+      setPatientFacilityForm(validateForm);
     }
   },[])
 

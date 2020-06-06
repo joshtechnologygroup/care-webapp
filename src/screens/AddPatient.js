@@ -30,10 +30,10 @@ function AddPatient(props) {
     diseases: [],
   });
   let history = useHistory();
-  const [formA, setFormA] = useState({});
-  const [formB, setFormB] = useState({});
-  const [formC, setFormC] = useState({});
-  const [formD, setFormD] = useState({});
+  const [personalForm, setPersonalForm] = useState({});
+  const [contactForm, setContactForm] = useState({});
+  const [patientFacilityForm, setPatientFacilityForm] = useState({});
+  const [medicationForm, setMedicationForm] = useState({});
   const [labDetails, setLabDetails] = useState({});
   const [facilityDetails, setFacilityDetails] = useState({});
   const [fieldErrorDict, setFieldErrorDict] = useState({});
@@ -65,11 +65,11 @@ function AddPatient(props) {
 
   const handleSave = async () => { //calling save profile api
     let flag = true;
-    let a = await formA;
-    let b = await formB;
-    let c = await formC;
-    let d = await formD;
-    let e = { ...a, ...b, ...c, ...d };
+    let personalDetails = await personalForm;
+    let contactDetails = await contactForm;
+    let patientfacilitiesDetails = await patientFacilityForm;
+    let medicationDetails = await medicationForm;
+    let e = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
 
     Object.keys(e).forEach((key, value) => {
       if (profile[key] || facilityDetails[key]) {
@@ -128,28 +128,28 @@ function AddPatient(props) {
           saveProfile={saveProfile}
           handleSave={handleSave}
           fieldErrorDict={fieldErrorDict}
-          setFormA={setFormA}
+          setPersonalForm={setPersonalForm}
         />
         <FacilityDetails
           editMode={true}
           profile={profile}
           fieldErrorDict={fieldErrorDict}
           saveFacilityDetails={saveFacilityDetails}
-          setFormB={setFormB}
+          setPatientFacilityForm={setPatientFacilityForm}
         />
         <ContactDetailForm
           profile={profile}
           fieldErrorDict={fieldErrorDict}
           saveProfile={saveProfile}
           handleSave={handleSave}
-          setFormC={setFormC}
+          setContactForm={setContactForm}
         />
         <MedicationDetails
           editMode={true}
           fieldErrorDict={fieldErrorDict}
           saveProfile={saveProfile}
           profile={profile}
-          setFormD={setFormD}
+          setMedicationForm={setMedicationForm}
         />
         {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}

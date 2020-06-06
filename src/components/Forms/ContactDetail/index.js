@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { getProfileDependencies } from 'Actions/PatientsAction';
 export function ContactDetailForm(props) {
-  const { profile, editMode, setFormC, saveProfile, handleError, fieldErrorDict, fetchProfileDependencies, districts, states  } = props;
+  const { profile, editMode, setContactForm, saveProfile, handleError, fieldErrorDict, fetchProfileDependencies, districts, states  } = props;
   const validationSchema = Yup.object({
     phone_number: Yup.number("Please enter contact number").required('Please enter contact number').test('len', 'Must be exactly 10 characters', val => (val ? val.toString() : "").length === 10),
     phone_number_belongs_to: Yup.string("Whom does this number blongs to?").required('Whom does this number belongs to?'),
@@ -33,7 +33,7 @@ export function ContactDetailForm(props) {
     onSubmit={submit}
     >
       {
-        props => <Form editMode={editMode} setFormC={setFormC} fieldErrorDict={fieldErrorDict} saveProfile={saveProfile} districts={districts} handleError={handleError} states={states} {...props} />
+        props => <Form editMode={editMode} setContactForm={setContactForm} fieldErrorDict={fieldErrorDict} saveProfile={saveProfile} districts={districts} handleError={handleError} states={states} {...props} />
       }
     </Formik>
   );

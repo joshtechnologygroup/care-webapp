@@ -24,7 +24,7 @@ export default function Form(props) {
     cancelCallback,
     editMode,
     saveProfile,
-    setFormD,
+    setMedicationForm,
     validateForm,
     fieldErrorDict,
     errors,
@@ -32,8 +32,8 @@ export default function Form(props) {
   } = props;
 
   useEffect(()=>{
-    if(setFormD) {
-    props.setFormD(validateForm);
+    if(setMedicationForm) {
+    props.setMedicationForm(validateForm);
     }
   },[])
 

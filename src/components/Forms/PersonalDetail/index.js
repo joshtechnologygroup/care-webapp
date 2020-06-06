@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { getProfileDependencies } from 'Actions/PatientsAction';
 export function PersonalDetailForm(props) {
   const { i18n } = useTranslation();
-  const { profile, editMode, setFormA, handleError, fieldErrorDict, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus, medicationDetails } = props;
+  const { profile, editMode, setPersonalForm, handleError, fieldErrorDict, saveProfile, clusterGroup, facilityList, fetchProfileDependencies, covidStatus, clinicalStatus, currentStatus, medicationDetails } = props;
   const validationSchema = Yup.object({
     name: Yup.string().required(i18n.t('Please enter Patient Name')),
     month: Yup.number().required(i18n.t('Please enter age in months')).max(11, i18n.t('Max value for months is 11')),
@@ -35,7 +35,7 @@ export function PersonalDetailForm(props) {
       onSubmit={submit}
       >
          {(props) => (
-       <Form editMode={editMode} fieldErrorDict={fieldErrorDict} setFormA={setFormA} facilityList={facilityList} clusterGroup={clusterGroup} medicationDetails={medicationDetails} handleError={handleError} covidStatus={covidStatus} clinicalStatus={clinicalStatus} currentStatus={currentStatus} saveProfile={saveProfile}{...props} />
+       <Form editMode={editMode} fieldErrorDict={fieldErrorDict} setPersonalForm={setPersonalForm} facilityList={facilityList} clusterGroup={clusterGroup} medicationDetails={medicationDetails} handleError={handleError} covidStatus={covidStatus} clinicalStatus={clinicalStatus} currentStatus={currentStatus} saveProfile={saveProfile}{...props} />
       )}
     </Formik>
   );

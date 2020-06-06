@@ -51,10 +51,8 @@ class PatientDetail extends Component {
         patient_family_details: false,
       },
       profile: patientDetail,
-      api: null,
     }
     this.setEditable = this.setEditable.bind(this);
-    // this.apiCall = this.apiCall.bind(this);
   }
   setEditable = (key, value) => {
     this.setState({
@@ -89,13 +87,13 @@ class PatientDetail extends Component {
     }
   }
 
-  componentDidUpdate(prevState) {
-    // Typical usage (don't forget to compare props):
-    if(this.state.isEditing !== prevState.isEditing && this.state.isEditing){
-      const patientId = this.props.match.params.patientId;
-      this.props.fetchPatient(patientId);  
-    }
-  }
+  // componentDidUpdate(prevState) {
+  //   // Typical usage (don't forget to compare props):
+  //   if(this.state.isEditing !== prevState.isEditing){
+  //     const patientId = this.props.match.params.patientId;
+  //     this.props.fetchPatient(patientId);  
+  //   }
+  // }
 
   onSubmit = async (data, key) => {
     let patientId = this.props.match.params.patientId;
@@ -160,6 +158,9 @@ class PatientDetail extends Component {
                   handleEdit={() => this.setEditable(formList[1], true)}
                 />
             }
+            <FacilityDetails
+              profile={this.props.patient.facility_details}
+            />
             <Timeline timeline={this.props.patient.patient_timeline} />
             <MedicationDetails
               editMode={false} profile={this.props.patient.medication_details[0]}
@@ -167,15 +168,12 @@ class PatientDetail extends Component {
             {/* <DoctorAttendant
               profile={profile[formList[2]].attendant}
             /> */}
-            <FacilityDetails
-              profile={this.props.patient.facility_details}
-            />
             <LabTestDetails
               profile={this.props.patient.patient_lab_details}
             />
-            {/* <PortieDetails
+            <PortieDetails
               profile={this.props.patient.portie_calling_details}
-            /> */}
+            />
             <FamilyDetails
               profile={this.props.patient.patient_family_details}
             />
@@ -198,7 +196,6 @@ const mapStateToProps = state => {
   const { patient, fetchDetails } = state;
   return {
     patient: patient,
-    apiSuccess: fetchDetails.apiSuccess
   };
 };
 
