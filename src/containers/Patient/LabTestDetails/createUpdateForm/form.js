@@ -37,11 +37,6 @@ export default function Form(props) {
     touched,
   } = props;
 
-  const changeText = (name, val) => {
-    setFieldValue(name, val);
-    setFieldTouched(name);
-  };
-
   const [sampleDate, setSampleDate] = React.useState(date_of_sample);
   const [resultDate, setResultDate] = React.useState(date_of_result);
   const [completed, setCompeleted] = React.useState(false);
