@@ -9,9 +9,11 @@ const useStyles = makeStyles(theme =>
       },
       '& .MuiInputLabel-shrink': {
         fontSize: '1.864em',
+        width: '130%',
       },
       '& .MuiInputBase-input': {
         fontSize: '1.6em',
+        lineHeight: '2.1rem',
       }
     }
   })

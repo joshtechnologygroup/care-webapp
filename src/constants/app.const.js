@@ -90,8 +90,8 @@ export const genderChoices = [
     },
     {
         id: 3,
-        name: 'Others',
-        title: 'Others',
+        name: 'Non-binary gender',
+        title: 'Non-binary gender',
         value: 3,
     },
 ];
