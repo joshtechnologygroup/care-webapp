@@ -12,6 +12,7 @@ import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
+import * as Constants from "Src/constants"
 
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
@@ -171,9 +172,15 @@ class PatientDetail extends Component {
             <LabTestDetails
               profile={this.props.patient.patient_lab_details}
             />
-            <PortieDetails
-              profile={this.props.patient.portie_calling_details}
-            />
+            {
+                (this.props.patient.patient_status === Constants.HOME_ISOLATION_STATUS ||
+                !_.isEmpty(this.props.patient.portie_calling_details)) && 
+                <PortieDetails
+                profile={this.props.patient.portie_calling_details}
+                patientStatus={this.props.patient.patient_status}
+                patient={this.props.patient}
+                />
+            }
             <FamilyDetails
               profile={this.props.patient.patient_family_details}
             />

@@ -125,5 +125,6 @@ export const labTestStatusChoices = [
 export const DATE_ONLY_FORMAT = "DD/MM/YYYY";
 export const EASY_DATE_FORMAT = "DD-MMM-YYYY"
 export const TIME_FORMAT = "hh:mm A";
+export const HOME_ISOLATION_STATUS = "home-isolation";
 
 export const FACILITY_DEFAULT = '---------------';
