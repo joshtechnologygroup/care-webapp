@@ -1,14 +1,24 @@
 import React from 'react';
-import { Grid, Button, TextField, IconButton} from '@material-ui/core';
+import {Grid, Button, TextField, IconButton} from '@material-ui/core';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
-import { MultiSelectBoolDropdown, MultiSelectNumberDropdown, MultiSelectDateDropdown } from 'Components/Inputs';
+import {MultiSelectBoolDropdown, MultiSelectNumberDropdown, MultiSelectDateDropdown} from 'Components/Inputs';
 
 import './Filters.scss';
 
-export default function Filters({ onSeeMore, options, handleBooleanCallBack, handleNumberCallBack, handleDateCallBack, handleStringCallBack, handleApplyFilter, handleReset }) {
-  const { i18n } = useTranslation();
+export default function Filters({
+                                  onSeeMore,
+                                  options,
+                                  handleBooleanCallBack,
+                                  handleNumberCallBack,
+                                  handleDateCallBack,
+                                  handleStringCallBack,
+                                  handleApplyFilter,
+                                  handleReset,
+                                  defaultSelected
+                                }) {
+  const {i18n} = useTranslation();
   let countFilter = 0;
   const [showMore, setShowMore] = React.useState(false);
   const [reset, setReset] = React.useState(false);
@@ -25,8 +35,8 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
 
   return (
     <div className="filters">
-      <Grid container direction="row" spacing={2} >
-        <Grid item xs={2} sm={1} md={1} >
+      <Grid container direction="row" spacing={2}>
+        <Grid item xs={2} sm={1} md={1}>
           <div className="filters__heading">{i18n.t('filterText')}</div>
         </Grid>
         <Grid item xs={8} md={9}>
@@ -39,24 +49,26 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectBoolDropdown
-                          onSelect={(val) => { 
-                              setReset(false);
-                              handleBooleanCallBack(val);
-                            }}
-                          options={option.cellRendererParams.options || ['Yes','No']} // can pass dynamically yes,No True false
+                          onSelect={(val) => {
+                            setReset(false);
+                            handleBooleanCallBack(val);
+                          }}
+                          options={option.cellRendererParams.options || ['Yes', 'No']} // can pass dynamically yes,No True false
                           fieldName={option['headerName']}
                           paramName={option['field']}
                           reset={reset}
-                          />
+                          defaultSelected={defaultSelected}
+                        />
                       </Grid>);
                     case 'number':
                       countFilter += 1;
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectNumberDropdown
                           onSelect={(val) => {
-                              setReset(false);
-                              handleNumberCallBack(val)}
-                            }
+                            setReset(false);
+                            handleNumberCallBack(val)
+                          }
+                          }
                           fieldName={option['headerName']}
                           field={option['field']}
                           reset={reset}
@@ -67,9 +79,9 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                       return (<Grid key={option['field']} item xs={12} sm={3}>
                         <MultiSelectDateDropdown
                           onSelect={(val) => {
-                              setReset(false)
-                              handleDateCallBack(val)
-                            }}
+                            setReset(false)
+                            handleDateCallBack(val)
+                          }}
                           fieldName={option['headerName']}
                           field={option['field']}
                           reset={reset}
@@ -87,14 +99,15 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
                           size="small"
                           value={textFieldVal[index]}
                           onChange={(val) => {
-                              const currTextFieldVal = [...textFieldVal];
-                              currTextFieldVal[index] = val.target.value;
-                                setTextFieldVal([...currTextFieldVal]);
-                              handleStringCallBack(val.target.name, val.target.value);
-                            }}
+                            const currTextFieldVal = [...textFieldVal];
+                            currTextFieldVal[index] = val.target.value;
+                            setTextFieldVal([...currTextFieldVal]);
+                            handleStringCallBack(val.target.name, val.target.value);
+                          }}
                         />
                       </Grid>);
-                    default: return '';
+                    default:
+                      return '';
                   }
                 } else {
                   return null;
@@ -103,24 +116,26 @@ export default function Filters({ onSeeMore, options, handleBooleanCallBack, han
           </Grid>
         </Grid>
         <Grid item xs={2} md={2} container direction="row" justify="flex-start"
-          alignItems="flex-start">
-            <Grid item md={8} container>
-                <Grid md={7}>
-                    <Button className="apply_btn" variant="contained" color="primary" onClick={handleApplyFilter}>
-                        Apply
-                    </Button>
-                </Grid>
-                <Grid md={5}>
-                    <IconButton color="primary" onClick={() => {
-                        setReset(true); 
-                        setTextFieldVal(new Array(filterOptions.length).fill(""))
-                        handleReset();
-                    }}><RotateLeftIcon /></IconButton>
-                </Grid>
+              alignItems="flex-start">
+          <Grid item md={8} container>
+            <Grid md={7}>
+              <Button className="apply_btn" variant="contained" color="primary" onClick={handleApplyFilter}>
+                Apply
+              </Button>
             </Grid>
-            <Grid md={4}>
-                {(countFilter > 1 && (countFilter > 4 || window.innerWidth < 600)) ? <Button className="more-less_btn" color="primary" onClick={handleSeeMore}>{showMore ? i18n.t('lessText') : i18n.t('moreText')}</Button> : null}
+            <Grid md={5}>
+              <IconButton color="primary" onClick={() => {
+                setReset(true);
+                setTextFieldVal(new Array(filterOptions.length).fill(""))
+                handleReset();
+              }}><RotateLeftIcon/></IconButton>
             </Grid>
+          </Grid>
+          <Grid md={4}>
+            {(countFilter > 1 && (countFilter > 4 || window.innerWidth < 600)) ?
+              <Button className="more-less_btn" color="primary"
+                      onClick={handleSeeMore}>{showMore ? i18n.t('lessText') : i18n.t('moreText')}</Button> : null}
+          </Grid>
         </Grid>
       </Grid>
     </div>
