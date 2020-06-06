@@ -80,7 +80,7 @@ export const ContactDetail = (props) => {
                 {profile.address}
               </Typography>
               <Typography variant="h6">
-                {!_.isEmpty(districts) && profile.district && districts.find(group => group.id == profile.district).name}, {profile.city}
+                {!_.isEmpty(districts) && profile.district && districts.find(group => group.id == profile.district).name}
               </Typography>
               <Typography variant="h6">
                 {!_.isEmpty(states) && profile.state &&
@@ -98,16 +98,14 @@ export const ContactDetail = (props) => {
                   {i18n.t('Native Place')}
                 </Typography>
                 <Typography variant="h6">
-                  {states &&
-                    states.map(choice => {
-                      return choice.id === profile.nativeState ? (choice.name) : ''
-                    })
-                  }
-                  {
-                    countryChoices.map(choice => {
-                      return choice.id === profile.nativeCountry ? (choice.name) : ''
-                    })
-                  }
+                {!_.isEmpty(states) && profile.state &&
+                  states.map(choice => {
+                    return choice.id === profile.native_state ? (choice.name) : ''
+                  })
+                }
+                </Typography>
+                <Typography variant="h6">
+                {profile.native_country}
                 </Typography>
               </Grid>
             }

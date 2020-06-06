@@ -90,9 +90,9 @@ class PatientDetail extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // Typical usage (don't forget to compare props):
-    if(this.state.isEditing !== prevState.isEditing){
+    if (this.state.isEditing !== prevState.isEditing) {
       const patientId = this.props.match.params.patientId;
-      this.props.fetchPatient(patientId);  
+      this.props.fetchPatient(patientId);
     }
   }
 
@@ -101,17 +101,26 @@ class PatientDetail extends Component {
     let response;
     if (key === 'personal') {
       response = await this.props.updatePatientPersonalDetails(data, patientId);
+      if (response.status === true) {
+        this.props.createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+        )
+      } else {
+        this.props.createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
+        )
+      }
     } else if (key === 'contact') {
       response = await this.props.updatePatientContactDetails(data, patientId);
-    }
-    if (response.status === true) {
-      this.props.createToastNotification(
-        ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
-      )
-    } else {
-      this.props.createToastNotification(
-        ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Errors occurs", DANGER)
-      )
+      if (response.status === true) {
+        this.props.createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+        )
+      } else {
+        this.props.createToastNotification(
+          ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Errors occurs", DANGER)
+        )
+      }
     }
     this.setState({
       profile: {
@@ -171,13 +180,13 @@ class PatientDetail extends Component {
               profile={this.props.patient.patient_lab_details}
             />
             {
-                (this.props.patient.patient_status === Constants.HOME_ISOLATION_STATUS ||
-                !_.isEmpty(this.props.patient.portie_calling_details)) && 
-                <PortieDetails
+              (this.props.patient.patient_status === Constants.HOME_ISOLATION_STATUS ||
+                !_.isEmpty(this.props.patient.portie_calling_details)) &&
+              <PortieDetails
                 profile={this.props.patient.portie_calling_details}
                 patientStatus={this.props.patient.patient_status}
                 patient={this.props.patient}
-                />
+              />
             }
             <FamilyDetails
               profile={this.props.patient.patient_family_details}

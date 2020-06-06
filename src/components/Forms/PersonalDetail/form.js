@@ -19,10 +19,9 @@ import ButtonToggle from 'Components/ButtonToggle';
 import { genderChoices } from 'Constants/app.const';
 import ProfileImageInput from '../../profileImageInput';
 import { GENDER_MAPPING_PROPS } from 'Constants/app.const.js';
-import { TOTAL_PERSONEL_DETAILS_FIELDS } from 'Src/constants';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-import { patient_status_choices } from 'Constants/app.const';
+import { patient_status_choices, FACILITY_EXISTS } from 'Constants/app.const';
 
 export default function Form(props) {
   const classes = useStyles();
@@ -42,13 +41,11 @@ export default function Form(props) {
     },
     errors,
     touched,
-    handleSave,
     setFieldTouched,
     setFieldValue,
     editMode,
     saveProfile,
     clusterGroup,
-    handleError,
     handleSubmit,
     validateForm,
     fieldErrorDict,
@@ -89,7 +86,11 @@ export default function Form(props) {
   }
 
   const setStatus = (name, val) => {
+    if(val){
     setFieldValue(name, val);
+    } else {
+      setFieldValue(name, FACILITY_EXISTS);
+    }
     if (saveProfile) {
       saveProfile(name, val)
     }

@@ -20,7 +20,17 @@ const updatePatientPersonalDetails = (body, id) => async (dispatch) => {
         return { status: true };
     } else if (patient_personal_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_personal_response.json();
-        return { status: false, error: "dummy error generated in UI" };
+        let error = "Some Errors occurs";
+        if(data.icmr_id && data.govt_id) {
+            error = data.icmr_id[0] + "\n" + data.govt_id[0]
+        }
+        else if(data.icmr_id) {
+            error = data.icmr_id[0];
+        }
+        else if(data.govt_id) {
+            error = data.govt_id[0];
+        } 
+        return { status: false, error: error };
     }
 };
 

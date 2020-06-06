@@ -172,6 +172,7 @@ export function Form(props) {
                 name="state"
                 label={i18n.t('State')}
                 value={state}
+                isDisabled={true}
                 onChange={handleChange}
                 helperText={touched.state ? errors.state : ""}
                 error={touched.state && Boolean(errors.state)}

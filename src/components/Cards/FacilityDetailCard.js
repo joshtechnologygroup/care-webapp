@@ -66,7 +66,7 @@ export function FacilityDetailCard(props) {
                   <Tooltip title={i18n.t('Facility Name')}>
                     <span>{details.name}</span>
                   </Tooltip>
-                  <Typography variant="inherit" className="text--gray"> #{details.id}</Typography>
+                  {details.patient_facility_id && <Typography variant="inherit" className="text--gray"> #{details.patient_facility_id}</Typography>}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={`auto`}>
