@@ -26,3 +26,20 @@
         min-width: 100px;
     }
 }
+
+.react-select {
+    > div {
+        border-radius: 0;
+        font-size: 1.6rem;
+        color: rgba($black, .8);
+        padding: .4rem;
+    }
+    &__error {
+        > div {
+            border-color: $red;
+        }
+    }
+    ~ .text--error {
+        margin: 0;
+    }
+}
