@@ -72,28 +72,20 @@ export default function Form(props) {
   return (
     <form onSubmit={handleSubmit}>
         {
-        createPortieErrors && createPortieErrors.patient && 
-        <FormControl component="fieldset" error={true}>
-            <FormHelperText >{createPortieErrors.patient}</FormHelperText>
-        </FormControl>
+          createPortieErrors && createPortieErrors.patient &&
+          <p className="text--error">{createPortieErrors.patient}</p>
         }
         {
-        updatePortieErrors && updatePortieErrors.patient && 
-        <FormControl component="fieldset" error={true}>
-            <FormHelperText >{updatePortieErrors.patient}</FormHelperText>
-        </FormControl>
+          updatePortieErrors && updatePortieErrors.patient &&
+          <p className="text--error">{updatePortieErrors.patient}</p>
         }
         {
-        createPortieErrors && createPortieErrors.non_field_errors && 
-        <FormControl component="fieldset" error={true}>
-            <FormHelperText >{createPortieErrors.non_field_errors}</FormHelperText>
-        </FormControl>
+          createPortieErrors && createPortieErrors.non_field_errors && 
+          <p className="text--error">{createPortieErrors.non_field_errors}</p>
         }
         {
-        updatePortieErrors && updatePortieErrors.non_field_errors && 
-        <FormControl component="fieldset" error={true}>
-            <FormHelperText >{updatePortieErrors.non_field_errors}</FormHelperText>
-        </FormControl>
+          updatePortieErrors && updatePortieErrors.non_field_errors && 
+          <p className="text--error">{updatePortieErrors.non_field_errors}</p>
         }
       <Grid container spacing={2}>
         <Grid item xs={12} className="mb-10">
@@ -137,38 +129,33 @@ export default function Form(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
             <Select
-                options={porteaOptions}
-                name="portie"
-                defaultValue={portie || ""}
-                onChange={(val) => {
-                    setFieldTouched('portie');
-                    setFieldValue('portie', val.value);
-                }}
-                error={touched.portie && Boolean(errors.portie)}
+              className={`react-select ${touched.portie && Boolean(errors.portie) && 'react-select__error'}`}
+              options={porteaOptions}
+              name="portie"
+              defaultValue={portie || ""}
+              placeholder={i18n.t('Select Portie')}
+              onChange={(val) => {
+                  setFieldTouched('portie');
+                  setFieldValue('portie', val.value);
+              }}
             />
             {
-            touched.portie && errors.portie && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText >{errors.portie}</FormHelperText>
-            </FormControl>
+              touched.portie && errors.portie && 
+              <p className="text--error">{errors.portie}</p>
             }
             {
-            createPortieErrors && createPortieErrors.portie && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText >{createPortieErrors.portie}</FormHelperText>
-            </FormControl>
+              createPortieErrors && createPortieErrors.portie && 
+              <p className="text--error">{createPortieErrors.portie}</p>
             }
             {
-            updatePortieErrors && updatePortieErrors.portie && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText >{updatePortieErrors.portie}</FormHelperText>
-            </FormControl>
+              updatePortieErrors && updatePortieErrors.portie && 
+              <p className="text--error">{updatePortieErrors.portie}</p>
             }
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField 
             name="patient_phone_number"
-            defaultValue={patient_phone_number}
+            value={patient_phone_number}
             label={i18n.t('Patient contact number')}
             fullWidth
             onChange={changeText.bind(null, "patient_phone_number")}
@@ -180,32 +167,27 @@ export default function Form(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
             <Select
-                options={RELATIONSHIP_OPTIONS}
-                defaultValue={""}
-                name="relation"
-                onChange={(val) => {
-                    setFieldTouched('relation');
-                    setFieldValue('relation', val.value);
-                }}
-                error={touched.relation && Boolean(errors.relation)}
+              className={`react-select ${touched.relation && Boolean(errors.relation) && 'react-select__error'}`}
+              options={RELATIONSHIP_OPTIONS}
+              defaultValue={""}
+              placeholder={i18n.t('Relation with patient')}
+              name="relation"
+              onChange={(val) => {
+                  setFieldTouched('relation');
+                  setFieldValue('relation', val.value);
+              }}
             />
             {
-            touched.relation && errors.relation && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText >{errors.relation}</FormHelperText>
-            </FormControl>
+              touched.relation && errors.relation &&
+              <p className="text--error">{errors.relation}</p>
             }
             {
-            createPortieErrors && createPortieErrors.relation && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText >{createPortieErrors.relation}</FormHelperText>
-            </FormControl>
+              createPortieErrors && createPortieErrors.relation && 
+              <p className="text--error">{createPortieErrors.relation}</p>
             }
             {
-            updatePortieErrors && updatePortieErrors.relation && 
-            <FormControl component="fieldset" error={true}>
-                <FormHelperText >{updatePortieErrors.relation}</FormHelperText>
-            </FormControl>
+              updatePortieErrors && updatePortieErrors.relation && 
+              <p className="text--error">{updatePortieErrors.relation}</p>
             }
         </Grid>
         <Grid item xs={12}>
