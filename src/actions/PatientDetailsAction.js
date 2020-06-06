@@ -13,6 +13,10 @@ import * as HttpStatus from 'http-status-codes'
 const updatePatientPersonalDetails = (body, id) => async (dispatch) => {
     const patient_personal_response = await CommonService.makeAuthorizedApiCall(`${Routes.PERSONAL_DETAILS_URL}${id}/`, PUT, body, {});
     if (patient_personal_response.ok) {
+        dispatch({
+            type: ReducerTypes.FETCH_PATIENT_DETAIL_API,
+            error: true
+        });
         return { status: true };
     } else if (patient_personal_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_personal_response.json();
@@ -28,6 +32,11 @@ const updatePatientPersonalDetails = (body, id) => async (dispatch) => {
 const updatePatientContactDetails= (body, id) => async (dispatch) => {
     const patient_contact_response = await CommonService.makeAuthorizedApiCall(`${Routes.CONTACT_DETAILS_URL}${id}/`, PUT, body, {})
     if (patient_contact_response.ok) {
+        const data = await patient_contact_response.json();
+        dispatch({
+            type: ReducerTypes.FETCH_PATIENT_DETAIL_API,
+            error: true
+        });
         return { status: true };
     } else if (patient_contact_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_contact_response.json();
@@ -41,9 +50,12 @@ const updatePatientContactDetails= (body, id) => async (dispatch) => {
  * @param {number} id: id of the patient
  */
 const updatePatientMedicationDetails= (body, id) => async (dispatch) => {
-    console.log(body, id, "-----------");
     const patient_medication_response = await CommonService.makeAuthorizedApiCall(`${Routes.MEDICATION_DETAILS_URL}${id}/`, PUT, body, {})
     if (patient_medication_response.ok) {
+        dispatch({
+            type: ReducerTypes.FETCH_PATIENT_DETAIL_API,
+            error: true
+        });
         return { status: true };
     } else if (patient_medication_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_medication_response.json();

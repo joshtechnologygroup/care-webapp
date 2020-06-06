@@ -9,7 +9,8 @@ import {
     currentStatus, 
     states, 
     patient,
-    testingLabs
+    testingLabs,
+    fetchDetails
 } from "Reducers/PatientReducer";
 import {
     facilities,
@@ -59,4 +60,5 @@ export default combineReducers({
     userTypes,
     toasts,
     testingLabs,
+    fetchDetails,
 });

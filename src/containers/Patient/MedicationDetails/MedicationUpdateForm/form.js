@@ -28,6 +28,7 @@ export default function Form(props) {
     validateForm,
     fieldErrorDict,
     errors,
+    touched,
   } = props;
 
   useEffect(()=>{
@@ -57,7 +58,7 @@ export default function Form(props) {
           onChange={(val) => setValue(val, 'covid_status')}
         />
           <h5 className="text--error">
-            {errors.covid_status}
+            {touched.covid_status && Boolean(errors.covid_status) || (fieldErrorDict ? fieldErrorDict.covid_status : "") && errors.covid_status && errors.covid_status}
           </h5>
       </Grid>
 
@@ -68,11 +69,11 @@ export default function Form(props) {
         <SingleSelectChipsInput
           value={clinical_status}
           valueKey="id"
-          options={CovidStatusChoices}
+          options={clinicalStatusChoices}
           onChange={(val) => setValue(val, 'clinical_status')}
         />
         <h5 className="text--error">
-            {errors.clinical_status}
+            {touched.clinical_status && Boolean(errors.clinical_status) || (fieldErrorDict ? fieldErrorDict.clinical_status : "") && errors.clinical_status}
           </h5>
       </Grid>
 

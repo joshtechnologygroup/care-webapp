@@ -24,6 +24,9 @@ import _ from "underscore";
 import Loader from 'react-loader-spinner';
 import * as ReducerTypes from 'Reducers/Types';
 import * as Routes from 'Src/routes';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import { SUCCESS, DANGER } from "Src/constants";
 
 class PatientDetail extends Component {
   constructor(props) {
@@ -47,9 +50,11 @@ class PatientDetail extends Component {
         portie_calling_details: false,
         patient_family_details: false,
       },
-      profile: patientDetail
+      profile: patientDetail,
+      api: null,
     }
     this.setEditable = this.setEditable.bind(this);
+    // this.apiCall = this.apiCall.bind(this);
   }
   setEditable = (key, value) => {
     this.setState({
@@ -83,16 +88,33 @@ class PatientDetail extends Component {
       this.props.getPatientDetailsDependencies(required_data);
     }
   }
-  onSubmit = async(data, key) => {
+
+  componentDidUpdate(prevState) {
+    // Typical usage (don't forget to compare props):
+    if(this.state.isEditing !== prevState.isEditing && this.state.isEditing){
+      const patientId = this.props.match.params.patientId;
+      this.props.fetchPatient(patientId);  
+    }
+  }
+
+  onSubmit = async (data, key) => {
     let patientId = this.props.match.params.patientId;
     let response;
-    console.log(patientId,data,key)
-    if(key === 'personal') {
-      response =await this.props.updatePatientPersonalDetails(data, patientId);
-    } else if(key === 'contact') {
-      response =await this.props.updatePatientContactDetails(data, patientId);
-    } else if(key === 'medication') {
-      response =await this.props.updatePatientMedicationDetails(data, patientId);
+    if (key === 'personal') {
+      response = await this.props.updatePatientPersonalDetails(data, patientId);
+    } else if (key === 'contact') {
+      response = await this.props.updatePatientContactDetails(data, patientId);
+    } else if (key === 'medication') {
+      response = await this.props.updatePatientMedicationDetails(data, patientId);
+    }
+    if (response.status === true) {
+      this.props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+      )
+    } else {
+      this.props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Errors occurs", DANGER)
+      )
     }
     this.setState({
       profile: {
@@ -138,7 +160,7 @@ class PatientDetail extends Component {
                   handleEdit={() => this.setEditable(formList[1], true)}
                 />
             }
-            <Timeline timeline={this.props.patient.patient_timeline}/>
+            <Timeline timeline={this.props.patient.patient_timeline} />
             <MedicationDetails
               editMode={false} profile={this.props.patient.medication_details[0]}
             />
@@ -179,9 +201,10 @@ class PatientDetail extends Component {
 
 
 const mapStateToProps = state => {
-  const { patient } = state;
+  const { patient, fetchDetails } = state;
   return {
     patient: patient,
+    apiSuccess: fetchDetails.apiSuccess
   };
 };
 
@@ -194,6 +217,7 @@ PatientDetail.propTypes = {
   updatePatientPersonalDetails: PropTypes.func.isRequired,
   updatePatientContactDetails: PropTypes.func.isRequired,
   updatePatientMedicationDetails: PropTypes.func.isRequired,
+  createToastNotification: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { fetchPatient, updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, getPatientDetailsDependencies })(PatientDetail);
+export default connect(mapStateToProps, { fetchPatient, updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, getPatientDetailsDependencies, createToastNotification })(PatientDetail);

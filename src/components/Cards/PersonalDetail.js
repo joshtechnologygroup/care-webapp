@@ -73,7 +73,7 @@ export default function PersonalDetail(props) {
                 {profile.name}
               </Typography>
               <Typography variant="h6" color="textSecondary">
-                {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.age_years ? profile.age_years + ' ' + i18n.t('years') : ''} {profile.ageMonths ? profile.ageMonths + ' ' + i18n.t('months') : ''}
+                {i18n.t(GENDER_CHOICES[profile.gender])}, {profile.year ? profile.year + ' ' + i18n.t('years') : ''} {profile.month ? profile.month + ' ' + i18n.t('months') : ''}
               </Typography>
               <Typography variant="h6" color="textSecondary">
                 {i18n.t('Govt ID')}: {profile.govt_id}

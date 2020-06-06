@@ -58,28 +58,6 @@ const getProfileDependencies = (params) => async (dispatch) => {
 };
 
 
-/**
- * Creating or Updating the Inventory 
- * @param {object} state: Body of inventory object
- * @param {number} id: id of current inventory object clicked
- */
-const createOrUpdateInventory = (state, id = null) => async (dispatch) => {
-    const inventory_response = await facilityService.makeAuthorizedFacilityApiCall(state, id)
-    if(inventory_response.ok) {
-        dispatch({
-            type: ReducerTypes.SET_ERROR_CREATE_INVENTORY,
-            error: false
-        });
-    } else if (inventory_response.status === HttpStatus.BAD_REQUEST) {
-        const data = await inventory_response.json();
-        dispatch({
-            type: ReducerTypes.SET_ERROR_CREATE_INVENTORY,
-            error: data.non_field_errors[0]
-        });
-    }
-};
-
-
 const getShortFacilitiesList = () => async (dispatch) => {
     dispatch(dispatchDependentActions(
         [
@@ -89,4 +67,4 @@ const getShortFacilitiesList = () => async (dispatch) => {
     ));
 }
 
-export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, createOrUpdateInventory, getTransferDependencies,getProfileDependencies, getShortFacilitiesList }
+export { getFacilitiesList, getFacilityDependencies, getInventoryList, getInventoryDependencies, getTransferDependencies,getProfileDependencies, getShortFacilitiesList }

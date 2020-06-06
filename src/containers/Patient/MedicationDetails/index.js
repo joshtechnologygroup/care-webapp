@@ -38,13 +38,9 @@ export function MedicationDetail(props) {
     if (editable === true) {
       response = await updatePatientMedicationDetails(initial, patientId);
       if (response.status) {
-        alert('updated medication details successfully');
-        createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
-      )
+         props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated " , SUCCESS))
       } else {
-        alert(response.error);
-        createToastNotification(
+        props.createToastNotification(
           ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER)
       )
       }
@@ -88,7 +84,8 @@ export function MedicationDetail(props) {
 MedicationDetail.propTypes = {
   profile: PropTypes.object.isRequired,
   editMode: PropTypes.bool,
-  updatePatientMedicationDetails: PropTypes.func
+  updatePatientMedicationDetails: PropTypes.func,
+  createToastNotification: PropTypes.func
 }
 
 MedicationDetail.defaultProps = {
@@ -98,4 +95,4 @@ MedicationDetail.defaultProps = {
 const mapStateToProps = (state) => ({
 });
 
-export default connect(mapStateToProps, { updatePatientMedicationDetails })(MedicationDetail);
+export default connect(mapStateToProps, { updatePatientMedicationDetails, createToastNotification })(MedicationDetail);

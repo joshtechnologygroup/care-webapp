@@ -47,7 +47,6 @@ export default function Form(props) {
     setFieldValue,
     editMode,
     saveProfile,
-    facilityList,
     clusterGroup,
     handleError,
     handleSubmit,
@@ -60,7 +59,6 @@ export default function Form(props) {
     if(setFormA) {
     setFormA(validateForm);
     }
-    console.log(touched,errors)
   }, []);
 
   const [values, setValues] = React.useState({
@@ -77,28 +75,12 @@ export default function Form(props) {
     if (value) {
       setFieldTouched(event.target.name, false, true);
     }
-    let error = false;
-    if (saveProfile) {
-      if (value === "") {
-        error = true;
-      } else if (Object.keys(touched).length >= TOTAL_PERSONEL_DETAILS_FIELDS) {
-        Object.entries(touched).forEach(([item, itemValue]) => {
-          if (itemValue === true) {
-            error = true;
-            return;
-          }
-        })
-      }
-      if (handleError) {
-        handleError(error);
-      }
-    }
   };
 
   const setProfileFields = (name, value) => {
-    const genderId = GENDER_MAPPING_PROPS[value];
+    setFieldValue(name, value);
     if (saveProfile) {
-      saveProfile(name, genderId);
+      saveProfile(name, value);
     }
     setFieldTouched(name, true, false);
     if (value) {
@@ -119,7 +101,6 @@ export default function Form(props) {
   };
   return (
     <form onSubmit={handleSubmit}>
-       {console.log(fieldErrorDict,"-------personal--")}
       <div className="section-header mt-0">
         <h4 className="heading--card">{i18n.t('Personal Details')}</h4>
       </div>
@@ -130,7 +111,7 @@ export default function Form(props) {
             <Grid item className="p-0 bg-gray text-center" xs={12} sm={2}>
               <ProfileImageInput
                 altText={i18n.t('Click to change photo')}
-                defaultImage={gender === 'Male' ? patientMale : patientFemale}
+                defaultImage={(gender === 1 || !gender) ? patientMale : patientFemale}
                 imageSrc={imageSrc}
                 handleChange={(file, image) => setProfileImage(file, image)}
               />
@@ -144,13 +125,13 @@ export default function Form(props) {
                     fullWidth
                     value={name}
                     onChange={change}
-                    helperText={touched.name ? errors.name : "" }
+                    helperText={touched.name ? errors.name : "" || (fieldErrorDict ? fieldErrorDict.name : "")}
                     error={touched.name && Boolean(errors.name) ||(fieldErrorDict ? fieldErrorDict.name : "")}
                     required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <ButtonToggle restrictUnselect={true} defaultSelected={gender} data={genderChoices} onChange={(data) => setProfileFields("gender", data)} />
+                  <ButtonToggle restrictUnselect={true} defaultSelected={gender} data={genderChoices} onChange={(data) => setProfileFields("gender", data) } />
                 </Grid>
                 <Grid item xs={6} sm={3}>
                   <TextField
@@ -172,7 +153,7 @@ export default function Form(props) {
                     value={month}
                     onChange={change}
                     helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "")}
-                    error={touched.month && Boolean(errors.month)}
+                    error={touched.month && Boolean(errors.month) || (fieldErrorDict ? fieldErrorDict.month : "")}
                     fullWidth
                     type="number"
                     required
@@ -195,8 +176,8 @@ export default function Form(props) {
                     label={i18n.t('Govt ID')}
                     value={govt_id}
                     onChange={change}
-                    helperText={touched.govt_id ? errors.govt_id : ""}
-                    error={touched.govt_id && Boolean(errors.govt_id) || fieldErrorDict ? fieldErrorDict.govt_id : ""}
+                    helperText={touched.govt_id ? errors.govt_id : "" || (fieldErrorDict ? fieldErrorDict.govt_id : "")}
+                    error={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "")}
                     fullWidth
                     required
                   />
@@ -208,7 +189,6 @@ export default function Form(props) {
                     label={i18n.t('Cluster group of patient')}
                     value={cluster_group}
                     onChange={change}
-                    type="number"
                     helperText={touched.cluster_group ? errors.cluster_group : ""}
                     error={touched.cluster_group && Boolean(errors.cluster_group)}
                     fullWidth

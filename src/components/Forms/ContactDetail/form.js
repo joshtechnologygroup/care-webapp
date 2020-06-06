@@ -91,25 +91,10 @@ export function Form(props) {
     if(value) {
       setFieldTouched(name, false, true);
     }
-    if(saveProfile) {
-    let error = false;
-    if(value === "") {
-      error = true;
-    } else if(Object.keys(touched).length >= TOTAL_CONTACT_DETAILS_FIELDS){
-      Object.entries(touched).forEach(([item, itemValue]) => {
-        if(itemValue === true){
-          error = true;
-          return;
-        }
-      })
-    }
-    handleError(error);
-  }
   };
 
   return (
   <form onSubmit={handleSubmit}>
-    {console.log(fieldErrorDict,"---------")}
     <div className="section-header" onClick={handleSubmit}>
       <h4 className="heading--card">{i18n.t('Contact Details')}</h4>
     </div>

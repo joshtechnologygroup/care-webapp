@@ -13,8 +13,9 @@ export function ContactDetailForm(props) {
     address: Yup.string("Please enter address"),
     district: Yup.string("Please enter district"),
     state: Yup.string("Please enter state"),
-    pincode: Yup.number("Please enter pincode").test('len', 'Must be exactly 6 characters', val => (val ? val.toString() : "").length === 6)
+    pincode: Yup.number("Please enter pincode"),
   });
+
   const submit= (data) => {
     props.handleSubmit(data);
   };

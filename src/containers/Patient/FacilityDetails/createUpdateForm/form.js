@@ -37,9 +37,10 @@ export default function Form(props) {
     editMode,
     setFormB,
     validateForm,
-    fieldErrorDict
+    fieldErrorDict,
+    touched,
   } = props;
-console.log(errors,"cfcfcfgcvgvfgvhybjn", fieldErrorDict);
+
   useEffect(()=>{
     if(setFormB) {
     setFormB(validateForm);
@@ -91,8 +92,8 @@ console.log(errors,"cfcfcfgcvgvfgvhybjn", fieldErrorDict);
                 fullWidth
                 className="field"
                 variant="outlined"
-                helperText={errors.facility}
-                error={Boolean(errors.facility) ||(fieldErrorDict ? fieldErrorDict.facility : "")}
+                helperText={touched.facility ? errors.facility : "" || (fieldErrorDict ? fieldErrorDict.facility : "")}
+                error={touched.facility && Boolean(errors.facility) || (fieldErrorDict ? fieldErrorDict.facility : "")}
                />
 
             }
@@ -102,8 +103,8 @@ console.log(errors,"cfcfcfgcvgvfgvhybjn", fieldErrorDict);
             label={i18n.t('Patient facility id')}
             value={patient_facility_id}
             onChange={setFacilityId}
-            helperText={errors.patient_facility_id ? errors.patient_facility_id : ""}
-            error={errors.patient_facility_id && Boolean(errors.patient_facility_id) }
+            helperText={touched.patient_facility_id ? errors.patient_facility_id : "" || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "")}
+            error={touched.patient_facility_id && Boolean(errors.patient_facility_id) || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "")}
             fullWidth
             className="field"
             variant="outlined"
@@ -162,7 +163,7 @@ console.log(errors,"cfcfcfgcvgvfgvhybjn", fieldErrorDict);
             valueKey="id"
           />
           <h5 className="text--error">
-            {errors.patient_status}
+            {touched.patient_facility_id && Boolean(errors.patient_facility_id) || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "") && errors.patient_status}
           </h5>
         </Grid>
         { editMode &&
