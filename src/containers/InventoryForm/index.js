@@ -90,24 +90,24 @@ export const InventoryForm = (props) => {
         }
     }
 
-    const handleChange = (name, e) => {
+    const handleChange = (name, event) => {
         if (typeof name === 'object') {
             setInventoryData({ ...inventoryData, ...name });
         } else {
-            setInventoryData({ ...inventoryData, [name]: e });
+            setInventoryData({ ...inventoryData, [name]: event });
         }
         switch (name) {
             case 'name':
-                errors.name = Constants.FACILITY_DEFAULT === e.label;
+                errors.name = Constants.FACILITY_DEFAULT === event.label;
                 break;
             case 'type':
-                errors.type = Constants.FACILITY_DEFAULT === e.label;
+                errors.type = Constants.FACILITY_DEFAULT === event.label;
                 break;
             case 'required_quantity':
-                errors.required_quantity = !e;
+                errors.required_quantity = !event;
                 break;
             case 'current_quantity':
-                errors.current_quantity = !e;
+                errors.current_quantity = !event;
                 break;
             default: break;
         }
