@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { FormControl, Select, Input, MenuItem, Checkbox, ListItemText } from '@material-ui/core'
 
-export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, paramName, reset }) {
+export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, paramName, reset, defaultSelected }) {
+
+
   const [value, setValue] = React.useState([]);
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -21,10 +23,11 @@ export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, 
   };
 
   useEffect(() => {
+    setValue(defaultSelected[paramName] || []);
       if(reset) {
           setValue([]);
       }
-  }, [reset])
+  }, [reset, defaultSelected, options, paramName]);
 
   return (
     <div className="input-common">
@@ -50,7 +53,7 @@ export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, 
           </MenuItem>
           {options.map((name) => (
             <MenuItem key={name} value={name}>
-              <Checkbox color="primary" checked={value.indexOf(name) > -1} />
+              <Checkbox color="primary" checked={(value.indexOf(name) > -1)} />
               <ListItemText primary={name} />
             </MenuItem>
           ))}

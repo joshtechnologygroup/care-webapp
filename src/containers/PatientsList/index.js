@@ -25,6 +25,7 @@ import {
 
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import * as Constants from 'Src/constants';
 
 
 export function PatientsList(props) {
@@ -35,7 +36,7 @@ export function PatientsList(props) {
   const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
   const [selectedParams, setSelectedParams] = useState({});
   const [ordering, setOrdering] = useState({field: null, ordering: 'none'});
-
+  const [defaultSelected, setDefaultSelected] = useState({});
   // getting all the denpendencies related to patient list
   useEffect(() => {
     let required_data = [[], []]
@@ -45,7 +46,7 @@ export function PatientsList(props) {
       'clinical_status_list': [Routes.CLINICAL_STATUS_LIST_URL, ReducerTypes.GET_CLINICAL_STATUS_LIST],
       'cluster_group_list': [Routes.CLUSTER_GROUP_LIST_URL, ReducerTypes.GET_CLUSTER_GROUP_LIST],
       'covid_status_list': [Routes.COVID_STATUS_LIST_URL, ReducerTypes.GET_COVID_STATUS_LIST],
-      'facilities': [Routes.FACILITY_LIST_URL, ReducerTypes.GET_FACILITY_LIST],
+      'facilities': [Routes.FACILITY_SHORT_LIST_URL, ReducerTypes.GET_SHORT_FACILITY_LIST],
       'ownership_types': [Routes.OWNERSHIP_TYPE_LIST_URL, ReducerTypes.GET_OWNERSHIP_TYPE_LIST],
       'facility_types': [Routes.FACILITY_TYPE_LIST_URL, ReducerTypes.GET_FACILITY_TYPE_LIST],
       'current_status': [Routes.PATIENT_STATUS_LIST_URL, ReducerTypes.GET_PATIENT_STATUS_LIST]
@@ -73,6 +74,8 @@ export function PatientsList(props) {
       ownership_types,
       facility_types,
       current_status,
+      user_type,
+      preferred_districts
     } = props
     if (
       districts_list &&
@@ -83,7 +86,9 @@ export function PatientsList(props) {
       facilities &&
       ownership_types &&
       facility_types &&
-      current_status
+      current_status &&
+      user_type &&
+      preferred_districts
     ) {
       const joinById = {
         'clinical_status': clinical_status_list,
@@ -158,11 +163,11 @@ export function PatientsList(props) {
         if (col.field === 'facility_type') {
           col.cellRendererParams.options = update_list['updated_facility_types_list']
         }
-      })
-
+      });
 
       setTotalPages(Math.ceil(props.count / PAGINATION_LIMIT))
       setPatients(update_patients);
+      // handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE);
     } else if (
       districts_list ||
       clinical_status_list ||
@@ -185,14 +190,33 @@ export function PatientsList(props) {
     props.patients,
     props.facilities,
     props.current_status,
+    props.user_type,
+    props.preferred_districts
   ]); // if the list changes then again set all the foreign keys
 
 
   // when the component loads bring the patients list
   useEffect(() => {
-    handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE);
+    const {
+      districts_list,
+      user_type,
+      preferred_districts
+    } = props
+    if (
+      districts_list &&
+      user_type &&
+      preferred_districts
+    ) {
+      if (user_type === Constants.DISTRICT_MANAGER) {
+        let update_preferred_districts = [];
+        update_preferred_districts = preferred_districts.map((id) => districts_list.find((value, index, array) => value.id === id).name);
+        setSelectedParams({district: preferred_districts});
+        setDefaultSelected({district: update_preferred_districts});
+      }
+    }
+    handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE, {district: preferred_districts});
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ordering]);
+  }, [ordering, props.user_type, props.preferred_districts, props.districts_list]);
 
   const handleApiCall = async (url, next_page, params = {...selectedParams}) => {
     if (ordering.field) {
@@ -200,7 +224,7 @@ export function PatientsList(props) {
     }
     props.getPatientList(url, params);
     setPage(next_page);
-  }
+  };
 
   const handleBooleanCallBack = (val) => {
     const {
@@ -268,6 +292,7 @@ export function PatientsList(props) {
   }
 
 
+
   return (
     <React.Fragment>
       <Grid container
@@ -277,11 +302,13 @@ export function PatientsList(props) {
         <Grid item xs={12} sm={12}>
           <Filters
             options={CONFIG.columnDefs}
+            defaultSelected={defaultSelected}
             onSeeMore={() => setShowOverlay(!showOverlay)}
             handleApplyFilter={() => handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE)}
             handleReset={() => {
               handleApiCall(StringUtils.formatVarString(Routes.PATIENT_LIST_URL, [PAGINATION_LIMIT, 0]), INITIAL_PAGE, {});
               setSelectedParams({});
+              setDefaultSelected({});
             }}
             handleBooleanCallBack={val => handleBooleanCallBack(val)}
             handleNumberCallBack={val => handleNumberCallBack(val)}
@@ -355,7 +382,7 @@ export function PatientsList(props) {
 const mapStateToProps = (state) => ({
   facility_types: state.facilityTypes.results,
   ownership_types: state.ownershipTypes.results,
-  facilities: state.facilities.results,
+  facilities: state.shortFacilities.results,
   patients: state.patients.results,
   count: state.patients.count,
   next: state.patients.next,
@@ -365,9 +392,13 @@ const mapStateToProps = (state) => ({
   cluster_group_list: state.clusterGroup.results,
   covid_status_list: state.covidStatus.results,
   current_status: state.currentStatus.results,
+  preferred_districts: state.profile.preferred_districts,
+  user_type: state.profile.user_type,
 });
 
 PatientsList.propTypes = {
+  user_type: PropTypes.number,
+  preferred_districts: PropTypes.array,
   facility_types: PropTypes.array,
   ownership_types: PropTypes.array,
   current_status: PropTypes.array,
