@@ -87,13 +87,13 @@ class PatientDetail extends Component {
     }
   }
 
-  // componentDidUpdate(prevState) {
-  //   // Typical usage (don't forget to compare props):
-  //   if(this.state.isEditing !== prevState.isEditing){
-  //     const patientId = this.props.match.params.patientId;
-  //     this.props.fetchPatient(patientId);  
-  //   }
-  // }
+  componentDidUpdate(prevState) {
+    // Typical usage (don't forget to compare props):
+    if(this.state.isEditing !== prevState.isEditing){
+      const patientId = this.props.match.params.patientId;
+      this.props.fetchPatient(patientId);  
+    }
+  }
 
   onSubmit = async (data, key) => {
     let patientId = this.props.match.params.patientId;
