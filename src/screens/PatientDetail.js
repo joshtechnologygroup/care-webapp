@@ -21,7 +21,7 @@ import { updatePatientPersonalDetails, updatePatientContactDetails, updatePatien
 import { patientDetail } from 'Mockdata/patientDetail.json';
 import { fetchPatient, updatePatientDetails, getPatientDetailsDependencies } from 'Actions/PatientsAction';
 import _ from "underscore";
-import Loader from 'react-loader-spinner';
+import Loader from 'Components/Loader';
 import * as ReducerTypes from 'Reducers/Types';
 import * as Routes from 'Src/routes';
 import { createToastNotification } from 'Actions/ToastAction';
@@ -184,14 +184,8 @@ class PatientDetail extends Component {
       );
     } else {
       return (
-        <div>
-          <Loader
-            className="mr-3"
-            type="ThreeDots"
-            color="#138ca7"
-            height={90}
-            width={90}
-          />
+        <div className="flex-col-center">
+          <Loader />
           <h3>Loading...</h3>
         </div>
       )

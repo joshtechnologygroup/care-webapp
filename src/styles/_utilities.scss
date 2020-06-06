@@ -100,6 +100,11 @@
   align-items: center;
   justify-content: center;
 }
+.flex-col-center {
+  @extend .flex-center;
+  @extend .full-heigh-container;
+  flex-direction: column;
+}
 .align-items-center {
   display: flex;
   align-items: center;
