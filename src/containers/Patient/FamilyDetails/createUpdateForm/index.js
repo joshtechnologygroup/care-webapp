@@ -37,7 +37,10 @@ export const CreateUpdateForm = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Formik
-                        initialValues={details}
+                        initialValues={editMode ? details : {
+                            name: "", phone_number: "", relation: "", 
+                            age_year: "", age_month: "", gender: "",
+                        }}
                         validationSchema={validationSchema}
                         onSubmit={submit}
                     >

@@ -10,7 +10,7 @@ import { PropTypes } from 'prop-types';
 import { reachableStatus } from 'Constants/app.const';
 
 export const CreateUpdatePortieDetails = (props) => {
-    const { editMode, details, handleSubmit, cancelCallback, porteaUsers } = props;
+    const { editMode, details, handleSubmit, cancelCallback, porteaUsers, createPortieErrors, updatePortieErrors } = props;
     const { i18n } = useTranslation();
 
     const validationSchema = Yup.object({
@@ -21,10 +21,8 @@ export const CreateUpdatePortieDetails = (props) => {
     });
 
     const submit = async (data) => {
-        console.log(data);
         handleSubmit(data);
     };
-
 
     return (
         <Card className="mb-10 add-placeholder">
@@ -47,7 +45,14 @@ export const CreateUpdatePortieDetails = (props) => {
                         onSubmit={submit}
                     >
                         {
-                            props => <Form editMode={editMode} porteaUsers={porteaUsers} details={details} {...props} cancelCallback={cancelCallback}/>
+                            props => <Form 
+                            editMode={editMode} 
+                            porteaUsers={porteaUsers} 
+                            details={details} {...props} 
+                            cancelCallback={cancelCallback} 
+                            createPortieErrors={createPortieErrors}
+                            updatePortieErrors={updatePortieErrors}
+                            />
                         }
                     </Formik>
                 </Grid>

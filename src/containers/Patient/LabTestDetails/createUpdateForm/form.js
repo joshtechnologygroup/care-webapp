@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
 import {
@@ -33,29 +33,23 @@ export default function Form(props) {
     saveLabDetails,
     testingLabs,
     touched,
+    values
   } = props;
 
-  const setDate = (e) => {
-    setFieldValue('date_of_sample', e);
-    setFieldTouched('date_of_sample');
-    if(saveLabDetails) {
-      saveLabDetails('date_of_sample', e);
-    }
-  }
+  const changeText = (name, e) => {
+    setFieldTouched(e.target.name);
+    setFieldValue(name, e.target.value);
+  };
 
-  const setStatus = (name, val) =>{
-    setFieldValue(name, val);
-    if(saveLabDetails){ 
-      saveLabDetails(name, val);
-    }
-  }
+  const [completed, setCompeleted] = React.useState(false);
 
-  const onSelectLab = (event, value) => {
-    setFieldValue("testing_lab", value.id);
-    if(saveLabDetails){ 
-      saveLabDetails("testing_lab", value.id);
+  useEffect(() => {
+    if(values.result && [3, 4].indexOf(values.result) >= 0) {
+        setCompeleted(true)
+    } else {
+        setCompeleted(false);
     }
-  }
+  }, [values.result])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -65,15 +59,17 @@ export default function Form(props) {
           <Autocomplete
             options={testingLabs}
             getOptionLabel={(option) => option.name}
-            onChange={(event, value) => onSelectLab(event, value)}
+            name="testing_lab"
+            onChange={(event, val) => {
+                setFieldTouched('testing_lab');
+                setFieldValue('testing_lab', val.id);
+            }}
             renderInput={(params) => 
             <TextField
               {...params}
-              name="testing_lab"
               value={testing_lab}
               label={i18n.t('Testing Lab name')}
               fullWidth
-              value={testing_lab}
               className="field"
               variant="outlined"
               helperText={errors.testing_lab && touched.testing_lab}
@@ -86,10 +82,10 @@ export default function Form(props) {
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DateTimePicker
-              label={i18n.t('Date time')}
+              label={i18n.t('Date of Sample')}
               inputVariant="outlined"
               value={date_of_sample}
-              onChange={setDate}
+              onChange={(val) => setFieldValue('date_of_sample', val)}
               className="field"
               name="date_of_sample"
               disableFuture
@@ -110,15 +106,45 @@ export default function Form(props) {
             {i18n.t('Result')}
           </Typography>
           <SingleSelectChipsInput
-            value={result}
+            value={result || ""}
+            name="result"
             options={labTestStatusChoices}
-            onChange={(val) => setStatus('result', val)}
+            onChange={(val) => {
+                setFieldTouched('result');
+                setFieldValue('result', val);
+            }}
             valueKey="id"
           />
           <h5 className="text--error">
-            {errors.result}
+            {touched.result && errors.result}
           </h5>
         </Grid>
+
+        {
+            completed &&
+            <Grid item xs={12} sm={6}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DateTimePicker
+                label={i18n.t('Date of Result')}
+                inputVariant="outlined"
+                value={date_of_sample}
+                onChange={(val) => setFieldValue('date_of_result', val)}
+                className="field"
+                name="date_of_result"
+                disableFuture
+                format="dd/MM/yyyy"
+                InputProps={{
+                    endAdornment: (
+                    <InputAdornment><Event /></InputAdornment>
+                    ),
+                }}
+                fullWidth
+                helperText={touched.testing_lab && errors.testing_lab}
+                error={touched.testing_lab && Boolean(errors.testing_lab)}
+                />
+            </MuiPickersUtilsProvider>
+            </Grid>
+        }
 
         <Grid container justify="flex-end" className="mt-10" item xs={12}>
           <Button

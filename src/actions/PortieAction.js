@@ -16,7 +16,7 @@ const createPortieDetails = (body) => async (dispatch) => {
         return { status: true };
     } else if (portie_response.status === HttpStatus.BAD_REQUEST) {
         const data = await portie_response.json();
-        return { status: false, error: "dummy error generated in UI" };
+        return { status: false, errors: data};
     }
 };
 
@@ -31,7 +31,7 @@ const updatePortieDetails = (body, portieId) => async (dispatch) => {
         return { status: true };
     } else if (portie_response.status === HttpStatus.BAD_REQUEST) {
         const data = await portie_response.json();
-        return { status: false, error: "dummy error generated in UI" };
+        return { status: false, errors: data };
     }
 };
 
