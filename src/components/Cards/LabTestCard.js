@@ -13,10 +13,9 @@ import {
 } from '@material-ui/core';
 
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { EditOutlined, EventOutlined } from '@material-ui/icons';
-import { DATE_FORMAT } from 'Src/constants';
-// Importing mock data
-import { labTestStatusChoices } from 'Mockdata/labTestStatusChoices.json';
+import { EditOutlined, EventOutlined, AccessTime } from '@material-ui/icons';
+import { EASY_DATE_FORMAT, TIME_FORMAT } from 'Src/constants';
+import { labTestStatusChoices } from 'Constants/app.const';
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -80,11 +79,11 @@ export default function LabTestCard(props) {
             <span className="heading--sub">{i18n.t('Sample collected on')}</span>
             <Typography variant="h6" className="d-flex">
               <EventOutlined className="mr-5" />
-              <Tooltip title={i18n.t('Sample collected on')}>
-                <span>
-                  {moment(details.date_of_sample).format(DATE_FORMAT)}
-                </span>
-              </Tooltip>
+              {moment(details.date_of_sample).format(EASY_DATE_FORMAT)}
+            </Typography>
+            <Typography variant="h6" className="d-flex">
+              <AccessTime className="mr-5" />
+              {moment(details.date_of_sample).format(TIME_FORMAT)}
             </Typography>
           </Grid>
 
@@ -92,11 +91,11 @@ export default function LabTestCard(props) {
             <span className="heading--sub">{i18n.t('Last Updated')}</span>
             <Typography variant="h6" className="d-flex">
               <EventOutlined className="mr-5" />
-              <Tooltip title={i18n.t('Last Updated')}>
-                <span>
-                  {moment(details.status_updated_at).format(DATE_FORMAT)}
-                </span>
-              </Tooltip>
+              {moment(details.status_updated_at).format(EASY_DATE_FORMAT)}
+            </Typography>
+            <Typography variant="h6" className="d-flex">
+              <EventOutlined className="mr-5" />
+              {moment(details.status_updated_at).format(TIME_FORMAT)}
             </Typography>
           </Grid>
 

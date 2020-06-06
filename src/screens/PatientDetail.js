@@ -12,9 +12,11 @@ import FacilityDetails from 'Containers/Patient/FacilityDetails';
 import LabTestDetails from 'Containers/Patient/LabTestDetails';
 import PortieDetails from 'Containers/Patient/PortieDetails';
 import FamilyDetails from 'Containers/Patient/FamilyDetails';
+import * as Constants from "Src/constants"
 
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails } from 'Actions/PatientDetailsAction';
 
 // Importing mock data: Please remove upon integration
 import { patientDetail } from 'Mockdata/patientDetail.json';
@@ -23,6 +25,9 @@ import _ from "underscore";
 import Loader from 'Components/Loader';
 import * as ReducerTypes from 'Reducers/Types';
 import * as Routes from 'Src/routes';
+import { createToastNotification } from 'Actions/ToastAction';
+import * as ToastUtils from 'Src/utils/toast';
+import { SUCCESS, DANGER } from "Src/constants";
 
 class PatientDetail extends Component {
   constructor(props) {
@@ -46,7 +51,7 @@ class PatientDetail extends Component {
         portie_calling_details: false,
         patient_family_details: false,
       },
-      profile: patientDetail
+      profile: patientDetail,
     }
     this.setEditable = this.setEditable.bind(this);
   }
@@ -82,8 +87,34 @@ class PatientDetail extends Component {
       this.props.getPatientDetailsDependencies(required_data);
     }
   }
-  onSubmit = (data, key) => {
-    this.props.updatePatientDetails(data);
+
+  componentDidUpdate(prevProps ,prevState) {
+    // Typical usage (don't forget to compare props):
+    if(this.state.isEditing !== prevState.isEditing){
+      const patientId = this.props.match.params.patientId;
+      this.props.fetchPatient(patientId);  
+    }
+  }
+
+  onSubmit = async (data, key) => {
+    let patientId = this.props.match.params.patientId;
+    let response;
+    if (key === 'personal') {
+      response = await this.props.updatePatientPersonalDetails(data, patientId);
+    } else if (key === 'contact') {
+      response = await this.props.updatePatientContactDetails(data, patientId);
+    } else if (key === 'medication') {
+      response = await this.props.updatePatientMedicationDetails(data, patientId);
+    }
+    if (response.status === true) {
+      this.props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+      )
+    } else {
+      this.props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Errors occurs", DANGER)
+      )
+    }
     this.setState({
       profile: {
         ...this.state.profile,
@@ -128,22 +159,28 @@ class PatientDetail extends Component {
                   handleEdit={() => this.setEditable(formList[1], true)}
                 />
             }
-            <Timeline timeline={this.props.patient.patient_timeline}/>
+            <FacilityDetails
+              profile={this.props.patient.facility_details}
+            />
+            <Timeline timeline={this.props.patient.patient_timeline} />
             <MedicationDetails
               editMode={false} profile={this.props.patient.medication_details[0]}
             />
             {/* <DoctorAttendant
               profile={profile[formList[2]].attendant}
             /> */}
-            <FacilityDetails
-              profile={this.props.patient.facility_details}
-            />
             <LabTestDetails
               profile={this.props.patient.patient_lab_details}
             />
-            <PortieDetails
-              profile={this.props.patient.portie_calling_details}
-            />
+            {
+                (this.props.patient.patient_status === Constants.HOME_ISOLATION_STATUS ||
+                !_.isEmpty(this.props.patient.portie_calling_details)) && 
+                <PortieDetails
+                profile={this.props.patient.portie_calling_details}
+                patientStatus={this.props.patient.patient_status}
+                patient={this.props.patient}
+                />
+            }
             <FamilyDetails
               profile={this.props.patient.patient_family_details}
             />
@@ -163,7 +200,7 @@ class PatientDetail extends Component {
 
 
 const mapStateToProps = state => {
-  const { patient } = state;
+  const { patient, fetchDetails } = state;
   return {
     patient: patient,
   };
@@ -175,6 +212,10 @@ PatientDetail.propTypes = {
   fetchPatient: PropTypes.func.isRequired,
   updatePatientDetails: PropTypes.func.isRequired,
   getPatientDetailsDependencies: PropTypes.func.isRequired,
+  updatePatientPersonalDetails: PropTypes.func.isRequired,
+  updatePatientContactDetails: PropTypes.func.isRequired,
+  updatePatientMedicationDetails: PropTypes.func.isRequired,
+  createToastNotification: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { fetchPatient, updatePatientDetails, getPatientDetailsDependencies })(PatientDetail);
+export default connect(mapStateToProps, { fetchPatient, updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, getPatientDetailsDependencies, createToastNotification })(PatientDetail);

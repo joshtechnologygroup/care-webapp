@@ -8,8 +8,6 @@ import InventoryList from 'Containers/InventoryList';
 import InventoryForm from 'Containers/InventoryForm';
 import {ListAlt} from '@material-ui/icons';
 import { Search } from 'Components/Inputs';
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 export function Inventory(props){
@@ -19,10 +17,6 @@ export function Inventory(props){
     const [error, setError] = React.useState(false);
     const handleSearch = (value) =>{
         setVal(value);
-    }
-
-    function Alert(props) {
-        return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
 
     const onClose = (event, reason) => {
@@ -76,18 +70,6 @@ export function Inventory(props){
                 </div>
                 <InventoryForm open={open} onClose={handleClose} />
             </div>
-            <div>{props.error}</div>
-            <Snackbar
-                open={props.error || props.error === false}
-                autoHideDuration={5000}
-                onClose={onClose}
-              >
-                <Alert onClose={onClose} severity={!props.error ? "success": "error"}>
-                  <div>
-                    {Boolean(props.error) ? props.error : "Successfully created Inventory!"}
-                    </div>
-                </Alert>
-            </Snackbar>
         </Grid>
     );
 }

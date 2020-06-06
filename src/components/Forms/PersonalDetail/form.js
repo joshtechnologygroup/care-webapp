@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Card,
@@ -22,8 +22,7 @@ import { GENDER_MAPPING_PROPS } from 'Constants/app.const.js';
 import { TOTAL_PERSONEL_DETAILS_FIELDS } from 'Src/constants';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { patient_status_choices } from 'Mockdata/PatientStatusChoices.json';
+import { patient_status_choices } from 'Constants/app.const';
 
 export default function Form(props) {
   const classes = useStyles();
@@ -48,11 +47,19 @@ export default function Form(props) {
     setFieldValue,
     editMode,
     saveProfile,
-    facilityList,
     clusterGroup,
     handleError,
     handleSubmit,
+    validateForm,
+    fieldErrorDict,
+    setPersonalForm,
   } = props;
+
+  useEffect(() => {
+    if(setPersonalForm) {
+      setPersonalForm(validateForm);
+    }
+  }, []);
 
   const [values, setValues] = React.useState({
     facilityExists: Boolean(facility),
@@ -62,34 +69,18 @@ export default function Form(props) {
     const { name, value } = event.target;
     setFieldValue(name, value);
     if (saveProfile) {
-      saveProfile(name, value)
+      saveProfile(name, value);
     }
     setFieldTouched(name, true, false);
     if (value) {
       setFieldTouched(event.target.name, false, true);
     }
-    let error = false;
-    if (saveProfile) {
-      if (value === "") {
-        error = true;
-      } else if (Object.keys(touched).length >= TOTAL_PERSONEL_DETAILS_FIELDS) {
-        Object.entries(touched).forEach(([item, itemValue]) => {
-          if (itemValue === true) {
-            error = true;
-            return;
-          }
-        })
-      }
-      if (handleError) {
-        handleError(error);
-      }
-    }
   };
 
   const setProfileFields = (name, value) => {
-    const genderId = GENDER_MAPPING_PROPS[value];
+    setFieldValue(name, value);
     if (saveProfile) {
-      saveProfile(name, genderId);
+      saveProfile(name, value);
     }
     setFieldTouched(name, true, false);
     if (value) {
@@ -120,7 +111,7 @@ export default function Form(props) {
             <Grid item className="p-0 bg-gray text-center" xs={12} sm={2}>
               <ProfileImageInput
                 altText={i18n.t('Click to change photo')}
-                defaultImage={gender === 'Male' ? patientMale : patientFemale}
+                defaultImage={(gender === GENDER_MAPPING_PROPS['Male'] || !gender) ? patientMale : patientFemale}
                 imageSrc={imageSrc}
                 handleChange={(file, image) => setProfileImage(file, image)}
               />
@@ -134,13 +125,13 @@ export default function Form(props) {
                     fullWidth
                     value={name}
                     onChange={change}
-                    helperText={touched.name ? errors.name : ""}
-                    error={touched.name && Boolean(errors.name)}
+                    helperText={touched.name ? errors.name : "" || (fieldErrorDict ? fieldErrorDict.name : "")}
+                    error={touched.name && Boolean(errors.name) ||(fieldErrorDict ? fieldErrorDict.name : "")}
                     required
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <ButtonToggle restrictUnselect={true} defaultSelected={gender} data={genderChoices} onChange={(data) => setProfileFields("gender", data)} />
+                  <ButtonToggle restrictUnselect={true} defaultSelected={gender} data={genderChoices} onChange={(data) => setProfileFields("gender", data) } />
                 </Grid>
                 <Grid item xs={6} sm={3}>
                   <TextField
@@ -148,8 +139,8 @@ export default function Form(props) {
                     label={i18n.t('Age in years')}
                     value={year}
                     onChange={change}
-                    helperText={touched.year ? errors.year : ""}
-                    error={touched.year && Boolean(errors.year)}
+                    helperText={touched.year ? errors.year : "" || (fieldErrorDict ? fieldErrorDict.year : "")}
+                    error={touched.year && Boolean(errors.year) ||(fieldErrorDict ? fieldErrorDict.year : "")}
                     fullWidth
                     type="number"
                     required
@@ -161,8 +152,8 @@ export default function Form(props) {
                     label={i18n.t('Age in Months')}
                     value={month}
                     onChange={change}
-                    helperText={touched.month ? errors.month : ""}
-                    error={touched.month && Boolean(errors.month)}
+                    helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "")}
+                    error={touched.month && Boolean(errors.month) || (fieldErrorDict ? fieldErrorDict.month : "")}
                     fullWidth
                     type="number"
                     required
@@ -185,8 +176,8 @@ export default function Form(props) {
                     label={i18n.t('Govt ID')}
                     value={govt_id}
                     onChange={change}
-                    helperText={touched.govt_id ? errors.govt_id : ""}
-                    error={touched.govt_id && Boolean(errors.govt_id)}
+                    helperText={touched.govt_id ? errors.govt_id : "" || (fieldErrorDict ? fieldErrorDict.govt_id : "")}
+                    error={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "")}
                     fullWidth
                     required
                   />
@@ -210,21 +201,21 @@ export default function Form(props) {
                     }
                   </TextField>
                 </Grid>
-                  <Grid className="pb-0 mb-10" item xs={12}>
-                    <Typography variant="h6">
-                      {i18n.t('Patient status')}
-                    </Typography>
-                    <SingleSelectChipsInput
-                      value={patient_status}
-                      options={patient_status_choices}
-                      onChange={(val) => setStatus('patient_status', val)}
-                      valueKey="id"
-                      unselectable={true}
-                    />
-                    <h5 className="text--error">
-                      {errors.patient_status}
-                    </h5>
-                  </Grid>
+                <Grid className="pb-0 mb-10" item xs={12}>
+                  <Typography variant="h6">
+                    {i18n.t('Patient status')}
+                  </Typography>
+                  <SingleSelectChipsInput
+                    value={patient_status}
+                    options={patient_status_choices}
+                    onChange={(val) => setStatus('patient_status', val)}
+                    valueKey="id"
+                    unselectable={true}
+                  />
+                  <h5 className="text--error">
+                    {errors.patient_status}
+                  </h5>
+                </Grid>
                 {
                   editMode &&
                   <Grid item xs={12} sm={3} className="ml-auto">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from "react-i18next";
 import { PropTypes } from 'prop-types';
 import {
@@ -9,15 +9,13 @@ import {
   InputAdornment,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Event } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-// Importing mock data
-import { facility_status_choices } from 'Mockdata/facility_status_choices.json';
-import { labs } from 'Mockdata/labs.json';
+import { facility_status_choices } from 'Constants/app.const';
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -37,7 +35,18 @@ export default function Form(props) {
     saveFacilityDetails,
     shortFacilities,
     editMode,
+    setPatientFacilityForm,
+    validateForm,
+    fieldErrorDict,
+    touched,
   } = props;
+
+  useEffect(()=>{
+    if(setPatientFacilityForm) {
+      setPatientFacilityForm(validateForm);
+    }
+  },[])
+
   const onSelectFacility = (event, value) => {
     const name = "facility"
     setFieldTouched(name);
@@ -45,7 +54,10 @@ export default function Form(props) {
     saveFacilityDetails(name, value.id);
   }
 
+  const [admitted, setAdmitted] = React.useState(admitted_at ? admitted_at : null);
+  const [discharged, setDischarged] = React.useState(discharged_at ? discharged_at : null);
   const setDateTime = (name, value) => {
+    name = "admitted_at" ? setAdmitted(value) : setDischarged(value);
     setFieldValue(name, value);
     setFieldTouched(name);
     saveFacilityDetails(name, value);
@@ -65,7 +77,6 @@ export default function Form(props) {
     }
     saveFacilityDetails(name, value);
   }
-
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={2}>
@@ -84,9 +95,9 @@ export default function Form(props) {
                 fullWidth
                 className="field"
                 variant="outlined"
-                helperText={errors.facility}
-                error={Boolean(errors.facility)}
-              />
+                helperText={touched.facility ? errors.facility : "" || (fieldErrorDict ? fieldErrorDict.facility : "")}
+                error={touched.facility && Boolean(errors.facility) || (fieldErrorDict ? fieldErrorDict.facility : "")}
+               />
 
             }
           />
@@ -95,8 +106,8 @@ export default function Form(props) {
             label={i18n.t('Patient facility id')}
             value={patient_facility_id}
             onChange={setFacilityId}
-            helperText={errors.patient_facility_id ? errors.patient_facility_id : ""}
-            error={errors.patient_facility_id && Boolean(errors.patient_facility_id)}
+            helperText={touched.patient_facility_id ? errors.patient_facility_id : "" || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "")}
+            error={touched.patient_facility_id && Boolean(errors.patient_facility_id) || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "")}
             fullWidth
             className="field"
             variant="outlined"
@@ -106,15 +117,15 @@ export default function Form(props) {
 
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
+            <KeyboardDateTimePicker
               label={i18n.t('Admitted Date/time')}
               inputVariant="outlined"
-              value={admitted_at}
+              value={admitted}
               onChange={(val) => setDateTime("admitted_at", val)}
               className="field"
               name="admitted_at"
               disableFuture
-              format="dd/MM/yyyy"
+              format="dd/MM/yyyy hh:mm a"
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>
@@ -124,15 +135,15 @@ export default function Form(props) {
             />
           </MuiPickersUtilsProvider>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
+            <KeyboardDateTimePicker
               label={i18n.t('Discharged Date/time')}
               inputVariant="outlined"
-              value={discharged_at}
+              value={discharged}
               onChange={(val) => setDateTime("discharged_at", val)}
               className="field"
               name="discharged_at"
               disableFuture
-              format="dd/MM/yyyy"
+              format="dd/MM/yyyy hh:mm a"
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>
@@ -155,7 +166,7 @@ export default function Form(props) {
             valueKey="id"
           />
           <h5 className="text--error">
-            {errors.patient_status}
+            {touched.patient_facility_id && Boolean(errors.patient_facility_id) || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "") && errors.patient_status}
           </h5>
         </Grid>
         { editMode &&

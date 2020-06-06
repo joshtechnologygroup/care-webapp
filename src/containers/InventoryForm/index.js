@@ -10,18 +10,21 @@ import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
 import Form from './form';
 import useStyles from './styles';
-import { createOrUpdateInventory } from 'Actions/FacilitiesAction';
+import { createInventories, updateInventories } from 'Actions/InventoriesAction';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'underscore';
+import { createToastNotification } from 'Actions/ToastAction';
 import * as Constants from 'Src/constants';
-import _ from 'underscore'
+import * as ToastUtils from 'Src/utils/toast';
+import { SUCCESS, DANGER } from "Src/constants";
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
     const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
-    const { open, data, onClose, createOrUpdateInventory, facilityList, inventoryTypesList, index } = props;
+    const { open, data, onClose, createInventories, updateInventories, facilityList, inventoryTypesList, index } = props;
     const [errors, setErrors] = useState({name: true,type: true, required_quantity: true, current_quantity: true, form: '' })
 
     const addAnother = (event) => {
@@ -37,7 +40,7 @@ export const InventoryForm = (props) => {
         }
     }, [facilityList, inventoryTypesList]);
 
-    const createInventory = () => {
+    const createInventory = async () => {
         let initial = inventoryData;
         if (!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)) {
             if (initial && !data) {
@@ -57,10 +60,29 @@ export const InventoryForm = (props) => {
             delete initial.name;
             delete initial.type;
             setInventoryData({ inventoryData: initial });
+            let response;
             if (isAddAnother === false && data) {
-                createOrUpdateInventory(initial, data.id)
+                response = await updateInventories(initial, data.id);
+                if (response.status === true) {
+                    props.createToastNotification(
+                        ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+                    )
+                } else {
+                    props.createToastNotification(
+                        ToastUtils.toastDict((new Date()).getTime(), "Added",  response.error, DANGER)
+                    )
+                }
             } else {
-                createOrUpdateInventory(initial)
+                response = await createInventories(initial);
+                if (response.status === true) {
+                    props.createToastNotification(
+                        ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+                    )
+                } else {
+                    props.createToastNotification(
+                        ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
+                    )
+                }
             }
         }
         if (!isAddAnother) {
@@ -147,7 +169,7 @@ const mapStateToProps = (state) => {
         inventoryList: inventory.results,
         inventoryTypesList: inventoryTypes,
         facilityList: shortFacilities.results,
-        count: state.inventory.count
+        count: state.inventory.count,
     };
 };
 
@@ -155,7 +177,9 @@ InventoryForm.propTypes = {
     inventoryList: PropTypes.array.isRequired,
     inventoryTypesList: PropTypes.array.isRequired,
     facilityList: PropTypes.array.isRequired,
-    createOrUpdateInventory: PropTypes.func.isRequired,
+    createInventories: PropTypes.func.isRequired,
+    updateInventories: PropTypes.func.isRequired,
+    createToastNotification: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { createOrUpdateInventory })(InventoryForm);
+export default connect(mapStateToProps, { createInventories, updateInventories, createToastNotification })(InventoryForm);
