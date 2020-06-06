@@ -1,40 +1,40 @@
 import React, {useEffect, useState} from 'react';
 import TableComponent from 'Components/TableComponent';
 import Grid from '@material-ui/core/Grid';
-import { GET } from "Src/constants";
+import {GET} from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import * as Routes from 'Src/routes';
 import * as StringUtils from 'Src/utils/stringformatting';
-import { CONFIG } from './config';
+import {CONFIG} from './config';
 import {
   multiSelectBooleanFilterCallback
 } from "Src/utils/listFilter";
-import { PAGINATION_LIMIT, INITIAL_PAGE, OFFSET } from 'Src/constants';
-import { mappingIdWithNames } from 'Src/utils/mapping-functions'
+import {PAGINATION_LIMIT, INITIAL_PAGE, OFFSET, FACILITY_MANAGER} from 'Src/constants';
+import {mappingIdWithNames} from 'Src/utils/mapping-functions'
 import PaginationController from 'Components/PaginationController';
 import Sort from 'Components/Sort';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Filters from "Components/Filters";
-import { getsFacilityStaffListDependencies, getStaffList } from 'Actions/FacilityStaffAction';
+import {getsFacilityStaffListDependencies, getStaffList} from 'Actions/FacilityStaffAction';
 
 
 export function DoctorAttendantList(props) {
-  const [ selectedParams, setSelectedParams ] = useState({});
+  const [selectedParams, setSelectedParams] = useState({});
   const [showColumnsPanel, setShowColumnsPanel] = useState(false);
-  const [ facilityStaffList, setFacilityInfrastructureList ] = useState(props.facilityStaffList);
-  const [ currentPage, setCurrentPage ] = useState(INITIAL_PAGE);
-  const [ currentUrl, setCurrentUrl ] = useState(StringUtils.formatVarString(Routes.FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
-  const [ totalPages, setTotalPages ] = useState(INITIAL_PAGE);
-  const [ ordering, setOrdering ] = useState({});
+  const [facilityStaffList, setFacilityInfrastructureList] = useState(props.facilityStaffList);
+  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
+  const [currentUrl, setCurrentUrl] = useState(StringUtils.formatVarString(Routes.FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
+  const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
+  const [ordering, setOrdering] = useState({});
   const [showOverlay, setShowOverlay] = useState(false);
 
   const handleApiCall = async () => {
-    let update_params = { ...selectedParams };
-    if(ordering.field) {
+    let update_params = {...selectedParams};
+    if (ordering.field) {
       Object.assign(update_params, {'ordering': [ordering.field]})
     }
-    if(ordering.ordering === 'desc'){
+    if (ordering.ordering === 'desc') {
       update_params.ordering = '-' + update_params.ordering
     }
     let required_data = [
@@ -46,13 +46,13 @@ export function DoctorAttendantList(props) {
       ]
     ];
     const requiredDependencies = {
-      'facilities':[Routes.FACILITY_SHORT_LIST_URL, ReducerTypes.GET_SHORT_FACILITY_LIST ],
-      'staffDesignationList':[Routes.STAFF_DESIGNATION_LIST_URL, ReducerTypes.GET_STAFF_DESIGNATION_LIST ],
+      'facilities': [Routes.FACILITY_SHORT_LIST_URL, ReducerTypes.GET_SHORT_FACILITY_LIST],
+      'staffDesignationList': [Routes.STAFF_DESIGNATION_LIST_URL, ReducerTypes.GET_STAFF_DESIGNATION_LIST],
     };
 
     Object.keys(requiredDependencies).forEach((list) => {
-      if(!props[list]){
-        required_data[0].push([ requiredDependencies[list][0], GET, {}])
+      if (!props[list]) {
+        required_data[0].push([requiredDependencies[list][0], GET, {}])
         required_data[1].push(requiredDependencies[list][1])
       }
     });
@@ -60,16 +60,18 @@ export function DoctorAttendantList(props) {
   };
 
   useEffect(() => {
-      handleApiCall();
-  }, [ currentUrl, ordering ]);
+    handleApiCall();
+  }, [currentUrl, ordering]);
 
   useEffect(() => {
-    const { facilities, facilityStaffList, staffDesignationList } = props;
-    if(
+    const {facilities, facilityStaffList, staffDesignationList, userType, associatedFacilities} = props;
+    if (
       facilities &&
       facilityStaffList &&
-      staffDesignationList
-    ){
+      staffDesignationList &&
+      userType &&
+      associatedFacilities
+    ) {
       let update_facilityStaffList = new Array(...facilityStaffList);
 
       const list = [
@@ -82,34 +84,40 @@ export function DoctorAttendantList(props) {
       })
 
       const update_list = {
-        'updated_facility_list' : [],
-        'updated_designation_list' : [],
+        'updated_facility_list': [],
+        'updated_designation_list': [],
       };
 
       const props_list = {
         'updated_facility_list': facilities,
-        'updated_designation_list' : staffDesignationList,
+        'updated_designation_list': staffDesignationList,
       };
 
       Object.keys(update_list).forEach((list_name) => {
-        props_list[list_name].forEach((element)=>{
+        props_list[list_name].forEach((element) => {
           update_list[list_name].push(element.name);
         })
       });
 
+      if (userType === FACILITY_MANAGER) {
+        update_list['updated_facility_list'] = associatedFacilities.map((id) => {
+          const facility = facilities.find((value, index, array) => value.id === id);
+          return facility.name
+        });
+      }
+
       CONFIG.columnDefs.forEach((col) => {
-        if(col.field === 'facility') {
+        if (col.field === 'facility') {
           col.cellRendererParams.options = update_list['updated_facility_list']
         }
-        if(col.field === 'designation') {
+        if (col.field === 'designation') {
           col.cellRendererParams.options = update_list['updated_designation_list']
         }
       });
 
-
-      setTotalPages(Math.ceil(props.count/PAGINATION_LIMIT))
+      setTotalPages(Math.ceil(props.count / PAGINATION_LIMIT))
       setFacilityInfrastructureList(update_facilityStaffList);
-    } else if(
+    } else if (
       facilities ||
       facilityStaffList ||
       staffDesignationList
@@ -123,7 +131,7 @@ export function DoctorAttendantList(props) {
   ]);
 
   const handleBooleanCallBack = (val) => {
-    const { facilities } = props
+    const {facilities} = props;
     const mapping_id_list = {
       'facility': facilities,
     };
@@ -131,14 +139,14 @@ export function DoctorAttendantList(props) {
       selectedParams,
       mapping_id_list,
       val);
-    setSelectedParams({ ...update_select_params });
-  }
+    setSelectedParams({...update_select_params});
+  };
 
   const handleStringCallBack = (field, val) => {
-    let update_select_params = { ... selectedParams }
+    let update_select_params = {...selectedParams}
     update_select_params[field] = val;
-    setSelectedParams({ ...update_select_params });
-  }
+    setSelectedParams({...update_select_params});
+  };
 
 
   return (
@@ -160,8 +168,8 @@ export function DoctorAttendantList(props) {
               setShowOverlay(!showOverlay);
             }}
             handleApplyFilter={() => {
-                props.getStaffList(currentUrl, selectedParams)
-                setShowOverlay(false);
+              props.getStaffList(currentUrl, selectedParams)
+              setShowOverlay(false);
             }}
             handleReset={() => {
               props.getStaffList(currentUrl, {});
@@ -185,43 +193,47 @@ export function DoctorAttendantList(props) {
           justify="space-between"
           alignItems="center"
         >
-          <Grid item xs={12} sm={3} >
+          <Grid item xs={12} sm={3}>
             <Sort
               onSelect={val => {
-                if(val === 'facility')
-                setOrdering({...ordering, field: ['facility__name']});
+                if (val === 'facility')
+                  setOrdering({...ordering, field: ['facility__name']});
                 else
                   setOrdering({...ordering, field: [val]});
               }}
               options={CONFIG.columnDefs}
               onToggleSort={toggleVal => {
                 setOrdering({...ordering, ordering: toggleVal});
-              }} />
+              }}/>
           </Grid>
-          <Grid item xs={12} sm={4} >
+          <Grid item xs={12} sm={4}>
 
             <PaginationController
-              resultsShown={currentPage}
+              resultsShown={totalPages && currentPage}
               totalResults={totalPages}
               onFirst={() => {
                 setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, OFFSET]));
                 setCurrentPage(INITIAL_PAGE)
               }}
               onPrevious={() => {
-                if(props.prevPage){
+                if (props.prevPage) {
                   setCurrentUrl(props.prevPage);
                   setCurrentPage(currentPage - 1)
-                }}}
+                }
+              }}
               onNext={() => {
-                if(props.nextPage){
+                if (props.nextPage) {
                   setCurrentUrl(props.nextPage);
                   setCurrentPage(currentPage + 1)
-                }}}
+                }
+              }}
               onLast={() => {
                 setCurrentUrl(StringUtils.formatVarString(Routes.FACILITY_STAFF_LIST_URL, [PAGINATION_LIMIT, PAGINATION_LIMIT * (totalPages - 1)]));
                 setCurrentPage(totalPages);
               }}
-              onShowList={() => { setShowColumnsPanel(!showColumnsPanel) }}
+              onShowList={() => {
+                setShowColumnsPanel(!showColumnsPanel)
+              }}
             />
           </Grid>
         </Grid>
@@ -240,7 +252,9 @@ export function DoctorAttendantList(props) {
           pagination={CONFIG.pagination}
           rowData={facilityStaffList}
           showColumnsPanel={showColumnsPanel}
-          onCloseColumnsPanel={() => { setShowColumnsPanel(false) }}
+          onCloseColumnsPanel={() => {
+            setShowColumnsPanel(false)
+          }}
         />
       </div>
     </React.Fragment>
@@ -254,10 +268,14 @@ const mapStateToProps = (state) => ({
   bedTypeList: state.bedType.results,
   facilities: state.shortFacilities.results,
   facilityStaffList: state.facilityStaff.results,
-  staffDesignationList: state.staffDesignation.results
+  staffDesignationList: state.staffDesignation.results,
+  userType: state.profile.user_type,
+  associatedFacilities: state.profile.associated_facilities,
 });
 
 DoctorAttendantList.propTypes = {
+  userType: PropTypes.number,
+  associatedFacilities: PropTypes.array,
   facilityStaffList: PropTypes.array,
   staffDesignationList: PropTypes.array,
   count: PropTypes.number,
@@ -268,4 +286,4 @@ DoctorAttendantList.propTypes = {
   getStaffList: PropTypes.func
 };
 
-export default connect(mapStateToProps, { getsFacilityStaffListDependencies, getStaffList })(DoctorAttendantList);
+export default connect(mapStateToProps, {getsFacilityStaffListDependencies, getStaffList})(DoctorAttendantList);
