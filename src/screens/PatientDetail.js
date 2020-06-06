@@ -87,7 +87,7 @@ class PatientDetail extends Component {
     }
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps ,prevState) {
     // Typical usage (don't forget to compare props):
     if(this.state.isEditing !== prevState.isEditing){
       const patientId = this.props.match.params.patientId;
