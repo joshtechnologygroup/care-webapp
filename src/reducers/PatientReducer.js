@@ -7,7 +7,8 @@ import {
     GET_STATE_LIST,
     SET_CURRENT_PATIENT,
     CLEAR_PATIENT,
-    GET_TESTING_LABS_LIST
+    GET_TESTING_LABS_LIST,
+    FETCH_PATIENT_DETAIL_API
 } from "Reducers/Types";
 
 const initialState = {};
@@ -103,4 +104,17 @@ const testingLabs = (state = {}, action) => {
     }
 };
 
-export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states, patient, testingLabs };
+
+const fetchDetails = (state = {}, action) => {
+    switch(action.type){
+        case FETCH_PATIENT_DETAIL_API:
+            return {
+                ...state,
+                apiSuccess: true,
+            }
+        default:
+            return state;
+    }
+};
+
+export { patients, clinicalStatus, clusterGroup, covidStatus, currentStatus, states, patient, testingLabs, fetchDetails };
