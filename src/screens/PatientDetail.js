@@ -173,9 +173,9 @@ class PatientDetail extends Component {
             <LabTestDetails
               profile={this.props.patient.patient_lab_details}
             />
-            <PortieDetails
+            {/* <PortieDetails
               profile={this.props.patient.portie_calling_details}
-            />
+            /> */}
             <FamilyDetails
               profile={this.props.patient.patient_family_details}
             />

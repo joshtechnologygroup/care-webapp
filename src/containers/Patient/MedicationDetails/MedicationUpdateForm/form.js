@@ -16,8 +16,8 @@ export default function Form(props) {
     values: {
       covid_status,
       clinical_status,
-      symptoms,
-      diseases,
+      patient_symptoms,
+      patient_diseases,
     },
     handleSubmit,
     setFieldValue,
@@ -83,8 +83,8 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={symptomChoices}
-          value={symptoms}
-          onChange={(val) => setValue(val, 'symptoms')}
+          value={patient_symptoms}
+          onChange={(val) => setValue(val, 'patient_symptoms')}
           valueKey="id"
         />
       </Grid>
@@ -95,8 +95,8 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={diseaseChoices}
-          value={diseases}
-          onChange={(val) => setValue(val, 'diseases')}
+          value={patient_diseases}
+          onChange={(val) => setValue(val, 'patient_diseases')}
           valueKey="id"
         />
       </Grid>

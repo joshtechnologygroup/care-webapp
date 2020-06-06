@@ -148,7 +148,7 @@ function AddPatient(props) {
           editMode={true}
           fieldErrorDict={fieldErrorDict}
           saveProfile={saveProfile}
-          profile={profile[formList[2]]}
+          profile={profile}
           setFormD={setFormD}
         />
         {/* <DoctorAttendant
