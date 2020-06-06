@@ -23,7 +23,9 @@ export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, 
   };
 
   useEffect(() => {
-    setValue(defaultSelected[paramName] || []);
+      if(defaultSelected){
+        setValue(defaultSelected[paramName] || []);
+      }
       if(reset) {
           setValue([]);
       }
