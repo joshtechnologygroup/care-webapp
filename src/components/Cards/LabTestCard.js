@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme =>
 export default function LabTestCard(props) {
   const classes = useStyles();
   const { i18n } = useTranslation();
-  const { details, editCallback } = props;
+  const { details, editCallback, testingLabs } = props;
 
   return (
     <Card elevation={4}
@@ -63,7 +63,7 @@ export default function LabTestCard(props) {
             <h4 className="heading--md">
               <Tooltip title={i18n.t('Lab name')}>
                 <span>
-                  {details.name}
+                  {testingLabs && testingLabs.find(lab => lab.id == details.testing_lab).name}
                 </span>
               </Tooltip>
             </h4>

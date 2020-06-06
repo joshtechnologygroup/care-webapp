@@ -88,5 +88,37 @@ export const RELATIONSHIP_OPTIONS = [
         "label": "Other relative"
     }
   ]
+
+export const labTestStatusChoices = [
+    {
+        "id": 1,
+        "name": "Sample Sent"
+    },
+    {
+        "id": 2,
+        "name": "Report Pending",
+        "theme": "warning"
+    },
+    {
+        "id": 3,
+        "name": "Positive",
+        "theme": "danger"
+    },
+    {
+        "id": 4,
+        "name": "Negative",
+        "theme": "success"
+    },
+    {
+        "id": 5,
+        "name": "Presumptive Positive",
+        "theme": "danger-light"
+    },
+    {
+        "id": 6,
+        "name": "Test Inconclusive",
+        "theme": "primary"
+    }
+  ];
 export const DATE_ONLY_FORMAT = "MM/DD/YYYY";
 export const TIME_FORMAT = "hh:mm A";
