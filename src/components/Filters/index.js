@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Button, TextField, IconButton} from '@material-ui/core';
+import {Grid, Button, TextField, IconButton, Tooltip} from '@material-ui/core';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import {useTranslation} from "react-i18next";
 
@@ -124,11 +124,13 @@ export default function Filters({
               </Button>
             </Grid>
             <Grid md={5}>
-              <IconButton color="primary" onClick={() => {
-                setReset(true);
-                setTextFieldVal(new Array(filterOptions.length).fill(""))
-                handleReset();
-              }}><RotateLeftIcon/></IconButton>
+              <Tooltip title={i18n.t('Reset filters')}>
+                <IconButton color="primary" onClick={() => {
+                  setReset(true);
+                  setTextFieldVal(new Array(filterOptions.length).fill(""))
+                  handleReset();
+                }}><RotateLeftIcon/></IconButton>
+              </Tooltip>
             </Grid>
           </Grid>
           <Grid md={4}>
