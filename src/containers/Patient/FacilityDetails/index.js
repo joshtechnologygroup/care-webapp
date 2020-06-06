@@ -74,7 +74,7 @@ export function FacilityDetails(props) {
               cancelCallback={cancel}
               editMode={profile.facility ? true : false}
               shortFacilities={shortFacilities}
-              details={{'admitted_at':new Date(),'discharged_at':new Date()}}
+              details={{}}
             />
           </Grid>
         }

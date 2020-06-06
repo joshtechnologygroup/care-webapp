@@ -9,7 +9,7 @@ import {
   InputAdornment,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Event } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -45,7 +45,10 @@ export default function Form(props) {
     saveFacilityDetails(name, value.id);
   }
 
+  const [admitted, setAdmitted] = React.useState(admitted_at ? admitted_at : null);
+  const [discharged, setDischarged] = React.useState(discharged_at ? discharged_at : null);
   const setDateTime = (name, value) => {
+    name = "admitted_at" ? setAdmitted(value) : setDischarged(value);
     setFieldValue(name, value);
     setFieldTouched(name);
     saveFacilityDetails(name, value);
@@ -106,15 +109,15 @@ export default function Form(props) {
 
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
+            <KeyboardDateTimePicker
               label={i18n.t('Admitted Date/time')}
               inputVariant="outlined"
-              value={admitted_at}
+              value={admitted}
               onChange={(val) => setDateTime("admitted_at", val)}
               className="field"
               name="admitted_at"
               disableFuture
-              format="dd/MM/yyyy"
+              format="dd/MM/yyyy hh:mm a"
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>
@@ -124,15 +127,15 @@ export default function Form(props) {
             />
           </MuiPickersUtilsProvider>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
+            <KeyboardDateTimePicker
               label={i18n.t('Discharged Date/time')}
               inputVariant="outlined"
-              value={discharged_at}
+              value={discharged}
               onChange={(val) => setDateTime("discharged_at", val)}
               className="field"
               name="discharged_at"
               disableFuture
-              format="dd/MM/yyyy"
+              format="dd/MM/yyyy hh:mm a"
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>

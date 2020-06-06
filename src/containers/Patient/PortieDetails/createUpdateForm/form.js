@@ -9,7 +9,7 @@ import {
     Button,
     Typography,
 } from '@material-ui/core';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Event } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -52,8 +52,10 @@ export default function Form(props) {
     setFieldValue(name, e.target.value);
   };
 
+  const [date, setDate] = React.useState(called_at ? called_at : null)
   const setDateTime = (e) => {
     console.log('e', e)
+    setDate(e);
     setFieldValue('called_at', e);
   };
 
@@ -115,10 +117,10 @@ export default function Form(props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
+            <KeyboardDateTimePicker
               label={i18n.t('Date time')}
               inputVariant="outlined"
-              value={called_at}
+              value={date}
               onChange={setDateTime}
               className="field"
               name="called_at"

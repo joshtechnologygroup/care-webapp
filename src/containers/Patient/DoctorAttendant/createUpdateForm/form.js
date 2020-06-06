@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Event } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -35,7 +35,9 @@ export default function Form(props) {
     setFieldValue(name, e.target.value);
   };
 
-  const setDateTime = (e) => {
+  const [dateTime, setdateTime] = React.useState(date ? date : null)
+  const setDate = (e) => {
+    setdateTime(e);
     setFieldValue('admitted_date_time', e);
     setFieldTouched('admitted_date_time');
   };
@@ -67,15 +69,15 @@ export default function Form(props) {
 
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <DateTimePicker
+            <KeyboardDateTimePicker
               label={i18n.t('Date & time')}
               inputVariant="outlined"
-              value={date}
-              onChange={setDateTime}
+              value={dateTime}
+              onChange={setDate}
               className="field"
               name="date"
               disableFuture
-              format="dd/MM/yyyy"
+              format="dd/MM/yyyy hh:mm a"
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>
