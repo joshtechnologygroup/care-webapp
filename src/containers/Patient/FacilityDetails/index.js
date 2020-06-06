@@ -16,7 +16,7 @@ import { getShortFacilitiesList } from 'Actions/FacilitiesAction'
 export function FacilityDetails(props) {
   const { i18n } = useTranslation();
   const { profile, fieldErrorDict, saveFacilityDetails, setFormB, shortFacilities, editMode } = props;
-console.log(props)
+
   const [editable, setEditable] = React.useState(editMode);
   let status =false;
   if(!profile){

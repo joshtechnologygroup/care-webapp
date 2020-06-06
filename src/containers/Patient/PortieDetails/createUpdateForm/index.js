@@ -24,7 +24,6 @@ export const CreateUpdatePortieDetails = (props) => {
         console.log(data);
         handleSubmit(data);
     };
-    console.log(details);
 
 
     return (

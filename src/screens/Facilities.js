@@ -9,7 +9,7 @@ import { Search } from 'Components/Inputs';
 class Facilities extends Component {
   render() {
     const { t } = this.props;
-    console.log(this.props)
+    
     return (
       <Grid
         container

@@ -16,6 +16,7 @@ export default function MedicationDetailForm(props) {
     patient_diseases: Yup.array().of(Yup.number()),
   });
   const submit= (data) => {
+    console.log(data);
     handleSubmit(data);
   };
   return (
