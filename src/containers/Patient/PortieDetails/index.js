@@ -29,7 +29,8 @@ export function PortieDetails(props) {
     getPorteaUsers, 
     fetchPatient,
     createToastNotification ,
-    patientStatus
+    patientStatus,
+    patient,
 } = props;
 
   let editableId;
@@ -112,7 +113,10 @@ export function PortieDetails(props) {
           handleSubmit={handleSubmit}
           cancelCallback={cancel}
           editMode={false}
-          details={{}}
+          details={{
+              patient_phone_number: patient.contact_details.phone_number,
+              relation: 1
+          }}
           porteaUsers={porteaUsers}
           createPortieErrors={createPortieErrors}
         />
