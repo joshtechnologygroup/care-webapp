@@ -78,7 +78,7 @@ export default function PortieDetailCard(props) {
           <Grid item xs={12}>
             <h6 className="heading--sub">{i18n.t('Comments/Feedback')}</h6>
             <Typography variant="h6" className="d-flex">
-              {details.comments}
+              {details.comments ? details.comments : i18n.t('No comments exist')}
             </Typography>
           </Grid>
           {
