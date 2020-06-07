@@ -86,7 +86,6 @@ export function Form(props) {
             className={classes.field}
           />
         </Grid>
-        {console.log(data)}
         <Grid item sm={6} xs={12}>
           <label className={classes.label}>{i18n.t('Available beds')}</label>
           <TextField
