@@ -49,9 +49,12 @@ export default function Form(props) {
 
   const onSelectFacility = (event, value) => {
     const name = "facility"
-    setFieldTouched(name);
+    setFieldTouched(name, true, false);
+    if(value) {
+    setFieldTouched(name, false, true);
     setFieldValue(name, value.id);
     saveFacilityDetails(name, value.id);
+    }
   }
 
   const [admitted, setAdmitted] = React.useState(admitted_at);
@@ -166,7 +169,7 @@ export default function Form(props) {
             valueKey="id"
           />
           <h5 className="text--error">
-            {touched.patient_facility_id && Boolean(errors.patient_facility_id) || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "") && errors.patient_status}
+            {touched.patient_status && Boolean(errors.patient_status) || (fieldErrorDict ? fieldErrorDict.patient_status : "") && errors.patient_status}
           </h5>
         </Grid>
         { editMode &&

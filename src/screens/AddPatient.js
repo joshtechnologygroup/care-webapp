@@ -59,10 +59,6 @@ function AddPatient(props) {
       ...prevState,
       [name]: value
     }));
-  } else {
-    let initial = {...profile};
-    delete initial.name;
-    setProfile(initial);
   }
   }
 
@@ -77,11 +73,9 @@ function AddPatient(props) {
     let patientfacilitiesDetails = await patientFacilityForm;
     let medicationDetails = await medicationForm;
     let e = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
-    console.log(e);
-    console.log(profile);
     Object.keys(e).forEach((key, value) => {
       if (profile[key] || facilityDetails[key]) {
-        e[key] = "";
+        e[key] = null;
       } else {
         flag = false;
       }
@@ -109,11 +103,8 @@ function AddPatient(props) {
         history.push(`/patients/${response.patientId}`);
       } else {
         props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER))
+          ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER))
       }
-    } else {
-      props.createToastNotification(
-        ToastUtils.toastDict((new Date()).getTime(), "Added", "please fill the required details", DANGER))
     }
   };
 
