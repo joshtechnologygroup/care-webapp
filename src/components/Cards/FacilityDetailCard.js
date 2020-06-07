@@ -61,7 +61,7 @@ export function FacilityDetailCard(props) {
           <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={3}>
-                <span class="heading--sub">{i18n.t('Facility Name')}</span>
+                <span className="heading--sub">{i18n.t('Facility Name')}</span>
                 <Typography variant="h5" color="primary">
                   <Tooltip title={i18n.t('Facility Name')}>
                     <span>{details.name}</span>
@@ -70,19 +70,19 @@ export function FacilityDetailCard(props) {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={`auto`}>
-                <span class="heading--sub mr-10">{i18n.t('Facility type')}</span>
+                <span className="heading--sub mr-10">{i18n.t('Facility type')}</span>
                 <Typography variant="h6">
                   <Tooltip title={i18n.t('Facility type')}>
                     <span>{facilityType}</span>
                   </Tooltip>
                 </Typography>
-                <span class="heading--sub mr-10">{i18n.t('Facility district')}</span>
+                <span className="heading--sub mr-10">{i18n.t('Facility district')}</span>
                 <Typography variant="h6">
                   <Tooltip title={i18n.t('Facility district')}>
                     <span>{district}</span>
                   </Tooltip>
                 </Typography>
-                <span class="heading--sub mr-10">{i18n.t('Facility ownership')}</span>
+                <span className="heading--sub mr-10">{i18n.t('Facility ownership')}</span>
                 <Typography variant="h6">
                   <Tooltip title={i18n.t('Facility ownership')}>
                     <span>{ownershipType}</span>
