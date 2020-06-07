@@ -41,20 +41,23 @@ export default function Form(props) {
     touched,
   } = props;
 
-  useEffect(()=>{
-    if(setPatientFacilityForm) {
+  useEffect(() => {
+    if (setPatientFacilityForm) {
       setPatientFacilityForm(validateForm);
     }
-  },[])
+  }, [])
 
   const onSelectFacility = (event, value) => {
     const name = "facility"
-    setFieldTouched(name);
-    setFieldValue(name, value.id);
-    saveFacilityDetails(name, value.id);
+    setFieldTouched(name, true, false);
+    if (value) {
+      setFieldTouched(name, false, true);
+      setFieldValue(name, value.id);
+      saveFacilityDetails(name, value.id);
+    }
   }
 
-  const [admitted, setAdmitted] = React.useState(admitted_at ? admitted_at : null);
+  const [admitted, setAdmitted] = React.useState(admitted_at);
   const [discharged, setDischarged] = React.useState(discharged_at ? discharged_at : null);
   const setDateTime = (name, value) => {
     name = "admitted_at" ? setAdmitted(value) : setDischarged(value);
@@ -97,7 +100,7 @@ export default function Form(props) {
                 variant="outlined"
                 helperText={touched.facility ? errors.facility : "" || (fieldErrorDict ? fieldErrorDict.facility : "")}
                 error={touched.facility && Boolean(errors.facility) || (fieldErrorDict ? fieldErrorDict.facility : "")}
-               />
+              />
 
             }
           />
@@ -166,10 +169,10 @@ export default function Form(props) {
             valueKey="id"
           />
           <h5 className="text--error">
-            {touched.patient_facility_id && Boolean(errors.patient_facility_id) || (fieldErrorDict ? fieldErrorDict.patient_facility_id : "") && errors.patient_status}
+            {touched.patient_status && Boolean(errors.patient_status) || (fieldErrorDict ? fieldErrorDict.patient_status : "") && errors.patient_status}
           </h5>
         </Grid>
-        { editMode &&
+        {editMode &&
           <Grid container justify="flex-end" className="mt-10" item xs={12}>
             <Button
               variant="contained"

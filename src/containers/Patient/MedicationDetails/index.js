@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { useTranslation } from "react-i18next";
 import {
   Grid,
@@ -21,6 +21,7 @@ export function MedicationDetail(props) {
   let { patientId } = useParams();
   const { profile, editMode, saveProfile, setMedicationForm, fieldErrorDict, updatePatientMedicationDetails } = props;
   const [editable, setEditable] = React.useState(editMode);
+  const[data, setData] = React.useState(profile);
 
   const cancelEdit = () => {
     setEditable(false);
@@ -30,14 +31,17 @@ export function MedicationDetail(props) {
     setEditable(true);
   };
 
+
+
   const handleSubmit = async (data) => {
     cancelEdit();
     let response;
     let initial = data;
     initial['patient'] = patientId;
-    if (editable === true) {
+    if (editable === true && !saveProfile) {
       response = await updatePatientMedicationDetails(initial, patientId);
       if (response.status) {
+        setData(data);
          props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated " , SUCCESS))
       } else {
         props.createToastNotification(
@@ -70,9 +74,9 @@ export function MedicationDetail(props) {
             <Grid container>
               {
                 editable ?
-                <MedicationUpdateForm setMedicationForm={setMedicationForm} fieldErrorDict={fieldErrorDict} editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={profile} />
+                <MedicationUpdateForm setMedicationForm={setMedicationForm} fieldErrorDict={fieldErrorDict} editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={data} />
                 :
-                <MedicationDetailView profile={profile} />
+                <MedicationDetailView profile={data} />
               }
             </Grid>
           </CardContent>
