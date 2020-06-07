@@ -253,9 +253,9 @@ export function PatientsList(props) {
     if (val.type === 'Equals To') {
       update_select_params[val.field + '_min'] = [val.fromValue]
       update_select_params[val.field + '_max'] = [val.fromValue]
-    } else if (val.type === 'Less Than') {
+    } else if (val.type === 'Less Than Equal To') {
       update_select_params[val.field + '_max'] = [val.fromValue]
-    } else if (val.type === 'Greater Than') {
+    } else if (val.type === 'Greater Than Equal To') {
       update_select_params[val.field + '_min'] = [val.fromValue]
     } else if (val.type === 'Range') {
       update_select_params[val.field + '_min'] = [val.fromValue]

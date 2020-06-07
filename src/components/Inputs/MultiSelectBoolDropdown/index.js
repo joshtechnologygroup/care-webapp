@@ -4,7 +4,7 @@ import { FormControl, Select, Input, MenuItem, Checkbox, ListItemText } from '@m
 export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, paramName, reset, defaultSelected }) {
 
 
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState((defaultSelected) ? defaultSelected[paramName] || [] : [] );
   const handleChange = (event) => {
     setValue(event.target.value);
     let selectedValue = {}
@@ -23,9 +23,6 @@ export default function MultiSelectBoolDropdown({ fieldName, options, onSelect, 
   };
 
   useEffect(() => {
-      if(defaultSelected){
-        setValue(defaultSelected[paramName] || []);
-      }
       if(reset) {
           setValue([]);
       }

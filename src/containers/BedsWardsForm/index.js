@@ -16,6 +16,9 @@ import useStyles from './styles';
 import * as Constants from 'Src/constants'
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
+import {createToastNotification} from 'Actions/ToastAction';
+import {SUCCESS, DANGER} from "Src/constants";
+import * as ToastUtils from 'Src/utils/toast';
 
 export const BedsWardsForm = (props) => {
   const classes = useStyles();
@@ -38,10 +41,10 @@ export const BedsWardsForm = (props) => {
     facility: null,
     room_type: null,
     bed_type: null,
-    total_bed: null,
-    occupied_bed: null,
-    available_bed: null
-  })
+    total_bed: "",
+    occupied_bed: "",
+    available_bed: ""
+  });
 
 
   const addAnother = (event) => {
@@ -49,6 +52,7 @@ export const BedsWardsForm = (props) => {
   }
 
   useEffect(() => {
+    console.log('---------------');
     const {facilities, roomTypes, bedTypes, userType, associatedFacilities} = props
     if (facilities && roomTypes && bedTypes && userType && associatedFacilities && userType) {
       let update_facility = [];
@@ -74,7 +78,10 @@ export const BedsWardsForm = (props) => {
         ...selectedData,
         facility: update_facility[0].value,
         room_type: update_bedtype[0].value,
-        bed_type: update_roomtype[0].value
+        bed_type: update_roomtype[0].value,
+        total_bed: "",
+        occupied_bed: "",
+        available_bed: ""
       })
       setErrors({...errors, facility: false, room_type: false, bed_type: false});
       setFacilityOptions(update_facility);
@@ -107,15 +114,22 @@ export const BedsWardsForm = (props) => {
 
   const {i18n} = useTranslation();
 
-  const handleSubmit = () => {
-    const response = props.createUpdateFacilityInfrastructure(selectedData, FACILITY_INFRASTRUCTURE_CREATE_URL, POST);
-    if (!response) {
+  const handleSubmit = async () => {
+    const response = await props.createUpdateFacilityInfrastructure(selectedData, FACILITY_INFRASTRUCTURE_CREATE_URL, POST);
+    if (!response.status) {
       setError({...response});
+      props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Error", "Some Error Occurs ", DANGER));
+    } else {
+      props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Created", "Successfully Added ", SUCCESS));
+      if (!isAddAnother) {
+        onClose();
+      }
+      setSelectedData(prevState => ({...prevState, total_bed: "", occupied_bed: "", available_bed: ""}));
+      setErrors(prevState => ({...prevState, total_bed: true, occupied_bed: true, available_bed: true}));
     }
-    if (!isAddAnother) {
-      onClose();
-    }
-  }
+  };
+
+  console.log(error)
 
   return (
     <CustomModal open={open} onClose={onClose} title={i18n.t('Add new Beds/Wards')}>
@@ -125,8 +139,7 @@ export const BedsWardsForm = (props) => {
             {
               props =>
                 <Form
-                  data={inventoryData}
-                  updateData={data}
+                  data={selectedData}
                   {...props}
                   handleChange={handleChange}
                   facilityOptions={facilityOptions}
@@ -190,7 +203,8 @@ BedsWardsForm.propTypes = {
   facilities: PropTypes.array,
   roomTypes: PropTypes.array,
   bedTypes: PropTypes.array,
-  createUpdateFacilityInfrastructure: PropTypes.func
+  createUpdateFacilityInfrastructure: PropTypes.func,
+  createToastNotification: PropTypes.func
 };
 
-export default connect(mapStateToProps, {createUpdateFacilityInfrastructure})(BedsWardsForm);
+export default connect(mapStateToProps, {createUpdateFacilityInfrastructure, createToastNotification})(BedsWardsForm);
