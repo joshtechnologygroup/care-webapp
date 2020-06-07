@@ -171,7 +171,7 @@ class PatientDetail extends Component {
             />
             <Timeline timeline={this.props.patient.patient_timeline} />
             <MedicationDetails
-              editMode={false} profile={this.props.patient.medication_details[0]}
+              editMode={false} profile={this.props.patient.medication_details[0]} showButtons={true}
             />
             {/* <DoctorAttendant
               profile={profile[formList[2]].attendant}

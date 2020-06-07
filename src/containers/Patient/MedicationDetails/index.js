@@ -19,7 +19,7 @@ import {SUCCESS, DANGER} from "Src/constants";
 export function MedicationDetail(props) {
   const { i18n } = useTranslation();
   let { patientId } = useParams();
-  const { profile, editMode, saveProfile, setMedicationForm, fieldErrorDict, updatePatientMedicationDetails } = props;
+  const { profile, editMode, saveProfile, setMedicationForm, fieldErrorDict, updatePatientMedicationDetails, showButtons } = props;
   const [editable, setEditable] = React.useState(editMode);
   const[data, setData] = React.useState(profile);
 
@@ -74,7 +74,7 @@ export function MedicationDetail(props) {
             <Grid container>
               {
                 editable ?
-                <MedicationUpdateForm setMedicationForm={setMedicationForm} fieldErrorDict={fieldErrorDict} editMode={profile.covid_status ? true : false} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={data} />
+                <MedicationUpdateForm setMedicationForm={setMedicationForm} fieldErrorDict={fieldErrorDict} editMode={editMode} handleSubmit={handleSubmit} saveProfile={saveProfile} cancelCallback={cancelEdit} profile={data} showButtons={showButtons} />
                 :
                 <MedicationDetailView profile={data} />
               }
