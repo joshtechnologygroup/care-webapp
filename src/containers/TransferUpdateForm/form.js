@@ -68,6 +68,7 @@ export default function Form(props) {
                 defaultValue={initialValues.comments}
                 onChange={changeText.bind(null, "comments")}
                 variant="outlined"
+                className={classes.field}
             />
         </Grid>
         <Grid container justify="flex-end" className="mt-10" item xs={12}>

@@ -10,6 +10,7 @@ import {
 import { EditOutlined, PhoneOutlined, RoomOutlined, HomeOutlined } from '@material-ui/icons';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { PropTypes } from 'prop-types';
+import _ from 'underscore';
 import { countryChoices, stateChoices, relationshipChoices } from 'Constants/app.const';
 import { fetchContactDependencies } from 'Actions/PatientDetailsAction';
 import { connect } from 'react-redux';
@@ -79,11 +80,11 @@ export const ContactDetail = (props) => {
                 {profile.address}
               </Typography>
               <Typography variant="h6">
-                {districts && districts.find(group => group.id == profile.district).name}, {profile.city}
+                {!_.isEmpty(districts) && profile.district && districts.find(group => group.id == profile.district).name}
               </Typography>
               <Typography variant="h6">
-                {
-                  stateChoices.map(choice => {
+                {!_.isEmpty(states) && profile.state &&
+                  states.map(choice => {
                     return choice.id === profile.state ? (choice.name) : ''
                   })
                 } - {profile.pincode}
@@ -97,16 +98,14 @@ export const ContactDetail = (props) => {
                   {i18n.t('Native Place')}
                 </Typography>
                 <Typography variant="h6">
-                  {states &&
-                    states.map(choice => {
-                      return choice.id === profile.nativeState ? (choice.name) : ''
-                    })
-                  }
-                  {
-                    countryChoices.map(choice => {
-                      return choice.id === profile.nativeCountry ? (choice.name) : ''
-                    })
-                  }
+                {!_.isEmpty(states) && profile.state &&
+                  states.map(choice => {
+                    return choice.id === profile.native_state ? (choice.name) : ''
+                  })
+                }
+                </Typography>
+                <Typography variant="h6">
+                {profile.native_country}
                 </Typography>
               </Grid>
             }

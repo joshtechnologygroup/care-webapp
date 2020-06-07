@@ -545,3 +545,5 @@ export const patient_facility_status_choices = [
       "theme": "success"
   }
 ]
+
+export const FACILITY_EXISTS = 4;

@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
 import CustomModal from 'Components/CustomModal';
 import { useTranslation } from "react-i18next";
 import { Formik } from 'formik';
@@ -15,11 +12,11 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'underscore';
 import { createToastNotification } from 'Actions/ToastAction';
+import * as Constants from 'Src/constants';
 import * as ToastUtils from 'Src/utils/toast';
 import { SUCCESS, DANGER } from "Src/constants";
 import * as Yup from 'yup';
 import * as utils from 'Src/utils/utils';
-import * as Constants from 'Src/constants';
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
@@ -28,20 +25,10 @@ export const InventoryForm = (props) => {
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
     const { open, data, onClose, createInventories, updateInventories, facilityList, inventoryTypesList, index, editMode } = props;
-    const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: '' })
 
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
-
-    // useEffect(() => {
-    //     if (!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)) {
-    //         setError(true)
-    //     }
-    //     else {
-    //         setError(false)
-    //     }
-    // }, [facilityList, inventoryTypesList]);
 
     const facilityName = [];
     const inventoryType = [];
@@ -105,78 +92,6 @@ export const InventoryForm = (props) => {
             onClose();
         }
     }
-
-
-    // const createInventory = async () => {
-    //     let initial = inventoryData;
-    //     if (!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)) {
-    //         if (initial && !data) {
-    //             Object.keys(facilityList).forEach((facility, index) => {
-    //                 if (initial.name.label === facilityList[facility].name) {
-    //                     initial['facility'] = facilityList[facility].id
-    //                     return;
-    //                 }
-    //             });
-    //             Object.keys(inventoryTypesList).forEach((inventoryitem, index) => {
-    //                 if (initial.type.label === inventoryTypesList[inventoryitem].name) {
-    //                     initial['item'] = inventoryTypesList[inventoryitem].id
-    //                     return;
-    //                 }
-    //             });
-    //         }
-    //         delete initial.name;
-    //         delete initial.type;
-    //         setInventoryData(initial);
-    //         let response;
-    //         if (isAddAnother === false && data) {
-    //             response = await updateInventories(initial, data.id);
-    //             if (response.status === true) {
-    //                 props.createToastNotification(
-    //                     ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
-    //                 )
-    //             } else {
-    //                 props.createToastNotification(
-    //                     ToastUtils.toastDict((new Date()).getTime(), "Added",  response.error, DANGER)
-    //                 )
-    //             }
-    //         } else {
-    //             response = await createInventories(initial);
-    //             if (response.status === true) {
-    //                 props.createToastNotification(
-    //                     ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
-    //                 )
-    //             } else {
-    //                 props.createToastNotification(
-    //                     ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
-    //                 )
-    //             }
-    //         }
-    //     }
-    //     if (!isAddAnother) {
-    //         onClose();
-    //     }
-    // }
-
-    // const handleChange = (name, e) => {
-    //     if (typeof name === 'object') {
-    //         setInventoryData({ ...inventoryData, ...name });
-    //     } else {
-    //         setInventoryData({ ...inventoryData, [name]: e });
-    //     }
-    //     switch (name) {
-    //         case 'required_quantity':
-    //             errors.required_quantity = e ? false : true;
-    //             break;
-    //         case 'current_quantity':
-    //             errors.current_quantity = e ? false : true;
-    //             break;
-    //         default: break;
-    //     }
-    //     setErrors(prevState => ({
-    //         ...prevState,
-    //         ...errors
-    //     }))
-    // }
 
     const getMappedData = (data) => {
         if(data && !_.isEmpty(data) && facilityName && inventoryType && !_.isEmpty(facilityName) && !_.isEmpty(inventoryType)) {

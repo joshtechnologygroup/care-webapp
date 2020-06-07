@@ -26,7 +26,7 @@ import { RELATIONSHIP_OPTIONS } from "Src/constants/"
 export default function Form(props) {
   const { i18n } = useTranslation();
   const {
-    details: {
+    values: {
       able_to_connect,
       portie,
       patient_phone_number,
@@ -46,16 +46,13 @@ export default function Form(props) {
     updatePortieErrors
   } = props;
 
-  console.log(initialValues);
-
-  const changeText = (name, e) => {
+  const changeText = (e, name) => {
     setFieldTouched(e.target.name);
     setFieldValue(name, e.target.value);
   };
 
   const [date, setDate] = React.useState(called_at);
   const setDateTime = (e) => {
-    console.log('e', e)
     setDate(e);
     setFieldValue('called_at', e);
   };
@@ -156,10 +153,10 @@ export default function Form(props) {
         <Grid item xs={12} sm={6}>
           <TextField 
             name="patient_phone_number"
-            label={i18n.t('Patient contact number')}
+            value={patient_phone_number}
+            label={i18n.t("Patient's contact number")}
             fullWidth
-            defaultValue={patient_phone_number}
-            onChange={changeText.bind(null, "patient_phone_number")}
+            onChange={(e) => changeText(e, "patient_phone_number")}
             className="field"
             variant="outlined"
             helperText={touched.patient_phone_number && errors.patient_phone_number}
@@ -170,7 +167,7 @@ export default function Form(props) {
             <Select
               className={`react-select ${touched.relation && Boolean(errors.relation) && 'react-select__error'}`}
               options={RELATIONSHIP_OPTIONS}
-              defaultValue={RELATIONSHIP_OPTIONS.find(item => item.value === relation)}
+              value={RELATIONSHIP_OPTIONS.find(choice => choice.value === relation)}
               placeholder={i18n.t('Relation with patient')}
               name="relation"
               onChange={(val) => {
@@ -198,7 +195,7 @@ export default function Form(props) {
             defaultValue={comments}
             label={i18n.t('Comments')}
             fullWidth
-            onChange={changeText.bind(null, "comments")}
+            onChange={(e) => changeText(e, "comments")}
             className="field"
             variant="outlined"
             helperText={touched.comments && errors.comments}

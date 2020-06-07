@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.2rem'
   },
   field: {
-    '& .MuiInputBase-input': {
+    '& input': {
       padding: '12px',
     },
   },

@@ -8,12 +8,12 @@ import { getProfileDependencies } from 'Actions/PatientsAction';
 export function ContactDetailForm(props) {
   const { profile, editMode, setContactForm, saveProfile, handleError, fieldErrorDict, fetchProfileDependencies, districts, states  } = props;
   const validationSchema = Yup.object({
-    phone_number: Yup.number("Please enter contact number").required('Please enter contact number').test('len', 'Must be exactly 10 characters', val => (val ? val.toString() : "").length === 10),
+    phone_number: Yup.string().required('please enter valid number.').matches(/^[6-9]\d{9}$/, {message: "Please enter valid number.", excludeEmptyString: true}),
     phone_number_belongs_to: Yup.string("Whom does this number blongs to?").required('Whom does this number belongs to?'),
     address: Yup.string("Please enter address"),
-    district: Yup.string("Please enter district"),
-    state: Yup.string("Please enter state"),
-    pincode: Yup.number("Please enter pincode"),
+    district: Yup.string("Please enter district").nullable(),
+    state: Yup.string("Please enter state").nullable(),
+    pincode: Yup.string().matches(/^[0-9]{6}$/, 'Must be exactly 6 digits'),
   });
 
   const submit= (data) => {

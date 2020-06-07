@@ -83,13 +83,13 @@ export function Form(props) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFieldValue(name, value);
-    if (saveProfile) {
-      saveProfile(name, value);
-    }
     setFieldTouched(name, true, false);
     if (value) {
       setFieldTouched(name, false, true);
+    }
+    setFieldValue(name, value);
+    if (saveProfile) {
+      saveProfile(name, value);
     }
   };
 
@@ -110,8 +110,8 @@ export function Form(props) {
                 fullWidth
                 value={phone_number}
                 onChange={handleChange}
-                helperText={touched.phone_number ? errors.phone_number : "" || (fieldErrorDict ? fieldErrorDict.phone_number : "")}
-                error={touched.phone_number && Boolean(errors.phone_number) || (fieldErrorDict ? fieldErrorDict.phone_number : "")}
+                helperText={touched.phone_number ? errors.phone_number : "" || (fieldErrorDict ? fieldErrorDict.phone_number : "") && errors.phone_number}
+                error={touched.phone_number && Boolean(errors.phone_number) || (fieldErrorDict ? fieldErrorDict.phone_number : "") && errors.phone_number}
               />
             </Grid>
 
@@ -122,8 +122,8 @@ export function Form(props) {
                 label={i18n.t('Contact Number belongs to')}
                 value={phone_number_belongs_to}
                 onChange={handleChange}
-                helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : "" || (fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "")}
-                error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to) || (fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "")}
+                helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : "" || (fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "") && errors.phone_number_belongs_to}
+                error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to) || (fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "") && errors.phone_number_belongs_to}
                 fullWidth
                 required
               >
@@ -172,6 +172,7 @@ export function Form(props) {
                 name="state"
                 label={i18n.t('State')}
                 value={state}
+                isDisabled={true}
                 onChange={handleChange}
                 helperText={touched.state ? errors.state : ""}
                 error={touched.state && Boolean(errors.state)}

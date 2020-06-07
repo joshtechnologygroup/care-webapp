@@ -14,7 +14,7 @@ export function PersonalDetailForm(props) {
     month: Yup.number().required(i18n.t('Please enter age in months')).max(11, i18n.t('Max value for months is 11')),
     year: Yup.number().required(i18n.t('Please enter age in years')).min(0, i18n.t('Invalid value for age')),
     gender: Yup.number(i18n.t('Please enter gender')).required(i18n.t('Gender is required')),
-    icmr_id: Yup.string(),
+    icmr_id: Yup.string().nullable(),
     govt_id: Yup.string().required(i18n.t('Please enter Govt ID')),
     patient_status: Yup.number(),
   });

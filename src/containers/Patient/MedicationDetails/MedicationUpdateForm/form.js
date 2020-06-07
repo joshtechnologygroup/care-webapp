@@ -60,7 +60,7 @@ export default function Form(props) {
           onChange={(val) => setValue(val, 'covid_status')}
         />
           <h5 className="text--error">
-            {touched.covid_status && Boolean(errors.covid_status) || (fieldErrorDict ? fieldErrorDict.covid_status : "") && errors.covid_status && errors.covid_status}
+            {touched.covid_status && Boolean(errors.covid_status) || (fieldErrorDict ? fieldErrorDict.covid_status : "") && errors.covid_status}
           </h5>
       </Grid>
 
