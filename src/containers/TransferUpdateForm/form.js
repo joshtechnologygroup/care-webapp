@@ -62,7 +62,6 @@ export default function Form(props) {
         </Grid>
         <Grid item sm={12} xs={12}>
             <TextField
-                multiline
                 name="comments"
                 label={i18n.t('Comments')}
                 fullWidth
