@@ -52,7 +52,6 @@ export const BedsWardsForm = (props) => {
   }
 
   useEffect(() => {
-    console.log('---------------');
     const {facilities, roomTypes, bedTypes, userType, associatedFacilities} = props
     if (facilities && roomTypes && bedTypes && userType && associatedFacilities && userType) {
       let update_facility = [];
@@ -128,8 +127,6 @@ export const BedsWardsForm = (props) => {
       setErrors(prevState => ({...prevState, total_bed: true, occupied_bed: true, available_bed: true}));
     }
   };
-
-  console.log(error)
 
   return (
     <CustomModal open={open} onClose={onClose} title={i18n.t('Add new Beds/Wards')}>
