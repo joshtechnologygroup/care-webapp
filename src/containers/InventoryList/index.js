@@ -88,7 +88,7 @@ export function InventoryList(props) {
       offset: offset,
       facility: value
     });
-  }, [queryParams, offset, fetchInventoryList, selectedParams, value]);
+  }, [queryParams, offset, fetchInventoryList, value]);
 
   useEffect(() => {
     if (error === false) {
@@ -122,6 +122,18 @@ export function InventoryList(props) {
       ordering: `-${val}`,
     });
   };
+
+  const applyFilter = () => {
+    const options = {
+        ...queryParams,
+        ...selectedParams,
+        offset: offset,
+    };
+    if (ordering) {
+        options.ordering = ordering;
+    }
+    fetchInventoryList(options);
+}
 
   const TogglesortByValue = toggleVal => {
     let order = ordering;
@@ -185,6 +197,14 @@ export function InventoryList(props) {
                   val
                 ),
               })}
+            handleApplyFilter={() => { 
+                applyFilter();
+                setShowOverlay(false);
+            }}
+            handleReset={() => {
+                setSelectedParams({});
+                fetchInventoryList();
+            }}
           />
         </Grid>
       </Grid>

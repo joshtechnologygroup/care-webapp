@@ -16,7 +16,7 @@ export const CreateUpdatePortieDetails = (props) => {
     const validationSchema = Yup.object({
         able_to_connect: Yup.boolean().required(i18n.t('Please select contact status')),
         portie: Yup.number().required(i18n.t('Please enter Portie name')),
-        patient_phone_number: Yup.number().required(i18n.t('Please enter Patient contact number')).min(10, i18n.t('Please enter a valid contact number')),
+        patient_phone_number: Yup.number().required(i18n.t("Please enter Patient's contact number")).min(10, i18n.t('Please enter a valid contact number')),
         relation: Yup.string().required(i18n.t('Please choose relation of Patient with the person')),
     });
 
@@ -35,9 +35,9 @@ export const CreateUpdatePortieDetails = (props) => {
                 <Grid item xs={12}>
                     <Formik
                         initialValues={editMode ? details : {
-                            'relation': "",
+                            'relation': 1,
                             "portie": "",
-                            "patient_phone_number": "",
+                            "patient_phone_number": details.patient_phone_number,
                             "able_to_connect": false,
                             "called_at": new Date(),
                         }}

@@ -1,6 +1,6 @@
 import * as CommonService from "Src/utils/services";
 import * as Routes from 'Src/routes';
-import { PUT } from "Src/constants";
+import { GET, PUT } from "Src/constants";
 import * as ReducerTypes from 'Reducers/Types';
 import { dispatchAction, dispatchDependentActions } from 'Actions/common';
 import * as HttpStatus from 'http-status-codes'
@@ -20,7 +20,17 @@ const updatePatientPersonalDetails = (body, id) => async (dispatch) => {
         return { status: true };
     } else if (patient_personal_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_personal_response.json();
-        return { status: false, error: "dummy error generated in UI" };
+        let error = "Some Errors occurs";
+        if(data.icmr_id && data.govt_id) {
+            error = data.icmr_id[0] + "\n" + data.govt_id[0]
+        }
+        else if(data.icmr_id) {
+            error = data.icmr_id[0];
+        }
+        else if(data.govt_id) {
+            error = data.govt_id[0];
+        } 
+        return { status: false, error: error };
     }
 };
 
@@ -63,4 +73,35 @@ const updatePatientMedicationDetails= (body, id) => async (dispatch) => {
     }
 };
 
-export { updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails };
+/**
+ * fetch the cluster group required for showing personal details
+ */
+const fetchClusterGroup = () => async (dispatch) => {
+    return await dispatch(dispatchDependentActions(
+        [
+            [Routes.CLUSTER_GROUP_LIST_URL, GET, {}, {}],
+        ],
+        [
+            ReducerTypes.GET_CLUSTER_GROUP_LIST,
+        ]
+    ));
+};
+
+/**
+ * fetch the dependencies required to show patient contac details
+ */
+const fetchContactDependencies = () => async (dispatch) => {
+    return await dispatch(dispatchDependentActions(
+        [
+            [Routes.DISTRICT_LIST_URL, GET, {}, {}],
+            [Routes.STATE_LIST_URL, GET, {}, {}],
+        ],
+        [
+            ReducerTypes.GET_DISTRICT_LIST,
+            ReducerTypes.GET_STATE_LIST
+        ]
+    ));
+};
+
+
+export { updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, fetchClusterGroup, fetchContactDependencies };

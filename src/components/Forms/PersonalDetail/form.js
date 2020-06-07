@@ -19,10 +19,9 @@ import ButtonToggle from 'Components/ButtonToggle';
 import { genderChoices } from 'Constants/app.const';
 import ProfileImageInput from '../../profileImageInput';
 import { GENDER_MAPPING_PROPS } from 'Constants/app.const.js';
-import { TOTAL_PERSONEL_DETAILS_FIELDS } from 'Src/constants';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-import { patient_status_choices } from 'Constants/app.const';
+import { patient_status_choices, FACILITY_EXISTS } from 'Constants/app.const';
 
 export default function Form(props) {
   const classes = useStyles();
@@ -42,13 +41,11 @@ export default function Form(props) {
     },
     errors,
     touched,
-    handleSave,
     setFieldTouched,
     setFieldValue,
     editMode,
     saveProfile,
     clusterGroup,
-    handleError,
     handleSubmit,
     validateForm,
     fieldErrorDict,
@@ -67,13 +64,13 @@ export default function Form(props) {
 
   const change = (event) => {
     const { name, value } = event.target;
+    setFieldTouched(name, true, false);
+    if (value) {
+      setFieldTouched(name, false, true);
+    }
     setFieldValue(name, value);
     if (saveProfile) {
       saveProfile(name, value);
-    }
-    setFieldTouched(name, true, false);
-    if (value) {
-      setFieldTouched(event.target.name, false, true);
     }
   };
 
@@ -82,14 +79,14 @@ export default function Form(props) {
     if (saveProfile) {
       saveProfile(name, value);
     }
-    setFieldTouched(name, true, false);
-    if (value) {
-      setFieldTouched(name, false, true);
-    }
   }
 
   const setStatus = (name, val) => {
+    if(val){
     setFieldValue(name, val);
+    } else {
+      setFieldValue(name, FACILITY_EXISTS);
+    }
     if (saveProfile) {
       saveProfile(name, val)
     }
@@ -125,8 +122,8 @@ export default function Form(props) {
                     fullWidth
                     value={name}
                     onChange={change}
-                    helperText={touched.name ? errors.name : "" || (fieldErrorDict ? fieldErrorDict.name : "")}
-                    error={touched.name && Boolean(errors.name) ||(fieldErrorDict ? fieldErrorDict.name : "")}
+                    helperText={touched.name && Boolean(errors.name) || (fieldErrorDict ? fieldErrorDict.name : "") && errors.name}
+                    error={touched.name && Boolean(errors.name) || (fieldErrorDict ? fieldErrorDict.name : "") && errors.name}
                     required
                   />
                 </Grid>
@@ -136,8 +133,8 @@ export default function Form(props) {
                     label={i18n.t('Age in years')}
                     value={year}
                     onChange={change}
-                    helperText={touched.year ? errors.year : "" || (fieldErrorDict ? fieldErrorDict.year : "")}
-                    error={touched.year && Boolean(errors.year) ||(fieldErrorDict ? fieldErrorDict.year : "")}
+                    helperText={touched.year ? errors.year : "" || (fieldErrorDict ? fieldErrorDict.year : "") && errors.year}
+                    error={touched.year && Boolean(errors.year) ||(fieldErrorDict ? fieldErrorDict.year : "") && errors.year}
                     fullWidth
                     type="number"
                     required
@@ -149,8 +146,8 @@ export default function Form(props) {
                     label={i18n.t('Age in Months')}
                     value={month}
                     onChange={change}
-                    helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "")}
-                    error={touched.month && Boolean(errors.month) || (fieldErrorDict ? fieldErrorDict.month : "")}
+                    helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "") && errors.month}
+                    error={touched.month && Boolean(errors.month) || (fieldErrorDict ? fieldErrorDict.month : "") &&  errors.month}
                     fullWidth
                     type="number"
                     required
@@ -173,8 +170,8 @@ export default function Form(props) {
                     label={i18n.t('Govt ID')}
                     value={govt_id}
                     onChange={change}
-                    helperText={touched.govt_id ? errors.govt_id : "" || (fieldErrorDict ? fieldErrorDict.govt_id : "")}
-                    error={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "")}
+                    helperText={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "") && errors.govt_id}
+                    error={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "") && errors.govt_id}
                     fullWidth
                     required
                   />
@@ -206,7 +203,7 @@ export default function Form(props) {
                     onChange={(data) => setProfileFields("gender", data)}
                     valueKey="id"
                   />
-                  <h5 className="text--error">{Boolean(touched.gender) && errors.gender}</h5>
+                  <h5 className="text--error">{Boolean(touched.gender) && errors.gender || (fieldErrorDict ? fieldErrorDict.gender : "") && errors.gender}</h5>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="h6">{i18n.t('Patient status')}</Typography>

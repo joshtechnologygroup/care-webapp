@@ -50,9 +50,19 @@ const createPatient = state => async (dispatch) => {
     if(create_patient_response.ok) {
         return {status: true, patientId: patient_data.personal_details[0].id};
     } else if(create_patient_response.status === HttpStatus.BAD_REQUEST) {
-    return {status:false, error: "patient with this govt id or icmr id already exists"}
+        let error = "Some Error Occurred";
+        if(patient_data.icmr_id && patient_data.govt_id) {
+            error = patient_data.icmr_id[0] + "\n" + patient_data.govt_id[0]
+        }
+        else if(patient_data.icmr_id) {
+            error = patient_data.icmr_id[0];
+        }
+        else if(patient_data.govt_id) {
+            error = patient_data.govt_id[0];
+        } 
+        return { status: false, error: error };
     }
-    return {status:false, error: "error occurs"}
+    return {status:false, error:  "Some Error Occurred"}
 }
 
 

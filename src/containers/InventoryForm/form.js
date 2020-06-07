@@ -11,91 +11,72 @@ import useStyles from './styles';
 import {connect} from 'react-redux';
 import _ from 'underscore';
 import * as utils from 'Src/utils/utils';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Button from '@material-ui/core/Button';
 
 export function Form(props) {
   const classes = useStyles();
   const {i18n} = useTranslation();
-  const {data, updateData, handleChange} = props;
-  const [errors, setErrors] = useState({required_quantity: false, current_quantity: false, form: ''})
+  const {
+      data, 
+      updateData, 
+      handleChange, 
+      editMode,
+      addAnother, 
+      isAddAnother, 
+      handleSubmit, 
+      setFieldTouched, 
+      setFieldValue,
+      errors,
+      touched,
+      facilityName,
+      inventoryType,
+      values
+    } = props;
 
-  const facilityName = [];
-  const inventoryType = [];
-
-  if (updateData) {
-    facilityName.push(utils.dropDownDict(updateData.facility, `facility-type-0`));
-    inventoryType.push(utils.dropDownDict(updateData.item, `inventory-name-0`))
-  } else {
-    facilityName.push(utils.dropDownDict(Constants.FACILITY_DEFAULT, `facility-name--`));
-    inventoryType.push(utils.dropDownDict(Constants.FACILITY_DEFAULT, `inventory-name--`));
-    if (props.userType !== Constants.FACILITY_MANAGER && !_.isEmpty(props.shortFacilities)) {
-      Object.keys(props.shortFacilities).forEach((facility, index) => {
-        facilityName.push(utils.dropDownDict(props.shortFacilities[facility].name, `facility-type-${index}`));
-      })
-    }
-    if (props.userType === Constants.FACILITY_MANAGER && props.associatedFacilities && props.shortFacilities) {
-      props.associatedFacilities.forEach((id) => {
-        Object.keys(props.shortFacilities).forEach((facility, index) => {
-          if (props.shortFacilities[facility].id === id) {
-            facilityName.push(utils.dropDownDict(props.shortFacilities[facility].name, `facility-type-${index}`));
-          }
-        });
-      });
-    }
-
-    if (!_.isEmpty(props.inventoryTypesList)) {
-      Object.keys(props.inventoryTypesList).forEach((inventoryitem, index) => {
-        inventoryType.push(utils.dropDownDict(props.inventoryTypesList[inventoryitem].name, `inventory-type-${index}`));
-      })
-    }
-  }
-  const change = (name, value) => {
-    handleChange(name, value);
+  const change = (name, e) => {
+      setFieldTouched(name, e.target.value);
+      setFieldValue(name, e.target.value);
   };
-  const changeText = (name, e) => {
-    switch (name) {
-      case 'required_quantity':
-        errors.required_quantity = !e.target.value;
-        break;
-      case 'current_quantity':
-        errors.current_quantity = !e.target.value;
-        break;
-      default:
-        break;
-    }
-    setErrors(prevState => ({
-      ...prevState,
-      ...errors
-    }))
-    handleChange(name, e.target.value);
-  };
-
-  useEffect(() => {
-    if (props.facilityList && !_.isEmpty(props.facilityList) && props.inventoryTypesList && !_.isEmpty(props.inventoryTypesList)) {
-      handleChange({"name": facilityName[0], "type": inventoryType[0]}); // Setting initial state
-    }
-  }, [errors]);
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Grid item container spacing={2}>
         <Grid item sm={6} xs={12}>
           <label className={classes.label}>{i18n.t('Facility Name')}</label>
           <Select
+          className={`${touched.facility && Boolean(errors.facility) && 'react-select__error'}`}
             options={facilityName}
-            defaultValue={facilityName[0]}
-            onChange={change.bind(null, "name")}
+            value={facilityName.find(item => item.value === values.facility) || values.facility}
+            onChange={(val) => {
+                setFieldTouched("facility");
+                setFieldValue("facility", val.value);
+            }}
             isDisabled={updateData ? true : false}
           />
+          {
+              touched.facility && errors.facility && 
+              <p className="text--error">{errors.facility}</p>
+            }
         </Grid>
 
         <Grid item sm={6} xs={12}>
           <label className={classes.label}>{i18n.t('Inventory Type')}</label>
           <Select
+          className={`${touched.item && Boolean(errors.item) && 'react-select__error'}`}
             options={inventoryType}
-            defaultValue={inventoryType[0]}
-            onChange={change.bind(null, "type")}
+            value={inventoryType.find(item => item.value === values.item) || values.item}
+            onChange={(val) => {
+                setFieldTouched("item")
+                setFieldValue("item", val.value);
+            }}
             isDisabled={updateData ? true : false}
           />
+          {
+              touched.item && errors.item && 
+              <p className="text--error">{errors.item}</p>
+            }
         </Grid>
         <Grid item sm={6} xs={12}>
           <label className={classes.label}>{i18n.t('Required Number')}</label>
@@ -104,8 +85,10 @@ export function Form(props) {
             type="number"
             variant="outlined"
             fullWidth
-            onChange={changeText.bind(null, "required_quantity")}
-            error={errors.required_quantity}
+            value={values.required_quantity}
+            onChange={change.bind(null, "required_quantity")}
+            error={touched.required_quantity && errors.required_quantity}
+            helperText={touched.required_quantity && errors.required_quantity}
             className={classes.field}
           />
         </Grid>
@@ -116,10 +99,33 @@ export function Form(props) {
             type="number"
             variant="outlined"
             fullWidth
-            onChange={changeText.bind(null, "current_quantity")}
-            error={errors.current_quantity}
+            value={values.current_quantity}
+            onChange={change.bind(null, "current_quantity")}
+            error={touched.current_quantity && errors.current_quantity}
+            helperText={touched.current_quantity && errors.current_quantity}
             className={classes.field}
           />
+        </Grid>
+        <Grid item xs={12}>
+            {
+                !editMode && 
+                <FormControlLabel
+                    value="end"
+                    control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
+                    label="Add Another"
+                    labelPlacement="end"
+                />
+            }
+            <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="medium"
+                type="submit"
+                disabled={Boolean(errors.length)}
+            >
+                {i18n.t('Ok')}
+            </Button>
         </Grid>
       </Grid>
     </form>

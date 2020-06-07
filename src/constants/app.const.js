@@ -198,54 +198,66 @@ export const GENDER_MAPPING_PROPS = {
 export const clinicalStatusChoices = [
   {
     "id": 1,
-    "name": "Asymptomatic"
+    "name": "Asymptomatic",
+    "theme": 'primary'
   },
   {
     "id": 2,
-    "name": "Mild symptoms"
+    "name": "Mild symptoms",
+    "theme": 'danger'
   },
   {
     "id": 3,
-    "name": "severe symptoms"
+    "name": "severe symptoms",
+    "theme": 'warning'
   },
   {
     "id": 4,
-    "name": "inward without oxygen"
+    "name": "inward without oxygen",
+    "theme": 'danger'
   },
   {
     "id": 5,
-    "name": "inward with oxygen"
+    "name": "inward with oxygen",
+    "theme": 'primary'
   },
   {
     "id": 6,
-    "name": "ICU without ventilator"
+    "name": "ICU without ventilator",
+    "theme": 'danger'
   },
   {
     "id": 7,
-    "name": "ICU with ventilator"
+    "name": "ICU with ventilator",
+    "theme": 'primary'
   },
   {
     "id": 8,
-    "name": "Other"
+    "name": "Other",
+    "theme": 'primary'
   }
 ]
 
 export const CovidStatusChoices = [
   {
       "id": 1,
-      "name": "Positive"
+      "name": "Positive",
+      "theme": 'danger'
   },
   {
       "id": 2,
-      "name": "Negative"
+      "name": "Negative",
+      "theme": 'success'
   },
   {
       "id": 3,
-      "name": "Result awaited"
+      "name": "Result awaited",
+      "theme": 'primary'
   },
   {
       "id": 4,
-      "name": "Not tested Yet"
+      "name": "Not tested Yet",
+      "theme": 'warning'
   }
 ]
 
@@ -324,11 +336,6 @@ export const symptomChoices =  [
 ]
 
 export const facility_status_choices =  [
-  {
-      "id": 2,
-      "name": "Admitted to Facility",
-      "theme": "danger"
-  },
   {
       "id": 3,
       "name": "Transferred to another Facility",
@@ -538,3 +545,5 @@ export const patient_facility_status_choices = [
       "theme": "success"
   }
 ]
+
+export const FACILITY_EXISTS = 4;

@@ -99,7 +99,6 @@ export default function LabTestCard(props) {
             </Typography>
           </Grid>
 
-
           <Grid className={classes.chip} item xs={12} sm={3}>
             <Tooltip title={i18n.t('Result')}>
               <Chip

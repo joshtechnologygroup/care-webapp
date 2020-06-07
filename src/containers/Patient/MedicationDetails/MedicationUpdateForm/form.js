@@ -17,6 +17,8 @@ export default function Form(props) {
       covid_status,
       clinical_status,
       patient_symptoms,
+      symptoms,
+      diseases,
       patient_diseases,
     },
     handleSubmit,
@@ -58,7 +60,7 @@ export default function Form(props) {
           onChange={(val) => setValue(val, 'covid_status')}
         />
           <h5 className="text--error">
-            {touched.covid_status && Boolean(errors.covid_status) || (fieldErrorDict ? fieldErrorDict.covid_status : "") && errors.covid_status && errors.covid_status}
+            {touched.covid_status && Boolean(errors.covid_status) || (fieldErrorDict ? fieldErrorDict.covid_status : "") && errors.covid_status}
           </h5>
       </Grid>
 
@@ -83,7 +85,7 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={symptomChoices}
-          value={patient_symptoms}
+          value={symptoms ? symptoms : patient_symptoms}
           onChange={(val) => setValue(val, 'patient_symptoms')}
           valueKey="id"
         />
@@ -95,7 +97,7 @@ export default function Form(props) {
         </Typography>
         <MultiSelectChipsInput
           options={diseaseChoices}
-          value={patient_diseases}
+          value={diseases ? diseases : patient_diseases}
           onChange={(val) => setValue(val, 'patient_diseases')}
           valueKey="id"
         />

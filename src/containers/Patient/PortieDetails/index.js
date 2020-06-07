@@ -61,7 +61,7 @@ export function PortieDetails(props) {
         setEditable('');
         profile.unshift(data);
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+            ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully Added ", SUCCESS)
         )
       } else {
         setCreatePortieErrors(portie_response.errors);
@@ -73,7 +73,7 @@ export function PortieDetails(props) {
       if (portie_response.status) {
         setEditable('');
         createToastNotification(
-            ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+            ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully Updated ", SUCCESS)
         )
       } else {
         setUpdatePortieErrors(portie_response.errors);

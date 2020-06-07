@@ -26,8 +26,9 @@ function AddPatient(props) {
   const [profile, setProfile] = useState({
     year: 1,
     month: 1,
-    symptoms: [],
-    diseases: [],
+    patient_symptoms: [],
+    patient_diseases: [],
+    state: 1,
   });
   let history = useHistory();
   const [personalForm, setPersonalForm] = useState({});
@@ -53,10 +54,12 @@ function AddPatient(props) {
   }
 
   const saveProfile = (name, value) => {
+    if(value){
     setProfile(prevState => ({
       ...prevState,
       [name]: value
     }));
+  }
   }
 
   function Alert(props) {
@@ -70,10 +73,9 @@ function AddPatient(props) {
     let patientfacilitiesDetails = await patientFacilityForm;
     let medicationDetails = await medicationForm;
     let e = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
-
     Object.keys(e).forEach((key, value) => {
       if (profile[key] || facilityDetails[key]) {
-        e[key] = "";
+        e[key] = null;
       } else {
         flag = false;
       }
@@ -84,14 +86,12 @@ function AddPatient(props) {
     }
 
     setFieldErrorDict(e);
-    if (flag === true) {
+    if (flag) {
       let initial_profile = { ...profile };
+      delete initial_profile.icmr_id;
       let patient_facility = { ...facilityDetails };
       if (!patient_facility['admitted_at']) {
         patient_facility['admitted_at'] = new Date()
-      }
-      if (!patient_facility['discharged_at']) {
-        patient_facility['discharged_at'] = new Date()
       }
       initial_profile['patient_facility'] = patient_facility;
       const response = await props.createPatient(initial_profile);
@@ -100,11 +100,8 @@ function AddPatient(props) {
         history.push(`/patients/${response.patientId}`);
       } else {
         props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Error Occurred", DANGER))
+          ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER))
       }
-    } else {
-      props.createToastNotification(
-        ToastUtils.toastDict((new Date()).getTime(), "Added", "please fill the required details", DANGER))
     }
   };
 

@@ -223,6 +223,10 @@
   "Add Facility": "सुविधा जोड़ें",
   "Result": "परिणाम",
   "Change language": "भाषा बदलें",
-  "Add new Beds/Wards": "Add new Beds/Wards",
-  "Select Portie": "पोर्टी का चयन करें"
+  "Add new Beds/Wards": "नए बेड / वार्ड जोड़ें",
+  "Select Portie": "पोर्टी का चयन करें",
+  "Reset filters": "फ़िल्टर रीसेट करें",
+  "Patient's contact number": "रोगी का संपर्क नंबर",
+  "Please enter Patient's contact number": "कृपया रोगी का संपर्क नंबर दर्ज करें।",
+  "No comments exist": "कोई टिप्पणी मौजूद नहीं है।"
 }
