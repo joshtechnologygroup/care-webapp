@@ -8,6 +8,7 @@ import * as HttpStatus from "http-status-codes";
 import { reset_password } from "Actions/AuthAction";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Loader from 'Components/Loader';
 
 function ResetPasswordPage(props) {
   // eslint-disable-next-line no-unused-vars
@@ -29,7 +30,10 @@ function ResetPasswordPage(props) {
   };
   const { t } = props;
   if (isLoading) {
-    return <p>Loading...</p>; // TODO: add a loader
+    return (<div className="flex-col-center">
+    <Loader />
+    <h3>Loading...</h3>
+  </div>);
   } else {
     const heading = isValid ? "Reset your password" : "";
     return (

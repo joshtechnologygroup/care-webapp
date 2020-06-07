@@ -24,7 +24,8 @@ function ResetPassword(props){
   });
   const [success, setSuccess] = useState('');
   const { t } = props;
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const { user_id, token } = props;
     if(!initial_password | !confirm_password | initial_password !== confirm_password){
       let error = {};
@@ -55,41 +56,49 @@ function ResetPassword(props){
   }
 
   return (
-    <div className="login__content">
-      <Typography variant="h5" className="mt-24">
-        {t('Create a new Password')}
-      </Typography>
-      <TextField
-        type="password"
-        name="initial_password"
-        variant="outlined"
-        className="form-field"
-        placeholder={t('Password')}
-        onChange={e => setInitialPassword(e.target.value)}
-        value={initial_password}
-        error={errors.initial_password}
-      />
+    <form onSubmit={handleSubmit} className="login__content">
+      {
+        success && <p className="success-box">{success}</p>
+      }
+      { 
+        !success && 
+        <>
+        <Typography variant="h5" className="mt-24">
+            {t('Create a new Password')}
+        </Typography>
+        <TextField
+            type="password"
+            name="initial_password"
+            variant="outlined"
+            className="form-field"
+            placeholder={t('Password')}
+            onChange={e => setInitialPassword(e.target.value)}
+            value={initial_password}
+            error={errors.initial_password}
+        />
 
-      <TextField
-        type="password"
-        name="confirm_password"
-        variant="outlined"
-        className="form-field"
-        placeholder={t('Confirm Password')}
-        onChange={e => setConfirmPassword(e.target.value)}
-        value={confirm_password}
-        error={errors.confirm_password}
-      />
+        <TextField
+            type="password"
+            name="confirm_password"
+            variant="outlined"
+            className="form-field"
+            placeholder={t('Confirm Password')}
+            onChange={e => setConfirmPassword(e.target.value)}
+            value={confirm_password}
+            error={errors.confirm_password}
+        />
 
-      <Button
-        variant="contained"
-        color="primary"
-        disableElevation
-        className="btn"
-        onClick={() => handleSubmit()}
-      >
-        {t('CHANGE PASSWORD')
-      }</Button>
+        <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            className="btn"
+            type="submit"
+        >
+            {t('CHANGE PASSWORD')
+        }</Button>
+        </>
+    }
       <Link
         to={'/login'}
         className="text--link"
@@ -101,11 +110,7 @@ function ResetPassword(props){
         errors.error_message &&
         <p className="success-box">{errors.error_message}</p>
       }
-      {
-        success &&
-        <p className="success-box">{success}</p>
-      }
-    </div>
+    </form>
   );
 }
 

@@ -81,7 +81,7 @@ export default function Form(props) {
           <Grid item xs={12} sm={12}>
             <Typography variant="h6">{i18n.t("Select District")}</Typography>
             {
-              districtPreference.length > 0 && preferred_districts.length > 0 &&
+              districtPreference.length > 0 &&
               <Select
                 name="preferred_districts_id"
                 options={districtPreference}

@@ -39,8 +39,6 @@ const PatientTransferForm = (props) => {
         from_facility: Yup.number("Please select From Facility").required('Please select From Facility'),
         to_facility: Yup.number("Pleae select To Facility").required('Please select To Facility'),
         patient: Yup.number("Please select a patient").required('Please select Patient'),
-        status: Yup.number().required('Please select a status').required('Please select a Status'),
-        comments: Yup.string()
       });
 
     return (
@@ -49,8 +47,9 @@ const PatientTransferForm = (props) => {
                 <Grid item xs={12}>
                     <Formik
                         initialValues={{
-                            status: 1,
-                            comments: ""
+                            from_facility: "",
+                            to_facility: "",
+                            patient: ""
                         }}
                         validationSchema={validationSchema}
                         onSubmit={submit}>

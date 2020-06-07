@@ -52,7 +52,6 @@ export default function Form(props) {
 
   const [date, setDate] = React.useState(called_at);
   const setDateTime = (e) => {
-    console.log('e', e)
     setDate(e);
     setFieldValue('called_at', e);
   };
@@ -130,7 +129,7 @@ export default function Form(props) {
               className={`react-select ${touched.portie && Boolean(errors.portie) && 'react-select__error'}`}
               options={porteaOptions}
               name="portie"
-              value={porteaOptions.find((option) => option.value === portie)}
+              defaultValue={portie && porteaOptions.find(item => item.value == portie)}
               placeholder={i18n.t('Select Portie')}
               onChange={(val) => {
                   setFieldTouched('portie');

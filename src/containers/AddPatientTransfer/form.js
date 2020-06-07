@@ -26,7 +26,6 @@ export function Form(props) {
         handleSubmit,
         setFieldValue,
         setFieldTouched,
-        initialValues,
         addTransferErrors,
         errors,
         patient,
@@ -93,14 +92,14 @@ export function Form(props) {
                     <label className={classes.label}>{i18n.t('From Facility')}</label>
                     <Select
                         options={facilityName}
-                        defaultValue={""}
                         name="from_facility"
                         onChange={(val) => {
+                            setFieldTouched('from_facility');
                             setFieldValue('from_facility', val.value);
                             setSelectedFacility(val.value);
                             clearPatient();
                         }}
-                        error={errors.from_facility}
+                        error={touched.from_facility && errors.from_facility}
                     />
                     {
                     touched.from_facility && errors.from_facility && 
@@ -113,9 +112,10 @@ export function Form(props) {
                     <label className={classes.label}>{i18n.t('Patient')}</label>
                     <AsyncSelect
                         loadOptions={loadOptions}
-                        defaultOptions={[{}]}
                         onInputChange={handleInputChange}
+                        placeholder={i18n.t("Search by Patient Name")}
                         onChange={(val) => {
+                            setFieldTouched('from_facility');
                             setFieldValue('patient', val.value);
                             showProfileCard(val.value);
                         }}
@@ -141,7 +141,10 @@ export function Form(props) {
                         options={facilityName}
                         defaultValue={""}
                         name="to_facility"
-                        onChange={(val) => setFieldValue('to_facility', val.value)}
+                        onChange={(val) => {
+                            setFieldTouched('to_facility')
+                            setFieldValue('to_facility', val.value)
+                        }}
                         error={errors.to_facility}
                     />
                     {
