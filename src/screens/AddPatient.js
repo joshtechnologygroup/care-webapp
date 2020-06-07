@@ -93,9 +93,6 @@ function AddPatient(props) {
       if (!patient_facility['admitted_at']) {
         patient_facility['admitted_at'] = new Date()
       }
-      if (!patient_facility['discharged_at']) {
-        patient_facility['discharged_at'] = new Date()
-      }
       initial_profile['patient_facility'] = patient_facility;
       const response = await props.createPatient(initial_profile);
       if (response.status) {

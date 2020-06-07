@@ -547,4 +547,3 @@ export const patient_facility_status_choices = [
 ]
 
 export const FACILITY_EXISTS = 4;
- 
