@@ -13,6 +13,7 @@ import * as StringUtils from 'Src/utils/stringformatting';
 import {connect} from "react-redux";
 import {PatientsList} from "../containers/PatientsList";
 import PropTypes from "prop-types";
+import Loader from 'Components/Loader';
 
 export function FacilityDetails(props) {
   const [formList, setFormList] = useState(['personal', 'contact']);
@@ -99,7 +100,12 @@ export function FacilityDetails(props) {
   };
 
   if (loading) {
-    return (<h1>Loading</h1>);
+    return ( 
+    <div className="flex-col-center">
+    <Loader />
+    <h3>Loading...</h3>
+  </div>
+  );
   } else if (facility.contact) {
     return (
       <div>
