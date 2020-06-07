@@ -35,9 +35,9 @@ export const CreateUpdatePortieDetails = (props) => {
                 <Grid item xs={12}>
                     <Formik
                         initialValues={editMode ? details : {
-                            'relation': "",
+                            'relation': 1,
                             "portie": "",
-                            "patient_phone_number": "",
+                            "patient_phone_number": details.patient_phone_number,
                             "able_to_connect": false,
                             "called_at": new Date(),
                         }}

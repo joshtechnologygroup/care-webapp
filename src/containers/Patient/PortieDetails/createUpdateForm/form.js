@@ -34,6 +34,7 @@ export default function Form(props) {
       called_at,
       comments,
     },
+    initialValues,
     porteaUsers,
     errors,
     handleSubmit,
@@ -45,7 +46,7 @@ export default function Form(props) {
     updatePortieErrors
   } = props;
 
-  console.log(errors);
+  console.log(initialValues);
 
   const changeText = (name, e) => {
     setFieldTouched(e.target.name);
@@ -132,7 +133,7 @@ export default function Form(props) {
               className={`react-select ${touched.portie && Boolean(errors.portie) && 'react-select__error'}`}
               options={porteaOptions}
               name="portie"
-              defaultValue={portie || ""}
+              defaultValue={portie && porteaOptions.find(item => item.value == portie)}
               placeholder={i18n.t('Select Portie')}
               onChange={(val) => {
                   setFieldTouched('portie');
@@ -155,9 +156,9 @@ export default function Form(props) {
         <Grid item xs={12} sm={6}>
           <TextField 
             name="patient_phone_number"
-            value={patient_phone_number}
             label={i18n.t('Patient contact number')}
             fullWidth
+            defaultValue={patient_phone_number}
             onChange={changeText.bind(null, "patient_phone_number")}
             className="field"
             variant="outlined"
@@ -169,7 +170,7 @@ export default function Form(props) {
             <Select
               className={`react-select ${touched.relation && Boolean(errors.relation) && 'react-select__error'}`}
               options={RELATIONSHIP_OPTIONS}
-              defaultValue={""}
+              defaultValue={RELATIONSHIP_OPTIONS.find(item => item.value === relation)}
               placeholder={i18n.t('Relation with patient')}
               name="relation"
               onChange={(val) => {
