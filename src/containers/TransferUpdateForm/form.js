@@ -62,12 +62,14 @@ export default function Form(props) {
         </Grid>
         <Grid item sm={12} xs={12}>
             <TextField
+                multiline
                 name="comments"
                 label={i18n.t('Comments')}
                 fullWidth
                 defaultValue={initialValues.comments}
                 onChange={changeText.bind(null, "comments")}
                 variant="outlined"
+                className={classes.field}
             />
         </Grid>
         <Grid container justify="flex-end" className="mt-10" item xs={12}>
