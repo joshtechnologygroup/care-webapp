@@ -39,7 +39,7 @@ export const InventoryForm = (props) => {
     }
 
     if (props.userType === Constants.FACILITY_MANAGER && props.associatedFacilities && props.facilityList) {
-        props.associatedFacilities.forEach((id) => {
+        props.associatedFacilities && props.associatedFacilities.forEach((id) => {
         Object.keys(props.facilityList).forEach((facility, index) => {
             if (props.shorfacilityListtFacilities[facility].id === id) {
             facilityName.push(utils.dropDownDict(props.facilityList[facility].name, props.facilityList[facility]));
@@ -67,11 +67,11 @@ export const InventoryForm = (props) => {
             const response = await updateInventories(data, data.id);
             if (response.status === true) {
                 props.createToastNotification(
-                    ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+                    ToastUtils.toastDict((new Date()).getTime(), i18n.t("Updated"), i18n.t("Successfully updated"), SUCCESS)
                 )
             } else {
                 props.createToastNotification(
-                    ToastUtils.toastDict((new Date()).getTime(), "Added",  response.error, DANGER)
+                    ToastUtils.toastDict((new Date()).getTime(), i18n.t("Added"),  response.error, DANGER)
                 )
             }
         } else {
@@ -80,11 +80,11 @@ export const InventoryForm = (props) => {
             resetForm();
             if (response.status === true) {
                 props.createToastNotification(
-                    ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+                    ToastUtils.toastDict((new Date()).getTime(), i18n.t("Added"), i18n.t("Successfully Added"), SUCCESS)
                 )
             } else {
                 props.createToastNotification(
-                    ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
+                    ToastUtils.toastDict((new Date()).getTime(), i18n.t("Added"), response.error, DANGER)
                 )
             }
         }

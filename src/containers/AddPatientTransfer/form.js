@@ -47,8 +47,6 @@ export function Form(props) {
         }); 
     }
 
-    console.log(errors);
-
     const filterPatients = async (inputValue) => {
         const url = selectedFacility ? `${GET_SHORT_PATIENT_LIST_URL}?limit=3&offset=0&name=${inputValue}&from_facility=${selectedFacility}` : `${GET_SHORT_PATIENT_LIST_URL}?limit=3&offset=0&name=${inputValue}`
         const response = await CommonService.makeAuthorizedApiCall(url, GET, {},  {})
@@ -115,7 +113,7 @@ export function Form(props) {
                     <AsyncSelect
                         loadOptions={loadOptions}
                         onInputChange={handleInputChange}
-                        placeholder="Search by Patient Name"
+                        placeholder={i18n.t("Search by Patient Name")}
                         onChange={(val) => {
                             setFieldTouched('from_facility');
                             setFieldValue('patient', val.value);

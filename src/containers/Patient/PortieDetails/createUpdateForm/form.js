@@ -34,7 +34,6 @@ export default function Form(props) {
       called_at,
       comments,
     },
-    initialValues,
     porteaUsers,
     errors,
     handleSubmit,

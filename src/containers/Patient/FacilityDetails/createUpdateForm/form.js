@@ -60,7 +60,6 @@ export default function Form(props) {
   const [admitted, setAdmitted] = React.useState(admitted_at);
   const [discharged, setDischarged] = React.useState(discharged_at);
   const setDateTime = (name, value) => {
-      console.log(name, value);
     name = "admitted_at" ? setAdmitted(value) : setDischarged(value);
     setFieldValue(name, value);
     setFieldTouched(name);
