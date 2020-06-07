@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.2rem'
   },
   field: {
-    '& > div': {
+    zIndex: 0,
+    '& input': {
       padding: '1.2rem',
     }
   },
