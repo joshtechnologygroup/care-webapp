@@ -123,7 +123,7 @@ export default function Form(props) {
                     value={name}
                     onChange={change}
                     helperText={touched.name && Boolean(errors.name) || (fieldErrorDict ? fieldErrorDict.name : "") && errors.name}
-                    error={touched.name && Boolean(errors.name) || (fieldErrorDict ? fieldErrorDict.name : "") && errors.name}
+                    error={touched.name && Boolean(errors.name) || Boolean(fieldErrorDict ? fieldErrorDict.name : "") && Boolean(errors.name)}
                     required
                   />
                 </Grid>
@@ -134,7 +134,7 @@ export default function Form(props) {
                     value={year}
                     onChange={change}
                     helperText={touched.year ? errors.year : "" || (fieldErrorDict ? fieldErrorDict.year : "") && errors.year}
-                    error={touched.year && Boolean(errors.year) ||(fieldErrorDict ? fieldErrorDict.year : "") && errors.year}
+                    error={touched.year && Boolean(errors.year) || Boolean(fieldErrorDict ? fieldErrorDict.year : "") && Boolean(errors.year)}
                     fullWidth
                     type="number"
                     required
@@ -147,7 +147,7 @@ export default function Form(props) {
                     value={month}
                     onChange={change}
                     helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "") && errors.month}
-                    error={touched.month && Boolean(errors.month) || (fieldErrorDict ? fieldErrorDict.month : "") &&  errors.month}
+                    error={touched.month && Boolean(errors.month) || Boolean(fieldErrorDict ? fieldErrorDict.month : "") &&  Boolean(errors.month)}
                     fullWidth
                     type="number"
                     required
@@ -171,7 +171,7 @@ export default function Form(props) {
                     value={govt_id}
                     onChange={change}
                     helperText={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "") && errors.govt_id}
-                    error={touched.govt_id && Boolean(errors.govt_id) || (fieldErrorDict ? fieldErrorDict.govt_id : "") && errors.govt_id}
+                    error={touched.govt_id && Boolean(errors.govt_id) || Boolean(fieldErrorDict ? fieldErrorDict.govt_id : "") && Boolean(errors.govt_id)}
                     fullWidth
                     required
                   />

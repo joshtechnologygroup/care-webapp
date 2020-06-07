@@ -111,7 +111,7 @@ export function Form(props) {
                 value={phone_number}
                 onChange={handleChange}
                 helperText={touched.phone_number ? errors.phone_number : "" || (fieldErrorDict ? fieldErrorDict.phone_number : "") && errors.phone_number}
-                error={touched.phone_number && Boolean(errors.phone_number) || (fieldErrorDict ? fieldErrorDict.phone_number : "") && errors.phone_number}
+                error={touched.phone_number && Boolean(errors.phone_number) || Boolean(fieldErrorDict ? fieldErrorDict.phone_number : "") && Boolean(errors.phone_number)}
               />
             </Grid>
 
@@ -123,7 +123,7 @@ export function Form(props) {
                 value={phone_number_belongs_to}
                 onChange={handleChange}
                 helperText={touched.phone_number_belongs_to ? errors.phone_number_belongs_to : "" || (fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "") && errors.phone_number_belongs_to}
-                error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to) || (fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "") && errors.phone_number_belongs_to}
+                error={touched.phone_number_belongs_to && Boolean(errors.phone_number_belongs_to) || Boolean(fieldErrorDict ? fieldErrorDict.phone_number_belongs_to : "") && Boolean(errors.phone_number_belongs_to)}
                 fullWidth
                 required
               >
@@ -172,7 +172,6 @@ export function Form(props) {
                 name="state"
                 label={i18n.t('State')}
                 value={state}
-                isDisabled={true}
                 onChange={handleChange}
                 helperText={touched.state ? errors.state : ""}
                 error={touched.state && Boolean(errors.state)}

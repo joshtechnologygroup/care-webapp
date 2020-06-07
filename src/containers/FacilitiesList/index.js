@@ -168,7 +168,6 @@ export function FacilitiesList(props) {
         <React.Fragment>
             <Grid
                 container
-                direction
                 alignItems="center"
                 className={`container-padding ${
                     showOverlay

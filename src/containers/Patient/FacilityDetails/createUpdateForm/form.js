@@ -60,7 +60,7 @@ export default function Form(props) {
   const [admitted, setAdmitted] = React.useState(admitted_at);
   const [discharged, setDischarged] = React.useState(discharged_at);
   const setDateTime = (name, value) => {
-    name = "admitted_at" ? setAdmitted(value) : setDischarged(value);
+    name === "admitted_at" ? setAdmitted(value) : setDischarged(value);
     setFieldValue(name, value);
     setFieldTouched(name);
     saveFacilityDetails(name, value);
@@ -121,7 +121,7 @@ export default function Form(props) {
         <Grid item xs={12} sm={6}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDateTimePicker
-              label={i18n.t('Admitted Date/time')}
+              label={i18n.t('Admitted date/time')}
               inputVariant="outlined"
               value={admitted}
               onChange={(val) => setDateTime("admitted_at", val)}

@@ -225,4 +225,4 @@ PatientDetail.propTypes = {
   createToastNotification: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { fetchPatient, updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, getPatientDetailsDependencies, createToastNotification })(PatientDetail);
+export default connect(mapStateToProps, { fetchPatient, updatePatientDetails, updatePatientPersonalDetails, updatePatientContactDetails, updatePatientMedicationDetails, getPatientDetailsDependencies, createToastNotification })(PatientDetail);
