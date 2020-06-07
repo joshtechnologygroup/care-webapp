@@ -29,7 +29,7 @@ $risks: (
         border-left: 1px solid $timeline_gray;
         margin-left: 12rem;
         padding: 0.5rem 3rem;
-        min-height: 4rem;
+        min-height: 5rem;
         &:first-child {
             border: none;
         }
@@ -60,7 +60,7 @@ $risks: (
         color: $timeline_gray;
         position: absolute;
         left: -11rem;
-        top: 2px;
+        top: 0;
     }
 }
 @each $name, $color in $types {

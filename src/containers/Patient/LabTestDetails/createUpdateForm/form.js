@@ -64,22 +64,22 @@ export default function Form(props) {
             getOptionLabel={(option) => option.name}
             name="testing_lab"
             onChange={(event, val) => {
-              setFieldValue('testing_lab', val ? val.id : '');
               setFieldTouched('testing_lab');
+              setFieldValue('testing_lab', val ? val.id : '');
             }}
-            value={testingLabs.filter((lab) => lab.id === testing_lab)[0]}
+            defaultValue={testingLabs.filter((lab) => lab.id === testing_lab)[0]}
             renderInput={(params) => 
               <TextField
-              {...params}
-              value={testing_lab}
-              label={i18n.t('Testing Lab name')}
-              fullWidth
-              className="field"
-              variant="outlined"
-              helperText={touched.testing_lab && errors.testing_lab}
-              error={Boolean(errors.testing_lab) && touched.testing_lab}
-            />
-          }
+                {...params}
+                value={testing_lab}
+                label={i18n.t('Testing Lab name')}
+                fullWidth
+                className="field"
+                variant="outlined"
+                helperText={touched.testing_lab && errors.testing_lab}
+                error={Boolean(errors.testing_lab) && touched.testing_lab}
+              />
+            }
           />
         </Grid>
         <Grid item xs={12} sm={6}>

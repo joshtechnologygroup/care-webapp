@@ -36,7 +36,8 @@ import Toaster from 'Components/Toaster';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {getUserProfile} from "Actions/UserProfileAction";
-import * as CookieService from 'Services/CookieService'
+import * as CookieService from 'Services/CookieService';
+import * as Routes from 'Src/routes';
 
 function Home(props) {
   const history = useHistory();
@@ -46,7 +47,7 @@ function Home(props) {
       if (response.status !== HttpStatus.OK) {
         CookieService.deleteUserId();
         CookieService.deleteTokenCookie();
-        history.push('/login');
+        history.push(Routes.RELATIVE_LOGIN);
       }
     });
   }, []);

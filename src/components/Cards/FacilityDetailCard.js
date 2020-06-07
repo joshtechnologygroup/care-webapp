@@ -59,9 +59,9 @@ export function FacilityDetailCard(props) {
       <Card className="mb-0" elevation={4}>
         {status !== 'Home Isolation' &&
           <CardContent>
-            <Grid alignItems="center" container spacing={2}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={3}>
-                <span class="heading--sub">{i18n.t('Facility Name')}</span>
+                <span className="heading--sub">{i18n.t('Facility Name')}</span>
                 <Typography variant="h5" color="primary">
                   <Tooltip title={i18n.t('Facility Name')}>
                     <span>{details.name}</span>
@@ -70,23 +70,19 @@ export function FacilityDetailCard(props) {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={`auto`}>
-                <span class="heading--sub mr-10">{i18n.t('Facility type')}</span>
+                <span className="heading--sub mr-10">{i18n.t('Facility type')}</span>
                 <Typography variant="h6">
                   <Tooltip title={i18n.t('Facility type')}>
                     <span>{facilityType}</span>
                   </Tooltip>
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={`auto`}>
-                <span class="heading--sub mr-10">{i18n.t('Facility district')}</span>
+                <span className="heading--sub mr-10">{i18n.t('Facility district')}</span>
                 <Typography variant="h6">
                   <Tooltip title={i18n.t('Facility district')}>
                     <span>{district}</span>
                   </Tooltip>
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={`auto`}>
-                <span class="heading--sub mr-10">{i18n.t('Facility ownership')}</span>
+                <span className="heading--sub mr-10">{i18n.t('Facility ownership')}</span>
                 <Typography variant="h6">
                   <Tooltip title={i18n.t('Facility ownership')}>
                     <span>{ownershipType}</span>
@@ -94,7 +90,7 @@ export function FacilityDetailCard(props) {
                 </Typography>
               </Grid>
               {details.admitted_at &&
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={`auto`}>
                   <h6 className="heading--sub">{i18n.t('Admitted date/time')}</h6>
                   <Typography variant="h6" className="d-flex">
                     <EventOutlined className="mr-5" />
@@ -108,7 +104,7 @@ export function FacilityDetailCard(props) {
               }
               {
                 Boolean(details.discharged_at) &&
-                <Grid item xs={12} sm={2}>
+                <Grid item xs={12} sm={`auto`}>
                   <h6 className="heading--sub">{i18n.t('Discharged on')}</h6>
                   <Typography variant="h6" className="d-flex">
                     <EventOutlined className="mr-5" />
@@ -120,7 +116,7 @@ export function FacilityDetailCard(props) {
                   </Typography>
                 </Grid>
               }
-              <Grid item xs={12} sm={3} className="ml-auto text-right">
+              <Grid item xs={12} sm={`auto`} className="ml-auto text-right">
                 <Chip
                   label={
                     currentStatus.map(choice => {
