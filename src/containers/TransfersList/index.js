@@ -207,7 +207,10 @@ export function TransfersList(props) {
                                 setSelectedParams({...multiSelectDateCallBack(selectedParams, val)})
                             }
                         }
-                        handleReset={() => setSelectedParams({})}
+                        handleReset={() => {
+                            setSelectedParams({});
+                            fetchTransferList();
+                        }}
                     />
                 </Grid>
             </Grid>

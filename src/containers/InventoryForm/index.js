@@ -17,108 +17,205 @@ import _ from 'underscore';
 import { createToastNotification } from 'Actions/ToastAction';
 import * as ToastUtils from 'Src/utils/toast';
 import { SUCCESS, DANGER } from "Src/constants";
+import * as Yup from 'yup';
+import * as utils from 'Src/utils/utils';
+import * as Constants from 'Src/constants';
 
 export const InventoryForm = (props) => {
     const classes = useStyles();
+    const { i18n } = useTranslation();
     const [inventoryData, setInventoryData] = useState({});
     const [isAddAnother, setIsAddAnother] = useState(false);
     const [error, setError] = useState(false)
-    const { open, data, onClose, createInventories, updateInventories, facilityList, inventoryTypesList, index } = props;
+    const { open, data, onClose, createInventories, updateInventories, facilityList, inventoryTypesList, index, editMode } = props;
     const [errors, setErrors] = useState({ required_quantity: true, current_quantity: true, form: '' })
 
     const addAnother = (event) => {
         setIsAddAnother(event.target.checked)
     }
 
-    useEffect(() => {
-        if (!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)) {
-            setError(true)
-        }
-        else {
-            setError(false)
-        }
-    }, [facilityList, inventoryTypesList]);
+    // useEffect(() => {
+    //     if (!facilityList && _.isEmpty(facilityList) && !inventoryTypesList && _.isEmpty(inventoryTypesList)) {
+    //         setError(true)
+    //     }
+    //     else {
+    //         setError(false)
+    //     }
+    // }, [facilityList, inventoryTypesList]);
 
-    const createInventory = async () => {
-        let initial = inventoryData;
-        if (!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)) {
-            if (initial && !data) {
-                Object.keys(facilityList).forEach((facility, index) => {
-                    if (initial.name.label === facilityList[facility].name) {
-                        initial['facility'] = facilityList[facility].id
-                        return;
-                    }
-                });
-                Object.keys(inventoryTypesList).forEach((inventoryitem, index) => {
-                    if (initial.type.label === inventoryTypesList[inventoryitem].name) {
-                        initial['item'] = inventoryTypesList[inventoryitem].id
-                        return;
-                    }
-                });
+    const facilityName = [];
+    const inventoryType = [];
+    if (props.userType !== Constants.FACILITY_MANAGER && !_.isEmpty(props.facilityList)) {
+        Object.keys(props.facilityList).forEach((facility, index) => {
+        facilityName.push(utils.dropDownDict(props.facilityList[facility].name, props.facilityList[facility].id));
+        })
+    }
+
+    if (props.userType === Constants.FACILITY_MANAGER && props.associatedFacilities && props.facilityList) {
+        props.associatedFacilities.forEach((id) => {
+        Object.keys(props.facilityList).forEach((facility, index) => {
+            if (props.shorfacilityListtFacilities[facility].id === id) {
+            facilityName.push(utils.dropDownDict(props.facilityList[facility].name, props.facilityList[facility]));
             }
-            delete initial.name;
-            delete initial.type;
-            setInventoryData({ inventoryData: initial });
-            let response;
-            if (isAddAnother === false && data) {
-                response = await updateInventories(initial, data.id);
-                if (response.status === true) {
-                    props.createToastNotification(
-                        ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
-                    )
-                } else {
-                    props.createToastNotification(
-                        ToastUtils.toastDict((new Date()).getTime(), "Added",  response.error, DANGER)
-                    )
-                }
+        });
+        });
+        }
+
+        if (!_.isEmpty(props.inventoryTypesList)) {
+            Object.keys(props.inventoryTypesList).forEach((inventoryitem, index) => {
+            inventoryType.push(utils.dropDownDict(props.inventoryTypesList[inventoryitem].name, props.inventoryTypesList[inventoryitem].id));
+            })
+        }
+
+
+    const validationSchema = Yup.object({
+        facility: Yup.number().required(i18n.t('Please select facility')),
+        item: Yup.number().required(i18n.t('Please select Invetory Type')),
+        current_quantity: Yup.number().required(i18n.t('Please fill Current quantity')),
+        required_quantity: Yup.number().required(i18n.t('Please fill Required quantity')),
+    });
+
+    const handleSubmit = async (data, { resetForm, setSubmitting }) => {
+        if(editMode) {
+            const response = await updateInventories(data, data.id);
+            if (response.status === true) {
+                props.createToastNotification(
+                    ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+                )
             } else {
-                response = await createInventories(initial);
-                if (response.status === true) {
-                    props.createToastNotification(
-                        ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
-                    )
-                } else {
-                    props.createToastNotification(
-                        ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
-                    )
-                }
+                props.createToastNotification(
+                    ToastUtils.toastDict((new Date()).getTime(), "Added",  response.error, DANGER)
+                )
+            }
+        } else {
+            const response = await createInventories(data);
+            setSubmitting(false);
+            resetForm();
+            if (response.status === true) {
+                props.createToastNotification(
+                    ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+                )
+            } else {
+                props.createToastNotification(
+                    ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
+                )
             }
         }
-        if (!isAddAnother) {
+        if(!isAddAnother) {
             onClose();
         }
     }
 
-    const handleChange = (name, e) => {
-        if (typeof name === 'object') {
-            setInventoryData({ ...inventoryData, ...name });
-        } else {
-            setInventoryData({ ...inventoryData, [name]: e });
-        }
-        switch (name) {
-            case 'required_quantity':
-                errors.required_quantity = e ? false : true;
-                break;
-            case 'current_quantity':
-                errors.current_quantity = e ? false : true;
-                break;
-            default: break;
-        }
-        setErrors(prevState => ({
-            ...prevState,
-            ...errors
-        }))
-    }
 
-    const { i18n } = useTranslation();
+    // const createInventory = async () => {
+    //     let initial = inventoryData;
+    //     if (!_.isEmpty(facilityList) && !_.isEmpty(inventoryTypesList)) {
+    //         if (initial && !data) {
+    //             Object.keys(facilityList).forEach((facility, index) => {
+    //                 if (initial.name.label === facilityList[facility].name) {
+    //                     initial['facility'] = facilityList[facility].id
+    //                     return;
+    //                 }
+    //             });
+    //             Object.keys(inventoryTypesList).forEach((inventoryitem, index) => {
+    //                 if (initial.type.label === inventoryTypesList[inventoryitem].name) {
+    //                     initial['item'] = inventoryTypesList[inventoryitem].id
+    //                     return;
+    //                 }
+    //             });
+    //         }
+    //         delete initial.name;
+    //         delete initial.type;
+    //         setInventoryData(initial);
+    //         let response;
+    //         if (isAddAnother === false && data) {
+    //             response = await updateInventories(initial, data.id);
+    //             if (response.status === true) {
+    //                 props.createToastNotification(
+    //                     ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+    //                 )
+    //             } else {
+    //                 props.createToastNotification(
+    //                     ToastUtils.toastDict((new Date()).getTime(), "Added",  response.error, DANGER)
+    //                 )
+    //             }
+    //         } else {
+    //             response = await createInventories(initial);
+    //             if (response.status === true) {
+    //                 props.createToastNotification(
+    //                     ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS)
+    //                 )
+    //             } else {
+    //                 props.createToastNotification(
+    //                     ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
+    //                 )
+    //             }
+    //         }
+    //     }
+    //     if (!isAddAnother) {
+    //         onClose();
+    //     }
+    // }
+
+    // const handleChange = (name, e) => {
+    //     if (typeof name === 'object') {
+    //         setInventoryData({ ...inventoryData, ...name });
+    //     } else {
+    //         setInventoryData({ ...inventoryData, [name]: e });
+    //     }
+    //     switch (name) {
+    //         case 'required_quantity':
+    //             errors.required_quantity = e ? false : true;
+    //             break;
+    //         case 'current_quantity':
+    //             errors.current_quantity = e ? false : true;
+    //             break;
+    //         default: break;
+    //     }
+    //     setErrors(prevState => ({
+    //         ...prevState,
+    //         ...errors
+    //     }))
+    // }
+
+    const getMappedData = (data) => {
+        if(data && !_.isEmpty(data) && facilityName && inventoryType && !_.isEmpty(facilityName) && !_.isEmpty(inventoryType)) {
+            const facility = facilityName.find(item => item.label == data.facility);
+            const type = inventoryType.find(type => type.label == data.item);
+            return {
+                ...data,
+                facility: facility ? facility.value: data.facility,
+                item: type ? type.value : data.type
+            }
+        }
+        return data;
+    }
 
     return (
         <CustomModal open={open} onClose={onClose} title={i18n.t('Inventory')}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Formik>
+                    <Formik
+                    initialValues={data ? getMappedData(data): {
+                        facility: "",
+                        item: "",
+                        current_quantity: "",
+                        required_quantity: ""
+                    }}
+                    onSubmit={handleSubmit}
+                    validationSchema={validationSchema}
+                    >
                         {
-                            props => <Form data={inventoryData} updateData={data}  {...props} handleChange={handleChange} />
+                            props => <Form 
+                            data={inventoryData}
+                            updateData={data} 
+                            isAddAnother={isAddAnother} 
+                            addAnother={addAnother} 
+                            {...props}
+                            editMode={editMode}
+                            facilityName={facilityName} 
+                            inventoryType={inventoryType} 
+                            />
                         }
                     </Formik>
                 </Grid>
@@ -129,26 +226,6 @@ export const InventoryForm = (props) => {
                             <FormHelperText className={classes.error}>Facility Name and Inventory Type not exists...</FormHelperText>
                         </FormControl>
                     }
-                </Grid>
-                <Grid item xs={12}>
-                    {!data &&
-                        <FormControlLabel
-                            value="end"
-                            control={<Switch checked={isAddAnother} onChange={addAnother} color="primary" />}
-                            label="Add Another"
-                            labelPlacement="end"
-                        />
-                    }
-                    <Button
-                        className={classes.button}
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={createInventory}
-                        disabled={errors.required_quantity || errors.current_quantity}
-                    >
-                        {i18n.t('Ok')}
-                    </Button>
                 </Grid>
             </Grid>
         </CustomModal>

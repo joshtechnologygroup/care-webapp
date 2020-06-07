@@ -198,7 +198,10 @@ export function FacilitiesList(props) {
                             applyFilter();
                             setShowOverlay(false);
                         }}
-                        handleReset={() => setSelectedParams({})}
+                        handleReset={() => {
+                            setSelectedParams({});
+                            fetchFacilityList();
+                        }}
                     />
                 </Grid>
             </Grid>
