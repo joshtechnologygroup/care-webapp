@@ -13,7 +13,12 @@ const useStyles = makeStyles(theme => ({
   },
   error: {
     fontSize: '1.2rem'
-  }
+  },
+  field: {
+    '& > div': {
+      padding: '1.2rem',
+    }
+  },
 }));
 
 export default useStyles;
