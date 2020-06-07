@@ -153,7 +153,6 @@ export function DoctorAttendantList(props) {
     <React.Fragment>
       <Grid
         container
-        direction
         alignItems="center"
         className={`container-padding ${
           showOverlay

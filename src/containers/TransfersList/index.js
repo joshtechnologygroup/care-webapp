@@ -167,7 +167,6 @@ export function TransfersList(props) {
         <React.Fragment>
             <Grid
                 container
-                direction
                 alignItems="center"
                 className={`container-padding ${
                     showOverlay

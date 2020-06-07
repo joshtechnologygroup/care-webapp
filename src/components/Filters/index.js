@@ -118,12 +118,12 @@ export default function Filters({
         <Grid item xs={2} md={2} container direction="row" justify="flex-start"
               alignItems="flex-start">
           <Grid item md={8} container>
-            <Grid md={7}>
+            <Grid item md={7}>
               <Button className="apply_btn" variant="contained" color="primary" onClick={handleApplyFilter}>
                 Apply
               </Button>
             </Grid>
-            <Grid md={5}>
+            <Grid item md={5}>
               <Tooltip title={i18n.t('Reset filters')}>
                 <IconButton color="primary" onClick={() => {
                   setReset(true);
@@ -133,7 +133,7 @@ export default function Filters({
               </Tooltip>
             </Grid>
           </Grid>
-          <Grid md={4}>
+          <Grid item md={4}>
             {(countFilter > 1 && (countFilter > 4 || window.innerWidth < 600)) ?
               <Button className="more-less_btn" color="primary"
                       onClick={handleSeeMore}>{showMore ? i18n.t('lessText') : i18n.t('moreText')}</Button> : null}

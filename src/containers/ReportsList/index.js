@@ -13,7 +13,6 @@ export function ReportsList(props) {
   return (
     <React.Fragment>
       <Grid container
-        direction
         alignItems="center"
         className={`container-padding ${showOverlay ? "filter-container-overlay" : 'filter-container'}`}>
         <Grid item xs={12} sm={12} >

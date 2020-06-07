@@ -46,7 +46,7 @@ export function Form(props) {
         <Grid item sm={6} xs={12}>
           <label className={classes.label}>{i18n.t('Facility Name')}</label>
           <Select
-          className={`${touched.facility && Boolean(errors.facility) && 'react-select__error'}`}
+            className={`${touched.facility && Boolean(errors.facility) && 'react-select__error'}`}
             options={facilityName}
             value={facilityName.find(item => item.value === values.facility) || values.facility}
             onChange={(val) => {
@@ -64,7 +64,7 @@ export function Form(props) {
         <Grid item sm={6} xs={12}>
           <label className={classes.label}>{i18n.t('Inventory Type')}</label>
           <Select
-          className={`${touched.item && Boolean(errors.item) && 'react-select__error'}`}
+            className={`${touched.item && Boolean(errors.item) && 'react-select__error'}`}
             options={inventoryType}
             value={inventoryType.find(item => item.value === values.item) || values.item}
             onChange={(val) => {

@@ -23,7 +23,7 @@ export const Dashboard = (props) => {
     const { i18n } = useTranslation();
 
     return (
-        <Grid container justify="center" spacing="3">
+        <Grid container justify="center" spacing={3}>
             <Grid item xs={12} sm={5}>
                 <Card className={classes.root}>
                     <CardContent>

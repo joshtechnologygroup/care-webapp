@@ -174,10 +174,10 @@ export function NavigationPanel(props) {
             </Link>
           </li>
           <li className={getActivatedRoute('/logout') ? 'active' : ''}>
-            <Link className="nav-link" onClick={handleLogOut}>
+            <p className="nav-link" onClick={handleLogOut}>
               <ExitToApp/>
               {i18n.t('Logout')}
-            </Link>
+            </p>
           </li>
         </ul>
         <div className="lang-wrap">
