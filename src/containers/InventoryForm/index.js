@@ -59,7 +59,7 @@ export const InventoryForm = (props) => {
             }
             delete initial.name;
             delete initial.type;
-            // setInventoryData({ inventoryData: initial });
+            setInventoryData({ inventoryData: initial });
             let response;
             if (isAddAnother === false && data) {
                 response = await updateInventories(initial, data.id);

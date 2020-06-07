@@ -101,7 +101,7 @@ class PatientDetail extends Component {
     let response;
     if (key === 'personal') {
       response = await this.props.updatePatientPersonalDetails(data, patientId);
-      if (response.status === true) {
+      if (response.status) {
         this.props.createToastNotification(
           ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
         )

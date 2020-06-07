@@ -41,19 +41,19 @@ export default function Form(props) {
     touched,
   } = props;
 
-  useEffect(()=>{
-    if(setPatientFacilityForm) {
+  useEffect(() => {
+    if (setPatientFacilityForm) {
       setPatientFacilityForm(validateForm);
     }
-  },[])
+  }, [])
 
   const onSelectFacility = (event, value) => {
     const name = "facility"
     setFieldTouched(name, true, false);
-    if(value) {
-    setFieldTouched(name, false, true);
-    setFieldValue(name, value.id);
-    saveFacilityDetails(name, value.id);
+    if (value) {
+      setFieldTouched(name, false, true);
+      setFieldValue(name, value.id);
+      saveFacilityDetails(name, value.id);
     }
   }
 
@@ -100,7 +100,7 @@ export default function Form(props) {
                 variant="outlined"
                 helperText={touched.facility ? errors.facility : "" || (fieldErrorDict ? fieldErrorDict.facility : "")}
                 error={touched.facility && Boolean(errors.facility) || (fieldErrorDict ? fieldErrorDict.facility : "")}
-               />
+              />
 
             }
           />
@@ -172,7 +172,7 @@ export default function Form(props) {
             {touched.patient_status && Boolean(errors.patient_status) || (fieldErrorDict ? fieldErrorDict.patient_status : "") && errors.patient_status}
           </h5>
         </Grid>
-        { editMode &&
+        {editMode &&
           <Grid container justify="flex-end" className="mt-10" item xs={12}>
             <Button
               variant="contained"
