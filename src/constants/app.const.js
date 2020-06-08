@@ -204,12 +204,12 @@ export const clinicalStatusChoices = [
   {
     "id": 2,
     "name": "Mild symptoms",
-    "theme": 'danger'
+    "theme": 'danger-light'
   },
   {
     "id": 3,
     "name": "severe symptoms",
-    "theme": 'warning'
+    "theme": 'danger'
   },
   {
     "id": 4,
@@ -479,11 +479,6 @@ export const labTestStatusChoices =  [
       "name": "Sample Sent"
   },
   {
-      "id": 2,
-      "name": "Report Pending",
-      "theme": "warning"
-  },
-  {
       "id": 3,
       "name": "Positive",
       "theme": "danger"
@@ -547,3 +542,6 @@ export const patient_facility_status_choices = [
 ]
 
 export const FACILITY_EXISTS = 4;
+export const ADMITTED_TO_FACILITY = 2;
+export const TRANSFERRED_TO_ANOTHER_FACILITY = 3;
+export const DISCHARGED = 4;

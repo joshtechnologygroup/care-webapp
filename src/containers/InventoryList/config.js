@@ -25,7 +25,6 @@ export const CONFIG = {
       headerName: 'Required #',
       field: 'required_quantity',
       minWidth: 80,
-      editable: true,
       cellRendererParams: {isSortable: true, filterType: 'number', filterPriority: true},
       onCellValueChanged: (data) => {
         console.log('on cell change', data)
@@ -35,7 +34,6 @@ export const CONFIG = {
       headerName: 'Current #',
       field: 'current_quantity',
       minWidth: 80,
-      editable: true,
       cellRendererParams: {isSortable: true, filterType: 'number', filterPriority: true},
     },
     {

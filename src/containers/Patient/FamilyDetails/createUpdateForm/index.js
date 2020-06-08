@@ -18,7 +18,7 @@ export const CreateUpdateForm = (props) => {
         name: Yup.string().required(i18n.t('Please enter Family member name')),
         age_month: Yup.number().required(i18n.t('Please enter age')).max(11, i18n.t('Invalid value')).min(0, 'Invalid value'),
         age_year: Yup.number().required(i18n.t('Please enter age')).min(0, 'Invalid value'),
-        phone_number: Yup.number().positive().required(i18n.t('Please enter phone number')).min(10, i18n.t('Please enter a valid contact number')),
+        phone_number: Yup.number().positive().min(10, i18n.t('Please enter a valid contact number')),
         relation: Yup.string().required(i18n.t('Please choose relation with Patient')),
         gender: Yup.number().required(i18n.t('Please choose gender')),
     });
