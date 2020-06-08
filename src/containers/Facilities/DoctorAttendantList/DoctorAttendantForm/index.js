@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {PATCH, POST} from 'Src/constants'
@@ -19,7 +17,7 @@ import {FACILITY_STAFF_UPDATE_URL, FACILITY_STAFF_CREATE_URL} from 'Src/routes';
 import * as StringUtils from 'Src/utils/stringformatting';
 import * as ToastUtils from 'Src/utils/toast';
 import {createToastNotification} from 'Actions/ToastAction';
-import {SUCCESS, FACILITY_MANAGER} from "Src/constants";
+import {SUCCESS, DANGER, FACILITY_MANAGER} from "Src/constants";
 import * as utils from 'Src/utils/utils';
 
 export const DoctorAttendantForm = (props) => {
@@ -28,6 +26,8 @@ export const DoctorAttendantForm = (props) => {
   const [error, setError] = useState(false)
   const {open, data, onClose, updateOperation} = props;
   const [errors, setErrors] = useState({
+    facility: true,
+    designation: true,
     name: true,
     phone_number: true,
     email: true,
@@ -35,9 +35,9 @@ export const DoctorAttendantForm = (props) => {
   });
   const [errorString, setErrorString] = useState({name: [""], phone_number: [""], email: [""], detail: ""});
   const [updatedData, setUpdateData] = useState({
-    name: (updateOperation) ? data.name : null,
-    phone_number: (updateOperation) ? data.phone_number : null,
-    email: (updateOperation) ? data.email : null
+    name: (updateOperation) ? data.name : "",
+    phone_number: (updateOperation) ? data.phone_number : "",
+    email: (updateOperation) ? data.email : ""
   });
   const [designation, setDesignation] = useState([]);
   const [facility, setFacility] = useState([]);
@@ -49,7 +49,6 @@ export const DoctorAttendantForm = (props) => {
     const {designationList, facilityList, userType, associatedFacilities} = props
     let update_designation_list = [], update_facility_list = [];
     if (updateOperation && designationList) {
-      // update_facility_list.push({label: data.facility});
       update_facility_list.push(utils.dropDownDict(data.facility));
       designationList.forEach((row) => update_designation_list.push(utils.dropDownDict(row.name, row.id)));
       setUpdateData((prevState) => ({
@@ -71,11 +70,6 @@ export const DoctorAttendantForm = (props) => {
         });
       }
       designationList.forEach((row) => update_designation_list.push({value: row.id, label: row.name}));
-      setUpdateData((prevState) => ({
-        ...prevState,
-        facility: update_facility_list[0].value,
-        designation: update_designation_list[0].value,
-      }));
     }
     setDesignation(update_designation_list);
     setFacility(update_facility_list);
@@ -91,7 +85,27 @@ export const DoctorAttendantForm = (props) => {
       if (!isAddAnother) {
         onClose();
       }
+      setErrors(prevState => ({
+        ...prevState,
+        name: true,
+        phone_number: true,
+        email: true,
+      }));
+      setUpdateData(prevState => ({
+        ...prevState,
+        name: (updateOperation) ? data.name : "",
+        phone_number: (updateOperation) ? data.phone_number : "",
+        email: (updateOperation) ? data.email : ""
+      }))
     } else {
+      try {
+        delete response.status;
+        let errorMessage = '';
+        Object.keys(response).forEach((key) => errorMessage += response[key].reduce((total, value, index, array) => total + value));
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Error", errorMessage, DANGER));
+      } catch (e) {
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Error", "An Error Has Occurred.", DANGER));
+      }
       setError(true);
       delete response['status'];
       setErrorString(prevState => ({...prevState, ...response}));
@@ -134,6 +148,7 @@ export const DoctorAttendantForm = (props) => {
               props => <Form
                 {...props}
                 data={data}
+                updatedData={updatedData}
                 handleChange={handleChange}
                 updateOperation={updateOperation}
                 designation={designation}
@@ -141,13 +156,6 @@ export const DoctorAttendantForm = (props) => {
                 errorString={errorString}/>
             }
           </Formik>
-        </Grid>
-        <Grid item xs={12}>
-          {error &&
-          <FormControl component="fieldset" error={true}>
-            <FormHelperText className={classes.error}>{errors.detail}</FormHelperText>
-          </FormControl>
-          }
         </Grid>
         <Grid item xs={12}>
           {!data &&
@@ -165,6 +173,8 @@ export const DoctorAttendantForm = (props) => {
             size="medium"
             onClick={updateFacilityStaff}
             disabled={
+              errors.facility ||
+              errors.designation ||
               errors.name ||
               errors.phone_number ||
               errors.email

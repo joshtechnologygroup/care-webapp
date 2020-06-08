@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
@@ -16,13 +14,13 @@ import {FACILITY_INFRASTRUCTURE_UPDATE_URL, FACILITY_INFRASTRUCTURE_LIST_URL} fr
 import {connect} from 'react-redux';
 import * as StringUtil from 'Src/utils/stringformatting';
 import {createToastNotification} from 'Actions/ToastAction';
-import {SUCCESS} from "Src/constants";
+import {SUCCESS, DANGER} from "Src/constants";
 import * as ToastUtils from 'Src/utils/toast';
 
 export const BedsForm = (props) => {
   const classes = useStyles();
   const [isAddAnother, setIsAddAnother] = useState(false);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   const {open, data, onClose} = props;
   const [errors, setErrors] = useState({total_beds: true, occupied_beds: true, available_bed: true, form: ''})
   const [updatedData, setUpdateData] = useState({
@@ -37,9 +35,15 @@ export const BedsForm = (props) => {
   const updateFacilityInfrastructure = async () => {
     const {createUpdateFacilityInfrastructure, createToastNotification} = props;
     const response = await createUpdateFacilityInfrastructure(updatedData, StringUtil.formatVarString(FACILITY_INFRASTRUCTURE_UPDATE_URL, [data.id]), 'PATCH')
-    if (!response.status) {
-      setError(true);
-      setErrors({...errors, form: response.detail})
+    if (response.status) {
+      try{
+        delete response.status
+        let errorMessage = '';
+        Object.keys(response).forEach((key) => errorMessage += response[key].reduce((total, value, index, array) => total + value));
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Error", errorMessage, DANGER));
+      } catch (e) {
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Error", "An Error Has Occurred.", DANGER));
+      }
     } else {
       createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully updated ", SUCCESS))
     }
@@ -78,14 +82,6 @@ export const BedsForm = (props) => {
               props => <Form  {...props} data={data} handleChange={handleChange}/>
             }
           </Formik>
-        </Grid>
-        <Grid item xs={12}>
-          {
-            error === true &&
-            <FormControl component="fieldset" error={true}>
-              <FormHelperText className={classes.error}>{errors.form}</FormHelperText>
-            </FormControl>
-          }
         </Grid>
         <Grid item xs={12}>
           {!data &&

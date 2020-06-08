@@ -3,19 +3,22 @@ import {useTranslation} from "react-i18next";
 import {
   Grid,
   TextField
-
 } from '@material-ui/core';
 import {PropTypes} from 'prop-types';
 import Select from 'react-select'
 import useStyles from './styles';
 import {connect} from 'react-redux';
-import _ from 'underscore'
 
 export function Form(props) {
   const classes = useStyles();
   const {i18n} = useTranslation();
   const {data, handleChange} = props;
-  const [errors, setErrors] = useState({total_bed: false, occupied_bed: false, available_bed: false, form: ''})
+  const [errors, setErrors] = useState({
+    total_bed: false,
+    occupied_bed: false,
+    available_bed: false,
+    form: ''
+  });
   const change = (name, value) => handleChange(name, value);
 
   const changeText = (name, e) => {
@@ -36,7 +39,6 @@ export function Form(props) {
           <label className={classes.label}>{i18n.t('Facility Name')}</label>
           <Select
             options={props.facilityOptions}
-            defaultValue={props.facilityOptions[0]}
             onChange={change.bind(null, "facility")}
           />
         </Grid>
@@ -45,7 +47,6 @@ export function Form(props) {
           <label className={classes.label}>{i18n.t('Room Type')}</label>
           <Select
             options={props.roomOptions}
-            defaultValue={props.roomOptions[0]}
             onChange={change.bind(null, "room_type")}
           />
         </Grid>
@@ -54,7 +55,6 @@ export function Form(props) {
           <label className={classes.label}>{i18n.t('Bed Type')}</label>
           <Select
             options={props.bedOptions}
-            defaultValue={props.bedOptions[0]}
             onChange={change.bind(null, "bed_type")}
           />
         </Grid>

@@ -131,9 +131,10 @@ export function DoctorAttendantList(props) {
   ]);
 
   const handleBooleanCallBack = (val) => {
-    const {facilities} = props;
+    const {facilities, staffDesignationList} = props;
     const mapping_id_list = {
       'facility': facilities,
+      'designation': staffDesignationList
     };
     let update_select_params = multiSelectBooleanFilterCallback(
       selectedParams,
