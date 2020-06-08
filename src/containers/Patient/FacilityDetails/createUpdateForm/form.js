@@ -16,6 +16,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
 import { facility_status_choices, TRANSFERRED_TO_ANOTHER_FACILITY, DISCHARGED } from 'Constants/app.const';
+import { DATE_TIME_FORMAT } from 'Src/constants'
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -162,7 +163,7 @@ export default function Form(props) {
               className="field"
               name="admitted_at"
               disableFuture
-              format="dd/MM/yyyy hh:mm a"
+              format={DATE_TIME_FORMAT}
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>
@@ -181,7 +182,7 @@ export default function Form(props) {
                 className="field mt-10"
                 name="discharged_at"
                 disableFuture
-                format="dd/MM/yyyy hh:mm a"
+                format={DATE_TIME_FORMAT}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment><Event /></InputAdornment>
