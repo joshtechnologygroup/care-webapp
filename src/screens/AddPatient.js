@@ -20,7 +20,8 @@ import _ from 'underscore';
 import { createToastNotification } from 'Actions/ToastAction';
 import * as ToastUtils from 'Src/utils/toast';
 import { SUCCESS, DANGER } from "Src/constants";
-import {regex} from 'Constants/app.const';
+import { FACILITY_EXISTS, ADMITTED_TO_FACILITY } from 'Constants/app.const';
+
 function AddPatient(props) {
   const [formList, setFormList] = useState(['personal', 'contact', 'medication', 'facility', 'labTests', 'portieDetails', 'family',])
   const [profile, setProfile] = useState({
@@ -54,12 +55,12 @@ function AddPatient(props) {
   }
 
   const saveProfile = (name, value) => {
-    if(value){
-    setProfile(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  }
+    if (value) {
+      setProfile(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   }
 
   function Alert(props) {
@@ -72,20 +73,38 @@ function AddPatient(props) {
     let contactDetails = await contactForm;
     let patientfacilitiesDetails = await patientFacilityForm;
     let medicationDetails = await medicationForm;
-    let e = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
-    Object.keys(e).forEach((key, value) => {
+    let errors = { ...personalDetails, ...contactDetails, ...patientfacilitiesDetails, ...medicationDetails };
+    Object.keys(errors).forEach((key, value) => {
       if (profile[key] || facilityDetails[key]) {
-        e[key] = null;
+        errors[key] = null;
       } else {
         flag = false;
       }
     });
-    if(profile['phone_number'] && !(regex.phone_number).test(profile['phone_number'])) {
-      e['phone_number'] = "please enter valid phone number"
+    const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (profile['phone_number'] && !regex.test(profile['phone_number'])) {
+      errors['phone_number'] = "please enter valid  phone number"
+      flag = false;
+    }
+    const pat1 = /^\d{6}$/;
+    if (profile['pincode'] && !pat1.test(profile['pincode'])) {
+      errors['pincode'] = "please enter valid pincode"
+      flag = false;
+    }
+    if (!profile['patient_status']) {
+      profile['patient_status'] = FACILITY_EXISTS;
+    }
+    if (profile['patient_status'] === FACILITY_EXISTS && !facilityDetails['facility'] && !facilityDetails['patient_status']) {
+      errors['facility'] = 'facility name is required';
+      flag = false;
+      errors['patient_status'] = 'Please select current status';
+    }
+    if (!_.isEmpty(facilityDetails) && facilityDetails['patient_status'] !== ADMITTED_TO_FACILITY && !facilityDetails['discharged_at']) {
+      errors['discharged_at'] = 'please fill discharged date';
       flag = false;
     }
 
-    setFieldErrorDict(e);
+    setFieldErrorDict(errors);
     if (flag) {
       let initial_profile = { ...profile };
       delete initial_profile.icmr_id;
@@ -93,14 +112,16 @@ function AddPatient(props) {
       if (!patient_facility['admitted_at']) {
         patient_facility['admitted_at'] = new Date()
       }
-      initial_profile['patient_facility'] = patient_facility;
+      if (profile['patient_status'] === 4) {
+        initial_profile['patient_facility'] = patient_facility;
+      }
       const response = await props.createPatient(initial_profile);
       if (response.status) {
-        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Added", "Successfully added ", SUCCESS))
+        props.createToastNotification(ToastUtils.toastDict((new Date()).getTime(), "Updated", "Successfully Updated ", SUCCESS))
         history.push(`/patients/${response.patientId}`);
       } else {
         props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER))
+          ToastUtils.toastDict((new Date()).getTime(), "Updated", response.error, DANGER))
       }
     }
   };

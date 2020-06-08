@@ -101,37 +101,34 @@ class PatientDetail extends Component {
     let response;
     if (key === 'personal') {
       response = await this.props.updatePatientPersonalDetails(data, patientId);
-      if (response.status) {
-        this.props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
-        )
-      } else {
-        this.props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Added", response.error, DANGER)
-        )
-      }
     } else if (key === 'contact') {
       response = await this.props.updatePatientContactDetails(data, patientId);
-      if (response.status === true) {
-        this.props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
-        )
-      } else {
-        this.props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Added", "Some Errors occurs", DANGER)
-        )
-      }
     }
-    this.setState({
-      profile: {
-        ...this.state.profile,
-        [key]: data
-      },
-      isEditing: {
-        ...this.state.isEditing,
-        [key]: false
-      }
-    })
+    if (response.status) {
+      this.setState({
+        profile: {
+          ...this.state.profile,
+          ...data
+        },
+        isEditing: {
+          ...this.state.isEditing,
+          [key]: false
+        }
+      })
+      this.props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "updated", "Successfully updated ", SUCCESS)
+      )
+    } else {
+      this.setState({
+        profile: {
+          ...this.state.profile,
+          ...data
+        },
+      })
+      this.props.createToastNotification(
+        ToastUtils.toastDict((new Date()).getTime(), "updated", response.error, DANGER)
+      )
+    }
   }
 
   render() {

@@ -191,8 +191,8 @@ export function Form(props) {
                 label={i18n.t('Pincode')}
                 value={pincode}
                 onChange={handleChange}
-                helperText={touched.pincode ? errors.pincode : ""}
-                error={touched.pincode && Boolean(errors.pincode)}
+                helperText={touched.pincode ? errors.pincode : "" || (fieldErrorDict ? fieldErrorDict.pincode : "") && errors.pincode}
+                error={touched.pincode ? errors.pincode : "" || (fieldErrorDict ? fieldErrorDict.pincode : "") && errors.pincode}
                 fullWidth
               />
             </Grid>
