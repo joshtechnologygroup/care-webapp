@@ -15,7 +15,8 @@ import DateFnsUtils from '@date-io/date-fns';
 
 import { SingleSelectChipsInput } from 'Components/Inputs';
 
-import { facility_status_choices } from 'Constants/app.const';
+import { facility_status_choices, TRANSFERRED_TO_ANOTHER_FACILITY, DISCHARGED } from 'Constants/app.const';
+import { DATE_TIME_FORMAT } from 'Src/constants'
 
 export default function Form(props) {
   const { i18n } = useTranslation();
@@ -25,7 +26,8 @@ export default function Form(props) {
       patient_facility_id,
       admitted_at,
       patient_status,
-      discharged_at
+      discharged_at,
+      transfer_facility,
     },
     errors,
     handleSubmit,
@@ -47,8 +49,7 @@ export default function Form(props) {
     }
   }, [])
 
-  const onSelectFacility = (event, value) => {
-    const name = "facility"
+  const onSelectFacility = (name, event, value) => {
     setFieldTouched(name, true, false);
     if (value) {
       setFieldTouched(name, false, true);
@@ -58,7 +59,10 @@ export default function Form(props) {
   }
 
   const [admitted, setAdmitted] = React.useState(admitted_at);
-  const [discharged, setDischarged] = React.useState(discharged_at);
+  const [discharged, setDischarged] = React.useState(discharged_at ? discharged_at : null);
+  const [completed, setCompeleted] = React.useState(false);
+  const [transfered, setTransfered] = React.useState(false);
+
   const setDateTime = (name, value) => {
     name === "admitted_at" ? setAdmitted(value) : setDischarged(value);
     setFieldValue(name, value);
@@ -68,6 +72,16 @@ export default function Form(props) {
 
   const setStatus = (name, val) => {
     setFieldValue(name, val);
+    if (val && [TRANSFERRED_TO_ANOTHER_FACILITY, DISCHARGED].indexOf(val) >= 0) {
+      setCompeleted(true);
+    } else {
+      setCompeleted(false);
+    }
+    if (val === TRANSFERRED_TO_ANOTHER_FACILITY) {
+      setTransfered(true);
+    } else {
+      setTransfered(false);
+    }
     saveFacilityDetails(name, val);
   }
 
@@ -88,7 +102,7 @@ export default function Form(props) {
           <Autocomplete
             options={shortFacilities}
             getOptionLabel={(option) => option.name}
-            onChange={onSelectFacility}
+            onChange={(event, value) => onSelectFacility("facility", event, value)}
             renderInput={(params) =>
               <TextField
                 {...params}
@@ -116,6 +130,27 @@ export default function Form(props) {
             variant="outlined"
             type="number"
           />
+          {transfered &&
+            <Autocomplete
+              options={shortFacilities}
+              getOptionLabel={(option) => option.name}
+              onChange={(event, value) => onSelectFacility("transfer_facility", event, value)}
+              renderInput={(params) =>
+                <TextField
+                  {...params}
+                  value={transfer_facility}
+                  name="transfer_facility"
+                  label={i18n.t('Select Transfer Facility')}
+                  fullWidth
+                  className="field"
+                  variant="outlined"
+                  helperText={touched.transfer_facility ? errors.transfer_facility : "" || (fieldErrorDict ? fieldErrorDict.transfer_facility : "")}
+                  error={touched.transfer_facility && Boolean(errors.transfer_facility) || (fieldErrorDict ? fieldErrorDict.transfer_facility : "")}
+                />
+
+              }
+            />
+          }
         </Grid>
 
         <Grid item xs={12} sm={6}>
@@ -128,7 +163,7 @@ export default function Form(props) {
               className="field"
               name="admitted_at"
               disableFuture
-              format="dd/MM/yyyy hh:mm a"
+              format={DATE_TIME_FORMAT}
               InputProps={{
                 endAdornment: (
                   <InputAdornment><Event /></InputAdornment>
@@ -137,30 +172,34 @@ export default function Form(props) {
               fullWidth
             />
           </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDateTimePicker
-              label={i18n.t('Discharged Date/time')}
-              inputVariant="outlined"
-              value={discharged}
-              onChange={(val) => setDateTime("discharged_at", val)}
-              className="field mt-10"
-              name="discharged_at"
-              disableFuture
-              format="dd/MM/yyyy hh:mm a"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment><Event /></InputAdornment>
-                ),
-              }}
-              fullWidth
-            />
-          </MuiPickersUtilsProvider>
+          {completed &&
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDateTimePicker
+                label={transfered ? i18n.t('Transfered Date/time') : i18n.t('Discharged Date/time')}
+                inputVariant="outlined"
+                value={discharged}
+                onChange={(val) => setDateTime("discharged_at", val)}
+                className="field mt-10"
+                name="discharged_at"
+                disableFuture
+                format={DATE_TIME_FORMAT}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment><Event /></InputAdornment>
+                  ),
+                }}
+                fullWidth
+                helperText={touched.discharged_at && errors.discharged_at || (fieldErrorDict ? fieldErrorDict.discharged_at : "")}
+                error={touched.discharged_at && Boolean(errors.discharged_at) || (fieldErrorDict ? fieldErrorDict.discharged_at : "")}
+              />
+            </MuiPickersUtilsProvider>
+          }
         </Grid>
 
 
         <Grid className="pb-0 mb-10" item xs={12}>
           <Typography variant="h6">
-            {i18n.t('status')}
+            {i18n.t('Status')}
           </Typography>
           <SingleSelectChipsInput
             value={patient_status}
@@ -169,7 +208,7 @@ export default function Form(props) {
             valueKey="id"
           />
           <h5 className="text--error">
-            {touched.patient_status && Boolean(errors.patient_status) || (fieldErrorDict ? fieldErrorDict.patient_status : "") && errors.patient_status}
+            {touched.patient_status && Boolean(errors.patient_status) || (fieldErrorDict ? fieldErrorDict.patient_status : "")}
           </h5>
         </Grid>
         {editMode &&

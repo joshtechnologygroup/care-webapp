@@ -13,25 +13,26 @@ import {
 } from '@material-ui/core';
 import { PhoneOutlined, EventOutlined, AccessTime, EditOutlined } from '@material-ui/icons';
 import { RELATIONSHIP_OPTIONS } from "Src/constants/"
+import { EASY_DATE_FORMAT, TIME_FORMAT } from 'Src/constants';
 
 const useStyles = makeStyles(theme =>
-    createStyles({
-        chip: {
-            minWidth: theme.typography.pxToRem(156),
-        },
-        edit: {
-            position: 'absolute',
-            right: '0',
-            top: '50%',
-            transform: 'translate(50%, -50%)',
-            boxShadow: 'none',
-            [theme.breakpoints.down('sm')]: {
-                right: theme.typography.pxToRem(14),
-                top: theme.typography.pxToRem(14),
-                transform: 'none',
-            },
-        },
-    })
+  createStyles({
+    chip: {
+      minWidth: theme.typography.pxToRem(156),
+    },
+    edit: {
+      position: 'absolute',
+      right: '0',
+      top: '50%',
+      transform: 'translate(50%, -50%)',
+      boxShadow: 'none',
+      [theme.breakpoints.down('sm')]: {
+        right: theme.typography.pxToRem(14),
+        top: theme.typography.pxToRem(14),
+        transform: 'none',
+      },
+    },
+  })
 );
 
 export default function PortieDetailCard(props) {
@@ -54,7 +55,7 @@ export default function PortieDetailCard(props) {
           <Grid item xs={12} sm={4} md={5}>
             <h6 className="heading--sub">{i18n.t('Contacted whom')}</h6>
             <h4 className="heading--md text--gray">{
-                RELATIONSHIP_OPTIONS.find(relation => relation.value == details.relation).label
+              RELATIONSHIP_OPTIONS.find(relation => relation.value == details.relation).label
             }</h4>
             <Typography variant="h6" className="d-flex">
               <PhoneOutlined className="mr-5" />
@@ -68,11 +69,11 @@ export default function PortieDetailCard(props) {
             />
             <Typography variant="h6" className="d-flex mt-5">
               <EventOutlined className="mr-5" />
-              {moment(details.dateTime).format("DD-MMM-YYYY")}
+              {moment(details.called_at).format(EASY_DATE_FORMAT)}
             </Typography>
             <Typography variant="h6" className="d-flex">
               <AccessTime className="mr-5" />
-              {moment(details.dateTime).format("HH:MM A")}
+              {moment(details.called_at).format(TIME_FORMAT)}
             </Typography>
           </Grid>
           <Grid item xs={12}>

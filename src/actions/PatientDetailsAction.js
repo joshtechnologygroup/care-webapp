@@ -50,7 +50,7 @@ const updatePatientContactDetails= (body, id) => async (dispatch) => {
         return { status: true };
     } else if (patient_contact_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_contact_response.json();
-        return { status: false, error: "dummy error generated in UI" };
+        return { status: false, error: "Some Errors occurs" };
     }
 };
 
@@ -69,7 +69,7 @@ const updatePatientMedicationDetails= (body, id) => async (dispatch) => {
         return { status: true };
     } else if (patient_medication_response.status === HttpStatus.BAD_REQUEST) {
         const data = await patient_medication_response.json();
-        return { status: false, error: "dummy error generated in UI" };
+        return { status: false, error: "Some Errors occurs" };
     }
 };
 

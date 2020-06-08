@@ -53,7 +53,7 @@ export default function Form(props) {
   } = props;
 
   useEffect(() => {
-    if(setPersonalForm) {
+    if (setPersonalForm) {
       setPersonalForm(validateForm);
     }
   }, []);
@@ -82,13 +82,16 @@ export default function Form(props) {
   }
 
   const setStatus = (name, val) => {
-    if(val){
-    setFieldValue(name, val);
+    if (val) {
+      setFieldValue(name, val);
+      if (saveProfile) {
+        saveProfile(name, val)
+      }
     } else {
       setFieldValue(name, FACILITY_EXISTS);
-    }
-    if (saveProfile) {
-      saveProfile(name, val)
+      if (saveProfile) {
+        saveProfile(name, FACILITY_EXISTS)
+      }
     }
   }
 
@@ -147,7 +150,7 @@ export default function Form(props) {
                     value={month}
                     onChange={change}
                     helperText={touched.month ? errors.month : "" || (fieldErrorDict ? fieldErrorDict.month : "") && errors.month}
-                    error={touched.month && Boolean(errors.month) || Boolean(fieldErrorDict ? fieldErrorDict.month : "") &&  Boolean(errors.month)}
+                    error={touched.month && Boolean(errors.month) || Boolean(fieldErrorDict ? fieldErrorDict.month : "") && Boolean(errors.month)}
                     fullWidth
                     type="number"
                     required

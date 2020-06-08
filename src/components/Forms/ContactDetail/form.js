@@ -187,12 +187,13 @@ export function Form(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                type="number"
                 name="pincode"
                 label={i18n.t('Pincode')}
                 value={pincode}
                 onChange={handleChange}
-                helperText={touched.pincode ? errors.pincode : ""}
-                error={touched.pincode && Boolean(errors.pincode)}
+                helperText={touched.pincode ? errors.pincode : "" || (fieldErrorDict ? fieldErrorDict.pincode : "") && errors.pincode}
+                error={touched.pincode ? errors.pincode : "" || (fieldErrorDict ? fieldErrorDict.pincode : "") && errors.pincode}
                 fullWidth
               />
             </Grid>
