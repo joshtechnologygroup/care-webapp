@@ -46,6 +46,7 @@ export default function Form(props) {
         setCompeleted(true)
     } else {
         setCompeleted(false);
+        setDate('date_of_result', undefined);
     }
   }, [result])
 
