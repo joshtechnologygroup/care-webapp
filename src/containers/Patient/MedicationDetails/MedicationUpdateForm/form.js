@@ -84,6 +84,7 @@ export default function Form(props) {
           {i18n.t('List of all COVID symptoms in the patient')}
         </Typography>
         <MultiSelectChipsInput
+          name="patient_symptoms"
           options={symptomChoices}
           value={symptoms ? symptoms : patient_symptoms}
           onChange={(val) => setValue(val, 'patient_symptoms')}
@@ -96,6 +97,7 @@ export default function Form(props) {
           {i18n.t('List of all non-COVID disease in the patient')}
         </Typography>
         <MultiSelectChipsInput
+          name="patient_diseases"
           options={diseaseChoices}
           value={diseases ? diseases : patient_diseases}
           onChange={(val) => setValue(val, 'patient_diseases')}

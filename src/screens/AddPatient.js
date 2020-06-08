@@ -121,7 +121,7 @@ function AddPatient(props) {
         history.push(`/patients/${response.patientId}`);
       } else {
         props.createToastNotification(
-          ToastUtils.toastDict((new Date()).getTime(), "Updated", response.error, DANGER))
+          ToastUtils.toastDict((new Date()).getTime(), i18n.t("Error!"), response.error, DANGER))
       }
     }
   };

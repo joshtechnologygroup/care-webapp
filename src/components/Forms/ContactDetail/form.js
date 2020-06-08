@@ -187,6 +187,7 @@ export function Form(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                type="number"
                 name="pincode"
                 label={i18n.t('Pincode')}
                 value={pincode}
