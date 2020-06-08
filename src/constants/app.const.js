@@ -166,19 +166,19 @@ export const GENDER_LIST_MAPPING = [
 
 export const STATUS_LIST_MAPPING = [
   {
-    id: 'home-isolation',
+    id: '1',
     name: 'Home Isolation',
   },
   {
-    id: 'recovered',
+    id: '2',
     name: 'Recovered',
   },
   {
-    id: 'dead',
+    id: '3',
     name: 'Dead',
   },
   {
-    id: 'facility-status',
+    id: '4',
     name: 'Facility Status',
   }
 ]

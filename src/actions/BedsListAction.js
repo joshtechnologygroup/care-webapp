@@ -14,9 +14,9 @@ const createUpdateFacilityInfrastructure = (body, url, method = PATCH) => async 
   const data = await response.json();
   if( response.ok ){
     dispatch(getBedsList(FACILITY_INFRASTRUCTURE_LIST_URL, {ordering: '-updated_at'}));
-    return { status: true };
+    return { status: false };
   } else {
-    return { status: false, detail: data.detail };
+    return { status: true, ...data };
   }
 }
 

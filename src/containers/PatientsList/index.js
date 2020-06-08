@@ -137,7 +137,7 @@ export function PatientsList(props) {
         if (col.field === 'facility_district' || col.field === 'district') {
           col.cellRendererParams.options = update_list['updated_district_list']
         }
-        if (col.field === 'facility_name') {
+        if (col.field === 'facility') {
           col.cellRendererParams.options = update_list['updated_facility_list']
         }
         if (col.field === 'cluster_group') {
@@ -218,6 +218,7 @@ export function PatientsList(props) {
   };
 
   const handleBooleanCallBack = (val) => {
+    console.log(val)
     const {
       districts_list,
       clinical_status_list,
@@ -232,7 +233,7 @@ export function PatientsList(props) {
       'cluster_group': cluster_group_list,
       'covid_status': covid_status_list,
       'clinical_status': clinical_status_list,
-      'facility_name': facilities,
+      'facility': facilities,
       'facility_district': districts_list,
       'facility_type': facility_types,
       'ownership_type': ownership_types,
@@ -253,9 +254,9 @@ export function PatientsList(props) {
     if (val.type === 'Equals To') {
       update_select_params[val.field + '_min'] = [val.fromValue]
       update_select_params[val.field + '_max'] = [val.fromValue]
-    } else if (val.type === 'Less Than') {
+    } else if (val.type === 'Less Than Equal To') {
       update_select_params[val.field + '_max'] = [val.fromValue]
-    } else if (val.type === 'Greater Than') {
+    } else if (val.type === 'Greater Than Equal To') {
       update_select_params[val.field + '_min'] = [val.fromValue]
     } else if (val.type === 'Range') {
       update_select_params[val.field + '_min'] = [val.fromValue]

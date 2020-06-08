@@ -24,9 +24,6 @@ class Patients extends Component {
 			>
 				<div className="primary-bg-light">
 					<Header>
-						<div className="header-container__search-container">
-							<Search searchPlaceholder={t('search.placeholder.patients')} />
-						</div>
 						<div className="ml-auto">
 							<Button
 								variant="contained"

@@ -11,7 +11,7 @@ export const CONFIG = {
     {headerName: 'Govt. ID', field: 'govt_id', cellRenderer: 'PatientRenderer', cellRendererParams: {isSortable: true}},
     {headerName: 'Patient Name', cellRenderer: 'PatientRenderer', field: 'name', minWidth: 120},
     {
-      headerName: 'Facility Name', field: 'facility_name', minWidth: 120, cellRendererParams: {
+      headerName: 'Facility Name', field: 'facility', minWidth: 120, cellRendererParams: {
         filterType: 'boolean',
         options: []
       },

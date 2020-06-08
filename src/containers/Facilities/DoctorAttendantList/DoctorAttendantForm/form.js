@@ -49,7 +49,7 @@ export function Form(props) {
           <label className={classes.label}>{i18n.t('Facility Name')}</label>
           <Select
             options={props.facility}
-            defaultValue={props.facility[0]}
+            defaultValue={data && props.facility[0]}
             onChange={change.bind(null, "facility")}
             isDisabled={updateOperation}
           />
@@ -59,7 +59,7 @@ export function Form(props) {
           <label className={classes.label}>{i18n.t('Designation')}</label>
           <Select
             options={props.designation}
-            defaultValue={props.designation[0]}
+            defaultValue={data && props.designation[0]}
             onChange={change.bind(null, "designation")}
           />
         </Grid>
@@ -73,11 +73,11 @@ export function Form(props) {
             className={classes.field}
             id={"standard-error-helper-text"}
             defaultValue={data && data.name}
+            value={props.updatedData.name}
             helperText={props.errorString.name.reduce((total, value, index, array) => total + ' ' + value)}
             fullWidth
             onChange={changeText.bind(null, "name")}
             error={errors.name}
-            // error={true}
           />
         </Grid>
         <Grid item sm={6} xs={12}>
@@ -89,6 +89,7 @@ export function Form(props) {
             variant="outlined"
             className={classes.field}
             defaultValue={data && data.phone_number}
+            value={props.updatedData.phone_number}
             fullWidth
             onChange={changeText.bind(null, "phone_number")}
             error={errors.phone_number}
@@ -100,6 +101,7 @@ export function Form(props) {
             name="email"
             type="email"
             variant="outlined"
+            value={props.updatedData.email}
             className={classes.field}
             helperText={props.errorString.email.reduce((total, value, index, array) => total + ' ' + value)}
             defaultValue={data && data.email}
