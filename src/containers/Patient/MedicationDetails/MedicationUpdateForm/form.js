@@ -31,6 +31,7 @@ export default function Form(props) {
     fieldErrorDict,
     errors,
     touched,
+    showButtons
   } = props;
 
   useEffect(()=>{
@@ -105,7 +106,7 @@ export default function Form(props) {
         />
       </Grid>
       {
-        editMode &&
+        showButtons &&
         <Grid container justify="flex-end" className="mt-10" item xs={12}>
           <Button
             variant="contained"

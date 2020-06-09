@@ -91,6 +91,7 @@ export function Form(props) {
                 <Grid item sm={12} xs={12}>
                     <label className={classes.label}>{i18n.t('From Facility')}</label>
                     <Select
+                        className={`${touched.from_facility && Boolean(errors.from_facility) && 'react-select__error'}`}
                         options={facilityName}
                         name="from_facility"
                         onChange={(val) => {
@@ -111,11 +112,12 @@ export function Form(props) {
                 <Grid item sm={12} xs={12}>
                     <label className={classes.label}>{i18n.t('Patient')}</label>
                     <AsyncSelect
+                        className={`${touched.patient && Boolean(errors.patient) && 'react-select__error'}`}
                         loadOptions={loadOptions}
                         onInputChange={handleInputChange}
                         placeholder={i18n.t("Search by Patient Name")}
                         onChange={(val) => {
-                            setFieldTouched('from_facility');
+                            setFieldTouched('patient');
                             setFieldValue('patient', val.value);
                             showProfileCard(val.value);
                         }}
@@ -138,6 +140,7 @@ export function Form(props) {
                 <Grid item sm={12} xs={12}>
                     <label className={classes.label}>{i18n.t('To Facility')}</label>
                     <Select
+                        className={`${touched.to_facility && Boolean(errors.to_facility) && 'react-select__error'}`}
                         options={facilityName}
                         defaultValue={""}
                         name="to_facility"

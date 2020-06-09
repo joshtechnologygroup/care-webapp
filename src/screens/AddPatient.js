@@ -168,6 +168,7 @@ function AddPatient(props) {
           saveProfile={saveProfile}
           profile={profile}
           setMedicationForm={setMedicationForm}
+          showButtons={false}
         />
         {/* <DoctorAttendant
             profile={profile[formList[2]].attendant}

@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import * as Yup from 'yup';
 
 export default function MedicationDetailForm(props) {
-  const { profile, handleSubmit, cancelCallback, setMedicationForm, fieldErrorDict, editMode, saveProfile } = props;
+  const { profile, handleSubmit, cancelCallback, setMedicationForm, fieldErrorDict, editMode, saveProfile, showButtons } = props;
   const { i18n } = useTranslation();
   
   const validationSchema = Yup.object({
@@ -23,7 +23,7 @@ export default function MedicationDetailForm(props) {
       onSubmit={submit}
     >
       {
-        props => <Form {...props} setMedicationForm={setMedicationForm} fieldErrorDict={fieldErrorDict} cancelCallback={cancelCallback} saveProfile={saveProfile} editMode={editMode} />
+        props => <Form {...props} setMedicationForm={setMedicationForm} fieldErrorDict={fieldErrorDict} cancelCallback={cancelCallback} saveProfile={saveProfile} editMode={editMode} showButtons={showButtons} />
       }
     </Formik>
   );
